@@ -1,0 +1,85 @@
+//
+//  AddExpansesViewModel.swift
+//  Vondera
+//
+//  Created by Shreif El Sayed on 29/06/2023.
+//
+
+import Foundation
+import Combine
+
+class AddExpansesViewModel : ObservableObject {
+    var storeId:String
+    var myUser:UserData?
+    var expansesDao:ExpansesDao
+    var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
+    @Published var newItem:Expense?
+
+    
+    private var shouldDismissView = false {
+        didSet {
+            viewDismissalModePublisher.send(shouldDismissView)
+        }
+    }
+    
+    @Published var price = ""
+    @Published var desc = ""
+    
+    @Published var showToast = false
+    @Published var msg = ""
+    @Published var isSaving = false
+    
+    
+    init(storeId:String) {
+        self.storeId = storeId
+        expansesDao = ExpansesDao(storeId: storeId)
+        
+        Task {
+            myUser = await LocalInfo().getLocalUser()
+        }
+    }
+    
+    func save() async {
+        guard price.isNumeric else {
+            showTosat(msg: "Enter a valid price")
+            return
+        }
+        
+        guard !desc.isBlank else {
+            showTosat(msg: "Add a description for your expanse")
+            return
+        }
+        
+        
+        DispatchQueue.main.async {
+            self.isSaving = true
+        }
+        
+        do {
+            // --> Update the database
+            var expanses = Expense(amount: Int(price) ?? 0, description: desc, madeBy: myUser?.id ?? "")
+            try await expansesDao.create(expanses: &expanses)
+            
+            DispatchQueue.main.async { [expanses] in
+                //self.showTosat(msg: "Expanse Added")
+                self.newItem = expanses
+                self.shouldDismissView = true
+            }
+        } catch {
+            //showTosat(msg: error.localizedDescription)
+        }
+        
+        
+        DispatchQueue.main.async {
+            self.isSaving = false
+        }
+        
+    }
+    
+    func showTosat(msg: String) {
+        DispatchQueue.main.async {
+            self.msg = msg
+            self.showToast.toggle()
+        }
+    }
+}

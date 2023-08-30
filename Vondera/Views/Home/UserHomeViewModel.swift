@@ -1,0 +1,37 @@
+//
+//  UserHomeViewModel.swift
+//  Vondera
+//
+//  Created by Shreif El Sayed on 29/06/2023.
+//
+
+import Foundation
+
+class UserHomeViewModel : ObservableObject {
+    var usersDao = UsersDao()
+    @Published var myUser:UserData?
+    
+    func getUser() async {
+        self.myUser = await LocalInfo().getLocalUser()
+        
+        if myUser == nil {
+            await AuthManger().logOut()
+        }
+    }
+    
+    func userOnline() async {
+        do {
+            try await usersDao.update(id: myUser!.id, hash: ["online": true])
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
+    }
+    
+    func userOffline() async {
+        do {
+            try await usersDao.update(id: myUser!.id, hash: ["online": false])
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
+    }
+}
