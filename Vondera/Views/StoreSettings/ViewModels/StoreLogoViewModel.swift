@@ -71,7 +71,7 @@ class StoreLogoViewModel : NSObject, ObservableObject, PHPickerViewControllerDel
                 store.logo = url.absoluteString
                 
                 // Saving local
-                var myUser = await LocalInfo().getLocalUser()
+                let myUser = await LocalInfo().getLocalUser()
                 if myUser!.storeId == store.ownerId {
                     myUser!.store!.logo = url.absoluteString
                     _ = await LocalInfo().saveUser(user: myUser!)

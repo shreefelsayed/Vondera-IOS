@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1710E54E3D88EB354857EE3C /* Pods_Vondera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */; };
 		B30115CB2A554DE600A7F701 /* StepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30115CA2A554DE600A7F701 /* StepsView.swift */; };
 		B30115CD2A56F11000A7F701 /* StoreShipping.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30115CC2A56F11000A7F701 /* StoreShipping.swift */; };
 		B30115CF2A56F13300A7F701 /* StoreShippingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30115CE2A56F13300A7F701 /* StoreShippingViewModel.swift */; };
@@ -229,6 +228,15 @@
 		B3C30F5C2A9F283A0086B3FE /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = B3C30F5B2A9F283A0086B3FE /* ZipArchive */; };
 		B3C30F5F2A9F28A10086B3FE /* SwiftXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = B3C30F5E2A9F28A10086B3FE /* SwiftXLSX */; };
 		B3D150532A7AB98E003AB8B8 /* ReceiptPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */; };
+		B3D8E5172A9FB94100DC5049 /* Pods_Vondera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */; };
+		B3D8E51B2A9FBB8600DC5049 /* ReportCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51A2A9FBB8600DC5049 /* ReportCard.swift */; };
+		B3D8E51D2A9FBD3E00DC5049 /* StoreReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51C2A9FBD3E00DC5049 /* StoreReport.swift */; };
+		B3D8E5202A9FBE2800DC5049 /* OrderListExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51F2A9FBE2800DC5049 /* OrderListExt.swift */; };
+		B3D8E5252A9FCA5400DC5049 /* ExpansesExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E5242A9FCA5400DC5049 /* ExpansesExt.swift */; };
+		B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */; };
+		B3D8E52B2A9FF6F600DC5049 /* ChoosePlanCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52A2A9FF6F600DC5049 /* ChoosePlanCard.swift */; };
+		B3D8E52E2A9FF99D00DC5049 /* AppPlans.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */; };
+		B3D8E5302A9FFA2200DC5049 /* PlanDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */; };
 		B3DFDC0E2A4498F000037858 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */; };
 		B3DFDC102A44A01500037858 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0F2A44A01500037858 /* AddProductView.swift */; };
 		B3DFDC122A44A08900037858 /* AddProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC112A44A08900037858 /* AddProductViewModel.swift */; };
@@ -268,6 +276,8 @@
 		B3EF61892A440E40007930ED /* StoreCouriersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61882A440E40007930ED /* StoreCouriersViewModel.swift */; };
 		B3EF618C2A4412B9007930ED /* CourierCurrentOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF618B2A4412B9007930ED /* CourierCurrentOrders.swift */; };
 		B3EF618E2A441427007930ED /* CourierCurrentOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF618D2A441427007930ED /* CourierCurrentOrdersViewModel.swift */; };
+		B3FACA672AA0203200EB55F6 /* EditCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FACA662AA0203200EB55F6 /* EditCategory.swift */; };
+		B3FACA692AA0242000EB55F6 /* EditCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FACA682AA0242000EB55F6 /* EditCategoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -465,6 +475,15 @@
 		B3C30F4D2A9F14540086B3FE /* ContactDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDialog.swift; sourceTree = "<group>"; };
 		B3C30F522A9F1C4B0086B3FE /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptPDF.swift; sourceTree = "<group>"; };
+		B3D8E5142A9F3ACB00DC5049 /* VonderaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VonderaRelease.entitlements; sourceTree = "<group>"; };
+		B3D8E51A2A9FBB8600DC5049 /* ReportCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCard.swift; sourceTree = "<group>"; };
+		B3D8E51C2A9FBD3E00DC5049 /* StoreReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreReport.swift; sourceTree = "<group>"; };
+		B3D8E51F2A9FBE2800DC5049 /* OrderListExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListExt.swift; sourceTree = "<group>"; };
+		B3D8E5242A9FCA5400DC5049 /* ExpansesExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansesExt.swift; sourceTree = "<group>"; };
+		B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreHelper.swift; sourceTree = "<group>"; };
+		B3D8E52A2A9FF6F600DC5049 /* ChoosePlanCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlanCard.swift; sourceTree = "<group>"; };
+		B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPlans.swift; sourceTree = "<group>"; };
+		B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDao.swift; sourceTree = "<group>"; };
 		B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		B3DFDC0F2A44A01500037858 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
 		B3DFDC112A44A08900037858 /* AddProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewModel.swift; sourceTree = "<group>"; };
@@ -497,6 +516,8 @@
 		B3EF61882A440E40007930ED /* StoreCouriersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCouriersViewModel.swift; sourceTree = "<group>"; };
 		B3EF618B2A4412B9007930ED /* CourierCurrentOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierCurrentOrders.swift; sourceTree = "<group>"; };
 		B3EF618D2A441427007930ED /* CourierCurrentOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierCurrentOrdersViewModel.swift; sourceTree = "<group>"; };
+		B3FACA662AA0203200EB55F6 /* EditCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategory.swift; sourceTree = "<group>"; };
+		B3FACA682AA0242000EB55F6 /* EditCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewModel.swift; sourceTree = "<group>"; };
 		D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vondera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -511,6 +532,7 @@
 				B30E2FAF2A42668700F45D7F /* ImageSlideshow/Kingfisher in Frameworks */,
 				B33051FE2A4BF67300B0EE8B /* OmenTextField in Frameworks */,
 				B3A7C8BE2A285B5600D6C1D2 /* FirebaseMessaging in Frameworks */,
+				B3D8E5172A9FB94100DC5049 /* Pods_Vondera.framework in Frameworks */,
 				B3A7C8E72A286FF300D6C1D2 /* FacebookCore in Frameworks */,
 				B31AE4062A414255003B7867 /* NetworkImage in Frameworks */,
 				B33DBD0A2A49F944008BBB69 /* SwiftUIGenericDialog in Frameworks */,
@@ -544,7 +566,6 @@
 				B3A7C8B02A285B5600D6C1D2 /* FirebaseCrashlytics in Frameworks */,
 				B3A7C8B22A285B5600D6C1D2 /* FirebaseDynamicLinks in Frameworks */,
 				B3A7C8C02A285B5600D6C1D2 /* FirebaseRemoteConfig in Frameworks */,
-				1710E54E3D88EB354857EE3C /* Pods_Vondera.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +680,7 @@
 		B31CFA612A2853AF00CBA01C /* Vondera */ = {
 			isa = PBXGroup;
 			children = (
+				B3D8E5142A9F3ACB00DC5049 /* VonderaRelease.entitlements */,
 				B3A7C8F42A287CA900D6C1D2 /* Dao */,
 				B34896272A3F4E5400BD99AE /* Managers */,
 				B3A7C8C82A285C3700D6C1D2 /* Models */,
@@ -685,7 +707,6 @@
 		B334038D2A470D20008CB1D8 /* PDFs */ = {
 			isa = PBXGroup;
 			children = (
-				B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */,
 			);
 			path = PDFs;
 			sourceTree = "<group>";
@@ -709,6 +730,7 @@
 				B339709B2A45F62E00E44FA2 /* Dashboard.swift */,
 				B339709D2A45FB5500E44FA2 /* StoreAllOrders.swift */,
 				B339709F2A45FB5E00E44FA2 /* StoreDeletedOrders.swift */,
+				B3D8E51C2A9FBD3E00DC5049 /* StoreReport.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -767,6 +789,7 @@
 			children = (
 				B390EB742A48C3B10058D06B /* StoreCateogriesViewModel.swift */,
 				B33DBCFF2A494381008BBB69 /* CreateCateogryViewModel.swift */,
+				B3FACA682AA0242000EB55F6 /* EditCategoryViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -792,6 +815,7 @@
 			isa = PBXGroup;
 			children = (
 				B34687172A3FAE8200FFFA1E /* Helpers */,
+				B39FAA002A4CB962004773AA /* GovsUtil.swift */,
 				B34896282A3F4E6100BD99AE /* AuthManger.swift */,
 				B314F4D92A4DE766009856E3 /* CartManager.swift */,
 				B390EB692A489DC60058D06B /* FirebaseStorageUploader.swift */,
@@ -856,9 +880,10 @@
 			path = SplashEntry;
 			sourceTree = "<group>";
 		};
-		B36923BF2A41D5CD00709112 /* HelperViews */ = {
+		B36923BF2A41D5CD00709112 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B33DBCFC2A494020008BBB69 /* TopTaps.swift */,
 				B36923C02A41D5E300709112 /* TopSellingProducts.swift */,
 				B36923C52A41E00F00709112 /* TopSellingAreas.swift */,
 				B36923C72A41E67D00709112 /* StoreOrdersCount.swift */,
@@ -868,38 +893,23 @@
 				B390EB552A47D4280058D06B /* NavigationText.swift */,
 				B30115CA2A554DE600A7F701 /* StepsView.swift */,
 				B30115D02A5702C600A7F701 /* PlanCard.swift */,
+				B3D8E52A2A9FF6F600DC5049 /* ChoosePlanCard.swift */,
 			);
-			path = HelperViews;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		B36923C22A41DC4B00709112 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B3D8E5262A9FE2D200DC5049 /* Tools */,
+				B3D8E51E2A9FBE1400DC5049 /* ModelExts */,
 				B3C30F572A9F1E4F0086B3FE /* Excel */,
-				B346871A2A3FBE0A00FFFA1E /* BottomSheet.swift */,
-				B30CF0CB2A52A66C00245955 /* CheckBoxView.swift */,
-				B3DFDC2A2A45133D00037858 /* ChipView.swift */,
-				B3C30F4A2A9F0EE20086B3FE /* ColorsUtil.swift */,
-				B33DBD362A4A5531008BBB69 /* Contact.swift */,
-				B3DFDC1D2A44EB5100037858 /* Copying.swift */,
-				B3A7E77B2A3F5FB700F0CD11 /* CustomButton.swift */,
-				B3A7C8FE2A287D1A00D6C1D2 /* DateExtenstions.swift */,
+				B3D8E5162A9FAF4100DC5049 /* Pdfs */,
+				B3D8E5152A9FAF3C00DC5049 /* Views */,
 				B36923C32A41DC5A00709112 /* DictionaryEncoder.swift */,
-				B3275F422A53D86100F4F935 /* DownloadManager.swift */,
 				B3A7C9002A287E4100D6C1D2 /* EncodableExtenstion.swift */,
-				B314F4E92A4EB7EA009856E3 /* FloatingActionButton.swift */,
-				B314F4E72A4EB6CE009856E3 /* FloatingButton.swift */,
-				B33DBD032A496472008BBB69 /* FullScreenImageView.swift */,
-				B39FAA002A4CB962004773AA /* GovsUtil.swift */,
-				B3DFDC312A453B2300037858 /* NonDismiss.swift */,
-				B3EF61672A43B6CD007930ED /* PullToRefresh.swift */,
-				B3C30F482A9EECA40086B3FE /* PushNotificationManager.swift */,
-				B33DBD0B2A4A09D9008BBB69 /* SearchBar.swift */,
-				B33403982A473DFE008CB1D8 /* SlideNetworkView.swift */,
-				B3A7C8F22A28799400D6C1D2 /* StringExtenstions.swift */,
 				B33DBCEB2A48D512008BBB69 /* SwipeHelper.swift */,
-				B33DBCFC2A494020008BBB69 /* TopTaps.swift */,
-				B3A7E7792A3F5D9B00F0CD11 /* ViewExt.swift */,
+				B3C30F4A2A9F0EE20086B3FE /* ColorsUtil.swift */,
 				B3C30F522A9F1C4B0086B3FE /* FileUtils.swift */,
 			);
 			path = Utils;
@@ -998,6 +1008,7 @@
 				B33DBCED2A48EDB3008BBB69 /* WarehouseCard.swift */,
 				B39FAA062A4CE579004773AA /* ProductSoldView.swift */,
 				B314F4CC2A4DD720009856E3 /* UserCircle.swift */,
+				B3D8E51A2A9FBB8600DC5049 /* ReportCard.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -1036,6 +1047,7 @@
 				B33DBCFE2A494375008BBB69 /* ViewModels */,
 				B390EB6F2A48C30B0058D06B /* StoreCategories.swift */,
 				B390EB722A48C31E0058D06B /* CreateCategory.swift */,
+				B3FACA662AA0203200EB55F6 /* EditCategory.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1043,6 +1055,8 @@
 		B3A7C8C52A285C1E00D6C1D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B3D8E52C2A9FF99000DC5049 /* Plans */,
+				B3D8E5292A9FF57800DC5049 /* Intro */,
 				B314F4D12A4DE6F9009856E3 /* AddOrder */,
 				B36923B02A41C7A300709112 /* Auth */,
 				B36D8C6E2A40946F00A8C555 /* Cards */,
@@ -1053,7 +1067,7 @@
 				B3C30F4C2A9F14460086B3FE /* Dialogs */,
 				B3DFDC1B2A44B2FD00037858 /* Employees */,
 				B3DFDC1C2A44B30300037858 /* Expanses */,
-				B36923BF2A41D5CD00709112 /* HelperViews */,
+				B36923BF2A41D5CD00709112 /* Components */,
 				B36D8C512A4086A100A8C555 /* Home */,
 				B36923C92A41EC7500709112 /* Order */,
 				B334038D2A470D20008CB1D8 /* PDFs */,
@@ -1127,6 +1141,7 @@
 				B3A7C8F72A287CBE00D6C1D2 /* StoresDao.swift */,
 				B36923B92A41CEB900709112 /* TipDao.swift */,
 				B3A7C8F52A287CB800D6C1D2 /* UserDao.swift */,
+				B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */,
 			);
 			path = Dao;
 			sourceTree = "<group>";
@@ -1146,6 +1161,71 @@
 				B36D89CC2A9F2B8000948FF8 /* SalesExcel.swift */,
 			);
 			path = Excel;
+			sourceTree = "<group>";
+		};
+		B3D8E5152A9FAF3C00DC5049 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B314F4E92A4EB7EA009856E3 /* FloatingActionButton.swift */,
+				B314F4E72A4EB6CE009856E3 /* FloatingButton.swift */,
+				B33DBD032A496472008BBB69 /* FullScreenImageView.swift */,
+				B3DFDC312A453B2300037858 /* NonDismiss.swift */,
+				B33403982A473DFE008CB1D8 /* SlideNetworkView.swift */,
+				B346871A2A3FBE0A00FFFA1E /* BottomSheet.swift */,
+				B30CF0CB2A52A66C00245955 /* CheckBoxView.swift */,
+				B3DFDC2A2A45133D00037858 /* ChipView.swift */,
+				B3A7E77B2A3F5FB700F0CD11 /* CustomButton.swift */,
+				B3EF61672A43B6CD007930ED /* PullToRefresh.swift */,
+				B3C30F482A9EECA40086B3FE /* PushNotificationManager.swift */,
+				B33DBD0B2A4A09D9008BBB69 /* SearchBar.swift */,
+				B3A7E7792A3F5D9B00F0CD11 /* ViewExt.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B3D8E5162A9FAF4100DC5049 /* Pdfs */ = {
+			isa = PBXGroup;
+			children = (
+				B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */,
+			);
+			path = Pdfs;
+			sourceTree = "<group>";
+		};
+		B3D8E51E2A9FBE1400DC5049 /* ModelExts */ = {
+			isa = PBXGroup;
+			children = (
+				B3A7C8FE2A287D1A00D6C1D2 /* DateExtenstions.swift */,
+				B3A7C8F22A28799400D6C1D2 /* StringExtenstions.swift */,
+				B3D8E51F2A9FBE2800DC5049 /* OrderListExt.swift */,
+				B3D8E5242A9FCA5400DC5049 /* ExpansesExt.swift */,
+			);
+			path = ModelExts;
+			sourceTree = "<group>";
+		};
+		B3D8E5262A9FE2D200DC5049 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				B3275F422A53D86100F4F935 /* DownloadManager.swift */,
+				B33DBD362A4A5531008BBB69 /* Contact.swift */,
+				B3DFDC1D2A44EB5100037858 /* Copying.swift */,
+				B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		B3D8E5292A9FF57800DC5049 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Intro;
+			sourceTree = "<group>";
+		};
+		B3D8E52C2A9FF99000DC5049 /* Plans */ = {
+			isa = PBXGroup;
+			children = (
+				B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */,
+			);
+			path = Plans;
 			sourceTree = "<group>";
 		};
 		B3DFDC1B2A44B2FD00037858 /* Employees */ = {
@@ -1219,6 +1299,7 @@
 				B31CFA5B2A2853AF00CBA01C /* Sources */,
 				B31CFA5C2A2853AF00CBA01C /* Frameworks */,
 				B31CFA5D2A2853AF00CBA01C /* Resources */,
+				B38731CB2AA014FE00C606B1 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1364,6 +1445,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B38731CB2AA014FE00C606B1 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1392,6 +1496,7 @@
 				B30115CD2A56F11000A7F701 /* StoreShipping.swift in Sources */,
 				B30CF0CA2A52945100245955 /* CourierFeesViewModel.swift in Sources */,
 				B30CF0A72A51F62F00245955 /* ProductInfoView.swift in Sources */,
+				B3D8E52B2A9FF6F600DC5049 /* ChoosePlanCard.swift in Sources */,
 				B3EF61822A43FE75007930ED /* CategoryDao.swift in Sources */,
 				B33DBD282A4A4426008BBB69 /* StoreExpanses.swift in Sources */,
 				B36D8C702A40948100A8C555 /* OrderCard.swift in Sources */,
@@ -1438,6 +1543,7 @@
 				B3977F8C2A40A03200927558 /* OrderFragmentsViewModel.swift in Sources */,
 				B36923CB2A41EC8700709112 /* OrderDetails.swift in Sources */,
 				B3A7C8ED2A28708600D6C1D2 /* LoginViewModel.swift in Sources */,
+				B3D8E51B2A9FBB8600DC5049 /* ReportCard.swift in Sources */,
 				B30CF0BC2A51FBCD00245955 /* ProductVisibiltyViewModel.swift in Sources */,
 				B33DBD2F2A4A45BF008BBB69 /* StoreExpansesViewModel.swift in Sources */,
 				B30CF0C82A52944800245955 /* CourierFees.swift in Sources */,
@@ -1457,7 +1563,9 @@
 				B3EF617B2A43FB93007930ED /* StoreProducts.swift in Sources */,
 				B36D8C682A408E1300A8C555 /* Updates.swift in Sources */,
 				B30CF0B82A51FBC400245955 /* ProductStocksViewModel.swift in Sources */,
+				B3D8E5202A9FBE2800DC5049 /* OrderListExt.swift in Sources */,
 				B339709E2A45FB5500E44FA2 /* StoreAllOrders.swift in Sources */,
+				B3D8E52E2A9FF99D00DC5049 /* AppPlans.swift in Sources */,
 				B36923A72A41C28600709112 /* ChangePhoneView.swift in Sources */,
 				B31AE3FF2A413EF0003B7867 /* ReadyViewModel.swift in Sources */,
 				B3A7C8F62A287CB800D6C1D2 /* UserDao.swift in Sources */,
@@ -1469,6 +1577,7 @@
 				B33970A02A45FB5E00E44FA2 /* StoreDeletedOrders.swift in Sources */,
 				B30CF0AF2A51F80700245955 /* ProductStock.swift in Sources */,
 				B3EF61802A43FBE7007930ED /* CategoryTab.swift in Sources */,
+				B3FACA692AA0242000EB55F6 /* EditCategoryViewModel.swift in Sources */,
 				B3EF61622A43AEE0007930ED /* Expanses.swift in Sources */,
 				B30CF0C42A5290FE00245955 /* CourierEdit.swift in Sources */,
 				B390EB622A4860E80058D06B /* StoreCommunications.swift in Sources */,
@@ -1491,6 +1600,7 @@
 				B33DBCFB2A48FE38008BBB69 /* AlmostOutViewModel.swift in Sources */,
 				B3A7C8FF2A287D1A00D6C1D2 /* DateExtenstions.swift in Sources */,
 				B3A7C8F32A28799400D6C1D2 /* StringExtenstions.swift in Sources */,
+				B3FACA672AA0203200EB55F6 /* EditCategory.swift in Sources */,
 				B334038C2A470698008CB1D8 /* ClientOrdersViewModel.swift in Sources */,
 				B3A7C8EF2A28708D00D6C1D2 /* CreateAccountViewModel.swift in Sources */,
 				B33DBD022A495150008BBB69 /* StoreOptionsViewModel.swift in Sources */,
@@ -1520,6 +1630,7 @@
 				B36923BA2A41CEB900709112 /* TipDao.swift in Sources */,
 				B30CF0C62A5291CF00245955 /* CourierEditViewModel.swift in Sources */,
 				B30CF0B62A51FBC300245955 /* ProductPriceViewModel.swift in Sources */,
+				B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */,
 				B36D8C612A40878C00A8C555 /* ReadyOrdersFragment.swift in Sources */,
 				B33970AB2A461F8700E44FA2 /* EmployeeCard.swift in Sources */,
 				B3A7C8DB2A285FF800D6C1D2 /* SubscribedPlan.swift in Sources */,
@@ -1535,6 +1646,7 @@
 				B33970992A45E8D500E44FA2 /* UpdateCard.swift in Sources */,
 				B3A7C8FA2A287CC600D6C1D2 /* OrdersDao.swift in Sources */,
 				B31AE4032A413F09003B7867 /* ConfirmedViewModel.swift in Sources */,
+				B3D8E51D2A9FBD3E00DC5049 /* StoreReport.swift in Sources */,
 				B36923BE2A41D39200709112 /* GovStaticsDao.swift in Sources */,
 				B33DBD002A494381008BBB69 /* CreateCateogryViewModel.swift in Sources */,
 				B3EF617E2A43FBB8007930ED /* StoreProductsViewModel.swift in Sources */,
@@ -1542,6 +1654,7 @@
 				B3EF61582A434ADE007930ED /* UserOrders.swift in Sources */,
 				B390EB562A47D4280058D06B /* NavigationText.swift in Sources */,
 				B314F4D32A4DE718009856E3 /* AddToCart.swift in Sources */,
+				B3D8E5252A9FCA5400DC5049 /* ExpansesExt.swift in Sources */,
 				B314F4D52A4DE71E009856E3 /* Cart.swift in Sources */,
 				B3275F432A53D86100F4F935 /* DownloadManager.swift in Sources */,
 				B314F4CB2A4DD42D009856E3 /* UserHomeViewModel.swift in Sources */,
@@ -1549,6 +1662,7 @@
 				B314F4DA2A4DE766009856E3 /* CartManager.swift in Sources */,
 				B3EF61602A43AE40007930ED /* Client.swift in Sources */,
 				B346871B2A3FBE0A00FFFA1E /* BottomSheet.swift in Sources */,
+				B3D8E5302A9FFA2200DC5049 /* PlanDao.swift in Sources */,
 				B3EF61892A440E40007930ED /* StoreCouriersViewModel.swift in Sources */,
 				B3A7C8DF2A28600800D6C1D2 /* WhatsappPojo.swift in Sources */,
 				B33970A32A45FB7100E44FA2 /* StoreAllOrderViewModel.swift in Sources */,
@@ -1717,7 +1831,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -1731,12 +1846,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1754,8 +1869,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -1769,12 +1885,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1796,7 +1912,7 @@
 				B31CFA712A2853B000CBA01C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B31CFA722A2853B000CBA01C /* Build configuration list for PBXNativeTarget "Vondera" */ = {
 			isa = XCConfigurationList;
@@ -1805,7 +1921,7 @@
 				B31CFA742A2853B000CBA01C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

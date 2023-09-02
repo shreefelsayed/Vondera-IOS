@@ -14,7 +14,7 @@ struct LoadingScreen: View {
         if loggedIn {
             UserHome()
         } else {
-            ProgressView()
+            SplashScreen()
                 .onAppear {
                     Task {
                         do {
@@ -26,6 +26,26 @@ struct LoadingScreen: View {
                 }
         }
         
+    }
+}
+
+struct SplashScreen : View {
+    var body: some View {
+        ZStack {
+            VStack (alignment: .center) {
+                Spacer()
+                
+                Image("logo_horz")
+                    .resizable()
+                    .scaledToFit()
+                
+                Spacer()
+                ProgressView()
+                Spacer().frame(height: 48)
+            }
+            .padding()
+        }
+        .ignoresSafeArea()
     }
 }
 

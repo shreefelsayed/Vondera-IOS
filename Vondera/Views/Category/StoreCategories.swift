@@ -14,6 +14,7 @@ struct StoreCategories: View {
     @ObservedObject var viewModel:StoreCategoriesViewModel
     @State private var draggingIndex: Int?
     @State var draggedItem : Category?
+    @State var editCategory:Category?
     
     init(store: Store) {
         self.store = store
@@ -41,7 +42,7 @@ struct StoreCategories: View {
                             }
                         }))
                         .mySwipeAction(color: .blue, icon: "pencil" ) { // custom color + icon
-                            print("Show Edit dialog")
+                            self.editCategory = item
                         }
                     }
                 }
@@ -58,6 +59,17 @@ struct StoreCategories: View {
                 }
             }
         }
+        
+        .sheet(item: $editCategory, onDismiss: {
+            Task {
+                await viewModel.getData()
+            }
+        }, content: { cat in
+            NavigationView {
+                EditCategory(storeId: store.ownerId, category: cat)
+            }
+        })
+        
         .overlay(alignment: .center, content: {
             EmptyMessageView(msg: "No categories were added to your store yet !")
                 .isHidden(!viewModel.items.isEmpty)

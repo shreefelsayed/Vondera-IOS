@@ -194,6 +194,8 @@ struct OrderDetails: View {
                     
                 }
             }
+            .padding()
+            
             BottomSheet(isShowing: $contactSheet, content: {
                 AnyView(ContactDialog(phone: viewModel.order?.phone ?? "", toggle: $contactSheet))
             }())
@@ -233,7 +235,7 @@ struct OrderDetails: View {
                        type: .regular,
                        title: viewModel.msg)
         }
-        .padding()
+        
         .navigationTitle("#\(viewModel.orderId)")
         
     }

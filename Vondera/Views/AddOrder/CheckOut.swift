@@ -152,6 +152,9 @@ class CheckOutViewModel: ObservableObject {
             
             self.isSaving = false
             self.shouldDismissView = true
+            
+            // Show rating store dialog
+            AppStoreHelper().showRating()
         }
     }
     

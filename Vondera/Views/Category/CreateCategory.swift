@@ -11,7 +11,9 @@ import LoadingButton
 
 struct CreateCategory: View {
     var storeId:String
+    
     @Binding var listCategories:[Category]
+    
     @ObservedObject var viewModel:CreateCategoryViewModel
     @Environment(\.presentationMode) private var presentationMode
     
@@ -68,6 +70,7 @@ struct CreateCategory: View {
                     Text("Create Category")
                         .foregroundColor(.white)
                 }
+                .disabled(viewModel.isSaving)
             }
             
         }

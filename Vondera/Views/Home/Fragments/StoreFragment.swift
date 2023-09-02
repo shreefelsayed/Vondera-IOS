@@ -97,17 +97,17 @@ struct StoreFragment: View {
                             NavigationLink("Change Phone", destination: ChangePhoneView())
                                 .bold()
                             
-                            NavigationLink("Connect to social media", destination: ConnectSocialView())
-                                .bold()
+                            /*NavigationLink("Connect to social media", destination: ConnectSocialView())
+                                .bold()*/
                         }
                         
                         Section("App Settings") {
                             NavigationLink("Notification Settings", destination: NotificationsSettingsView())
                                 .bold()
                             
-                            NavigationLink("App Language", destination: Text("App Language"))
+                            /*NavigationLink("App Language", destination: Text("App Language"))
                                 .bold()
-                            
+                                .isHidden(true)*/
                             
                             NavigationLink("About app", destination: AboutAppView())
                                 .bold()
@@ -130,10 +130,7 @@ struct StoreFragment: View {
                     BottomSheet(isShowing: $showContactDialog, content: {
                         AnyView(ContactDialog(phone:customerServiceNumber, toggle: $showContactDialog))
                     }())
-                    .padding()
                 }
-                
-                
             }
         }
         .onAppear {
@@ -142,8 +139,6 @@ struct StoreFragment: View {
             }
         }
         .navigationTitle("Settings")
-        
-       
         
     }
 }

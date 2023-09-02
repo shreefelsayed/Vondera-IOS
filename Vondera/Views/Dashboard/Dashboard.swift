@@ -1,76 +1,46 @@
-//
-//  Dashboard.swift
-//  Vondera
-//
-//  Created by Shreif El Sayed on 23/06/2023.
-//
-
 import SwiftUI
 
 struct Dashboard: View {
     var store:Store
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading) {
-                NavigationText(view: AnyView(EmptyView()), label: "Reports", divider: false)
-
-                
-                VStack(alignment: .leading) {
-                    Text("Store Users")
-                        .font(.title2)
-                        .bold()
-                        .padding(.vertical, 6)
-                    
-                    NavigationText(view: AnyView(StoreEmployees(storeId: store.ownerId)), label: "Employees")
-
-                    
-                    NavigationText(view: AnyView(StoreCouriers(storeId: store.ownerId)), label: "Couriers")
-
-                    
-                    NavigationText(view: AnyView(ClientsView(store: store)), label: "Shoppers", divider: false)
-
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Products")
-                        .font(.title2)
-                        .bold()
-                        .padding(.vertical, 6)
-                    
-                    NavigationText(view: AnyView(AddProductView(storeId: store.ownerId)), label: "New Product")
-                    
-                    NavigationText(view: AnyView(StoreProducts(storeId: store.ownerId)), label: "Store Product")
-                    
-                    NavigationText(view: AnyView(WarehouseView(storeId: store.ownerId)), label: "Warehouse", divider: false)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Others")
-                        .font(.title2)
-                        .bold()
-                        .padding(.vertical, 6)
-                    
-                    NavigationText(view: AnyView(StoreAllOrders(storeId: store.ownerId)), label: "All Orders")
-                    
-                    NavigationText(view: AnyView(StoreDeletedOrders(storeId: store.ownerId)), label: "Deleted Orders")
-                    
-                    NavigationText(view: AnyView(EmptyView()), label: "Order Complaints", divider: false)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Tools")
-                        .font(.title2)
-                        .bold()
-                        .padding(.vertical, 6)
-                    
-                    NavigationText(view: AnyView(StoreExpanses(storeId: store.ownerId)), label: "Expanses")
-                    NavigationText(view: AnyView(EmptyView()), label: "Create Orders Sheet", divider: false)
-                    
-                }
-                
-                
+        List() {
+            Section("") {
+                NavigationLink("Reports", destination: StoreReport(storeId: store.ownerId))
             }
-            .padding()
+            
+            Section("Store Users") {
+                NavigationLink("Employees", destination: StoreEmployees(storeId: store.ownerId))
+                NavigationLink("Couriers", destination: StoreCouriers(storeId: store.ownerId))
+                NavigationLink("Shoppers", destination: ClientsView(store: store))
+            }
+            
+            
+            Section("Products") {
+                NavigationLink("New Product") {
+                    AddProductView(storeId: store.ownerId)
+                }
+                
+                NavigationLink("Categories", destination: StoreCategories(store: store))
+                
+                NavigationLink("Store Product") {
+                    StoreProducts(storeId: store.ownerId)
+                }
+                NavigationLink("Warehouse") {
+                    WarehouseView(storeId: store.ownerId)
+                }
+            }
+            
+            
+            Section("Others") {
+                NavigationLink("All Orders", destination: StoreAllOrders(storeId: store.ownerId))
+                NavigationLink("Deleted Orders", destination: StoreDeletedOrders(storeId: store.ownerId))
+                //NavigationLink("Order Complaints", destination: EmptyView())
+            }
+            
+            Section("Tools") {
+                NavigationLink("Expanses", destination: StoreExpanses(storeId: store.ownerId))
+                //NavigationLink("Create Orders Sheet", destination: EmptyView())
+            }
         }
         .navigationTitle("Dashboard 💼")
     }

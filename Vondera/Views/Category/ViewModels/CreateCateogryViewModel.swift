@@ -16,6 +16,7 @@ class CreateCategoryViewModel : NSObject, ObservableObject, PHPickerViewControll
     var categoryDao:CategoryDao
     @Published var selectedImage: UIImage?
     @Published var name = ""
+    
     @Published var category:Category?
 
     @Published var msg = ""

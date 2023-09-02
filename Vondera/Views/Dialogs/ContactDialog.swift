@@ -86,7 +86,8 @@ struct ContactDialog: View {
                 }
             }
         }
-        .padding(.vertical, 48)
+        .padding(.vertical, 26)
+        .padding(.horizontal, 16)
     }
 }
 

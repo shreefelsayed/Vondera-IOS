@@ -143,7 +143,7 @@ struct Cart: View {
                     }
                     .padding()
                     .ignoresSafeArea()
-                    .background(Color.white)
+                    .background(Color.background)
                 }
             }
             

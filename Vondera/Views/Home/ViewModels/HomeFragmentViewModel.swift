@@ -70,7 +70,7 @@ class HomeFragmentViewModel : ObservableObject {
         
         do {
             var userDoc = try await usersDao.getUser(uId: user!.id)
-            var store = try await storesDao.getStore(uId: user!.storeId)
+            let store = try await storesDao.getStore(uId: user!.storeId)
             
             userDoc?.store = store
             _ = await LocalInfo().saveUser(user: userDoc!)

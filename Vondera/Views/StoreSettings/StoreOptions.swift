@@ -96,7 +96,7 @@ struct StoreOptions: View {
                             Spacer()
                             
                             TextField("Quantity", text: $viewModel.indec)
-                                .frame(width: 100, height: 50)
+                                .frame(width: 60, height: 50)
                                 .roundedTextFieldStyle()
                                 .keyboardType(.numberPad)
                                 .multilineTextAlignment(.center)
@@ -127,7 +127,7 @@ struct StoreOptions: View {
                         .font(.caption)
                     
                     Toggle("Live E-commerce website", isOn: $viewModel.website)
-                        .disabled(viewModel.store.subscribedPlan?.website ?? true)
+                        .disabled(!(viewModel.store.subscribedPlan?.website ?? false))
 
                     Text("If this feature is supported in your package, you can enable your website or disable it from here")
                         .font(.caption)

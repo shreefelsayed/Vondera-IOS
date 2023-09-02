@@ -20,9 +20,17 @@ class AuthManger {
     }
     
     func logOut() async {
+        /*
+         mail : erey@fools.com
+         Password : ##erey322003##
+         */
         do {
             if mAuth.currentUser != nil {
-                try! await usersDao.update(id: mAuth.currentUser!.uid, hash: ["online": false])
+                do {
+                    try await usersDao.update(id: mAuth.currentUser!.uid, hash: ["online": false])
+                } catch {
+                    
+                }
             }
 
             print("Logging out")
@@ -121,6 +129,7 @@ class AuthManger {
         
         guard uId != nil else {
             print("No user id not found")
+            await logOut()
             return false
         }
         
@@ -129,6 +138,7 @@ class AuthManger {
         
         guard user != nil else {
             print("Failed to get user")
+            await logOut()
             return false
         }
         
@@ -145,23 +155,24 @@ class AuthManger {
         
         guard store != nil else {
             print("Failed to get store")
+            await logOut()
             return false
         }
         
         user?.store = store
         
         let saved = await LocalInfo().saveUser(user: user!)
-        
         guard saved else {
             print("Failed to save user")
+            await logOut()
             return false
         }
         
-        try! await usersDao.update(id: user!.id, hash: ["online": true])
+        try! await usersDao.update(id: user!.id, hash: ["online": true, "ios": true])
         
         // Assign Notifications
         let pushManager = PushNotificationManager(userID: user!.id)
-        pushManager.registerForPushNotifications()
+        await pushManager.registerForPushNotifications()
         
         return true
     }

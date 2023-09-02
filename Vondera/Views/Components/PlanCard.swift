@@ -18,14 +18,19 @@ struct PlanCard: View {
                 
                 Spacer()
                 
-                Text("Change your plan")
+                NavigationLink("Change your plan") {
+                    AppPlans()
+                }
+                .buttonStyle(PlainButtonStyle())
+                .foregroundStyle(Color.accentColor)
             }
             
             ProgressView(value: Float(((store.subscribedPlan?.currentOrders ?? 0) / (store.subscribedPlan?.maxOrders ?? 0))))
+                .accentColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                 .frame(maxWidth: .infinity)
                 .progressViewStyle(LinearProgressViewStyle())
                 .padding(.vertical, 4)
-                .accentColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                
             
             HStack {
                 Text("Monthly Limit")

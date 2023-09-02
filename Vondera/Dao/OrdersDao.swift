@@ -42,6 +42,22 @@ class OrdersDao {
         
     }
     
+    func getOrdersByAddDate(from:Date, to:Date) async throws -> [Order] {
+        return convertToList(snapShot: try await collection
+            .order(by: "date", descending: true)
+            .whereField("date", isGreaterThanOrEqualTo: from)
+            .whereField("date", isLessThanOrEqualTo: to)
+            .getDocuments())
+    }
+    
+    func getOrdersByDeliverDate(from:Date, to:Date) async throws -> [Order] {
+        return convertToList(snapShot: try await collection
+            .order(by: "dateDelivered", descending: true)
+            .whereField("dateDelivered", isGreaterThanOrEqualTo: from)
+            .whereField("dateDelivered", isLessThanOrEqualTo: to)
+            .getDocuments())
+    }
+    
     func getClientOrders(id:String) async throws -> [Order] {
         return convertToList(snapShot: try await collection
             .whereField("phone", isEqualTo: id)

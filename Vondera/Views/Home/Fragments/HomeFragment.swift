@@ -1,10 +1,3 @@
-//
-//  HomeFragment.swift
-//  Vondera
-//
-//  Created by Shreif El Sayed on 19/06/2023.
-//
-
 import SwiftUI
 import NetworkImage
 
@@ -24,7 +17,9 @@ struct HomeFragment: View {
                 Spacer().frame(height: 20)
                 
                 VStack(alignment: .leading) {
-                    if viewModel.user != nil && !viewModel.user!.store!.finishedSteps() {
+                    
+                    // MARK : STEPS VIEW
+                    if viewModel.user != nil && !viewModel.user!.store!.finishedSteps() && viewModel.user!.accountType == "Owner" {
                         StepsView(store: viewModel.user!.store!)
                     }
                     
@@ -48,6 +43,16 @@ struct HomeFragment: View {
                         TipCard(tip: viewModel.tip!)
                         Spacer().frame(height: 20)
                     }
+                    
+                    // MARK : Buttons
+                    if viewModel.user?.accountType == "Owner" || viewModel.user?.accountType == "Admin" {
+                        
+                        //TODO : Show the Buttons
+                        
+                    } else {
+                        // TODO : Show one Button
+                    }
+                    
                     
                     // MARK : Orders count
                     if viewModel.user?.store?.ordersCountObj != nil {

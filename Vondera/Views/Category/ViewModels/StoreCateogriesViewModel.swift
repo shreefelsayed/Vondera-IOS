@@ -36,7 +36,9 @@ class StoreCategoriesViewModel : ObservableObject {
         }
     }
     
-    private func getData() async {
+    func getData() async {
+        self.items.removeAll()
+        
         DispatchQueue.main.async {
             self.listState = .loading
         }

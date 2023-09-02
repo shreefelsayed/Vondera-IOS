@@ -25,7 +25,7 @@ struct Order: Codable, Identifiable, Equatable {
     var dateDelivered: Timestamp?
     var dateAssembled: Timestamp?
     var dateConfirmed: Timestamp?
-
+    
     var courierId: String? = ""
     var addBy: String = ""
     var workedBy: String? = ""
@@ -70,7 +70,7 @@ struct Order: Codable, Identifiable, Equatable {
         self.discount = discount
         self.clientShippingFees = clientShippingFees
     }
-
+    
     var netProfitFinal: Int {
         if statue == "Failed" && (part != nil) && part == false {
             return netProfit
@@ -107,7 +107,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     var totalPrice: Int {
         if listProducts == nil {return 0}
-
+        
         var total: Int = 0
         for product in listProducts! {
             total += Int(product.price) * product.quantity
@@ -135,7 +135,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     var quantity: Int {
         if listProducts == nil {return 0}
-
+        
         var total: Int = 0
         for product in listProducts! {
             total += product.quantity
@@ -153,7 +153,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     var defaultPhoto: String {
         if listProducts == nil {return ""}
-
+        
         if listProducts!.isEmpty {
             return ""
         } else {
@@ -171,7 +171,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     var productsInfo: String {
         if listProducts == nil {return ""}
-
+        
         var str = ""
         for productOrderObject in listProducts! {
             str += productOrderObject.name
@@ -185,6 +185,19 @@ struct Order: Codable, Identifiable, Equatable {
     
     var canShippingInfoEdit: Bool {
         return statue == "Pending" || statue == "Confirmed" || statue == "Assembled"
+    }
+    
+    func getSellingPrice() -> Double {
+        if statue == "Failed" && !(part ?? false) {
+            return 0
+        }
+        
+        var totalMoney: Double = 0
+        listProducts!.forEach { product in
+            totalMoney += product.price * Double(product.quantity)
+        }
+        
+        return (totalMoney - Double((discount ?? 0)))
     }
     
     func canEditProducts(accountType: String) -> Bool {
@@ -221,8 +234,8 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     static func ==(lhs: Order, rhs: Order) -> Bool {
-            return lhs.id == rhs.id
-        }
+        return lhs.id == rhs.id
+    }
 }
 
 extension Order {
@@ -245,7 +258,7 @@ extension Order {
         str = str + "Products. \(self.productsInfo) \n"
         if(self.deposit != nil && self.deposit! > 0) {str = str + "Deposit. \(self.deposit ?? 0) \n"}
         str = str + "COD. \(self.COD) LE"
-
+        
         
         return str
     }

@@ -8,38 +8,35 @@
 import SwiftUI
 
 struct AboutAppView: View {
-    var body: some View {
-        ZStack (alignment: .bottom) {
-            VStack(alignment: .center) {
-                Spacer()
-                
-                Image("vondera_logo")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.accentColor)
-
-                    
-                Spacer()
+    var appVersion: String {
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                return version
             }
-            .frame(height: 300)
-            .padding()
-            
-            VStack(alignment: .center) {
-                Image("armjld_logo")
-                    .resizable()
-                    .frame(height: 60)
-                    .foregroundColor(.white)
-            }
-            .frame(maxWidth: .infinity)
-            .background(
-                Rectangle()
-                    .foregroundColor(.accentColor)
-                    .cornerRadius(25, corners: [.topLeft, .topRight])
-            )
-            .offset(y: -20)
-            
+            return "N/A"
         }
-        
+    
+    var body: some View {
+        List() {
+            Section("") {
+                HStack {
+                    Text("App Version")
+                    
+                    Spacer()
+                    
+                    Text("\(appVersion)")
+                }
+            }
+            
+            Section("") {
+                HStack {
+                    Text("Created By")
+                    
+                    Spacer()
+                    
+                    Text("Armjld Co.")
+                }
+            }
+        }
         .navigationTitle("About app")
     }
 }

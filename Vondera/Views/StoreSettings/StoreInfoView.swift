@@ -1,77 +1,67 @@
-//
-//  StoreInfoView.swift
-//  Vondera
-//
-//  Created by Shreif El Sayed on 20/06/2023.
-//
-
 import SwiftUI
 
 struct StoreInfoView: View {
     var store:Store
+    @State private var deleteStoreAlert = false
+    @State private var deleting = false
+
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading) {
-                VStack(alignment: .leading) {
-                    Text("Main Info")
-                        .font(.title2)
-                        .bold()
-                    
-                    Spacer().frame(height: 12)
-                    
-                    NavigationText(view: AnyView(StoreEditName(store: store)), label: "Name and Slogan")
-                    NavigationText(view: AnyView(StoreLogo(store: store)), label: "Logo")
-                    NavigationText(view: AnyView(StoreCommunications(store: store)), label: "Communications")
-                    NavigationText(view: AnyView(StoreSocial(store: store)), label: "Social Presence")
-                    NavigationText(view: AnyView(StoreOptions(store: store)), label: "Store Options", divider: false)
-                }
-                
-                Spacer().frame(height: 20)
-                
-                VStack(alignment: .leading) {
-                    Text("Products")
-                        .font(.title2)
-                        .bold()
-                    
-                    Spacer().frame(height: 12)
-                    
-                    NavigationText(view: AnyView(StoreCategories(store: store)), label: "Categories")
-                    NavigationText(view: AnyView(StoreProducts(storeId: store.ownerId)), label: "Products", divider: false)
-                }
-                
-                Spacer().frame(height: 20)
-                
-                VStack(alignment: .leading) {
-                    Text("Shipping Info")
-                        .font(.title2)
-                        .bold()
-                    
-                    Spacer().frame(height: 12)
-                    
-                    NavigationText(view: AnyView(StoreShipping(storeId: store.ownerId)), label: "Areas and shipping fees")
-                    
-                    NavigationText(view: AnyView(EmptyView()), label: "Receipt custom message", divider: false)
-                }
-                
-                Spacer().frame(height: 20)
-                
-                VStack(alignment: .leading) {
-                    Text("Api Settings")
-                        .font(.title2)
-                        .bold()
-                    
-                    Spacer().frame(height: 12)
-                    
-                    NavigationText(view: AnyView(EmptyView()), label: "Connect to shopify store")
-                    NavigationText(view: AnyView(EmptyView()), label: "Maytapi whatsapp info")
-                    NavigationText(view: AnyView(EmptyView()), label: "Events webhooks", divider: false)
-                }
-
-
+        List() {
+            Section("Main Info") {
+                NavigationLink("Name and Slogan", destination: StoreEditName(store: store))
+                NavigationLink("Logo", destination: StoreLogo(store: store))
+                NavigationLink("Communications", destination: StoreCommunications(store: store))
+                NavigationLink("Social Presence", destination: StoreSocial(store: store))
+                NavigationLink("Store Options", destination: StoreOptions(store: store))
             }
+            
+            Section("Shipping Info") {
+                NavigationLink("Areas and shipping fees", destination: StoreShipping(storeId: store.ownerId))
+                //NavigationLink("Receipt custom message", destination: StoreProducts(storeId: store.ownerId))
+            }
+            
+            /*Section("Api Settings") {
+             NavigationText(view: AnyView(EmptyView()), label: "Connect to shopify store")
+             NavigationText(view: AnyView(EmptyView()), label: "Maytapi whatsapp info")
+             NavigationText(view: AnyView(EmptyView()), label: "Events webhooks", divider: false)
+             }*/
+            
+            //TODO : Create Delete Store Button With Alert
+            
+            Button {
+                
+            } label: {
+                Text("Delete my store")
+                    .foregroundStyle(.red)
+                    .disabled(deleting)
+                    .onTapGesture {
+                        deleteStoreAlert.toggle()
+                    }
+            }
+            
         }
-        .padding()
+        .alert(isPresented: $deleteStoreAlert) {
+            Alert(
+                title: Text("Delete your store"),
+                message: Text("Are you sure you want to delete your store ? this will delete all of your data, we can't recover them later."),
+                
+                primaryButton: .destructive(
+                    Text("Delete").foregroundColor(.red), action: {
+                    deleteStore()
+                }),
+                secondaryButton: .cancel()
+            )
+        }
         .navigationTitle("Store Info")
+    }
+    
+    func deleteStore() {
+        Task {
+            deleting = true
+            try! await StoresDao().deleteStore(id:store.ownerId)
+            
+            await AuthManger().logOut()
+        }
     }
 }
 

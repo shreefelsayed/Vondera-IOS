@@ -33,8 +33,9 @@ class SalesExcel {
               
         // MARK : Create file and save
         let fileid = book.save("\(name).xlsx")
-        let url = URL(string: fileid)
-        FileUtils().shareFile(url: url!)
+        print("File path \(fileid)")
+        let url = URL(fileURLWithPath: fileid)
+        FileUtils().shareFile(url: url)
     }
     
     func createHeader(_ items:[String]) {

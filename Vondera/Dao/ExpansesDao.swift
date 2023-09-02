@@ -28,7 +28,7 @@ class ExpansesDao {
         return convertToList(snapShot: docs)
     }
     
-    func getBetweenDate(from:Timestamp, to:Timestamp) async throws -> [Expense] {
+    func getBetweenDate(from:Date, to:Date) async throws -> [Expense] {
         return convertToList(snapShot: try await collection
             .order(by: "date", descending: true)
             .whereField("date", isGreaterThanOrEqualTo: from)

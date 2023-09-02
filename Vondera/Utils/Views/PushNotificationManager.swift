@@ -12,7 +12,7 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         super.init()
     }
     
-    func registerForPushNotifications() {
+    func registerForPushNotifications() async {
         // For iOS 10 display notification (sent via APNS)
         UNUserNotificationCenter.current().delegate = self
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -22,19 +22,20 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
         // For iOS 10 data message (sent via FCM)
         Messaging.messaging().delegate = self
         
-        UIApplication.shared.registerForRemoteNotifications()
-        updateFirestorePushTokenIfNeeded()
+        await UIApplication.shared.registerForRemoteNotifications()
+        await updateFirestorePushTokenIfNeeded()
     }
-    func updateFirestorePushTokenIfNeeded() {
+    
+    func updateFirestorePushTokenIfNeeded() async {
         if let token = Messaging.messaging().fcmToken {
-            let usersRef = Firestore.firestore().collection("users").document(userID)
-            usersRef.setData(["device_token": token], merge: true)
+            try! await UsersDao().update(id: userID, hash: ["device_token": token])
+            print("Token should change \(token)")
         }
     }
     
     
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        updateFirestorePushTokenIfNeeded()
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) async {
+        await updateFirestorePushTokenIfNeeded()
     }
     
     

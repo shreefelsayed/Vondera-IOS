@@ -28,26 +28,26 @@ struct SubscribtionsView: View {
                         Spacer()
                         
                         NavigationLink("Upgrade your plan") {
-                            //TODO : Open the plans activity
+                            AppPlans()
                         }
                     }
                 } else {
                     VStack(alignment: .center) {
                         HStack {
                             NavigationLink("Renew Now") {
-                                //TODO : Open the plans activity
+                                AppPlans()
                             }
                             
                             Spacer()
                             
                             NavigationLink("Upgrade your plan") {
-                                //TODO : Open the plans activity
+                                AppPlans()
                             }
                         }
                         
-                        Text("Unsubscribe")
+                        /*Text("Unsubscribe")
                             .foregroundStyle(.red)
-                            .bold()
+                            .bold()*/
                     }
                 }
                 

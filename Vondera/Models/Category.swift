@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Category: Codable, Identifiable, Equatable {
+struct Category: Codable, Identifiable, Equatable, Hashable {
     var id: String = ""
     var name: String = ""
     var url: String = ""
