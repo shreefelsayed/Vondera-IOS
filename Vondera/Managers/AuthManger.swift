@@ -58,6 +58,7 @@ class AuthManger {
     func createStoreOwnerUser(userData: inout UserData, store:Store) async -> Bool {
         do {
             let fbUserCreated = await createFirebaseUserAccount(email: userData.email, pass: userData.pass)
+            
             guard fbUserCreated != nil else {
                 return false
             }

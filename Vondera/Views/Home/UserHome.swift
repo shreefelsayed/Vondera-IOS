@@ -95,12 +95,10 @@ struct UserHome: View {
     
     func online() {
         Task { await viewModel.userOnline() }
-        print("Visible")
     }
     
     func offline() {
         Task { await viewModel.userOffline() }
-        print("Background")
     }
 }
 

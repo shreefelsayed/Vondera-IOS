@@ -28,6 +28,12 @@ extension String {
         return emailPredicate.evaluate(with: self)
     }
     
+    var isValidName : Bool {
+            let nameRegex = "^[a-zA-Z]+$"
+            let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegex)
+            return nameTest.evaluate(with: self)
+        }
+    
     var isValidPassword:Bool {
         return self.count >= 6
     }

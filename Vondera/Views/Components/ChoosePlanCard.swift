@@ -53,7 +53,7 @@ struct ChoosePlanCard: View {
             
         }
         .padding()
-        .background(Color.white)
+        .background(Color.background)
         .cornerRadius(10)
         .shadow(radius: 5)
     }

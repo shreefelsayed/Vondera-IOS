@@ -156,6 +156,7 @@
 		B36D8C6D2A408F6600A8C555 /* ProductOrderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36D8C6C2A408F6600A8C555 /* ProductOrderObject.swift */; };
 		B36D8C702A40948100A8C555 /* OrderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36D8C6F2A40948100A8C555 /* OrderCard.swift */; };
 		B371077D2A47917B002FF1CB /* ComplaintsDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B371077C2A47917B002FF1CB /* ComplaintsDao.swift */; };
+		B38D9EA02AA4767E00A17C04 /* FloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D9E9F2AA4767E00A17C04 /* FloatingTextField.swift */; };
 		B390EB522A4792140058D06B /* Complaint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EB512A4792140058D06B /* Complaint.swift */; };
 		B390EB542A47A1540058D06B /* ExpansesDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EB532A47A1540058D06B /* ExpansesDao.swift */; };
 		B390EB562A47D4280058D06B /* NavigationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EB552A47D4280058D06B /* NavigationText.swift */; };
@@ -421,6 +422,7 @@
 		B36D8C6C2A408F6600A8C555 /* ProductOrderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductOrderObject.swift; sourceTree = "<group>"; };
 		B36D8C6F2A40948100A8C555 /* OrderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCard.swift; sourceTree = "<group>"; };
 		B371077C2A47917B002FF1CB /* ComplaintsDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplaintsDao.swift; sourceTree = "<group>"; };
+		B38D9E9F2AA4767E00A17C04 /* FloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingTextField.swift; sourceTree = "<group>"; };
 		B390EB512A4792140058D06B /* Complaint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complaint.swift; sourceTree = "<group>"; };
 		B390EB532A47A1540058D06B /* ExpansesDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansesDao.swift; sourceTree = "<group>"; };
 		B390EB552A47D4280058D06B /* NavigationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationText.swift; sourceTree = "<group>"; };
@@ -680,12 +682,12 @@
 		B31CFA612A2853AF00CBA01C /* Vondera */ = {
 			isa = PBXGroup;
 			children = (
+				B31CFA682A2853B000CBA01C /* Preview Content */,
 				B3D8E5142A9F3ACB00DC5049 /* VonderaRelease.entitlements */,
 				B3A7C8F42A287CA900D6C1D2 /* Dao */,
 				B34896272A3F4E5400BD99AE /* Managers */,
 				B3A7C8C82A285C3700D6C1D2 /* Models */,
 				B3A7C8C92A285C5900D6C1D2 /* Others */,
-				B31CFA682A2853B000CBA01C /* Preview Content */,
 				B36923C22A41DC4B00709112 /* Utils */,
 				B3A7C8C52A285C1E00D6C1D2 /* Views */,
 				B3C30F472A9EEBF70086B3FE /* VonderaDebug.entitlements */,
@@ -1179,6 +1181,7 @@
 				B3C30F482A9EECA40086B3FE /* PushNotificationManager.swift */,
 				B33DBD0B2A4A09D9008BBB69 /* SearchBar.swift */,
 				B3A7E7792A3F5D9B00F0CD11 /* ViewExt.swift */,
+				B38D9E9F2AA4767E00A17C04 /* FloatingTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1590,6 +1593,7 @@
 				B33DBD332A4A5292008BBB69 /* NewCourier.swift in Sources */,
 				B30CF0C02A5288CB00245955 /* EmployeeSettings.swift in Sources */,
 				B36D8C6B2A408EBC00A8C555 /* Product.swift in Sources */,
+				B38D9EA02AA4767E00A17C04 /* FloatingTextField.swift in Sources */,
 				B33DBD352A4A52B1008BBB69 /* ProductSettings.swift in Sources */,
 				B33DBD112A4A32E7008BBB69 /* QrCodeScanner.swift in Sources */,
 				B33970B42A462D1500E44FA2 /* ClientCard.swift in Sources */,
@@ -1831,7 +1835,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -1851,7 +1855,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1871,7 +1875,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -1890,7 +1894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -109,15 +109,37 @@ struct StoreFragment: View {
                                 .bold()
                                 .isHidden(true)*/
                             
+                            Button("Privacy Policy") {
+                                let url = "https://vondera.app/policy.html"
+                                if let Url = URL(string: url) {
+                                    UIApplication.shared.open(Url)
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .bold()
+                            
+                            Button("Terms & Condtions") {
+                                let url = "https://vondera.app/terms.html"
+                                if let Url = URL(string: url) {
+                                    UIApplication.shared.open(Url)
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+
+                            .bold()
+                            
                             NavigationLink("About app", destination: AboutAppView())
                                 .bold()
                         
                             
-                            Text("Contact customer service")
-                                .bold()
-                                .onTapGesture {
-                                    showContactDialog.toggle()
-                                }
+                            Button("Contact customer service") {
+                               showContactDialog.toggle()
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .bold()
+                            
+                            
+                                 
                         }
                         
                         Button("Log Out") {

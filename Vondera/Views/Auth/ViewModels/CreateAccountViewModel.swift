@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import Combine
 
 class CreateAccountViewModel: ObservableObject {
     @Published var email = ""
+    @Published var gov:String = GovsUtil().govs.first!
     @Published var name = ""
     @Published var storeName = ""
     @Published var storeAddress = ""
@@ -23,11 +25,29 @@ class CreateAccountViewModel: ObservableObject {
     @Published var bPhone = ""
     @Published var phone = ""
     @Published var showToast = false
+    @Published var isSaving = false
+    
+    var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
+    private var shouldDismissView = false {
+        didSet {
+            viewDismissalModePublisher.send(shouldDismissView)
+        }
+    }
     
     let authManger:AuthManger
     
     init() {
         authManger = AuthManger()
+    }
+    
+    
+    func showPrevPage() {
+        if currentPage == 1 {
+            shouldDismissView = true
+            return
+        }
+        
+        currentPage -= 1
     }
     
     func showNextPage() async {
@@ -43,35 +63,42 @@ class CreateAccountViewModel: ObservableObject {
     }
     
     func createAccount() async {
+        isSaving = true
         // --> Create user Object
         var user = UserData(id: "", name: name, email: email, phone: phone, addedBy: refferCode, accountType: "Owner", pass: password)
         
         // --> Create Store Object
-        let store = Store(name: storeName, address: address, governorate: "", phone: bPhone, subscribedPlan: SubscribedPlan(), ownerId: "")
+        let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, subscribedPlan: SubscribedPlan(), ownerId: "")
         
         // --> Create a store account
         let accountCreated = await AuthManger().createStoreOwnerUser(userData: &user, store: store)
         
+        isSaving = false
+        
         if accountCreated == false {
+            print("Error Happened")
             showError(err: "Something wrong happened")
         } else {
             print("Account has been created")
-            
-            // TODO : Navigate to home screen
-        
+            self.shouldDismissView = true
         }
         
         
     }
     
     func checkSecondPage() -> Bool {
-        guard !storeName.isBlank else {
-            showError(err: "Enter your store name")
+        guard !storeName.isValidName else {
+            showError(err: "Enter a valid store name")
             return false
         }
         
         guard bPhone.isPhoneNumber else {
             showError(err: "Enter a valid bussiness phone number")
+            return false
+        }
+        
+        guard !gov.isBlank else {
+            showError(err: "Select your government")
             return false
         }
         

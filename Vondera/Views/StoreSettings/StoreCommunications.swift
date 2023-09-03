@@ -20,52 +20,47 @@ struct StoreCommunications: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center, spacing: 12) {
-                TextField("Phone Number", text: $viewModel.phone)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
+        Form {
+            Section("Contact") {
+                FloatingTextField(title: "Business phone number", text: $viewModel.phone, caption: "We will use this number to contact you for any inquaries", required: true)
+                    .keyboardType(.phonePad)
                 
-                Text("This will not appear to your customers, we just need it so we can contact you.")
-                    .font(.caption)
-                
-                Divider()
-                
-                VStack(alignment: .leading) {
-                    Text("Address")
-                        .font(.title2)
-                        .bold()
-                    
-                    TextField("Address", text: $viewModel.address, axis: .vertical)
-                        .lineLimit(5, reservesSpace: true)
-                        .textFieldStyle(.roundedBorder)
+            }
+            
+            Section("Address") {
+                Picker("Government", selection: $viewModel.gov) {
+                    ForEach(GovsUtil().govs, id: \.self) { option in
+                        Text(option)
+                    }
                 }
-               
                 
-                LoadingButton(action: {
-                    save()
-                }, isLoading: $viewModel.isSaving, style: LoadingButtonStyle(width: .infinity, cornerRadius: 16, backgroundColor: .accentColor, loadingColor: .white)) {
+                FloatingTextField(title: "Address", text: $viewModel.address, caption: "We won't share your address, we collect it for analyze perpose", required: true, multiLine: true)
+                
+            }
+        }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
                     Text("Save")
-                        .foregroundColor(.white)
+                        .bold()
+                        .onTapGesture {
+                            save()
+                        }
                 }
+            }
+            .navigationTitle("Communications")
+            .willProgress(saving: viewModel.isSaving)
+            .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
+                if shouldDismiss {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }
+            .toast(isPresenting: $viewModel.showToast){
+                AlertToast(displayMode: .banner(.slide),
+                           type: .regular,
+                           title: viewModel.msg)
             }
             
         }
-        .padding()
-        .navigationTitle("Communications")
-        .willProgress(saving: viewModel.isSaving)
-        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-            if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
-        .toast(isPresenting: $viewModel.showToast){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: viewModel.msg)
-        }
-        
-    }
     
     func save() {
         Task {

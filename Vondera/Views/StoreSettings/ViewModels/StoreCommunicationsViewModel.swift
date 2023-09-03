@@ -12,6 +12,7 @@ class StoreCommunicationsViewModel : ObservableObject {
     }
     
     @Published var showToast = false
+    @Published var gov = ""
     @Published var msg = ""
     @Published var phone = ""
     @Published var address = ""
@@ -23,6 +24,7 @@ class StoreCommunicationsViewModel : ObservableObject {
         self.store = store
         self.phone = store.phone
         self.address = store.address
+        self.gov = store.governorate
     }
     
     func updateName() async {
@@ -37,7 +39,7 @@ class StoreCommunicationsViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            try await storesDao.update(id: store.ownerId, hashMap: ["phone": phone, "address":address])
+            try await storesDao.update(id: store.ownerId, hashMap: ["phone": phone, "address":address, "governorate": gov])
             store.phone = phone
             store.address = address
 

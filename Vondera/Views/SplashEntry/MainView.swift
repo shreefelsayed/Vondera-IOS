@@ -12,6 +12,7 @@ struct LoadingScreen: View {
     @State var loggedIn = false
     var body: some View {
         if loggedIn {
+            AccountHomeScreen()
             UserHome()
         } else {
             SplashScreen()
@@ -26,6 +27,32 @@ struct LoadingScreen: View {
                 }
         }
         
+    }
+}
+
+struct AccountHomeScreen : View {
+    @State var myUser:UserData?
+    
+    var body : some View {
+        ZStack {
+            if myUser != nil {
+                if myUser!.accountType == "Owner" || myUser!.accountType == "Store Admin" ||
+                    myUser!.accountType == "Employee" ||
+                    myUser!.accountType == "Marketing" {
+                    
+                    UserHome()
+                } else if myUser!.accountType == "Sales" {
+                    
+                } else if myUser!.accountType == "Admin" {
+                    
+                }
+            }
+        }
+        .onAppear {
+            Task {
+                self.myUser = await LocalInfo().getLocalUser()
+            }
+        }
     }
 }
 

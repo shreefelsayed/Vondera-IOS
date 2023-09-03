@@ -11,8 +11,6 @@ import FirebaseCore
 @main
 struct VonderaApp: App {
     init() {
-        
-        
         FirebaseApp.configure()
     }
     

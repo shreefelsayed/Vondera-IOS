@@ -21,49 +21,47 @@ struct StoreShipping: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                // --> Item List
-                ForEach(govManager.getDefaultCourierList(), id: \.self) { item in
-                    VStack {
-                        HStack {
-                            Text(item.govName)
-                            
-                            Spacer()
-                            
-                            if let selectedItem = viewModel.list.first(where: { $0 == item }) {
-                                TextField("Price", value: $viewModel.list[viewModel.list.firstIndex(of: selectedItem)!].price, formatter: NumberFormatter())
-                                    .frame(width: 60)
+        List {
+            HStack {
+                Text("Government")
+                
+                Spacer()
+                
+                Text("Shipping Price")
+            }
+            
+            
+            ForEach(govManager.getDefaultCourierList(), id: \.self) { item in
+                HStack(alignment: .center) {
+                    Toggle("\(item.govName)", isOn: Binding(
+                        get: {
+                            viewModel.list.contains { $0 == item }
+                        },
+                        set: { isChecked in
+                            if isChecked {
+                                if !viewModel.list.contains(item) {
+                                    viewModel.list.append(item)
+                                }
+                            } else {
+                                viewModel.list.removeAll { $0 == item }
                             }
-                            
-                            CheckBoxView(checked: Binding(
-                                get: {
-                                    viewModel.list.contains { $0 == item }
-                                },
-                                set: { isChecked in
-                                    if isChecked {
-                                        if !viewModel.list.contains(item) {
-                                            viewModel.list.append(item)
+                        }))
+                    
+                    if let selectedItem = viewModel.list.first(where: { $0 == item }) {
+                        TextField("Price", value: Binding(
+                                        get: { viewModel.list[viewModel.list.firstIndex(of: selectedItem)!].price },
+                                        set: { newValue in
+                                            if let index = viewModel.list.firstIndex(of: selectedItem) {
+                                                viewModel.list[index].price = newValue
+                                            }
                                         }
-                                    } else {
-                                        viewModel.list.removeAll { $0 == item }
-                                    }
-                                }), onSelected: {
-                                    
-                                }, onDeselect: {
-                                    
-                                })
-                            
-                            
-                            
-                        }
-                        
-                        Divider()
+                        ), formatter: NumberFormatter())
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 60)
                     }
                 }
             }
         }
-        .padding()
         .navigationTitle("Shipping Prices")
         .overlay(alignment: .center, content: {
             ProgressView()
