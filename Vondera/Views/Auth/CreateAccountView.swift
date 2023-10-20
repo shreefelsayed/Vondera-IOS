@@ -9,6 +9,11 @@ import SwiftUI
 import AlertToast
 
 struct CreateAccountView: View {
+    
+    
+    @State var openCategory = false
+    @State var openMarkets = false
+
     @StateObject var viewModel = CreateAccountViewModel()
     @Environment(\.presentationMode) private var presentationMode
 
@@ -19,15 +24,17 @@ struct CreateAccountView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            currentPage
-            
-            FloatingActionButton(symbolName: "arrow.forward", action: nextScreen)
-                .padding()
-
+        ZStack(alignment: viewModel.isCreated ? .center : .bottomTrailing) {
+            if viewModel.isCreated {
+                LottieView(name: "cart_loading", loopMode: .autoReverse)
+            } else {
+                currentPage
+                FloatingActionButton(symbolName: "arrow.forward", action: nextScreen)
+                    .padding()
+            }
         }
-        .toast(isPresenting: $viewModel.showToast){
-            AlertToast(displayMode: .hud,
+        .toast(isPresenting: Binding(value: $viewModel.errorMsg)){
+            AlertToast(displayMode: .alert,
                 type: .error(.red),
                 title: viewModel.errorMsg)
         }
@@ -38,11 +45,24 @@ struct CreateAccountView: View {
         }
         .willProgress(saving: viewModel.isSaving)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action : {
-            viewModel.showPrevPage()
-        }){
-            Image(systemName: "arrow.left")
-        })
+        .toolbar {
+            if !viewModel.isSaving && !viewModel.isCreated {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        viewModel.showPrevPage()
+                    } label: {
+                        Image(systemName: "arrow.left")
+                    }
+                }
+            }
+            
+        }
+        .sheet(isPresented: $openCategory) {
+            PickCategory(sheetVisible: $openCategory, selected: $viewModel.selectedCateogry)
+        }
+        .sheet(isPresented: $openMarkets) {
+            StoreMarketPlaces(selectedItems: $viewModel.selectedMarkets)
+        }
         .navigationTitle("Create New Store")
     }
     
@@ -59,23 +79,53 @@ struct CreateAccountView: View {
     
     var page2: some View {
         Form {
-            Text("Please enter your Store details")
-                .font(.title2)
-                .bold()
-                .multilineTextAlignment(.leading)
             
             Section("Name & Slogan") {
-                FloatingTextField(title: "Store Name", text: $viewModel.storeName, caption: "This is your store name, it will be printed on the receipts and in your website, it can be changed later", required: true)
-                    .textInputAutocapitalization(.words)
+                FloatingTextField(title: "Store Name", text: $viewModel.storeName, caption: "This is your store name, it will be printed on the receipts and in your website, it can be changed later", required: true, autoCapitalize: .words)
                 
-                FloatingTextField(title: "Slogan", text: $viewModel.slogan, caption: "Your store slogan, it will be shown on your receipts and in your website", required: false)
-                    .textInputAutocapitalization(.words)
+                FloatingTextField(title: "Slogan", text: $viewModel.slogan, caption: "Your store slogan, it will be shown on your receipts and in your website", required: false, autoCapitalize: .words)
+                
+                HStack {
+                    Text("Category")
+                    
+                    Spacer()
+                    
+                    Text(CategoryManager().getCategoryById(id: viewModel.selectedCateogry ?? 0).nameEn)
+                        .foregroundStyle(Color.accentColor)
+                        .bold()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.title3)
+                        .foregroundStyle(Color.accentColor)
+                }.onTapGesture {
+                    openCategory.toggle()
+                }
+                
+                VStack{
+                    HStack {
+                        Text("MarketPlaces")
+                        
+                        Spacer()
+                        
+                        Text("\($viewModel.selectedMarkets.count) Markets")
+                            .foregroundStyle(Color.accentColor)
+                            .bold()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.title3)
+                            .foregroundStyle(Color.accentColor)
+                    }.onTapGesture {
+                        openMarkets.toggle()
+                    }
+                    
+                    Text("Those are the market places (Sales Channels) you sell on, select only where your brand sell")
+                        .font(.caption)
+                }
                 
             }
             
             Section("Communication") {
-                FloatingTextField(title: "Business phone number", text: $viewModel.bPhone, caption: "We will use this number to contact you for any inquaries", required: true)
-                    .keyboardType(.phonePad)
+                FloatingTextField(title: "Business phone number", text: $viewModel.bPhone, caption: "We will use this number to contact you for any inquaries", required: true, keyboard: .phonePad)
                 
                 Picker("Government", selection: $viewModel.gov) {
                     ForEach(GovsUtil().govs, id: \.self) { option in
@@ -83,13 +133,12 @@ struct CreateAccountView: View {
                     }
                 }
                 
-                FloatingTextField(title: "Address", text: $viewModel.address, caption: "We won't share your address, we collect it for analyze perpose", required: true, multiLine: true)
+                FloatingTextField(title: "Address", text: $viewModel.address, caption: "We won't share your address, we collect it for analyze perpose", required: true, multiLine: true, autoCapitalize: .sentences)
                     
 
             }
            
             FloatingTextField(title: "Refer Code", text: $viewModel.refferCode, caption: "If one of Vondera team invited you, enter his refer code", required: false)
-                .textInputAutocapitalization(.never)
 
         }
         .lineLimit(1, reservesSpace: true)
@@ -97,27 +146,18 @@ struct CreateAccountView: View {
     
     var page1: some View {
         Form {
-            Text("Please enter your account details")
-                .font(.title2)
-                .bold()
-                .multilineTextAlignment(.leading)
-                
             Section("Personal Info") {
-                FloatingTextField(title: "Name", text: $viewModel.name, caption: "Your personal legal name", required: true)
-                    .textInputAutocapitalization(.words)
+                FloatingTextField(title: "Name", text: $viewModel.name, caption: "Your personal legal name", required: true, autoCapitalize: .words)
+                    
 
-                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "This will not be visible anywere", required: true)
-                    .textInputAutocapitalization(.words)
+                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "This will not be visible anywere", required: true, autoCapitalize: .words)
             }
             
             Section("Login Credintals") {
-                FloatingTextField(title: "Email Address", text: $viewModel.email, caption: "This is your main email address, note you can't change it later, you will use it to login to your store", required: true)
-                    .keyboardType(.emailAddress)
-                    .autocapitalization(.none)
+                FloatingTextField(title: "Email Address", text: $viewModel.email, caption: "This is your main email address, note you can't change it later, you will use it to login to your store", required: true, keyboard: .emailAddress)
             
                 
-                FloatingTextField(title: "Password", text: $viewModel.password, caption: "Choose a strong password, it must be 6 chars at least", required: true, secure: true)
-                    .autocapitalization(.none)
+                FloatingTextField(title: "Password", text: $viewModel.password, caption: "Choose a strong password, it must be 6 chars at least", required: nil, secure: true)
             }
            
         }
@@ -126,6 +166,21 @@ struct CreateAccountView: View {
     }
 }
 
+struct PickCategory: View {
+    @Binding var sheetVisible:Bool
+    @Binding var selected:Int?
+    var body: some View {
+        VStack {
+            List(CategoryManager().getAll(), id: \.self) { category in
+                StoreCategoryLinearCard(storeCategory: category, selected: $selected, onClicked: {
+                    sheetVisible.toggle()
+                })
+            }
+            .listStyle(.plain)
+        }
+        .navigationTitle("Choose your category")
+    }
+}
 struct CreateAccountView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{

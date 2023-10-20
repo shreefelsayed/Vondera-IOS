@@ -9,56 +9,35 @@ import SwiftUI
 import AlertToast
 
 struct ProductPrice: View {
-    var product:Product
+    var product:StoreProduct
     @ObservedObject var viewModel:ProductPriceViewModel
     @Environment(\.presentationMode) private var presentationMode
     
-    init(product: Product) {
+    init(product: StoreProduct) {
         self.product = product
         self.viewModel = ProductPriceViewModel(product: product)
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Product Price", text: Binding(
-                    get: { String(viewModel.price) },
-                    set: { newValue in
-                        viewModel.price = Int(newValue) ?? 0
-                    }
-                ))
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                
-                Text("This is how much you sell the product for, please note that you can edit this on each order you make if you enable this option from store options.")
-                    .font(.caption)
-                
-                TextField("Product Cost", text: Binding(
-                    get: { String(viewModel.cost) },
-                    set: { newValue in
-                        viewModel.cost = Int(newValue) ?? 0
-                    }
-                ))
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                
-                Text("This is how much your product costs you, so we can help you calculate your net profit.")
-                    .font(.caption)
-            }
-            .isHidden(viewModel.isLoading)
+        List {
+            FloatingTextField(title: "Product Price", text: .constant(""), caption: "This is the selling price of the product which the user will be charged at", required: true, isNumric: true, number: $viewModel.price)
+        
+            FloatingTextField(title: "Crossed Price", text: .constant(""), caption: "This is showed in your website, to compare the price this doesn't have any effect on the real price", required: false, isNumric: true, number: $viewModel.crossed)
+            
+            FloatingTextField(title: "Product Cost", text: .constant(""), caption: "This how much the product costs you", required: true, isNumric: true, number: $viewModel.cost)
         }
-        .padding()
+        .isHidden(viewModel.isLoading)
         .navigationTitle("Product Price")
-        .overlay(alignment: .center, content: {
+        .overlay(alignment: .center) {
             ProgressView()
                 .isHidden(!viewModel.isLoading)
-        })
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
                     update()
                 }
-                .disabled(viewModel.isLoading)
+                .disabled(viewModel.isLoading || viewModel.isSaving)
             }
         }
         .willProgress(saving: viewModel.isSaving)
@@ -67,7 +46,7 @@ struct ProductPrice: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
                        title: viewModel.msg)
@@ -81,8 +60,6 @@ struct ProductPrice: View {
     }
 }
 
-struct ProductPrice_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductPrice(product: Product.example())
-    }
+#Preview {
+    ProductPrice(product: StoreProduct.example())
 }

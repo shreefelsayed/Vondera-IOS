@@ -22,7 +22,7 @@ class AddExpansesViewModel : ObservableObject {
         }
     }
     
-    @Published var price = ""
+    @Published var price = 0
     @Published var desc = ""
     
     @Published var showToast = false
@@ -35,13 +35,13 @@ class AddExpansesViewModel : ObservableObject {
         expansesDao = ExpansesDao(storeId: storeId)
         
         Task {
-            myUser = await LocalInfo().getLocalUser()
+            myUser = UserInformation.shared.getUser()
         }
     }
     
     func save() async {
-        guard price.isNumeric else {
-            showTosat(msg: "Enter a valid price")
+        guard price > 0 else {
+            showTosat(msg: "Enter a valid amount")
             return
         }
         
@@ -57,7 +57,7 @@ class AddExpansesViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            var expanses = Expense(amount: Int(price) ?? 0, description: desc, madeBy: myUser?.id ?? "")
+            var expanses = Expense(amount: price, description: desc, madeBy: myUser?.id ?? "")
             try await expansesDao.create(expanses: &expanses)
             
             DispatchQueue.main.async { [expanses] in

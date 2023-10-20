@@ -22,26 +22,22 @@ struct CourierFees: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                // --> Item List
-                ForEach($viewModel.items, id: \.self) { item in
-                    VStack {
-                        HStack {
-                            Text(item.govName.wrappedValue)
-                            Spacer()
-                            TextField("Price", value: item.price, formatter: NumberFormatter())
-                                .frame(width: 60)
-                        }
+        List {
+            ForEach($viewModel.items, id: \.govName) { item in
+                VStack {
+                    HStack {
+                        Text(item.wrappedValue.govName)
                         
-                        Divider()
+                        Spacer()
+                        
+                        FloatingTextField(title: "Price", text: .constant(""), required: nil, isNumric: true, number: item.price)
+                            .frame(width: 80)
                     }
                 }
             }
-            .isHidden(viewModel.isLoading)
-            
         }
-        .padding()
+        .isHidden(viewModel.isLoading)
+        .listStyle(.plain)
         .navigationTitle("Shipping Prices")
         .overlay(alignment: .center, content: {
             ProgressView()

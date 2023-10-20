@@ -36,8 +36,6 @@ class NewEmployeeViewModel : ObservableObject {
     var myUser:UserData?
     var usersDao:UsersDao
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
-    @Published var newItem:UserData?
-    
     
     private var shouldDismissView = false {
         didSet {
@@ -49,11 +47,10 @@ class NewEmployeeViewModel : ObservableObject {
     @Published var phone = ""
     @Published var email = ""
     @Published var pass = ""
-    @Published var selectedAccountType = AccountType.admin
-    @Published var perc:Double = 0
+    @Published var selectedAccountType = AccountType.sales
+    @Published var perc:Int = 0
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     @Published var isSaving = false
     
     
@@ -62,28 +59,43 @@ class NewEmployeeViewModel : ObservableObject {
         usersDao = UsersDao()
         
         Task {
-            myUser = await LocalInfo().getLocalUser()
+            myUser = UserInformation.shared.getUser()
         }
     }
     
-    func save() async {
+    private func check() -> Bool {
         guard email.isValidEmail else {
             showTosat(msg: "Enter a valid employee email")
-            return
+            return false
         }
         
         guard pass.isValidPassword else {
             showTosat(msg: "Enter a valid password")
-            return
+            return false
         }
         
         guard !name.isBlank else {
             showTosat(msg: "Fill the Employee name")
-            return
+            return false
         }
         
         guard phone.isPhoneNumber else {
             showTosat(msg: "Fill the Employee phone")
+            return false
+        }
+        
+        if selectedAccountType == .sales {
+            guard perc <= 99 && perc >= 0 else {
+                showTosat(msg: "Enter a valid commission percentage")
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func save() async {
+        guard check() else {
             return
         }
         
@@ -97,13 +109,13 @@ class NewEmployeeViewModel : ObservableObject {
             
             //var mAuth2 = Auth.auth(app: FirebaseApp.app(name: "Vonderaa")!)
             
-            var fbUser = try await Auth.auth().createUser(withEmail: email, password: pass)
+            let fbUser = try await Auth.auth().createUser(withEmail: email, password: pass)
             
             // --> Update the database
             var userData = UserData(id: fbUser.user.uid, name: name, email: email, phone: phone, addedBy: myUser?.id ?? "", accountType: selectedAccountType.rawValue, pass: pass)
             
             userData.storeId = storeId
-            userData.percentage = perc
+            userData.percentage = Double(perc / 100)
             
             
             try await Auth.auth().signIn(withEmail: myUser!.email, password: myUser!.pass)
@@ -111,18 +123,16 @@ class NewEmployeeViewModel : ObservableObject {
             try await usersDao.addUser(user: userData)
             
             // --> Saving Local
-            var myUser = await LocalInfo().getLocalUser()
-            if myUser?.storeId == storeId {
-                if var employeesCount = myUser?.store?.employeesCount {
+            if let myUser = UserInformation.shared.getUser() {
+                if var employeesCount = myUser.store?.employeesCount {
                     employeesCount = employeesCount + 1
-                    myUser?.store?.employeesCount = employeesCount
-                    _ = await LocalInfo().saveUser(user: myUser!)
+                    myUser.store?.employeesCount = employeesCount
+                    UserInformation.shared.updateUser(myUser)
                 }
             }
             
             showTosat(msg: "Employee Added")
-            DispatchQueue.main.async { [userData] in
-                self.newItem = userData
+            DispatchQueue.main.async {
                 self.shouldDismissView = true
             }
         } catch {
@@ -148,7 +158,6 @@ class NewEmployeeViewModel : ObservableObject {
     
     func showTosat(msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
 }
 

@@ -12,19 +12,18 @@ class StoreProductsViewModel : ObservableObject {
     var categoryDao:CategoryDao
     var productsDao:ProductsDao
     
+    @Published var sortIndex = "sold" {
+        didSet {
+            updateListIndexs()
+        }
+    }
+    
     @Published var categories = [Category]()
-    @Published var products = [Product]()
+    @Published var products = [StoreProduct]()
     @Published var selectedCategory:String = ""
     @Published var errorMsg = ""
     @Published var isLoading = false
     @Published var searchText = ""
-    
-    var filteredItems: [Product] {
-        guard !searchText.isEmpty else { return products }
-        return products.filter { product in
-            product.filter(searchText)
-        }
-    }
     
     init(storeId:String) {
         self.storeId = storeId
@@ -41,10 +40,31 @@ class StoreProductsViewModel : ObservableObject {
         self.selectedCategory = id
         do {
             self.products = try await productsDao.getByCategory(id: self.selectedCategory)
+            DispatchQueue.main.async {
+                self.updateListIndexs()
+            }
             self.isLoading = false
         } catch {
             showError(msg: error.localizedDescription)
         }
+    }
+    
+    func updateListIndexs() {
+        DispatchQueue.main.async { [self] in
+            switch sortIndex {
+            case "name":
+                products.sort { $0.name < $1.name}
+            case "quantity":
+                products.sort { $0.quantity > $1.quantity}
+            case "sold":
+                products.sort { $0.sold ?? 0 > $1.sold ?? 0}
+            case "lastOrderDate":
+                products.sort { $0.lastOrderDate?.toDate() ?? Date() > $1.lastOrderDate?.toDate() ?? Date()}
+            default:
+                print("None known value")
+            }
+        }
+        
     }
     
     func getCategories() async {

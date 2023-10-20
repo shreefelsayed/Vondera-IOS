@@ -11,7 +11,7 @@ import Combine
 class EmployeeSettingsViewModel : ObservableObject {
     @Published var id:String
     var usersDao = UsersDao()
-    var myUser:UserData?
+    var myUser = UserInformation.shared.getUser()
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     
@@ -40,7 +40,7 @@ class EmployeeSettingsViewModel : ObservableObject {
         
         // --> Set the published values
         Task {
-            self.myUser = await LocalInfo().getLocalUser()!
+            self.myUser = UserInformation.shared.getUser()
             await getData()
         }
     }
@@ -50,7 +50,7 @@ class EmployeeSettingsViewModel : ObservableObject {
             self.isLoading = true
         }
         do {
-            var editUser = try await usersDao.getUser(uId: id)!
+            let editUser = try await usersDao.getUser(uId: id).item!
             name = editUser.name
             phone = editUser.phone
             email = editUser.email
@@ -84,7 +84,7 @@ class EmployeeSettingsViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            var map:[String:Any] = ["name": name,
+            let map:[String:Any] = ["name": name,
                                     "phone": phone,
                                     "accountType": selectedAccountType.rawValue,
                                     "perc": perc,

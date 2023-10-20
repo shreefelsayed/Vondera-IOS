@@ -6,16 +6,14 @@
 //
 
 import Foundation
-import AdvancedList
 
 class StoreCategoriesViewModel : ObservableObject {
     private var store:Store
     private var categoryDao:CategoryDao
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var loading = false
+    @Published var msg:String?
     @Published var items = [Category]()
-    @Published var listState:ListState = .items
     
     
     init(store:Store) {
@@ -29,39 +27,42 @@ class StoreCategoriesViewModel : ObservableObject {
     func updateIndexes() async {
         do {
             for (index, cat) in items.enumerated() {
+                
                 try await categoryDao.update(id: cat.id, hash: ["sortValue":index])
+                DispatchQueue.main.async { [self] in
+                    items[index].sortValue = index
+                }
             }
+            print("Updated indexs")
         } catch {
             showTosat(msg: error.localizedDescription)
         }
     }
     
     func getData() async {
-        self.items.removeAll()
-        
         DispatchQueue.main.async {
-            self.listState = .loading
+            self.loading = true
+            self.items.removeAll()
         }
         
         do {
-            print("Store id \(store.ownerId)")
             // --> Update the database
             let data = try await categoryDao.getAll()
-            print("Category count \(data.count)")
-            
             DispatchQueue.main.async {
                 self.items = data
-                self.listState = .items
+                self.loading = false
             }
+            
         } catch {
-            showTosat(msg: error.localizedDescription)
-            self.listState = .error(error as NSError)
+            DispatchQueue.main.async {
+                self.showTosat(msg: error.localizedDescription)
+                self.loading = false
+            }
         }
     }
     
     private func showTosat(msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
 }
 

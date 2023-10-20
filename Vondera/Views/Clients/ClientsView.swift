@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct ClientsView: View {
     var store:Store
@@ -18,46 +17,54 @@ struct ClientsView: View {
     }
     
     var body: some View {
-        VStack {
-            SearchBar(text: $viewModel.searchText)
-                .padding(.horizontal)
-
-            AdvancedList(viewModel.filteredItems, listView: { rows in
+        List {
+            ForEach(viewModel.filteredItems) { item in
+                ClientCard(client: item, storeId: store.ownerId)
                 
-                if #available(iOS 14, macOS 11, *) {
-                    ScrollView(showsIndicators: false) {
-                        LazyVStack(alignment: .leading, content: rows)
-                            .padding()
+                if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
                     }
-                } else {
-                    List(content: rows)
+                    .onAppear {
+                        loadItem()
+                    }
                 }
-            }, content: { item in
-                NavigationLink {
-                    ClientOrders(client: item, storeId: store.ownerId)
-                } label: {
-                    ClientCard(client: item)
-                }.buttonStyle(PlainButtonStyle())
-
-                
-            }, listState: viewModel.state, emptyStateView: {
-                EmptyMessageView(msg: "No one shopped from your store yet :(")
-            }, errorStateView: { error in
-                Text(error.localizedDescription).lineLimit(nil)
-            }, loadingStateView: {
-                ProgressView()
-            }).pagination(.init(type: .thresholdItem(offset: 5), shouldLoadNextPage: {
-                loadItem()
-            }) {
-            }).refreshable(action: {
-                await refreshData()
-            })
-            
-            Spacer()
+            }
         }
-        
+        .searchable(text: $viewModel.searchText, prompt: "Search your shoppers by name")
+        .listStyle(.plain)
+        .refreshable {
+            await refreshData()
+        }
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "No one shopped from your store yet :(")
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    Picker("Sort Option", selection: $viewModel.sortIndex) {
+                        Text("Name")
+                            .tag("name")
+                        
+                        Text("Last Order")
+                            .tag("lastOrder")
+                        
+                        Text("Orders Count")
+                            .tag("ordersCount")
+                        
+                        Text("Total Spent")
+                            .tag("total")
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                }
+            }
+        }
         .navigationTitle("Shoppers")
-        .navigationBarTitleDisplayMode(.large)
     }
     
     func refreshData() async {
@@ -71,8 +78,7 @@ struct ClientsView: View {
     }
 }
 
-struct ClientsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ClientsView(store: Store.example())
-    }
+#Preview {
+    ClientsView(store: Store.example())
 }
+

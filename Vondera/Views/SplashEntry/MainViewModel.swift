@@ -16,7 +16,7 @@ class MainViewModel : ObservableObject {
         do {
             let success = try await AuthManger().getData()
             DispatchQueue.main.async {
-                self.signed = success
+                self.signed = success != nil
             }
         } catch {
             print(error.localizedDescription)

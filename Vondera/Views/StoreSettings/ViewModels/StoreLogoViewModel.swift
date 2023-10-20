@@ -10,11 +10,12 @@ import Combine
 import FirebaseStorage
 import PhotosUI
 
-class StoreLogoViewModel : NSObject, ObservableObject, PHPickerViewControllerDelegate {
+class StoreLogoViewModel : ObservableObject {
     var store:Store
     var storesDao = StoresDao()
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
+    
     private var shouldDismissView = false {
         didSet {
             viewDismissalModePublisher.send(shouldDismissView)
@@ -22,11 +23,10 @@ class StoreLogoViewModel : NSObject, ObservableObject, PHPickerViewControllerDel
     }
     
     @Published var link = ""
-    @Published var selectedImage: UIImage?
+    @Published var selectedImage: UIImage? = nil
 
-    @Published var msg = ""
+    @Published var msg:String?
     @Published var isSaving = false
-    @Published var showToast = false
 
     
     init(store:Store) {
@@ -35,31 +35,32 @@ class StoreLogoViewModel : NSObject, ObservableObject, PHPickerViewControllerDel
     }
     
     
-    func saveNewLogo() async {
+    func saveNewLogo() {
         // --> Check if image wasn't selected
         guard selectedImage != nil else {
+            isSaving = false
             showMessage("Please select the new logo")
             return
         }
         
-        DispatchQueue.main.async {
-            self.isSaving = true
-        }
-        
-        print("Uploading image")
-        
         // --> Upload the new Image
         let ref = Storage.storage().reference().child("stores")
-        FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,name: "\(String(describing: store.ownerId)) - Logo" ,ref: ref) { url, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.isSaving = false
-                    self.showMessage(error.localizedDescription)
+        
+        guard let image = selectedImage else {
+            isSaving = false
+            showMessage("Please repick the image")
+            return
+        }
+
+        if selectedImage != nil {
+            isSaving = true
+            FirebaseStorageUploader().oneImageUpload(image: image ,name: "\(String(describing: store.ownerId)) - Logo" ,ref: ref) { [self] url, error in
+                if let error = error {
+                    isSaving = false
+                    showMessage(error.localizedDescription)
+                } else if let url = url {
+                    updateRef(url: url)
                 }
-                
-            } else if let url = url {
-                print("New logo uploaded")
-                self.updateRef(url: url)
             }
         }
     }
@@ -71,60 +72,33 @@ class StoreLogoViewModel : NSObject, ObservableObject, PHPickerViewControllerDel
                 store.logo = url.absoluteString
                 
                 // Saving local
-                let myUser = await LocalInfo().getLocalUser()
-                if myUser!.storeId == store.ownerId {
-                    myUser!.store!.logo = url.absoluteString
-                    _ = await LocalInfo().saveUser(user: myUser!)
+                if var myUser = UserInformation.shared.getUser() {
+                    myUser.store?.logo = url.absoluteString
+                    UserInformation.shared.updateUser(myUser)
+
+                    // Call the firebase function
+                    let data:[String:Any] = ["mid" : myUser.store?.merchantId ?? "", "link" : url.absoluteString]
+                    
+                    
+                    _ = try await FirebaseFunctionCaller().callFunction(functionName: "sheets-logoChanged", data: data)
                 }
-                
-                showMessage("Store Logo Changed")
-                print("New logo url updated")
+                                
                 DispatchQueue.main.async {
+                    self.showMessage("Store Logo Changed")
+                    self.isSaving = false
                     self.shouldDismissView = true
                 }
             } catch {
-                showMessage(error.localizedDescription)
-            }
-            
-            DispatchQueue.main.async {
-                self.isSaving = false
+                DispatchQueue.main.async {
+                    self.isSaving = false
+                    self.showMessage(error.localizedDescription)
+                }
             }
         }
     }
     
     private func showMessage(_ msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
-    
-    internal func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-        
-        for result in results {
-            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                    if let image = image as? UIImage {
-                        DispatchQueue.main.async {
-                            self?.selectedImage = image
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func pickPhotos() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 1
-        configuration.filter = .images
-        configuration.selection = .ordered
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        // Present the photo picker
-        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
-    }
-    
 }
 

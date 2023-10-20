@@ -9,17 +9,19 @@ import SwiftUI
 import NetworkImage
 
 struct ProductDetails: View {
-    var product:Product
+    @Binding var product:StoreProduct
+    @State var myUser:UserData?
+    
+    @Environment(\.presentationMode) private var presentationMode
+
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack (alignment: .leading) {
                 ZStack (alignment: .bottom){
                     NavigationLink(destination: FullScreenImageView(imageURLs: product.listPhotos)) {
-                        
                         SlideNetworkView(imageUrls: product.listPhotos)
                     }
-                    
                     
                     HStack {
                         VStack(alignment: .leading) {
@@ -59,7 +61,6 @@ struct ProductDetails: View {
                 VStack(alignment: .leading) {
                     
                     // MARK : Product Desc
-                    
                     VStack(alignment: .leading) {
                         Text("Product Description")
                             .font(.title2)
@@ -151,20 +152,61 @@ struct ProductDetails: View {
                     }
                     Spacer().frame(height: 12)
                     
+                    //MARK : Settings
+                    if (myUser?.canAccessAdmin ?? false) {
+                        HStack {
+                            Spacer()
+                            
+                            NavigationLink("Settings") {
+                                ProductSettings(product: product, onDeleted: { value in
+                                    self.presentationMode.wrappedValue.dismiss()
+                                })
+                            }
+                            
+                            Spacer()
+                        }
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
             }
             .frame(maxWidth: .infinity)
         }
+        .refreshable {
+            await refreshProduct()
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ProductSettings(product: product, storeId: product.storeId)) {
-                    Text("Settings")
+                if (myUser?.store?.websiteEnabled ?? false) {
+                    if let storeUrl =  myUser?.store?.storeLink() {
+                        ShareLink(item: product.getProductLink(storeLink: storeUrl)) {
+                            Image(systemName : "square.and.arrow.up.fill")
+                                .font(.title2)
+                                .bold()
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
         }
+        .task {
+            if let user = UserInformation.shared.getUser() {
+                self.myUser = user
+            }
+        }
         .navigationTitle("Product info")
+    }
+    
+    func refreshProduct() async {
+        do {
+            if let productData = try await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
+                DispatchQueue.main.async {
+                    self.product = productData
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func getVarientOptions(hash:[String:[String]]) -> String {
@@ -179,6 +221,6 @@ struct ProductDetails: View {
 
 struct ProductDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ProductDetails(product: Product.example())
+        ProductDetails(product: .constant(StoreProduct.example()))
     }
 }

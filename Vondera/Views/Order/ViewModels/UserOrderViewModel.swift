@@ -7,16 +7,15 @@
 
 import Foundation
 import FirebaseFirestore
-import AdvancedList
 
 class UserOrdersViewModel: ObservableObject {
     var id:String
     var storeId:String
+    private var ordersDao:OrdersDao
     
-    var ordersDao:OrdersDao
-    
-    @Published var state:ListState = .items
+    @Published var isLoading = false
     @Published var items = [Order]()
+    
     @Published var canLoadMore = true
     @Published var error = ""
     
@@ -27,7 +26,13 @@ class UserOrdersViewModel: ObservableObject {
         self.id = id
         self.storeId = storeId
         self.ordersDao = OrdersDao(storeId: storeId)
+        
+        Task {
+            await getData()
+        }
     }
+    
+    
     
     func refreshData() async {
         self.canLoadMore = true
@@ -37,13 +42,13 @@ class UserOrdersViewModel: ObservableObject {
     }
     
     func getData(refreshing:Bool = false) async {
-        guard state != .loading || !canLoadMore else {
+        guard !isLoading || !canLoadMore else {
             return
         }
         
         do {
-            if lastSnapshot == nil { state = .loading }
-           
+            isLoading = true
+            
             let result = try await ordersDao.getUserOrders(id: id, lastSnapShot: lastSnapshot)
             
             lastSnapshot = result.1
@@ -54,9 +59,9 @@ class UserOrdersViewModel: ObservableObject {
                 print("Can't load more data")
             }
             
-            state = .items
+            isLoading = false
         } catch {
-            if lastSnapshot == nil  { state = .error(error as NSError) }
+            isLoading = false
         }
         
     }

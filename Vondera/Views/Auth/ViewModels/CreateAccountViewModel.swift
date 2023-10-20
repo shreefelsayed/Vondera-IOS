@@ -16,17 +16,21 @@ class CreateAccountViewModel: ObservableObject {
     @Published var storeAddress = ""
     @Published var storeGov = ""
     @Published var password = ""
-    @Published var errorMsg = ""
     @Published var currentPage = 1
     @Published var slogan = ""
     @Published var refferCode = ""
+    @Published var selectedCateogry:Int? = 0
+    @Published var selectedMarkets:[String] = []
 
     @Published var address = ""
     @Published var bPhone = ""
     @Published var phone = ""
-    @Published var showToast = false
-    @Published var isSaving = false
     
+    @Published var isSaving = false
+    @Published var isCreated = false
+    
+    @Published var errorMsg:String?
+
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
         didSet {
@@ -53,7 +57,7 @@ class CreateAccountViewModel: ObservableObject {
     func showNextPage() async {
         if currentPage == 1 {
             if checkFirstPage() {
-                currentPage = currentPage + 1
+                currentPage += 1
             }
         } else if currentPage == 2 {
             if checkSecondPage() {
@@ -64,30 +68,54 @@ class CreateAccountViewModel: ObservableObject {
     
     func createAccount() async {
         isSaving = true
-        // --> Create user Object
-        var user = UserData(id: "", name: name, email: email, phone: phone, addedBy: refferCode, accountType: "Owner", pass: password)
         
-        // --> Create Store Object
-        let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, subscribedPlan: SubscribedPlan(), ownerId: "")
-        
-        // --> Create a store account
-        let accountCreated = await AuthManger().createStoreOwnerUser(userData: &user, store: store)
-        
-        isSaving = false
-        
-        if accountCreated == false {
-            print("Error Happened")
-            showError(err: "Something wrong happened")
-        } else {
-            print("Account has been created")
-            self.shouldDismissView = true
+        do {
+            // --> Check if email already exists
+            let emailExists = try await UsersDao().emailExists(email: email)
+            guard !emailExists else {
+                isSaving = false
+                showError(err: "This email is already signed up")
+                return
+            }
+            
+            // --> Create user Object
+            var user = UserData(id: "", name: name, email: email, phone: phone, addedBy: refferCode, accountType: "Owner", pass: password)
+            
+            // --> Create Store Object
+            let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, subscribedPlan: SubscribedPlan(), ownerId: "")
+            
+            store.categoryNo = selectedCateogry
+            store.listMarkets = selectedMarkets.map { id in
+                return StoreMarketPlace(id: id, active: true)
+            }
+            
+            // --> Create a store account
+            let accountCreated = await AuthManger().createStoreOwnerUser(userData: &user, store: store)
+            
+            if accountCreated == false {
+                showError(err: "Something wrong happened")
+                isSaving = false
+                return
+            }
+            
+            
+            isCreated = accountCreated
+            isSaving = false
+                        
+            DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+                self.isCreated = false
+                Task {
+                    try! await AuthManger().getData()
+                }
+                self.shouldDismissView = true
+            }
+        } catch {
+            showError(err: error.localizedDescription)
         }
-        
-        
     }
     
     func checkSecondPage() -> Bool {
-        guard !storeName.isValidName else {
+        guard storeName.isValidName else {
             showError(err: "Enter a valid store name")
             return false
         }
@@ -111,7 +139,7 @@ class CreateAccountViewModel: ObservableObject {
     }
     
     func checkFirstPage() -> Bool {
-        guard !name.isBlank else {
+        guard name.isValidName else {
             showError(err: "Enter your name")
             return false
         }
@@ -135,7 +163,8 @@ class CreateAccountViewModel: ObservableObject {
     }
     
     func showError(err:String) {
-        errorMsg = err
-        showToast = true
+        DispatchQueue.main.async {
+            self.errorMsg = err
+        }
     }
 }

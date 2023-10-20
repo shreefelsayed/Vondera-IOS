@@ -8,251 +8,416 @@
 import SwiftUI
 import MapKit
 import AlertToast
+import StepProgressView
 
 struct OrderDetails: View {
-    var id:String
-    var storeId:String
+    @Binding var order:Order
+    
+    @State var isLoading = false
+    @State var comment = ""
+    
+    @State var myUser = UserInformation.shared.user
+    
     @State private var snapshotImage: UIImage?
     @State private var delete = false
-    @State var assignDialog = false
+    
+    // COURIER SHEET
     @State var courier:Courier?
+    @State var assignDialog = false
+
+    // CONTACT CLIENT
     @State var contactSheet = false
     
-    @ObservedObject var viewModel:OrderDetailsViewModel
-    
-    init(id: String, storeId: String) {
-        self.id = id
-        self.storeId = storeId
-        self.viewModel = OrderDetailsViewModel(storeId: storeId, orderId: id)
-        
-        print("Order code \(id)")
-    }
-    
+    // CONTACT INFO
+    @State var contactUser:UserData?
+    @State private var sheetHeight: CGFloat = .zero
+    @State var msg:String?
+
     var body: some View {
-        ZStack {
-            VStack(alignment: .leading, spacing: 20) {
-                if viewModel.order != nil {
-                    ScrollView(showsIndicators: false) {
-                        VStack(alignment: .leading, spacing: 20) {
-                            
-                            // MARK : ORDER HEADER
-                            VStack(alignment: .leading) {
-                                HStack(alignment: .center) {
-                                    Text("Order Details")
-                                        .font(.title3)
-                                        .bold()
-                                    
-                                    Spacer()
-                                    
-                                    Text("#\(viewModel.orderId)")
-                                        .bold()
-                                        .foregroundStyle(Color.accentColor)
-                                }
-                                
-                                Divider()
-                                
-                                HStack(alignment: .center) {
-                                    Text("Order Statue")
-                                        .font(.title3)
-                                        .bold()
-                                    
-                                    Spacer()
-                                    
-                                    Text("\(viewModel.order?.statue ?? "")")
-                                        .bold()
-                                }
+        VStack(alignment: .leading, spacing: 20) {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 20) {
+                    
+                    // MARK : ORDER HEADER
+                    VStack(alignment: .leading) {
+                        HStack(alignment: .center) {
+                            if order.marketPlaceId != nil && !order.marketPlaceId!.isBlank {
+                                MarketHeaderCard(marketId: order.marketPlaceId!, withText: false)
                             }
                             
+                            Text("Order Details")
+                                .font(.title3)
+                                .bold()
                             
-                            // MARK : SHIPPING OPTIONS
-                            VStack(alignment: .leading) {
-                                Text("Shipping Info")
-                                    .font(.title2)
-                                    .bold()
-                                
-                                Spacer().frame(height: 8)
-                                
-                                HStack(alignment: .center) {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(viewModel.order!.name)
-                                        Text("\(viewModel.order!.gov), \(viewModel.order!.address)")
-                                        Text(viewModel.order!.gov)
-                                        Text(viewModel.order!.phone)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    if let image = snapshotImage {
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .cornerRadius(12)
-                                            .frame(width: 140, height: 100)
-                                            .onTapGesture {
-                                                openLocation()
-                                            }
-                                    }
-                                    
-                                }
-                                .font(.body)
-                                .foregroundColor(.secondary)
-                            }
+                            Spacer()
                             
-                            // MARK : CONTACT BUTTON
-                            HStack {
-                                Image(systemName: "person.crop.circle")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundStyle(Color.accentColor)
-                                
-                                Text("Contact Customer")
-                            }
-                            .onTapGesture {
-                                contactSheet.toggle()
-                            }
+                            Text("#\(order.id)")
+                                .bold()
+                                .foregroundStyle(Color.accentColor)
+                        }
+                        
+                        Divider()
+                        
+                        HStack(alignment: .center) {
+                            Text("Order Statue")
+                                .font(.title3)
+                                .bold()
                             
-                                                    
-                            // MARK : ORDER SUMMERY
-                            VStack(alignment: .leading) {
-                                Text("Order Summery")
-                                    .font(.title2)
-                                    .bold()
-                                
-                                Spacer().frame(height: 8)
-                                
-                                HStack {
-                                    Text("Products Price")
-                                    Spacer()
-                                    Text("+\(viewModel.order!.totalPrice) LE")
-                                }
-                                
-                                HStack {
-                                    Text("Shipping Fees")
-                                    Spacer()
-                                    Text("+\(viewModel.order!.clientShippingFees) LE")
-                                        .foregroundColor(.yellow)
-                                }
-                                
-                                if viewModel.order!.discount ?? 0 > 0 {
-                                    HStack {
-                                        Text("Discount")
-                                        Spacer()
-                                        Text("-\(viewModel.order!.discount ?? 0) LE")
-                                            .foregroundColor(.red)
-                                    }
-                                    
-                                    
-                                }
-                                
-                                Divider()
-                                
-                                HStack {
-                                    Text("COD")
-                                    Spacer()
-                                    Text("\(viewModel.order!.COD) LE")
-                                        .foregroundColor(.green)
-                                }
-                                
-                            }
-                            .bold()
+                            Spacer()
                             
-                            
-                            //MARK : ORDER PRODUCTS
-                            VStack (alignment: .leading){
-                                Text("Products Details")
-                                    .font(.title2)
-                                    .bold()
-                                
-                                Spacer().frame(height: 8)
-                                
-                                ForEach(viewModel.order!.listProducts!, id: \.productId) { product in
-                                    ProductOrderCard(orderProduct: product)
-                                }
-                            }
-                            
-                            // MARK : Updates View
-                            if viewModel.order?.listUpdates != nil {
-                                VStack (alignment: .leading){
-                                    Text("Updates")
-                                        .font(.title2)
-                                        .bold()
-                                    
-                                    Spacer().frame(height: 8)
-                                    
-                                    ForEach(viewModel.order!.listUpdates!.reversed(), id: \.self) { update in
-                                        UpdateCard(update: update)
-                                    }
-                                }
-                                Spacer().frame(height: 20)
-                            }
-                            
+                            Text("\(order.statue)")
+                                .bold()
                         }
                     }
                     
-                    // MARK : BUTTONS
-                    buttons.background(Color.background)
+                    
+                    StepsView(currentStep: .constant(order.getCurrentStep()), steps:  ["Added", "Confirmed", "Ready", "Shipped", "Finished"])
+                        .stepShape(.circle)
+                        .lastStepShape(.downTriangle)
+                        .futureStepFillColor(.yellow)
+                        .currentStepFillColor(UIColor(Color.accentColor))
+                        .pastStepFillColor(UIColor(Color.accentColor))
+                        
+                    // MARK : SHIPPING OPTIONS
+                    if (order.requireDelivery ?? true) {
+                        VStack(alignment: .leading) {
+                            Text("Shipping Info")
+                                .font(.title2)
+                                .bold()
+                            
+                            Spacer().frame(height: 8)
+                            
+                            HStack(alignment: .center) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(order.name)
+                                    Text("\(order.gov), \(order.address)")
+                                    Text(order.gov)
+                                    Text(order.phone)
+                                }
+                                
+                                Spacer()
+                                
+                                if let image = snapshotImage {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .cornerRadius(12)
+                                        .frame(width: 140, height: 100)
+                                        .onTapGesture {
+                                            openLocation()
+                                        }
+                                }
+                                
+                            }
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            
+                            Spacer().frame(height: 4)
+                            
+                            if !(order.notes?.isBlank ?? true) {
+                                Text(order.notes ?? "")
+                                    .foregroundStyle(.red)
+                                    .bold()
+                            }
+                        }
+                    }
                     
                     
+                    // MARK : CONTACT BUTTON
+                    HStack {
+                        Image(systemName: "person.crop.circle")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(Color.accentColor)
+                        
+                        Text("Contact Customer")
+                    }
+                    .onTapGesture {
+                        contactSheet.toggle()
+                    }
+                    
+                    
+                    // MARK : ORDER SUMMERY
+                    VStack(alignment: .leading) {
+                        Text("Order Summery")
+                            .font(.title2)
+                            .bold()
+                        
+                        Spacer().frame(height: 8)
+                        
+                        HStack {
+                            Text("Products Price")
+                            Spacer()
+                            Text("+\(order.totalPrice) LE")
+                        }
+                        
+                        if (order.requireDelivery ?? true) {
+                            
+                            HStack {
+                                Text("Shipping Fees")
+                                Spacer()
+                                Text("+\(order.clientShippingFees) LE")
+                                    .foregroundColor(.yellow)
+                            }
+                        }
+                        
+                        if order.discount ?? 0 > 0 {
+                            HStack {
+                                Text("Discount")
+                                Spacer()
+                                Text("-\(order.discount ?? 0) LE")
+                                    .foregroundColor(.red)
+                            }
+                            
+                            
+                        }
+                        
+                        Divider()
+                        
+                        HStack {
+                            Text("COD")
+                            Spacer()
+                            Text("\(order.COD) LE")
+                                .foregroundColor(.green)
+                        }
+                        
+                    }
+                    .bold()
+                    
+                    
+                    //MARK : ORDER PRODUCTS
+                    VStack (alignment: .leading){
+                        Text("Products Details")
+                            .font(.title2)
+                            .bold()
+                        
+                        Spacer().frame(height: 8)
+                        
+                        ForEach(order.listProducts!, id: \.productId) { product in
+                            ProductOrderCard(orderProduct: product)
+                        }
+                    }
+                    
+                    // MARK : Updates View
+                    if order.listUpdates != nil {
+                        VStack (alignment: .leading){
+                            Text("Updates")
+                                .font(.title2)
+                                .bold()
+                            
+                            Spacer().frame(height: 8)
+                            
+                            ForEach(order.listUpdates!.reversed(), id: \.self) { update in
+                                UpdateCard(update: update)
+                                    .listRowSeparator(.hidden)
+                                    .swipeActions(allowsFullSwipe: false){
+                                        Button {
+                                            Task {
+                                                let result = try await UsersDao().getUser(uId: update.uId)
+                                                if result.exists {
+                                                    contactUser = result.item
+                                                }
+                                            }
+                                            
+                                        } label: {
+                                            Image(systemName: "message.circle.fill")
+                                        }
+                                        .tint(.green)
+                                    }
+                                    .buttonStyle(.plain)
+                            }
+                            
+                            
+                            // MARK : Add New Comment
+                            HStack {
+                                FloatingTextField(title: "Add Comment", text: $comment, required: nil)
+                                    .padding(4)
+                                
+                                Button {
+                                    withAnimation {
+                                        addComment()
+                                    }
+                                } label: {
+                                    Image(systemName: "paperplane")
+                                        .font(.title3)
+                                        .foregroundStyle(Color.accentColor)
+                                }
+                            }
+                            .padding()
+                            .background(.secondary.opacity(0.1))
+                            .cornerRadius(10)
+                            
+                            
+                            
+                        }
+                        
+                        
+                        Spacer().frame(height: 20)
+                    }
                 }
             }
-            .padding()
             
-            BottomSheet(isShowing: $contactSheet, content: {
-                AnyView(ContactDialog(phone: viewModel.order?.phone ?? "", toggle: $contactSheet))
-            }())
-        }
-        
-        .onAppear {
-            if viewModel.order != nil {
-                generateMapSnapshot(latLang: viewModel.order!.latLang)
+            // MARK : BUTTONS
+            if let myUser = myUser {
+                buttons.background(Color.background)
             }
         }
-        .overlay(alignment: .center, content: {
-            if viewModel.isLoading || viewModel.order == nil {
+        .padding()
+        .refreshable {
+            await getOrderData()
+        }
+        .onAppear {
+            generateMapSnapshot(latLang: order.latLang)
+        }
+        .overlay(alignment: .center) {
+            if isLoading {
                 ProgressView()
             }
-        })
+        }
         .confirmationDialog("Are you sure you want to delete the order ?", isPresented: $delete, titleVisibility: .visible, actions: {
             Button("Delete", role: .destructive) {
-                viewModel.delete()
+                deleteOrder()
             }
             
             Button("Later", role: .cancel) {
-                
             }
         })
+        .sheet(isPresented: $contactSheet, content: {
+            ContactDialog(phone: order.phone , toggle: $contactSheet)
+                .fixedInnerHeight($sheetHeight)
+        })
         .sheet(isPresented: $assignDialog) {
-            CourierPicker(storeId: storeId, selectedOption: $courier)
+            CourierPicker(storeId: order.storeId ?? "", selectedOption: $courier)
         }
-        
-        .onChange(of: courier) { newValue in
-            // Handle selectedOption changes here
-            if let option = newValue {
-                viewModel.assign(option)
-            }
-        }
-        .toast(isPresenting: $viewModel.showToast){
+        .sheet(item: $contactUser, content: { user in
+            ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
+                .fixedInnerHeight($sheetHeight)
+        })
+        .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: msg)
         }
+        .onChange(of: courier) { newValue in
+            if let option = newValue {
+                assign(option)
+            }
+        }
+        .navigationTitle("#\(order.id)")
+    }
+    
+    func getOrderData() async {
+        do {
+            let orderData = try await OrdersDao(storeId: order.storeId ?? "").getOrder(id: order.id)
+            DispatchQueue.main.async {
+                if !orderData.exists {
+                    self.showTosat("Order doesn't exist")
+                    return
+                }
+                self.order = orderData.item
+            }
+        } catch {
+            showTosat(error.localizedDescription)
+        }
+    }
+    
+    func confirm() {
+        Task {
+            let order = await OrderManager().confirmOrder(order:&order)
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.showTosat("Order Confirmed")
+            }
+        }
+    }
+    
+    func assign(_ courier:Courier) {
+        Task {
+            let order = await OrderManager().outForDelivery(order: &order, courier: courier)
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.showTosat("Order Is with courier")
+            }
+        }
+    }
+    
+    func ready() {
+        Task {
+            let order = await OrderManager().assambleOrder(order:&order)
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.showTosat("Order Is ready for Shipping")
+            }
+        }
+    }
+    
+    func deliver() {
+        Task {
+            let order  = await OrderManager().orderDelivered(order:&order)
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.showTosat("Order is Delivered")
+            }
+        }
+    }
+    
+    func reset() {
+        Task {
+            self.order = await OrderManager().resetOrder(order:&order)
+            self.showTosat("Order has been reset")
+        }
+    }
+    
+    func deleteOrder() {
+        Task {
+            let order = await OrderManager().orderDelete(order:&order).result
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.showTosat("Order deleted")
+            }
+        }
+    }
+    
+    func failed() {
+        Task {
+            
+            let order = await OrderManager().orderFailed(order:&order)
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.showTosat("Order Failed")
+            }
+        }
+    }
+    
+    func addComment() {
+        Task {
+            
+            let order = await OrderManager().addComment(order: &order, msg: comment, code: 0)
+            DispatchQueue.main.async { [order] in
+                self.order = order
+                self.comment = ""
+                showTosat("Comment added")
+            }
+        }
+    }
         
-        .navigationTitle("#\(viewModel.orderId)")
-        
+    func showTosat(_ msg: String) {
+        DispatchQueue.main.async {
+            self.msg = msg
+        }
     }
     
     var buttons: some View {
-       
         VStack (alignment: .leading, spacing: 6){
             HStack(spacing: 6) {
                 if showConfirm {
                     ButtonLarge(label: "Confirm") {
-                        viewModel.confirm()
+                        confirm()
                     }
                 }
                 
                 if showAssembleButton {
                     ButtonLarge(label: "Ready to ship") {
-                        viewModel.ready()
+                        ready()
                     }
                 }
                 
@@ -261,28 +426,28 @@ struct OrderDetails: View {
                         assignDialog.toggle()
                     }
                 }
-                
             }
-            
             
             HStack(spacing: 6) {
                 if showDeliverButton {
                     ButtonLarge(label: "Delivered", background: .green) {
-                        viewModel.deliver()
+                        deliver()
                     }
                 }
                 
-                if showFailed {
+                #warning("Active this")
+                /*if showFailed {
                     ButtonLarge(label: "Return Order", background: .gray) {
-                        viewModel.failed()
+                        failed()
                     }
-                }
+                }*/
                 
             }
+            
             HStack(spacing: 6) {
                 if showResetButton {
                     ButtonLarge(label: "Reset Order", background: .red) {
-                        viewModel.reset()
+                        reset()
                     }
                 }
                 
@@ -296,24 +461,24 @@ struct OrderDetails: View {
         }
     }
     
-    var showAssign:Bool {viewModel.user!.accountType == "Marketing" ? false : viewModel.order?.statue == "Assembled"}
+    var showAssign:Bool {myUser!.accountType == "Marketing" ? false : order.statue == "Assembled"}
     
-    var showConfirm:Bool { viewModel.order?.statue == "Pending" }
+    var showConfirm:Bool { order.statue == "Pending" }
     
-    var showAssembleButton: Bool { viewModel.user!.accountType == "Marketing" ? false : viewModel.order?.statue == "Confirmed" }
+    var showAssembleButton: Bool { myUser!.accountType == "Marketing" ? false : order.statue == "Confirmed" }
     
-    var showDeliverButton: Bool { viewModel.user!.accountType == "Marketing" ? false : viewModel.order?.statue == "Assembled" || viewModel.order?.statue == "Out For Delivery" }
+    var showDeliverButton: Bool { myUser!.accountType == "Marketing" ? false : order.statue == "Assembled" || order.statue == "Out For Delivery" }
     
-    var showFailed: Bool { viewModel.user!.accountType == "Marketing" ? false : (viewModel.order?.requireDelivery ?? true) && viewModel.order?.statue == "Out For Delivery" }
+    var showFailed: Bool { myUser!.accountType == "Marketing" ? false : (order.requireDelivery ?? true) && order.statue == "Out For Delivery" }
     
     var showResetButton:Bool {
-        if viewModel.order?.statue == "Pending" { return false }
+        if order.statue == "Pending" { return false }
         
-        if viewModel.user!.accountType == "Owner" || viewModel.user!.accountType == "Store Admin" {
+        if myUser!.accountType == "Owner" || myUser!.accountType == "Store Admin" {
             return true
         }
         
-        if (viewModel.user?.store?.canWorkersReset ?? false) && viewModel.user!.accountType == "Worker" {
+        if (myUser?.store?.canWorkersReset ?? false) && myUser!.accountType == "Worker" {
             return true
         }
         
@@ -321,15 +486,15 @@ struct OrderDetails: View {
     }
     
     var showDelete:Bool {
-        return viewModel.order!.canDeleteOrder(accountType: viewModel.user!.accountType)
+        return order.canDeleteOrder(accountType: myUser!.accountType)
     }
     
     func openLocation() {
-        if viewModel.order?.latLang == nil { return }
-        
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: (viewModel.order?.latLang)!, addressDictionary:nil))
-        mapItem.name = "\(viewModel.order!.name) - #\(viewModel.order!.id)"
-        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        if let location = order.latLang  {
+            let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: location, addressDictionary:nil))
+            mapItem.name = "\(order.name) - #\(order.id)"
+            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+        }
     }
     
     func generateMapSnapshot(latLang: CLLocationCoordinate2D?) {

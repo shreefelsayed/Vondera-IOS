@@ -19,6 +19,7 @@ class CheckOutViewModel: ObservableObject {
     @Published var discount = "0"
     @Published var paid = false
     @Published var whats = false
+    @Published var marketPlaceId = ""
     
     @Published var isSaving = false
     @Published var showToast = false
@@ -43,6 +44,7 @@ class CheckOutViewModel: ObservableObject {
         }
     }
     
+    
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
         didSet {
@@ -51,21 +53,23 @@ class CheckOutViewModel: ObservableObject {
     }
     
     var storeId:String
+    var shipping:Bool
+
     var listItems:[OrderProductObject]
     
     var ordersDao:OrdersDao
     var clientsDao:ClientsDao
-    var myUser:UserData?
+    var myUser = UserInformation.shared.getUser()
     
-    init(storeId: String, listItems:[OrderProductObject]) {
+    init(storeId: String, listItems:[OrderProductObject], shipping: Bool) {
         self.storeId = storeId
+        self.shipping = shipping
         self.listItems = listItems
         self.ordersDao = OrdersDao(storeId: storeId)
         self.clientsDao = ClientsDao(storeId: storeId)
-        
+        self.myUser = UserInformation.shared.getUser()
+
         Task {
-            myUser = await LocalInfo().getLocalUser()
-            
             if myUser!.store!.listAreas!.isEmpty {
                 self.shouldDismissView = true
                 return
@@ -73,6 +77,10 @@ class CheckOutViewModel: ObservableObject {
             
             self.gov = myUser?.store?.listAreas?.first?.govName ?? ""
             await genrateId()
+            
+            if let market = myUser?.store?.listMarkets?.first {
+                marketPlaceId = market.id
+            }
         }
     }
     
@@ -95,6 +103,7 @@ class CheckOutViewModel: ObservableObject {
     var cod: Int {
         return totalPrice + (Int(shippingFees) ?? 0) - (Int(discount) ?? 0)
     }
+    
     var totalPrice : Int {
         var price = 0
         for item in listItems {
@@ -133,21 +142,26 @@ class CheckOutViewModel: ObservableObject {
         }
         
         
-        var order = Order(id: id, name: name, address: address, phone: phone, gov: gov, notes: notes, discount: Int(discount) ?? 0, clientShippingFees: Int(shippingFees) ?? 0)
+        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: Int(discount) ?? 0, clientShippingFees:(shipping ?  Int(shippingFees) ?? 0 : 0))
         
         order.listProducts = listItems
         order.addBy = myUser?.id ?? ""
         order.isPaid = paid
+        order.marketPlaceId = marketPlaceId
         order.storeId = storeId
         order.otherPhone = otherPhone
+        order.requireDelivery = shipping
         order.owner = myUser?.name ?? ""
         order.listUpdates?.append(Updates(uId: myUser?.id ?? "", code: 12))
         
-        await OrderManager().addOrder(order: &order)
+        if let newOrder = await OrderManager().addOrder(order: &order) {
+            order = newOrder
+        }
 
         DispatchQueue.main.async { [order] in
+            
             if self.whats {
-                Contact().openWhatsApp(phoneNumber: self.phone, message: order.toString())
+                _ = Contact().openWhatsApp(phoneNumber: self.phone, message: order.toString())
             }
             
             self.isSaving = false
@@ -179,12 +193,12 @@ class CheckOutViewModel: ObservableObject {
             return false
         }
         
-        if gov.isBlank {
+        if gov.isBlank && shipping {
             showToast("Please enter the client state")
             return false
         }
         
-        if address.isBlank {
+        if address.isBlank && shipping {
             showToast("Please enter the client address")
             return false
         }
@@ -213,74 +227,91 @@ class CheckOutViewModel: ObservableObject {
 struct CheckOut: View {
     var storeId: String
     var listItems: [OrderProductObject]
-    @State var shipping = true
+    var shipping:Bool
+    var onSubmited:(() -> ())
     
     @ObservedObject var viewModel: CheckOutViewModel
     @Environment(\.presentationMode) private var presentationMode
     
-    init(storeId: String, listItems: [OrderProductObject], shipping: Bool = true) {
+    init(storeId: String, listItems: [OrderProductObject], shipping: Bool, onSubmited : @escaping (() -> ())) {
         self.storeId = storeId
         self.listItems = listItems
-        self._shipping = State(initialValue: shipping)
-        _viewModel = ObservedObject(initialValue: CheckOutViewModel(storeId: storeId, listItems: listItems))
+        self.shipping = shipping
+        self.onSubmited = onSubmited
+        
+        _viewModel = ObservedObject(initialValue: CheckOutViewModel(storeId: storeId, listItems: listItems, shipping: shipping))
     }
     
     
     var body: some View {
         ScrollView (showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
+                // MARK : Market Places
+                if viewModel.myUser?.store?.listMarkets != nil {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(MarketsManager().getEnabledMarkets(storeMarkets: viewModel.myUser!.store!.listMarkets!)) { market in
+                                MarketHeaderCard(marketId: market.id, turnedOff: viewModel.marketPlaceId != market.id)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            viewModel.marketPlaceId = market.id
+                                        }
+                                    }
+                            }
+                        }
+                        
+                    }
+                }
                 
+                // MARK : Client Info
                 VStack(alignment: .leading) {
                     Text("Client info")
                         .font(.title2)
                         .bold()
                     
-                    TextField("Phone Number", text: $viewModel.phone)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.phonePad)
+                    FloatingTextField(title: "Phone Number", text: $viewModel.phone, required: true, keyboard: .phonePad)
                     
-                    TextField("Full Name", text: $viewModel.name)
-                        .textFieldStyle(.roundedBorder)
-                        .autocapitalization(.words)
                     
-                    TextField("Other Phone Number", text: $viewModel.otherPhone)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.phonePad)
+                    FloatingTextField(title: "Full Name", text: $viewModel.name, required: true, autoCapitalize: .words)
+                    
+                    
+                    FloatingTextField(title: "Other Phone Number", text: $viewModel.otherPhone, required: false, keyboard: .phonePad)
                     
                     Divider()
                 }
                 
                 
-                // Picker
-                VStack(alignment: .leading) {
-                    Text("Shipping info")
-                        .font(.title2)
-                        .bold()
-                    
-                    HStack {
-                        Text("Government")
+                // Shipping Info
+                if shipping {
+                    VStack(alignment: .leading) {
+                        Text("Shipping info")
+                            .font(.title2)
+                            .bold()
                         
-                        Spacer()
-                        
-                        Picker("Government", selection: $viewModel.gov) {
-                            ForEach(viewModel.myUser!.store!.listAreas!, id: \.self) { area in
-                                Text(area.govName)
-                                    .tag(area.govName)
+                        if let list = viewModel.myUser?.store?.listAreas?.uniqueElements() {
+                            HStack {
+                                Text("Government")
+                                
+                                Spacer()
+                                
+                                Picker("Government", selection: $viewModel.gov) {
+                                    ForEach(list, id: \.self) { area in
+                                        Text(area.govName)
+                                            .tag(area.govName)
+                                    }
+                                }
                             }
                         }
+                        
+                        FloatingTextField(title: "Address", text: $viewModel.address, required: true, multiLine: true, autoCapitalize: .sentences)
+                        
+                        Divider()
                     }
-                    
-                    TextField("Address", text: $viewModel.address, axis: .vertical)
-                        .lineLimit(5, reservesSpace: true)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    Divider()
                 }
                 
                 VStack(alignment: .leading) {
-                    TextField("Notes", text: $viewModel.notes, axis: .vertical)
-                        .lineLimit(5, reservesSpace: true)
-                        .textFieldStyle(.roundedBorder)
+                    FloatingTextField(title: "Notes", text: $viewModel.notes, required: false, multiLine: true, autoCapitalize: .sentences)
+                    
                     
                     Divider()
                 }
@@ -290,13 +321,13 @@ struct CheckOut: View {
                         .font(.title2)
                         .bold()
                     
-                    TextField("Shipping Fees", text: $viewModel.shippingFees)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.numberPad)
+                    if shipping {
+                        FloatingTextField(title: "Shipping Fees", text: $viewModel.shippingFees, required: true, keyboard: .numberPad)
+                    }
                     
-                    TextField("Discount", text: $viewModel.discount)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.numberPad)
+                    
+                    FloatingTextField(title: "Discount", text: $viewModel.discount, required: false, keyboard: .numberPad)
+                    
                     
                     Divider()
                 }
@@ -306,7 +337,11 @@ struct CheckOut: View {
                         .font(.title2)
                         .bold()
                     
-                    Toggle("Order prepaid", isOn: $viewModel.paid)
+                    if shipping && (viewModel.myUser?.store?.canPrePaid ?? false) {
+                        
+                        Toggle("Order prepaid", isOn: $viewModel.paid)
+                    }
+                    
                     
                     Toggle("Send Whatsapp message", isOn: $viewModel.whats)
                     
@@ -324,11 +359,15 @@ struct CheckOut: View {
                         Text("+\(viewModel.totalPrice) LE")
                     }
                     
-                    HStack {
-                        Text("Shipping Fees")
-                        Spacer()
-                        Text("+\(viewModel.shippingFees) LE").foregroundColor(.yellow)
+                    if shipping {
+                        HStack {
+                            Text("Shipping Fees")
+                            Spacer()
+                            Text("+\(viewModel.shippingFees) LE").foregroundColor(.yellow)
+                                
+                        }
                     }
+                    
                     
                     HStack {
                         Text("Discount")
@@ -366,8 +405,10 @@ struct CheckOut: View {
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
+                onSubmited()
             }
         }
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .toast(isPresenting: $viewModel.showToast){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
@@ -379,6 +420,8 @@ struct CheckOut: View {
 
 struct CheckOut_Previews: PreviewProvider {
     static var previews: some View {
-        CheckOut(storeId: Store.Qotoofs(), listItems: [])
+        CheckOut(storeId: Store.Qotoofs(), listItems: [], shipping: true) {
+            
+        }
     }
 }

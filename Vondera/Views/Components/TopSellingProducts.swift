@@ -9,7 +9,7 @@ import SwiftUI
 import NetworkImage
 
 struct TopSellingProducts: View {
-    var prodsList:[Product] = [Product]()
+    @Binding var prodsList:[StoreProduct]
     
     var body: some View {
         ScrollView {
@@ -17,20 +17,11 @@ struct TopSellingProducts: View {
                 Text("Top Selling Products 📦")
                     .font(.title2.bold())
             
-                ForEach(prodsList) { prod in
-                    ProductSoldView(prod: prod)
+                ForEach($prodsList.indices, id: \.self) { index in
+                    ProductSoldView(prod: $prodsList[index])
                 }
             }
 
         }
     }
 }
-
-
-
-struct TopSellingProducts_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductSoldView(prod: Product.example())
-    }
-}
-

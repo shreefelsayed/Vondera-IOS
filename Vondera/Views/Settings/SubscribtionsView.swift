@@ -56,9 +56,7 @@ struct SubscribtionsView: View {
         }
         .padding()
         .onAppear {
-            Task {
-                self.myUser = await LocalInfo().getLocalUser()
-            }
+            self.myUser = UserInformation.shared.getUser()
         }
         .navigationTitle("Subscribtion")
         

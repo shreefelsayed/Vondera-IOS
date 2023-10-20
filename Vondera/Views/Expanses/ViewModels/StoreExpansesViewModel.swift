@@ -8,28 +8,24 @@
 import Foundation
 import Combine
 import FirebaseFirestore
-import AdvancedList
 
 class StoreExpansesViewModel : ObservableObject {
     var storeId:String
     
     var expansesDao:ExpansesDao
-    @Published var state:ListState = .items
+    @Published var isLoading = false
+    
     @Published var items = [Expense]()
+    @Published var result = [Expense]()
+
     @Published var canLoadMore = true
-    @Published var error = ""
+    @Published var msg:String?
     
     // --> Server search
     private var cancellables = Set<AnyCancellable>()
     @Published var searchText = ""
-    @Published var result = [Expense]()
     
     private var lastSnapshot:DocumentSnapshot?
-    
-    var filteredItems: [Expense] {
-        guard !searchText.isEmpty else { return items }
-        return result
-    }
     
     init(storeId:String) {
         self.storeId = storeId
@@ -37,6 +33,7 @@ class StoreExpansesViewModel : ObservableObject {
         
         Task {
             await getData()
+            initSearch()
         }
     }
     
@@ -44,7 +41,6 @@ class StoreExpansesViewModel : ObservableObject {
     func deleteItem(item:Expense) {
         Task {
             try await expansesDao.delete(id:item.id)
-            
             DispatchQueue.main.sync {
                 items.removeAll(where: { $0.id == item.id })
             }
@@ -52,67 +48,50 @@ class StoreExpansesViewModel : ObservableObject {
     }
     
     func refreshData() async {
-        DispatchQueue.main.sync {
-            self.canLoadMore = true
-            self.lastSnapshot = nil
-            self.items.removeAll()
-        }
+        self.canLoadMore = true
+        self.lastSnapshot = nil
+        self.items.removeAll()
+        self.searchText = ""
         await getData()
     }
     
     func getData() async {
-        guard state != .loading || !canLoadMore else {
+        guard !isLoading || !canLoadMore else {
             return
         }
         
         do {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil { state = .loading }
-            }
-            
+            self.isLoading = true
             let result = try await expansesDao.getExpanses(lastSnapShot: lastSnapshot)
-            
-            
-            DispatchQueue.main.sync {
                 lastSnapshot = result.1
                 items.append(contentsOf: result.0)
                 if result.0.count == 0 {
                     self.canLoadMore = false
                 }
-                initSearch()
-                state = .items
-            }
+                
+                isLoading = false
+            
         } catch {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil { state = .error(error as NSError) }
-            }
+            isLoading = false
         }
         
     }
     
     func initSearch() {
         $searchText
-            .sink { newValue in
-                self.search(newValue)
+            .debounce(for: .seconds(1.2), scheduler: RunLoop.main) // Adjust the debounce time as needed
+            .removeDuplicates() // To avoid duplicate values
+            .sink { [self] newValue in
+                if !newValue.isBlank {
+                    Task {
+                        do {
+                            result = try await self.expansesDao.search(text: searchText).sorted(by: { $0.date!.toDate() < $1.date!.toDate() })
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
             }
             .store(in: &cancellables)
-    }
-    
-    func search(_ text:String) {
-        guard !text.isBlank else {
-            return
-        }
-        
-        Task {
-            do {
-                let result = try await self.expansesDao.search(text: text)
-                DispatchQueue.main.sync {
-                    self.result = result.sorted(by: { $0.date!.toDate() < $1.date!.toDate() })
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-        }
     }
 }

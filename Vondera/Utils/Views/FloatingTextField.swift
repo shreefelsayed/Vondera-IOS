@@ -11,46 +11,73 @@ struct FloatingTextField: View {
     let title: String
     let text: Binding<String>
     var caption:String?
-    var required:Bool = false
+    var required:Bool? = false
     var secure:Bool = false
     var multiLine:Bool = false
+    var autoCapitalize:TextInputAutocapitalization = .never
+    var keyboard:UIKeyboardType = .default
+    var isNumric = false
+    var number: Binding<Int>?
+    var isDiabled = false
 
 
     var body: some View {
         
         VStack(alignment: .leading, spacing: 2) {
-            if !text.wrappedValue.isEmpty {
+            if !text.wrappedValue.isEmpty || multiLine {
                 Text(title)
                     .font(.caption)
                     .foregroundColor(Color(.placeholderText))
-                    .opacity(text.wrappedValue.isEmpty ? 0 : 1)
-                    .offset(y: text.wrappedValue.isEmpty ? 20 : 0)
+                    .opacity(text.wrappedValue.isEmpty && !multiLine ? 0 : 1)
+                    .offset(y: text.wrappedValue.isEmpty && !multiLine ? 20 : 0)
             }
             
             
             HStack {
                 if secure {
-                    SecureField(title, text: text)
+                    HybridTextField(text: text, titleKey: title)
                 } else {
                     if multiLine {
-                        TextField(title, text: text)
-                            .lineLimit(5, reservesSpace: true)
-                            .textInputAutocapitalization(.sentences)
-                            .multilineTextAlignment(.leading)
+                        TextEditor(text: text)
+                            .keyboardType(keyboard)
+                            .frame(height: 100)
+                            .textInputAutocapitalization(autoCapitalize)
+                            .disabled(isDiabled)
+                        
+                            //.textInputAutocapitalization(autoCapitalize)
                     } else {
-                        TextField(title, text: text)
+                        if isNumric && number != nil {
+                            TextField(title, value: number!, formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
+                                .disabled(isDiabled)
+                        } else {
+                            TextField(title, text: text)
+                                .keyboardType(keyboard)
+                                .textInputAutocapitalization(autoCapitalize)
+                                .disabled(isDiabled)
+                        }
+                        
+                        
+                        
+                        
                     }
                         
                 }
                 
-                Text(required ? "Required" : "Optional")
-                    .foregroundStyle(.gray)
+                if required != nil {
+                    Text(required! ? "Required" : "Optional")
+                        .foregroundStyle(.gray)
+                }
+                
             }
             
             
             if caption != nil {
                 Text(caption!)
                     .font(.caption)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    
             }
             
         }.animation(.default)

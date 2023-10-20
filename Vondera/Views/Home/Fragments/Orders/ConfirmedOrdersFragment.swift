@@ -9,44 +9,32 @@ import SwiftUI
 
 struct ConfirmedOrdersFragment: View {
     @ObservedObject var viewModel = ConfirmedViewModel()
+    @State var selectOrders = false
     
     var body: some View {
-        ScrollView {
-            PullToRefreshOld(coordinateSpaceName: "scrollView") {
-                Task {
-                    await viewModel.getOrdersList()
+        List {
+            SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Orders")
+            
+            ForEach($viewModel.items.indices, id: \.self) { index in
+                if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
+                    OrderCard(order: $viewModel.items[index]) {
+                        selectOrders.toggle()
+                    }
                 }
             }
-            
-            VStack(spacing: 12) {
-                
-                HStack {
-                    SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Orders")
-                    
-                
-                    
-                    NavigationLink(destination: OrderSelectView(list: $viewModel.items)) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.accentColor)
-                    }
-                    
-                }
-                
-                ForEach(viewModel.filteredItems) {order in
-                    OrderCard(order: order)
-                }
-            }.isHidden(viewModel.items.isEmpty)
+        }
+        .listStyle(.plain)
+        .refreshable {
+            await viewModel.getData()
         }
         .overlay(alignment: .center) {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if viewModel.items.isEmpty {
-                EmptyMessageView(msg: "No confirmed orders found")
+            if viewModel.items.isEmpty {
+                EmptyMessageView(msg: "No Confirmed orders found")
             }
         }
-        .coordinateSpace(name: "scrollView")
+        .navigationDestination(isPresented: $selectOrders) {
+            OrderSelectView(list: $viewModel.items)
+        }
     }
 }
 

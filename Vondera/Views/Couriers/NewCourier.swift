@@ -21,55 +21,33 @@ struct NewCourier: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                // --> Main Data
-                Text("Courier info")
-                    .font(.title2)
-                    .bold()
+        List {
+            Section("Courier Info") {
                 
-                TextField("Courier Name", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.words)
-                    
-                TextField("Courier Phone", text: $viewModel.phone)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.phonePad)
-                        
-                Spacer().frame(height: 26)
+                FloatingTextField(title: "Courier Name", text: $viewModel.name, caption: "This is the courier company name", required: true, autoCapitalize: .words)
                 
-                Text("Shipping Prices")
-                    .font(.title2)
-                    .bold()
+                FloatingTextField(title: "Courier Contact Phone", text: $viewModel.phone, caption: "This will help you contact the courier company easily", required: true, keyboard: .phonePad)
+            }
+            
+            Section("Shipping Fees") {
+                Text("Note that the courier shipping fees will be detected from your net proft, this is the price that the couriers get for his service for you")
+                    .font(.body)
                 
-                // --> Item List
-                ForEach(viewModel.items, id: \.self) { item in
+                
+                ForEach($viewModel.items.indices, id: \.self) { index in
                     VStack {
                         HStack {
-                            Text(item.govName)
+                            Text(viewModel.items[index].govName)
+                            
                             Spacer()
-                            TextField("Price", text: Binding(
-                                get: { String(item.price) },
-                                set: { newValue in
-                                    if let newPrice = Int(newValue) {
-                                        // Update the price of the item
-                                        if let index = viewModel.items.firstIndex(of: item) {
-                                            viewModel.items[index].price = newPrice
-                                        }
-                                    }
-                                }
-                            ))
-                            .frame(width: 60)
+                            
+                            FloatingTextField(title: "Price", text: .constant(""), required: nil, isNumric: true, number: $viewModel.items[index].price)
+                                .frame(width: 80)
                         }
-                        
-                        Divider()
                     }
-                    
                 }
-
             }
         }
-        .padding()
         .navigationTitle("New Courier")
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {

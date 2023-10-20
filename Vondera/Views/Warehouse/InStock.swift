@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct InStock: View {
     var storeId:String
@@ -14,33 +13,38 @@ struct InStock: View {
     
     init(storeId: String) {
         self.storeId = storeId
-        print("View inited")
         self.viewModel = InStockViewModel(storeId: storeId)
     }
     
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
-            AdvancedList(viewModel.items, listView: { rows in
-                if #available(iOS 14, macOS 11, *) {
-                    ScrollView(showsIndicators: false) {
-                        LazyVStack(alignment: .leading, content: rows)
-                            .padding()
+            List {
+                ForEach($viewModel.items) { item in
+                    WarehouseCard(prod: item)
+                    
+                    if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .onAppear {
+                            loadItem()
+                        }
                     }
-                } else {
-                    List(content: rows)
                 }
-            }, content: { item in
-                WarehouseCard(prod: item)
-            }, listState: viewModel.state, emptyStateView: {
-                EmptyMessageView(msg: "No items are in the warehouse")
-            }, errorStateView: { error in
-                Text(error.localizedDescription).lineLimit(nil)
-            }, loadingStateView: {
-                ProgressView()
-            }).pagination(.init(type: .lastItem, shouldLoadNextPage: {
-                loadItem()
-            }) {
-            })
+            }
+            .refreshable {
+                await refreshData()
+            }
+            .listStyle(.plain)
+            .overlay {
+                if viewModel.isLoading && viewModel.items.isEmpty {
+                    ProgressView()
+                } else if !viewModel.isLoading && viewModel.items.isEmpty {
+                    EmptyMessageView(msg: "No items are in the warehouse")
+                }
+            }
             
             FloatingActionButton(symbolName: "square.and.arrow.up.fill") {
                 
@@ -48,19 +52,19 @@ struct InStock: View {
                     .generateReport()
             }
         }
-        
     }
     
     func loadItem() {
-        if !viewModel.canLoadMore { return }
         Task {
             await viewModel.getData()
         }
     }
+    
+    func refreshData() async {
+        await viewModel.refreshData()
+    }
 }
 
-struct InStock_Previews: PreviewProvider {
-    static var previews: some View {
-        InStock(storeId: "")
-    }
+#Preview {
+    InStock(storeId: Store.Qotoofs())
 }

@@ -9,23 +9,10 @@ import SwiftUI
 import NetworkImage
 
 struct ExpansesCard: View {
-    var expanse:Expense
-    var showData:Bool = false
+    @Binding var expanse:Expense
     
     var body: some View {
         VStack(alignment: .center) {
-            if showData {
-                Text(expanse.date?.toString(format: "MMMM"))
-                    .foregroundColor(.white)
-                    .bold()
-                    .padding(5)
-                    .background {
-                        Rectangle()
-                            .foregroundColor(.accentColor)
-                            .cornerRadius(12)
-                    }
-                    .padding(5)
-            }
             HStack(alignment: .center) {
                 VStack(alignment: .leading) {
                     Text(expanse.description)
@@ -36,7 +23,6 @@ struct ExpansesCard: View {
                         .foregroundColor(.secondary)
                 }
                
-                
                 Spacer()
                 
                 Text("-\(expanse.amount) LE")
@@ -44,13 +30,6 @@ struct ExpansesCard: View {
                     .foregroundColor(.red)
                     .bold()
             }
-            Divider()
         }
-    }
-}
-
-struct ExpansesCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ExpansesCard(expanse: Expense.example())
     }
 }

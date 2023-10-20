@@ -55,6 +55,15 @@
       }
     },
     {
+      "identity" : "chartview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AppPear/ChartView",
+      "state" : {
+        "revision" : "9115a992c91fa19cbb4f2241084240d38654a1fc",
+        "version" : "1.5.5"
+      }
+    },
+    {
       "identity" : "cocoatextfield",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/edgar-zigis/CocoaTextField",
@@ -208,6 +217,15 @@
       }
     },
     {
+      "identity" : "linechartview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Jonathan-Gander/LineChartView",
+      "state" : {
+        "revision" : "91416f04a04ad3117e4fe58c35a24bb66e57ebb4",
+        "version" : "1.4.0"
+      }
+    },
+    {
       "identity" : "listpagination",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/crelies/ListPagination",
@@ -304,6 +322,33 @@
       "state" : {
         "revision" : "b0f0662977418824d50546b2850a523dcd793bb0",
         "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "stepperview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/badrinathvm/StepperView",
+      "state" : {
+        "revision" : "c66fb84c640fbc312f4eead0b7ae2a77f93e0839",
+        "version" : "1.6.7"
+      }
+    },
+    {
+      "identity" : "stepprogressview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yonat/StepProgressView",
+      "state" : {
+        "revision" : "0c70b52a8e8c52dd1738ca913be64baa0417191b",
+        "version" : "1.6.3"
+      }
+    },
+    {
+      "identity" : "sweeterswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yonat/SweeterSwift",
+      "state" : {
+        "revision" : "aff918fc4e8cba40c51b1df99766594e3acc4eb1",
+        "version" : "1.2.3"
       }
     },
     {

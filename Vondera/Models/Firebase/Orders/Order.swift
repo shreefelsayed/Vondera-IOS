@@ -33,7 +33,6 @@ struct Order: Codable, Identifiable, Equatable {
     var statue: String = "Pending" //Pending - Confirmed - Assembled - Out For Delivery - Delivered - Failed - Deleted
     
     // --> Market Place
-    var marketPlace: String? = ""
     var marketPlaceId: String? = ""
     
     var discount: Int? = 0
@@ -220,6 +219,14 @@ struct Order: Codable, Identifiable, Equatable {
         }
     }
     
+    func canEditPrice() -> Bool {
+        if statue == "Delivered" || statue == "Failed" {
+            return false
+        }
+        
+        return true
+    }
+    
     func canDeleteOrder(accountType: String) -> Bool {
         if statue == "Deleted" {
             return false
@@ -240,7 +247,12 @@ struct Order: Codable, Identifiable, Equatable {
 
 extension Order {
     func filter(searchText:String) -> Bool {
-        return self.name.localizedCaseInsensitiveContains(searchText)
+        if searchText.isBlank {
+            return true
+        }
+        
+        return self.id.localizedCaseInsensitiveContains(searchText)
+        || self.name.localizedCaseInsensitiveContains(searchText)
         || self.phone.localizedCaseInsensitiveContains(searchText)
         || self.gov.localizedCaseInsensitiveContains(searchText)
         || self.address.localizedCaseInsensitiveContains(searchText)
@@ -252,7 +264,7 @@ extension Order {
         str = str + "Client Name. \(self.name) \n"
         str = str + "Client Phone. \(self.phone) \n"
         if !(self.otherPhone?.isEmpty ?? true) {
-            str = str + "Client Other phone. \(self.name) \n"
+            str = str + "Client Other phone. \(self.otherPhone!) \n"
         }
         str = str + "Client address. \(self.gov), \(self.address) \n"
         str = str + "Products. \(self.productsInfo) \n"
@@ -269,4 +281,27 @@ extension Order {
         order.listProducts = [product]
         return order
     }
+    
+    func getCurrentStep() -> Int {
+        var step = 0
+        switch self.statue {
+        case "Pending" :
+            step = 0
+        case "Confirmed":
+            step = 1
+        case "Assembled":
+            step = 2
+        case "Out For Delivery" :
+            step = 3
+        case "Delivered" :
+            step = 4
+        case "Failed":
+            step = 4
+        default:
+            step = 0
+        }
+        
+        return step
+    }
+    
 }

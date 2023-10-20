@@ -10,39 +10,40 @@ import NetworkImage
 
 struct EmployeeCard: View {
     var user:UserData
-    var onClick: (() -> ())?
+    
+    @State private var sheetHeight: CGFloat = .zero
+    @State var showContact = false
     
     var body: some View {
-        VStack(alignment: .leading) {
+        NavigationLink(destination: EmployeeProfile(user: user)) {
             HStack(alignment: .center) {
-                NetworkImage(url: URL(string: user.userURL)) { image in
-                    image.centerCropped()
-                } placeholder : {
-                    Color.gray
-                } fallback: {
-                    Image("defaultPhoto")
-                        .resizable()
-                        .centerCropped()
-                }
-                .background(Color.white)
-                .frame(width: 60, height: 60)
-                .clipShape(Circle())
-                 
+                ImagePlaceHolder(url: user.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
                 
                 VStack(alignment:.leading) {
                     Text(user.name)
-                        .font(.title2)
                         .bold()
                     
                     Text(user.stringAccountType())
-                        .font(.headline)
-    
+                    
+                    Text("Orders \(user.ordersCount ?? 0)")
+                        .font(.caption)
                 }
             }
-            .padding(2)
-            
-            Divider()
         }
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+            Button {
+                showContact.toggle()
+            } label: {
+                Image(systemName: "ellipsis.message.fill")
+            }
+            .tint(.green)
+        }
+        .sheet(isPresented: $showContact) {
+            ContactDialog(phone: user.phone, toggle: $showContact)
+                .fixedInnerHeight($sheetHeight)
+        }
+        .buttonStyle(.plain)
+        
     }
 }
 

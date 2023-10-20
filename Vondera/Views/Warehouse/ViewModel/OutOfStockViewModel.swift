@@ -7,14 +7,13 @@
 
 import Foundation
 import FirebaseFirestore
-import AdvancedList
 
 class OutOfStockViewModel: ObservableObject {
     var storeId:String
     var productsDao:ProductsDao
     
-    @Published var state:ListState = .items
-    @Published var items = [Product]()
+    @Published var isLoading = false
+    @Published var items = [StoreProduct]()
     @Published var canLoadMore = true
     @Published var error = ""
     
@@ -34,31 +33,23 @@ class OutOfStockViewModel: ObservableObject {
         self.canLoadMore = true
         self.lastSnapshot = nil
         self.items.removeAll()
-        await getData(refreshing: true)
+        await getData()
     }
     
-    func getData(refreshing:Bool = false) async {
-        guard state != .loading || !canLoadMore else {
+    func getData() async {
+        guard !isLoading && canLoadMore else {
             return
         }
         
         do {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil { state = .loading }
-            }
-           
+            isLoading = true
             let result = try await productsDao.getOutOfStock(lastSnapShot: lastSnapshot)
-            
-            DispatchQueue.main.sync {
-                lastSnapshot = result.1
-                items.append(contentsOf: result.0)
-                self.canLoadMore = !result.0.isEmpty
-                state = .items
-            }
+            lastSnapshot = result.1
+            items.append(contentsOf: result.0)
+            self.canLoadMore = !result.0.isEmpty
+            isLoading = false
         } catch {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil  { state = .error(error as NSError) }
-            }
+            isLoading = false
         }
     }
 }

@@ -9,14 +9,14 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Expense: Codable, Identifiable, Equatable {
+struct Expense: Codable, Identifiable, Equatable, Hashable {
     var id: String = ""
     @ServerTimestamp var date:Timestamp? = Timestamp(date: Date())
     var amount: Int = 0
     var description: String = ""
     var madeBy: String = ""
     var name: String = ""
-
+    
     init(amount: Int, description: String, madeBy: String) {
         self.amount = amount
         self.description = description
@@ -24,8 +24,8 @@ struct Expense: Codable, Identifiable, Equatable {
     }
     
     static func ==(lhs: Expense, rhs: Expense) -> Bool {
-            return lhs.id == rhs.id
-        }
+        return lhs.id == rhs.id
+    }
 }
 
 extension Expense {

@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class ProductPriceViewModel : ObservableObject {
-    @Published var product:Product
+    @Published var product:StoreProduct
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     var productsDao:ProductsDao
 
@@ -22,14 +22,14 @@ class ProductPriceViewModel : ObservableObject {
     
     @Published var price = 0
     @Published var cost = 0
+    @Published var crossed = 0
 
     @Published var isSaving = false
     @Published var isLoading = false
 
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     
-    init(product:Product) {
+    init(product:StoreProduct) {
         self.product = product
         self.productsDao = ProductsDao(storeId: product.storeId)
 
@@ -43,10 +43,12 @@ class ProductPriceViewModel : ObservableObject {
         DispatchQueue.main.async {
             self.isLoading = true
         }
+        
         do {
             self.product = try await productsDao.getProduct(id: product.id)!
             self.cost = Int(product.buyingPrice)
             self.price = Int(product.price)
+            self.crossed = Int(product.crossedPrice ?? 0)
         } catch {
             print(error.localizedDescription)
         }
@@ -56,23 +58,40 @@ class ProductPriceViewModel : ObservableObject {
         }
     }
     
+    func check() -> Bool{
+        guard price != 0 else {
+            msg = "Selling price can't be Zero"
+            return false
+        }
+        
+        if crossed > 0 && crossed < price {
+            msg = "Crossed price can't be less than the selling price"
+            return false
+        }
+        
+        return true
+    }
+    
     func update() async {
+        guard check() else {
+            return
+        }
+        
         DispatchQueue.main.async {
             self.isSaving = true
         }
         
         do {
             // --> Update the database
-            var map:[String:Any] = ["buyingPrice": cost, "price" : price]
+            let map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
             try await productsDao.update(id: product.id, hashMap: map)
             
-            
-            showTosat(msg: "Product cost and price changed")
             DispatchQueue.main.async {
+                self.msg = "Product cost and price changed"
                 self.shouldDismissView = true
             }
         } catch {
-            showTosat(msg: error.localizedDescription)
+            msg = error.localizedDescription
         }
         
         
@@ -80,10 +99,5 @@ class ProductPriceViewModel : ObservableObject {
             self.isSaving = false
         }
         
-    }
-    
-    func showTosat(msg: String) {
-        self.msg = msg
-        showToast.toggle()
     }
 }

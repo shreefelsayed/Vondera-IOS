@@ -8,8 +8,7 @@
 import Foundation
 
 
-struct StoreMarketPlace : Identifiable, Codable{
-    var id:String
-    var 
-    
+struct StoreMarketPlace : Identifiable, Codable, Hashable{
+    var id:String = ""
+    var active:Bool = true
 }

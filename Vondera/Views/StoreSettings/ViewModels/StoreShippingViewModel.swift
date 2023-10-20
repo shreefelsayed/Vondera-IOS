@@ -43,7 +43,9 @@ class StoreShippingViewModel : ObservableObject {
         }
         do {
             store = try await storesDao.getStore(uId: storeId)!
-            self.list = store!.listAreas ?? [CourierPrice]()
+            if var list = store?.listAreas  {
+                self.list = list.uniqueElements()
+            }
         } catch {
             print(error.localizedDescription)
         }
@@ -60,7 +62,7 @@ class StoreShippingViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            let map:[String:[CourierPrice]] = ["listAreas": list]
+            let map:[String:[CourierPrice]] = ["listAreas": list.uniqueElements()]
             let encoded: [String: Any]
             encoded = try! Firestore.Encoder().encode(map)
             

@@ -7,26 +7,58 @@
 
 import SwiftUI
 
+struct CourierCardWithNavigation: View {
+    var courier:Courier
+        
+    var body: some View {
+        NavigationLink(destination: CourierCurrentOrders(storeId: courier.storeId ?? "", courier: courier)) {
+            CourierCard(courier: courier)
+        }
+    }
+}
+
 struct CourierCard: View {
     var courier:Courier
     
+    @State private var sheetHeight: CGFloat = .zero
+    @State private var showContact = false
+    @State private var ordersCount = 0
+
     var body: some View {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(courier.name)
-                        .font(.title2)
-                        .bold()
-                    
-                    Text("\(courier.withCourier ?? 0) Orders with Courier")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
-                    Divider()
-                    
-                }.padding(.horizontal)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(courier.name)
+                    .font(.title2)
+                    .bold()
                 
-                Spacer()
+                Text("\(ordersCount) Orders with Courier")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
             }
+            .padding(.horizontal)
+            
+            Spacer()
+        }
+        .buttonStyle(.plain)
+        .task {
+            if let storeId = courier.storeId {
+                ordersCount = try! await OrdersDao(storeId: storeId)
+                    .getPendingCouriersOrderCount(id: courier.id)
+            }
+        }
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+            Button {
+                showContact.toggle()
+            } label: {
+                Image(systemName: "ellipsis.message.fill")
+            }
+            .tint(.green)
+        }
+        .sheet(isPresented: $showContact) {
+            ContactDialog(phone: courier.phone, toggle: $showContact)
+                .fixedInnerHeight($sheetHeight)
+        }
     }
 }
 

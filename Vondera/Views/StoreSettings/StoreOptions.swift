@@ -72,11 +72,9 @@ struct StoreOptions: View {
                         
                         Spacer()
                         
-                        TextField("Quantity", text: $viewModel.indec)
-                            .roundedTextFieldStyle()
+                        FloatingTextField(title: "Quantity", text: .constant(""), required: nil, isNumric: true, number: $viewModel.indec)
                             .frame(width: 60, height: 50)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.center)
+                        
                     }
                     
                     Text("Set up an indecator to track your low stocks")

@@ -9,9 +9,8 @@ import SwiftUI
 import NetworkImage
 
 struct CategoryLinear: View {
-    var category:Category
+    @Binding var category:Category
     var isSelected:Bool = false
-    var onClick: (() -> ())
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -40,20 +39,12 @@ struct CategoryLinear: View {
                         .foregroundColor(.accentColor)
                 }
             }
-            
-            Divider()
-            
-        }
-        .onTapGesture {
-            onClick()
         }
     }
 }
 
 struct CategoryLinear_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryLinear(category: Category.example()) {
-            
-        }
+        CategoryLinear(category: .constant(Category.example()))
     }
 }

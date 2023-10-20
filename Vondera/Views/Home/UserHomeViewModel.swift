@@ -11,11 +11,21 @@ class UserHomeViewModel : ObservableObject {
     var usersDao = UsersDao()
     @Published var myUser:UserData?
     
+    init() {
+        Task {
+            await getUser()
+        }
+    }
+    
     func getUser() async {
-        self.myUser = await LocalInfo().getLocalUser()
+        let user = UserInformation.shared.getUser()
         
-        if myUser == nil {
+        if user == nil {
             await AuthManger().logOut()
+        }
+        
+        DispatchQueue.main.async {
+            self.myUser = user
         }
     }
     

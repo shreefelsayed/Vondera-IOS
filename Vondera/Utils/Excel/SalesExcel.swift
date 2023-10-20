@@ -33,7 +33,9 @@ class SalesExcel {
               
         // MARK : Create file and save
         let fileid = book.save("\(name).xlsx")
+        
         print("File path \(fileid)")
+        
         let url = URL(fileURLWithPath: fileid)
         FileUtils().shareFile(url: url)
     }
@@ -43,7 +45,8 @@ class SalesExcel {
             let cell = sheet.AddCell(XCoords(row: 1, col: (index + 1)))
             cell.Cols(txt: .white, bg: .darkGray)
             cell.value = .text(title.uppercased(with: .autoupdatingCurrent))
-            cell.Font = XFont(.TrebuchetMS, 10, true)
+            cell.width = 100
+            cell.Font = XFont(.TrebuchetMS, 8, true)
             cell.alignmentHorizontal = .center
         }
     }
@@ -52,8 +55,9 @@ class SalesExcel {
         for (index, title) in items.enumerated() {
             let cell = sheet.AddCell(XCoords(row: rowNumber, col: (index + 1)))
             cell.Cols(txt: .black, bg: .white)
+            cell.width = 100
             cell.value = .text(title.uppercased(with: .autoupdatingCurrent))
-            cell.Font = XFont(.TrebuchetMS, 8, true)
+            cell.Font = XFont(.TrebuchetMS, 5, true)
             cell.alignmentHorizontal = .left
         }
     }

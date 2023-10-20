@@ -7,17 +7,33 @@
 
 import SwiftUI
 
-struct StoreCategory: View {
-    @State var store:Store
+struct StoreCategoryUpdate: View {
+    @Binding var store:Store
     
     var body: some View {
         VStack {
-            PickCategory(sheetVisible: <#T##Bool#>, selected: <#T##Int#>)
+            List(CategoryManager().getAll(), id: \.self) { category in
+                StoreCategoryLinearCard(storeCategory: category, selected: bindingItem(category))
+                .listRowInsets(EdgeInsets())
+            }
         }
         .navigationTitle("Store Category")
     }
+    
+    func bindingItem(_ category: StoreCategory) -> Binding<Int?> {
+        Binding<Int?>(
+            get: {
+            store.categoryNo ?? 21
+        },
+        set: { newValue in
+            store.categoryNo = category.id
+            
+            // MARK : Update Firebase
+            Task {
+                try! await StoresDao().update(id: store.ownerId, hashMap: ["categoryNo" : newValue ?? 0])
+            }
+            
+        })
+    }
 }
 
-#Preview {
-    StoreCategory()
-}

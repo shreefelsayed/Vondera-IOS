@@ -33,6 +33,7 @@ struct StoreEditName: View {
         }
         .navigationTitle("Name & Slogan")
         .willProgress(saving: viewModel.isSaving)
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
@@ -45,11 +46,10 @@ struct StoreEditName: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Text("Save")
-                    .bold()
-                    .onTapGesture {
-                        save()
-                    }
+                Button("Save") {
+                    save()
+                }
+                .disabled(viewModel.isSaving || viewModel.name.isBlank)
             }
         }
         

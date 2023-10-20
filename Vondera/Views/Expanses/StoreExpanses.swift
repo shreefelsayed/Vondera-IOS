@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
-import AdvancedList
 import AlertToast
+
 
 struct StoreExpanses: View {
     var storeId:String
+    
+    @State var selectedExpanse:Expense?
+    @State var addExpanses = false
     @ObservedObject var viewModel:StoreExpansesViewModel
     
     init(storeId:String) {
@@ -19,53 +22,88 @@ struct StoreExpanses: View {
     }
     
     var body: some View {
-        VStack {
-            AdvancedList(viewModel.items, listView: { rows in
-                if #available(iOS 14, macOS 11, *) {
-                    ScrollView(showsIndicators: false) {
-                        LazyVStack(alignment: .leading, content: rows)
-                            .padding()
+        List {
+            ForEach(viewModel.searchText.isBlank ? $viewModel.items : $viewModel.result) { item in
+                VStack(alignment: .center) {
+                    ExpansesCard(expanse: item)
+                        .swipeActions(allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                withAnimation {
+                                    viewModel.deleteItem(item: item.wrappedValue)
+                                }
+                            } label: {
+                                Image(systemName: "trash.fill")
+                            }
+
+                            Button {
+                                selectedExpanse = item.wrappedValue
+                            } label: {
+                                Image(systemName: "pencil")
+                            }
+                            .tint(.blue)
+                        }
+                    
+                    // MARK : Loading indec
+                    if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .onAppear {
+                            loadItem()
+                        }
                     }
-                } else {
-                    List(content: rows)
                 }
-            }, content: { item in
-                NavigationLink {
-                    EditExpanse()
-                } label: {
-                    let showLabel =  !item.date!.toDate().isSameMonth(as: viewModel.filteredItems.previousItem(of: item)?.date!.toDate())
-                    ExpansesCard(expanse: item, showData: showLabel)
-                }
-                .mySwipeAction() { // custom color + icon
-                    withAnimation {
-                        viewModel.deleteItem(item: item)
-                    }
-                }
-                .buttonStyle(PlainButtonStyle())
-            }, listState: viewModel.state, emptyStateView: {
-                EmptyMessageView(msg: "You haven't recorded any expanses yet !")
-            }, errorStateView: { error in
-                Text(error.localizedDescription).lineLimit(nil)
-            }, loadingStateView: {
-                ProgressView()
-            }).pagination(.init(type: .thresholdItem(offset: 5), shouldLoadNextPage: {
-                loadItem()
-            }) {
-            }).refreshable(action: {
-                await refreshData()
-            })
-            
-            Spacer()
+                
+                
+            }
+        }
+        .searchable(text: $viewModel.searchText, prompt: "Search for expanse")
+        .refreshable {
+            await refreshData()
+        }
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(systemName: "coloncurrencysign.circle.fill", msg: "You haven't recorded any expanses yet !")
+            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: AddExpanse(storeId: storeId, currentList: $viewModel.items)) {
-                    Text("Add")
+                Button("Add") {
+                    addExpanses.toggle()
                 }
             }
         }
+        .toast(isPresenting: Binding(value: $viewModel.msg), alert : {
+            AlertToast(displayMode: .banner(.slide), type: .regular, title: viewModel.msg)
+        })
+        
+        .sheet(isPresented: $addExpanses, content: {
+            NavigationStack {
+                AddExpanse(storeId: storeId) { newValue in
+                    withAnimation {
+                        viewModel.items.insert(newValue, at: 0)
+                    }
+                }
+            }
+        })
+        .sheet(item: $selectedExpanse) { item in
+            NavigationStack {
+                EditExpanse(expanse: item, storeId: storeId) { newValue in
+                    let index = viewModel.items.firstIndex { $0.id == newValue.id }
+                    if let index = index {
+                        DispatchQueue.main.async {
+                            viewModel.items[index] = newValue
+                            viewModel.msg = "Updated"
+                        }
+                    }
+                }
+            }
+        }
+
         .navigationTitle("Expanses 💳")
-        .navigationBarTitleDisplayMode(.large)
     }
     
     func refreshData() async {
@@ -79,8 +117,9 @@ struct StoreExpanses: View {
     }
 }
 
-struct StoreExpanses_Previews: PreviewProvider {
-    static var previews: some View {
-        StoreExpanses(storeId: "")
+#Preview {
+    NavigationView {
+        StoreExpanses(storeId: Store.Qotoofs())
+
     }
 }

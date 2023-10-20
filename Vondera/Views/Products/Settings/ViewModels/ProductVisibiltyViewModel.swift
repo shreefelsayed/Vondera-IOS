@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 class ProductVisibiltyViewModel : ObservableObject {
-    @Published var product:Product
-    var productsDao:ProductsDao
+    @Published var product:StoreProduct
+    private var productsDao:ProductsDao
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
         didSet {
@@ -18,39 +18,15 @@ class ProductVisibiltyViewModel : ObservableObject {
         }
     }
     
-    
     @Published var toogle = true
-
     @Published var isSaving = false
-    @Published var isLoading = false
-
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     
-    init(product: Product) {
+    init(product: StoreProduct) {
         self.product = product
         self.productsDao = ProductsDao(storeId: product.storeId)
-            
-        // --> Set the published values
-        Task {
-            await getData()
-        }
-    }
-    
-    func getData() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
-        do {
-            self.product = try await productsDao.getProduct(id: product.id)!
-            self.toogle = product.visible ?? true
-        } catch {
-            print(error.localizedDescription)
-        }
         
-        DispatchQueue.main.async {
-            self.isLoading = false
-        }
+        toogle = product.visible ?? true
     }
     
     func update() async {
@@ -60,7 +36,7 @@ class ProductVisibiltyViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            var map:[String:Any] = ["visible": toogle]
+            let map:[String:Any] = ["visible": toogle]
             try await productsDao.update(id: product.id, hashMap: map)
             
             product.visible = toogle
@@ -81,6 +57,5 @@ class ProductVisibiltyViewModel : ObservableObject {
     
     func showTosat(msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
 }

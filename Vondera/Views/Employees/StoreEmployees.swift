@@ -6,47 +6,46 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct StoreEmployees: View {
     var storeId:String
     
     @StateObject var viewModel:StoreEmployeesViewModel
-    
+    @State var contactUser:UserData?
+    @State private var sheetHeight: CGFloat = .zero
+
     init( storeId: String) {
         self.storeId = storeId
         _viewModel = StateObject(wrappedValue: StoreEmployeesViewModel(storeId: storeId))
     }
     
     var body: some View {
-        VStack {
-            if !viewModel.items.isEmpty {
-                ScrollView {
-                    VStack(spacing: 12) {
-                        SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Employees")
-                        
-                        ForEach(viewModel.filteredItems) { item in
-                            NavigationLink(destination: EmployeeProfile(user: item)) {
-                                EmployeeCard(user: item)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                        }
-                    }
+        List {
+            ForEach($viewModel.items.indices, id: \.self) { index in
+                if $viewModel.items[index].wrappedValue.filter(viewModel.searchText) {
+                    EmployeeCard(user: viewModel.items[index])
                 }
             }
         }
+        .listStyle(.plain)
+        .searchable(text: $viewModel.searchText, prompt: Text("Search \($viewModel.items.count) Employees"))
         .padding()
         .navigationTitle("Employees 🧑‍💼")
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Add", destination: NewEmployee(storeId: storeId, currentList: $viewModel.items))
+                NavigationLink("Add", destination: NewEmployee(storeId: storeId))
             }
         }
+        .sheet(item: $contactUser, content: { user in
+            ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
+                .fixedInnerHeight($sheetHeight)
+        })
+        .refreshable {
+            await viewModel.getData()
+        }
         .overlay(alignment: .center) {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if viewModel.items.isEmpty {
-                EmptyMessageView(msg: "You haven't added any employees yet")
+            if viewModel.items.isEmpty && !viewModel.isLoading {
+                EmptyMessageView(systemName: "person.crop.circle.badge.moon.fill", msg: "You haven't added any employees yet")
             }
         }
         

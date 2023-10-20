@@ -75,8 +75,8 @@ class ChangePasswordViewModel : ObservableObject {
             
             try await usersDao.update(id: user.id, hash: ["pass": pass1])
             user.pass = pass1
-            var _ = await LocalInfo().saveUser(user: user)
-            
+            UserInformation.shared.updateUser(user)
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.showTosat(msg: "Password Changed")
                 self.shouldDismissView = true

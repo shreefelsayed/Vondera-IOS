@@ -24,6 +24,47 @@ class OrdersDao {
         return doc.exists
     }
     
+    func searchByTextWithStatue(search:String, statue:String, lastSnapshot:DocumentSnapshot?) async throws -> (items: [Order], lastDocument: DocumentSnapshot?) {
+        
+        var query:Query = collection
+            .whereField("statue", isEqualTo: statue)
+            .order(by: getSearchIndex(query: search), descending: false)
+            .start(at: [search])
+            .end(at: ["\(search)\u{f8ff}"])
+        
+        if lastSnapshot != nil {
+            query = query.start(afterDocument: lastSnapshot!)
+        }
+        
+        query.limit(to: pageSize)
+        
+        let docs = try await query.getDocuments()
+        return (convertToList(snapShot: docs), docs.documents.last)
+    }
+    
+    func searchByText(query:String, lastSnapshot:DocumentSnapshot?) async throws -> (items: [Order], lastDocument: DocumentSnapshot?) {
+        return try await search(search: query, field: getSearchIndex(query: query), lastSnapShot: lastSnapshot)
+    }
+    
+    private func getSearchIndex(query:String) -> String {
+        var index = "name"
+        
+        if query.isPhoneNumber {
+            index = "phone"
+        } else if query.isNumeric && !query.isPhoneNumber {
+            index = "id"
+        }
+        
+        return index
+    }
+    
+    func getOrdersSortedBy(index:String = "date", desc:Bool = true, limit:Int = 10) async throws -> [Order] {
+        return try await collection
+            .order(by: index, descending: desc)
+            .limit(to: limit)
+            .getDocuments(as: Order.self)
+    }
+    
     func search(search:String, field:String = "name", lastSnapShot:DocumentSnapshot?) async throws -> ([Order], QueryDocumentSnapshot?) {
         
         var query:Query = collection
@@ -92,7 +133,7 @@ class OrdersDao {
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
-    func getCouriersFinished(id:String, lastSnapShot:DocumentSnapshot?) async throws -> ([Order], QueryDocumentSnapshot?) {
+    func getCouriersFinished(id:String, lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
         var query:Query = collection
             .order(by: "dateDelivered", descending: true)
             .whereField("courierId", isEqualTo: id)
@@ -102,8 +143,7 @@ class OrdersDao {
             query = query.start(afterDocument: lastSnapShot!)
         }
         
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
+        return try await query.getDocumentWithLastSnapshot(as: Order.self)
     }
     
     
@@ -132,22 +172,17 @@ class OrdersDao {
         }
     }
     
-    func getOrder(id: String, completion: @escaping (Order?, Bool) -> Void) async throws {
-        do {
-            let document = collection.document(id)
-            let docSnapshot = try await document.getDocument()
-            
-            let isHere = docSnapshot.exists
-            if isHere {
-                let order = try? docSnapshot.data(as: Order.self)
-                completion(order, isHere)
-            } else {
-                completion(nil, isHere)
-            }
-        } catch {
-            completion(nil, false)
-            throw error
-        }
+    func getPendingCouriersOrderCount(id:String) async throws -> Int {
+        var count = try await collection
+            .whereField("courierId", isEqualTo: id)
+            .whereField("statue", isEqualTo: "Out For Delivery")
+            .count.getAggregation(source: .server).count
+        
+        return Int(truncating: count)
+    }
+
+    func getOrder(id: String) async throws -> (item : Order, exists : Bool) {
+        return try await collection.document(id).getDocument(as: Order.self)
     }
     
     func update(id:String, hashMap:[String:Any]) async throws {
@@ -157,7 +192,7 @@ class OrdersDao {
     func addUpdate(id:String, update:Updates) async throws {
         let encoded: [String: Any]
         encoded = try Firestore.Encoder().encode(update)
-        try await collection.document(id).updateData(["listUpdates":FieldValue.arrayUnion([encoded])])
+        try await collection.document(id).updateData(["listUpdates":FieldValue.arrayUnion([encoded]), "lastUpdated": Date()])
     }
     
     func add(order:Order) async throws {
@@ -172,8 +207,22 @@ class OrdersDao {
         
     }
     
+    func getOrdersQueryByStatue(statue:String) -> Query {
+        return collection.whereField("statue", isEqualTo: statue)
+            .order(by: "date", descending: true)
+    }
+    
     func convertToList(snapShot:QuerySnapshot) -> [Order] {
         let arr = snapShot.documents.compactMap{doc -> Order? in
+            //print("Order \(doc.documentID)")
+            return try! doc.data(as: Order.self)
+        }
+        
+        return arr
+    }
+    
+    func convertToList(snapShot:[QueryDocumentSnapshot]) -> [Order] {
+        let arr = snapShot.compactMap{doc -> Order? in
             //print("Order \(doc.documentID)")
             return try! doc.data(as: Order.self)
         }

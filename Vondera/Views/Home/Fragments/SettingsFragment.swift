@@ -9,24 +9,27 @@ import SwiftUI
 import NetworkImage
 
 struct SettingsFragment: View {
-    @StateObject var viewModel = StoreSettingsViewModel()
-    @Environment(\.defaultMinListRowHeight) var minRowHeight
+    @ObservedObject var myUser = UserInformation.shared
+    
     @State var showContactDialog = false
     var customerServiceNumber = "01551542514"
     
+    @State var showSavedItems = false
+    @State var count = 0
+    
     var body: some View {
         VStack(alignment: .leading) {
-            if viewModel.user == nil {
-                ProgressView()
-            } else {
-                // MARK : Settings
-                ZStack {
+            if let myUser = myUser.user {
+                VStack {
+                    StoreToolbar(myUser: myUser)
+                        .padding()
+                    
                     List {
                         // MARK : Header
                         VStack(alignment: .leading) {
                             HStack(alignment: .top) {
                                 ZStack {
-                                    NetworkImage(url: URL(string: viewModel.user?.userURL ?? "" )) { image in
+                                    NetworkImage(url: URL(string: myUser.userURL)) { image in
                                       image.centerCropped()
                                     } placeholder: {
                                       ProgressView()
@@ -40,7 +43,7 @@ struct SettingsFragment: View {
                                     .clipShape(Circle())
                                 }
                                 .overlay(alignment: .bottomTrailing, content: {
-                                    NetworkImage(url: URL(string: viewModel.user?.store!.logo ?? "" )) { image in
+                                    NetworkImage(url: URL(string: myUser.store?.logo ?? "" )) { image in
                                         image.centerCropped()
                                     } placeholder: {
                                         ProgressView()
@@ -56,11 +59,11 @@ struct SettingsFragment: View {
                                 
                                 
                                 VStack(alignment: .leading) {
-                                    Text(viewModel.user?.name ?? "")
+                                    Text(myUser.name)
                                         .font(.title.bold())
                                         .foregroundColor(.accentColor)
                                     
-                                    Text("\(viewModel.user?.getAccountTypeString() ?? "") at \(viewModel.user?.store!.name ?? "")")
+                                    Text("\(myUser.getAccountTypeString()) at \(myUser.store?.name ?? "")")
                                         .font(.headline)
                                         .foregroundColor(.secondary)
                                 }
@@ -69,29 +72,48 @@ struct SettingsFragment: View {
                                 Spacer()
                             }
                             
-                            PlanCard(store: viewModel.user!.store!)
+                            if myUser.accountType == "Owner" {
+                                if let store = myUser.store {
+                                    PlanCard(store: store)
+                                }
+                            }
                         }
                         
-                        Section("Store Settings") {
-                            NavigationLink("Subscriptions", destination: SubscribtionsView())
-                                .bold()
-                            
-                            NavigationLink("Store Info", destination: StoreInfoView(store: viewModel.user!.store!))
-                                .bold()
-                            
-                            NavigationLink("Reffer Program", destination: RefferView(user:viewModel.user!))
-                                .bold()
+                        if myUser.accountType == "Owner" {
+                            Section("Store Settings") {
+                                NavigationLink("Subscriptions", destination: SubscribtionsView())
+                                    .bold()
+                                
+                                NavigationLink("Store Info", destination: StoreInfoView(store: myUser.store!))
+                                    .bold()
+                                
+                                /*
+                                NavigationLink {
+                                    AgelWallet(myUser: viewModel.user)
+                                } label: {
+                                    HStack {
+                                        Text("Agel Wallet")
+                                        Spacer()
+                                        Text("EGP \(viewModel.user?.store?.agelWallet ?? 0)")
+                                    }
+                                    .bold()
+                                }*/
+
+                                
+                                /*NavigationLink("Reffer Program", destination: RefferView(user:viewModel.user!))
+                                    .bold()*/
+                            }
                         }
                         
                         Section("Account Settings") {
-                            NavigationLink("My Orders", destination: UserOrders(id: viewModel.user!.id, storeId: viewModel.user!.storeId))
+                            NavigationLink("My Orders", destination: UserOrders(id: myUser.id, storeId: myUser.storeId))
                                 .bold()
                             
-                            NavigationLink("Edit my info", destination: EditInfoView(user: viewModel.user!))
+                            NavigationLink("Edit my info", destination: EditInfoView(user: myUser))
                                 .bold()
                             
                             
-                            NavigationLink("Change Password", destination: ChangePasswordView(user: viewModel.user!))
+                            NavigationLink("Change Password", destination: ChangePasswordView(user: myUser))
                                 .bold()
                             
                             NavigationLink("Change Phone", destination: ChangePhoneView())
@@ -137,36 +159,55 @@ struct SettingsFragment: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                             .bold()
-                            
-                            
-                                 
                         }
                         
-                        Button("Log Out") {
-                            Task {
-                                await AuthManger().logOut()
+                        Section () {
+                            Button(role: .destructive) {
+                                Task {
+                                    await AuthManger().logOut()
+                                }
+                            } label: {
+                                Text("Log Out")
                             }
-                        }.padding()
+                            
+                            // SWITCH accounts button
+                            if count > 0 {
+                                Button("Switch Account") {
+                                    withAnimation {
+                                        showSavedItems.toggle()
+                                    }
+                                }
+                            }
+                        }
+                        
                     }
-                    
-                    BottomSheet(isShowing: $showContactDialog, content: {
-                        AnyView(ContactDialog(phone:customerServiceNumber, toggle: $showContactDialog))
-                    }())
                 }
+            } else {
+                ProgressView()
             }
         }
-        .onAppear {
-            Task {
-                await viewModel.initalize()
+        .refreshable {
+            if let user = try? await UsersDao().getUserWithStore(userId: myUser.user?.id ?? "") {
+                UserInformation.shared.updateUser(user)
             }
         }
+        .task {
+            count = SavedAccountManager().getAllUsers().count
+        }
+        .sheet(isPresented: $showContactDialog) {
+            ContactDialog(phone:customerServiceNumber, toggle: $showContactDialog)
+        }
+        .sheet(isPresented: $showSavedItems, content: {
+            NavigationStack {
+                SwitchAccountView(show: $showSavedItems)
+                    .presentationDetents([.fraction(0.3)])
+            }
+        })
         .navigationTitle("Settings")
         
     }
 }
 
-struct StoreFragment_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsFragment()
-    }
+#Preview {
+    SettingsFragment()
 }

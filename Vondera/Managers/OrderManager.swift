@@ -23,7 +23,7 @@ class OrderManager {
 
     
     
-    func outForDelivery(list: inout [Order], courier:Courier) async {
+    func outForDelivery(list: inout [Order], courier:Courier) async -> [Order] {
         for var order in list {
             order = await outForDelivery(order: &order, courier: courier)
             
@@ -32,6 +32,8 @@ class OrderManager {
                 list[index] = order
             }
         }
+        
+        return list
     }
     
     func outForDelivery(order: inout Order, courier:Courier) async -> Order {
@@ -48,7 +50,7 @@ class OrderManager {
         hash["dateShipping"] = Timestamp(date: Date())
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
-        await addComment(order: &order, msg: "", code: OUT_FOR_DELV_CODE)
+        order = await addComment(order: &order, msg: "", code: OUT_FOR_DELV_CODE)
         order.statue = "Out For Delivery"
         order.courierId = courier.id
         order.courierName = courier.name
@@ -85,7 +87,8 @@ class OrderManager {
         hashMap["dateAssembled"] = nil
         
         try! await ordersDao.update(id: order.id, hashMap: hashMap)
-        await addComment(order: &order, msg: "", code: RESET_ORDER)
+        
+        order = await addComment(order: &order, msg: "", code: RESET_ORDER)
         order.statue = "Pending"
         order.courierId = ""
         order.courierName = ""
@@ -93,39 +96,47 @@ class OrderManager {
         order.dateShipping = nil
         order.dateAssembled = nil
         order.dateDelivered = nil
-        
         return order
     }
 
-    func orderDelete(list: inout [Order]) async {
+    func orderDelete(list: inout [Order]) async -> [Order]{
         for var order in list {
-            order = await orderDelete(order: &order)
+            order = await orderDelete(order: &order).result
             
             // Update the order in the list
             if let index = list.firstIndex(where: { $0 == order }) {
                 list[index] = order
             }
         }
+        
+        return list
     }
 
-    func orderDelete(order: inout Order) async -> Order {
-        if !order.canDeleteOrder(accountType: "Worker") { return order }
+    func orderDelete(order: inout Order) async -> (result : Order, success: Bool) {
+        guard let myUser = UserInformation.shared.getUser() else {
+            return (order, false)
+        }
         
+        if !order.canDeleteOrder(accountType: myUser.accountType) {
+            return (order, false)
+        }
+                
         let ordersDao = OrdersDao(storeId: order.storeId!)
         var hash:[String:Any] = [:]
         hash["statue"] = "Deleted"
         hash["dateDelivered"] = nil
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
-        await addComment(order: &order, msg: "", code: DELETED_CODE)
+        order = await addComment(order: &order, msg: "", code: DELETED_CODE)
         order.statue = "Deleted"
         order.dateDelivered = nil
         
-        return order
+        return (order, true)
     }
     
-    func orderDelivered(list: inout [Order]) async {
+    func orderDelivered(list: inout [Order]) async -> [Order]{
         for var order in list {
+            
             order = await orderDelivered(order: &order)
             
             // Update the order in the list
@@ -133,7 +144,10 @@ class OrderManager {
                 list[index] = order
             }
         }
+        
+        return list
     }
+    
     
     func orderDelivered(order: inout Order) async -> Order {
         let ordersDao = OrdersDao(storeId: order.storeId!)
@@ -142,13 +156,13 @@ class OrderManager {
         hash["dateDelivered"] = Timestamp(date: Date())
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
-        await addComment(order: &order, msg: "", code: DONE_CODE)
+        order = await addComment(order: &order, msg: "", code: DONE_CODE)
         order.statue = "Delivered"
         order.dateDelivered = Timestamp(date: Date())
         return order
     }
     
-    func assambleOrder(list: inout [Order]) async {
+    func assambleOrder(list: inout [Order]) async -> [Order] {
         for var order in list {
             order = await assambleOrder(order: &order)
             
@@ -157,6 +171,8 @@ class OrderManager {
                 list[index] = order
             }
         }
+        
+        return list
     }
     
     func assambleOrder(order: inout Order) async -> Order {
@@ -168,7 +184,7 @@ class OrderManager {
         hash["dateDelivered"] = nil
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
-        await addComment(order: &order, msg: "", code: ASSEMBLED_CODE)
+        order = await addComment(order: &order, msg: "", code: ASSEMBLED_CODE)
         order.statue = "Assembled"
         order.dateAssembled = Timestamp(date: Date())
         order.courierId = ""
@@ -176,16 +192,17 @@ class OrderManager {
         return order
     }
     
-    func confirmOrder(list: inout [Order]) async {
+    func confirmOrder(list: inout [Order]) async -> [Order] {
         for var order in list {
             order = await confirmOrder(order: &order)
             
             // Update the order in the list
             if let index = list.firstIndex(where: { $0 == order }) {
                 list[index] = order
-                print("Order updated")
             }
         }
+        
+        return list
     }
     
     func confirmOrder(order: inout Order) async -> Order {
@@ -197,7 +214,7 @@ class OrderManager {
         hash["dateDelivered"] = nil
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
-        await addComment(order: &order, msg: "", code: CONFIRM_CODE)
+        order = await addComment(order: &order, msg: "", code: CONFIRM_CODE)
         order.statue = "Confirmed"
         order.dateConfirm = Timestamp(date: Date())
         order.courierId = ""
@@ -207,7 +224,7 @@ class OrderManager {
     }
     
     // This is used to add an order to the project
-    func addOrder(order: inout Order) async {
+    func addOrder(order: inout Order) async -> Order? {
         let ordersDao = OrdersDao(storeId: order.storeId!)
         
         do {
@@ -225,13 +242,16 @@ class OrderManager {
             
             // Copy data to clipboard
             CopyingData().copyToClipboard(order.toString())
+            
+            return order
         } catch {
             print("\(error.localizedDescription)")
+            return nil
         }
     }
     
     func checkCommission(order: inout Order) async {
-        let myUser = await LocalInfo().getLocalUser()
+        let myUser = UserInformation.shared.getUser()
         if myUser!.accountType == "Marketing" && (myUser?.percentage ?? 0 ) > 0 {
             order.commission = (Int(myUser!.percentage! / 100) * order.netProfit)
         } else {
@@ -240,24 +260,28 @@ class OrderManager {
     }
     
     func onNewOrderAdded(storeId:String) async {
-        var myUser = await LocalInfo().getLocalUser()
-        if myUser?.storeId == storeId {
-            myUser?.store?.ordersCount! += 1
-            myUser?.store?.subscribedPlan?.currentOrders += 1
-            if (myUser?.store?.subscribedPlan?.currentOrders ?? 0) >= (myUser?.store?.subscribedPlan?.maxOrders ?? 0) {
-                myUser?.store?.subscribedPlan?.expired = true
+        if var myUser = UserInformation.shared.user {
+            myUser.ordersCount! += 1
+            myUser.store?.ordersCount! += 1
+            myUser.store?.subscribedPlan?.currentOrders += 1
+            myUser.store?.ordersCountObj?.Pending! += 1
+            
+            if (myUser.store?.subscribedPlan?.currentOrders ?? 0) >= (myUser.store?.subscribedPlan?.maxOrders ?? 0) {
+                myUser.store?.subscribedPlan?.expired = true
             }
             
-            _ = await LocalInfo().saveUser(user: myUser!)
+            UserInformation.shared.updateUser(myUser)
         }
     }
     
-    func addComment(order: inout Order, msg:String, code:Int) async {
-        let myUser = await LocalInfo().getLocalUser()
+    func addComment(order: inout Order, msg:String, code:Int) async -> Order  {
+        let myUser = UserInformation.shared.getUser()
         let ordersDao = OrdersDao(storeId: order.storeId!)
+        
         let update = Updates(text: msg, uId: myUser?.id ?? "", code: code)
         order.listUpdates?.append(update)
         try! await ordersDao.addUpdate(id: order.id, update: update)
+        return order
     }
     
     func listAttachments(orders: [Order]) -> [URL] {

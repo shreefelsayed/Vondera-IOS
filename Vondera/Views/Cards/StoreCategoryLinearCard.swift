@@ -8,11 +8,40 @@
 import SwiftUI
 
 struct StoreCategoryLinearCard: View {
+    var storeCategory:StoreCategory
+    @Binding var selected:Int?
+    var onClicked:(() -> ())?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Image(storeCategory.drawableId)
+                .circleImage(padding:4, redius: 40)
+            
+            Spacer().frame(width: 6)
+            
+            Text(storeCategory.nameEn)
+                .bold(selected == storeCategory.id ? true : false)
+            
+            Spacer()
+            
+            if selected == storeCategory.id {
+                Image(systemName: "checkmark")
+                    .font(.title2)
+                    .foregroundStyle(Color.white)
+            }
+        }
+        .padding()
+        .background(selected == storeCategory.id ? Color.accentColor : Color.background)
+        .onTapGesture {
+            selected = storeCategory.id
+            if onClicked != nil {
+                onClicked!()
+            }
+        }
     }
 }
 
+
 #Preview {
-    StoreCategoryLinearCard()
+    StoreCategoryLinearCard(storeCategory: StoreCategory.example(), selected: .constant(0))
 }

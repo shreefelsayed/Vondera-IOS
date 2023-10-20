@@ -9,96 +9,51 @@ import SwiftUI
 import AlertToast
 import FirebaseStorage
 import NetworkImage
-
-struct ImagePlaceHolder: View {
-    @Binding var url:String
-    @Binding var image:UIImage?
-    
-    var onClick:(() -> ())
-    var width:CGFloat = 60
-    var height:CGFloat = 60
-    var iconOverly = true
-    
-    var body: some View {
-        ZStack {
-            if image == nil {
-                NetworkImage(url: URL(string: url ?? "")) { image in
-                  image.centerCropped()
-                } placeholder: {
-                  ProgressView()
-                }
-                .background(Color.gray)
-                .frame(width: width, height: height)
-                .clipShape(Circle())
-                .overlay(alignment: .center) {
-                    if iconOverly {
-                        Image(systemName: "photo.fill.on.rectangle.fill")
-                            .resizable()
-                            .frame(width: CGFloat(width / 2), height: CGFloat(height / 2))
-                            .opacity(0.4)
-                    }
-                    
-                }.onTapGesture {
-                    onClick()
-                }
-            } else {
-                Image(uiImage: image)
-                    .resizable()
-                    .frame(width: width, height: height)
-                    .clipShape(Circle())
-                    .overlay(alignment: .center) {
-                        Image(systemName: "photo.fill.on.rectangle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .opacity(0.4)
-                    }.onTapGesture {
-                        onClick()
-                    }
-            }
-        }
-    }
-}
+import PhotosUI
 
 
 struct EditCategory: View {
-    
     var category:Category
     var storeId:String
-    
-    @ObservedObject var viewModel:EditCategoryViewModel
+    var onUpdated:((Category) -> ())
+    var onDeleted:((Category) -> ())
+
     @Environment(\.presentationMode) private var presentationMode
     
-    init(storeId: String, category:Category) {
-        self.storeId = storeId
-        self.category = category
-        self.viewModel = EditCategoryViewModel(storeId: storeId, category:category)
-    }
+    
+    @State private var name:String = ""
+    @State private var desc:String = ""
+    @State private var link:String = ""
+    @State private var selectedImage:UIImage?
+    @State private var picker:PhotosPickerItem?
+    
+    @State private var deleteDialog = false
+    @State private var msg:String?
+    @State private var isSaving = false
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center) {
-                HStack {
-                    ImagePlaceHolder(url: $viewModel.link, image: $viewModel.selectedImage, onClick: {
-                        viewModel.pickPhotos()
-                        print("Should pick")
-                    }, iconOverly: true)
-                    
-                    
-                    TextField("Category name", text: $viewModel.name)
-                        .textFieldStyle(.roundedBorder)
-                        .autocapitalization(.words)
+        List {
+            Section("Category info") {
+                FloatingTextField(title: "Category Name", text: $name, required: nil, autoCapitalize: .words)
+                
+                PhotosPicker(selection: $picker) {
+                    HStack {
+                        Text("Thumbnail")
+                        Spacer()
+                        ImagePickupHolder(currentImageURL: link, selectedImage: selectedImage, currentImagePlaceHolder: UIImage(named: "defaultCategory"), reduis: 25)
+                    }
                 }
+                
+                FloatingTextField(title: "Category Describtion", text: $desc, caption: "This will be visible in your website, make it from 10 to 50 words max", required: false, multiLine: true)
             }
-            
         }
-        .padding()
         .navigationTitle("Edit Category")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text("Delete")
                     .foregroundColor(.red)
                     .bold()
-                    .disabled(viewModel.isSaving)
+                    .disabled(isSaving)
                     .onTapGesture {
                         promoteDelete()
                     }
@@ -108,13 +63,25 @@ struct EditCategory: View {
                 Text("Update")
                     .foregroundColor(.accentColor)
                     .bold()
-                    .disabled(viewModel.name.isEmpty || viewModel.isSaving)
+                    .disabled(name.isEmpty || isSaving)
                     .onTapGesture {
                         updateData()
                     }
             }
         }
-        .alert(isPresented: $viewModel.deleteDialog) {
+        .onChange(of: picker) { _ in
+            Task {
+                if let data = try? await picker?.loadTransferable(type: Data.self) {
+                    if let uiImage = UIImage(data: data) {
+                        selectedImage = uiImage
+                        return
+                    }
+                }
+                
+                print("Failed")
+            }
+        }
+        .alert(isPresented: $deleteDialog) {
             Alert(
                 title: Text("Delete Category"),
                 message: Text("Are you sure you want to delete this category ? your products won't be deleted"),
@@ -122,37 +89,84 @@ struct EditCategory: View {
                 primaryButton: .destructive(
                     Text("Delete").foregroundColor(.red), action: {
                         delete()
-                }),
+                    }),
                 secondaryButton: .cancel()
             )
         }
-        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-            if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
-
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: msg)
         }
-        .willProgress(saving: viewModel.isSaving)
+        .willProgress(saving: isSaving)
+        .task {
+            name = category.name
+            link = category.url
+            desc = category.desc ?? ""
+        }
     }
     
     func delete() {
         Task {
-            await viewModel.deleteCategory()
+            await deleteCategory()
+            onDeleted(category)
         }
     }
     
     func promoteDelete() {
-        viewModel.deleteDialog.toggle()
+        deleteDialog.toggle()
     }
     
     func updateData() {
-        viewModel.updateData()
+        self.isSaving = true
+        
+        Task {
+            if selectedImage == nil {
+                setData()
+            } else {
+                uploadImage()
+            }
+        }
     }
     
+    func setData() {
+        Task {
+            let data:[String:Any] = ["name": name, "url" : link, "desc": desc]
+            try! await CategoryDao(storeId: storeId).update(id: category.id, hash: data)
+            
+            DispatchQueue.main.async {
+                var newCategory = category
+                newCategory.name = name
+                newCategory.url = link
+                newCategory.desc = desc
+                self.isSaving = false
+                onUpdated(newCategory)
+            }
+        }
+    }
     
+    func deleteCategory() async {
+        self.isSaving = true
+        try! await CategoryDao(storeId: storeId).delete(id: category.id)
+        
+        DispatchQueue.main.async {
+            print("category Deleted")
+            self.isSaving = false
+        }
+    }
+    
+    func uploadImage() {
+        let ref = Storage.storage().reference().child("stores").child(storeId)
+        FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,name: name ,ref: ref) { url, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.isSaving = false
+                }
+            } else if let url = url {
+                self.link = url.absoluteString
+                self.setData()
+            }
+        }
+    }
 }
+

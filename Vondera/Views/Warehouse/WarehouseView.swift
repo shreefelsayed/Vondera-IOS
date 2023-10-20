@@ -25,7 +25,10 @@ struct WarehouseView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            TopTaps(selection: $selectedTab, tabs: ["In Stock", "Almost Out", "Out of Stock"])
+            CustomTopTabBar(tabIndex: $selectedTab, titles: ["In Stock", "Almost Out", "Out of Stock"])
+                .padding(.leading, 12)
+                .padding(.top, 12)
+            
             if selectedTab == 0 {
                 inStockView
             } else if selectedTab == 1 {
@@ -41,10 +44,8 @@ struct WarehouseView: View {
 }
 
 
-struct WarehouseView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            WarehouseView(storeId: "")
-        }
+#Preview {
+    NavigationView {
+        WarehouseView(storeId: Store.Qotoofs())
     }
 }

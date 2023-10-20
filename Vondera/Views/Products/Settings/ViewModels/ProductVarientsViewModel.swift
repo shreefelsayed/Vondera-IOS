@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class ProductVarientsViewModel : ObservableObject {
-    @Published var product:Product
+    @Published var product:StoreProduct
     var productsDao:ProductsDao
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
@@ -18,43 +18,17 @@ class ProductVarientsViewModel : ObservableObject {
             viewDismissalModePublisher.send(shouldDismissView)
         }
     }
-
+    
     @Published var isSaving = false
-    @Published var isLoading = false
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     
     @Published var listTitles = [String]()
     @Published var listOptions = [[String]]()
     
-    init(product:Product) {
+    init(product:StoreProduct) {
         self.product = product
         productsDao = ProductsDao(storeId: product.storeId)
-
-        // --> Set the published values
-        Task {
-            await getData()
-        }
-        
-    }
-    
-    func getData() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
-        
-        do {
-            self.product = try await productsDao.getProduct(id: product.id)!
-            
-            self.setArrayData()
-            
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        DispatchQueue.main.async {
-            self.isLoading = false
-        }
+        setArrayData()
     }
     
     func setArrayData() {
@@ -85,12 +59,13 @@ class ProductVarientsViewModel : ObservableObject {
         }
         
         do {
-            var map:[String:Any] = ["hashVarients": list]
+            let map:[String:Any] = ["hashVarients": list]
             try await productsDao.update(id: product.id, hashMap: map)
             
             
-            showTosat(msg: "Product variants updated")
+            
             DispatchQueue.main.async {
+                self.showTosat(msg: "Product variants updated")
                 self.shouldDismissView = true
             }
         } catch {
@@ -108,7 +83,7 @@ class ProductVarientsViewModel : ObservableObject {
         listTitles.remove(at: i)
         listOptions.remove(at: i)
     }
-
+    
     func canAddVarient() -> Bool {
         if listTitles.isEmpty { return true }
         
@@ -125,7 +100,7 @@ class ProductVarientsViewModel : ObservableObject {
             return
         }
         
-
+        
         listTitles.append("")
         listOptions.append([String]())
     }
@@ -141,6 +116,5 @@ class ProductVarientsViewModel : ObservableObject {
     
     func showTosat(msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
 }

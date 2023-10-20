@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct OrderSelectView: View {
     @Binding var list:[Order]
@@ -13,84 +14,59 @@ struct OrderSelectView: View {
     
     @State var searchText = ""
     @State var isShowingSheet = false
-    @State var initalState = ""
     
-    init(list: Binding<[Order]>) {
-        _list = list
-        self.checkedItems.append(contentsOf: list.wrappedValue)
-    }
-    
-    var filterItems:[Order] {
-        guard !searchText.isEmpty else { return list }
-        
-        return list.filter { order in
-            order.filter(searchText: searchText)
-        }
-    }
-    
+    @State var size:CGFloat = .zero
+
     var body: some View {
-        ZStack {
-            ScrollView(showsIndicators: false) {
-                LazyVStack(alignment: .leading) {
-                    SearchBar(text: $searchText, hint: "Search \($list.count) Orders")
-                    
-                    HStack {
-                        Text("\(checkedItems.count) Selected Orders")
-                        Spacer()
-                        
-                        if !checkedItems.isEmpty {
-                            Text("Unselect All")
-                                .bold()
-                                .onTapGesture {
-                                    unselectAll()
-                                }
+        VStack {
+            HStack {
+                Text("\(checkedItems.count) Selected Orders")
+                Spacer()
+                
+                if !checkedItems.isEmpty {
+                    Text("Unselect All")
+                        .bold()
+                        .onTapGesture {
+                            unselectAll()
                         }
-                        
-                        if checkedItems.count != list.count {
-                            Text("Select All")
-                                .bold()
-                                .onTapGesture {
-                                    selectAll()
-                                }
+                }
+                
+                if checkedItems.count != list.count {
+                    Text("Select All")
+                        .bold()
+                        .onTapGesture {
+                            selectAll()
                         }
-                    }
-                    .padding(.vertical)
-                    
-                    ForEach(filterItems) { item in
-                        OrderSelect(order: item, checked: Binding(
-                            get: {
-                                checkedItems.contains { $0 == item }
-                            },
-                            set: { isChecked in
-                                if isChecked {
-                                    if !checkedItems.contains(item) {
-                                        checkedItems.append(item)
-                                    }
-                                } else {
-                                    checkedItems.removeAll { $0 == item }
-                                }
-                            }
-                        )) {
-                            
-                        } onDeselect: {
-                            
-                        }
-                        
-                    }
-                    
-                    
-                    
                 }
             }
             .padding()
             
-            BottomSheet(isShowing: $isShowingSheet, content: {
-                AnyView(ActionsDialog(list: $checkedItems, isShowen: $isShowingSheet))
-            }())
+            List {
+                ForEach($list.indices, id: \.self) { index in
+                    if list[index].filter(searchText: searchText) {
+                        OrderSelect(order: $list[index], checked: Binding(items: $checkedItems, currentItem: list[index]))
+                            .buttonStyle(.plain)
+                    }
+                }
+            }
+            .listStyle(.plain)
+            .overlay {
+                if list.isEmpty {
+                    EmptyMessageView(msg: "No orders to select from")
+                } else if list.isEmpty && !searchText.isBlank {
+                    EmptyMessageView(systemName: "magnifyingglass", msg: "No result for your search \(searchText)")
+                }
+            }
         }
-        .onAppear {
-            initalState = list.first!.statue
+        .searchable(text: $searchText)
+        .sheet(isPresented: $isShowingSheet) {
+            ActionsDialog(list: $checkedItems, isShowen: $isShowingSheet, onActionMade: {
+                self.isShowingSheet = false
+                unselectAll()
+            })
+            .presentationDetents([.medium])
         }
+        
         .toolbar {
             if !checkedItems.isEmpty {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -102,11 +78,6 @@ struct OrderSelectView: View {
         }
         .navigationTitle("Select orders")
         
-    }
-    
-    func removeOrdersWithDifferentStatus() {
-        unselectAll()
-        list = list.filter { $0.statue == initalState }
     }
     
     func selectAll() {
@@ -136,8 +107,8 @@ struct ActionsDialog: View {
     @Binding var isShowen:Bool
     @State var courierSheet = false
     @State var selectedOption:Courier?
-    
-    
+    @State var toast:String? = nil
+    var onActionMade : (() -> ())
     
     var body: some View {
         HStack {
@@ -153,39 +124,45 @@ struct ActionsDialog: View {
                 
                 VStack(alignment: .leading) {
                     Button("Print Receipts") {
+                        showToast("Receipts Genrated")
+                        
                         Task {
                             await ReciptPDF(orderList: list).generateAndOpenPDF()
                         }
+                        
+                        isShowen = false
                     }
                     
                     Divider()
                     
                     Button("Sales Report") {
-                        Task {
-                            SalesExcel(listOrders: list).generateReport()
-                        }
+                        showToast("Report Genrated")
+                        SalesExcel(listOrders: list).generateReport()
+                        isShowen = false
                     }
                     
                     Divider()
                     
                     Button("Download attachments") {
+                        showToast("Items downloading")
                         DownloadManager().saveImagesToDevice(imageURLs: OrderManager().listAttachments(orders: list))
-                        isShowen.toggle()
+                        isShowen = false
                     }
                     
                     Divider()
                 }
                 
-                
-                
-                
                 if statue <= 1 {
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
                             Button("Confirm orders") {
+                                showToast("Confirming Orders")
                                 Task {
-                                    await OrderManager().confirmOrder(list: &list)
-                                    isShowen.toggle()
+                                    let update = await OrderManager().confirmOrder(list: &list)
+                                    DispatchQueue.main.async {
+                                        self.list = update
+                                        self.onActionMade()
+                                    }
                                 }
                             }
                             
@@ -197,9 +174,13 @@ struct ActionsDialog: View {
                 if statue <= 2 {
                     VStack(alignment: .leading) {
                         Button("Assemble orders") {
+                            showToast("Assembling Orders")
                             Task {
-                                await OrderManager().assambleOrder(list: &list)
-                                isShowen.toggle()
+                                let update = await OrderManager().assambleOrder(list: &list)
+                                DispatchQueue.main.async {
+                                    self.list = update
+                                    self.onActionMade()
+                                }
                             }
                         }
                         
@@ -220,9 +201,13 @@ struct ActionsDialog: View {
                 if statue <= 4 {
                     VStack(alignment: .leading) {
                         Button("Deliver orders") {
+                            showToast("Finishing Orders")
                             Task {
-                                await OrderManager().orderDelivered(list: &list)
-                                isShowen.toggle()
+                                let update =  await OrderManager().orderDelivered(list: &list)
+                                DispatchQueue.main.async {
+                                    self.list = update
+                                    self.onActionMade()
+                                }
                             }
                         }
                         Divider()
@@ -233,21 +218,27 @@ struct ActionsDialog: View {
             
             Spacer()
         }
-        
         .sheet(isPresented: $courierSheet) {
             CourierPicker(storeId: list.first!.storeId!, selectedOption: $selectedOption)
         }
+        .toast(isPresenting: Binding(value: $toast)) {
+            AlertToast(displayMode: .alert, type: .complete(.accentColor), title: toast)
+        }
         .onChange(of: selectedOption) { newValue in
-            // Handle selectedOption changes here
             if let option = newValue {
+                showToast("Assigned to Courier")
+                
                 Task {
-                    await OrderManager().outForDelivery(list:&list, courier:option)
-                    isShowen.toggle()
+                    let update = await OrderManager().outForDelivery(list:&list, courier:option)
+                    DispatchQueue.main.async {
+                        self.list = update
+                        self.onActionMade()
+                    }
                 }
             }
         }
         .onAppear {
-            var firstStatue = list.first!.statue
+            let firstStatue = list.first!.statue
             if firstStatue == "Pending" {
                 statue = 1
             } else if firstStatue == "Confirmed" {
@@ -262,12 +253,14 @@ struct ActionsDialog: View {
                 statue = 0
             }
         }
-        .onChange(of: selectedOption) { newValue in
-            // Handle selectedOption changes here
-            if let option = newValue {
-                print("Selected option: \(option)")
-            }
-        }
         .padding()
     }
+    
+    func showToast(_ msg:String) {
+        DispatchQueue.main.async {
+            self.toast = msg
+        }
+    }
 }
+
+

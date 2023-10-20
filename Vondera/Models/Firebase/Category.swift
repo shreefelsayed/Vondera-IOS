@@ -12,6 +12,7 @@ struct Category: Codable, Identifiable, Equatable, Hashable {
     var id: String = ""
     var name: String = ""
     var url: String = ""
+    var desc:String? = ""
     var sortValue: Int? = 0
     var productsCount: Int? = 0
     

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct StoreInfoView: View {
-    var store:Store
+    @State var store:Store
     @State private var deleteStoreAlert = false
     @State private var deleting = false
 
@@ -11,7 +11,25 @@ struct StoreInfoView: View {
                 NavigationLink("Name and Slogan", destination: StoreEditName(store: store))
                 NavigationLink("Logo", destination: StoreLogo(store: store))
                 NavigationLink("Communications", destination: StoreCommunications(store: store))
+                
+                
+                
+                //TODO : RE-ENABLE THIS
+                /*
+                NavigationLink("Store Category", destination: StoreCategoryUpdate(store: $store))
+
+                 NavigationLink("Sales Channels", destination: StoreMarketPlaces(selectedItems: Binding(
+                     get: { store.listMarkets!.map(\.id) },
+                     set: { newValue in
+                         store.listMarkets = newValue.map { id in
+                             return StoreMarketPlace(id: id, active: true)
+                         }
+                     }
+                 )))
+                */
+                
                 NavigationLink("Social Presence", destination: StoreSocial(store: store))
+
                 NavigationLink("Store Options", destination: StoreOptions(store: store))
             }
             
@@ -26,24 +44,20 @@ struct StoreInfoView: View {
              NavigationText(view: AnyView(EmptyView()), label: "Events webhooks", divider: false)
              }*/
             
-            //TODO : Create Delete Store Button With Alert
             
             Button {
-                
+                deleteStoreAlert.toggle()
             } label: {
-                Text("Delete my store")
+                Text("Delete my account")
                     .foregroundStyle(.red)
                     .disabled(deleting)
-                    .onTapGesture {
-                        deleteStoreAlert.toggle()
-                    }
             }
             
         }
         .alert(isPresented: $deleteStoreAlert) {
             Alert(
-                title: Text("Delete your store"),
-                message: Text("Are you sure you want to delete your store ? this will delete all of your data, we can't recover them later."),
+                title: Text("Delete your account"),
+                message: Text("Are you sure you want to delete your accont ? this will delete all of your data, we can't recover them later."),
                 
                 primaryButton: .destructive(
                     Text("Delete").foregroundColor(.red), action: {
@@ -62,11 +76,5 @@ struct StoreInfoView: View {
             
             await AuthManger().logOut()
         }
-    }
-}
-
-struct StoreInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        StoreInfoView(store: Store.example())
     }
 }

@@ -11,11 +11,9 @@ import NetworkImage
 struct CartAdapter: View {
     @State private var priceText: String
     @Binding var orderProduct: OrderProductObject
-    var onDelete: (() -> ())
     
-    init(orderProduct: Binding<OrderProductObject>, onDelete: @escaping (() -> ())) {
+    init(orderProduct: Binding<OrderProductObject>) {
         _orderProduct = orderProduct
-        self.onDelete = onDelete
         _priceText = State(initialValue: String(orderProduct.wrappedValue.price))
     }
     
@@ -67,18 +65,12 @@ struct CartAdapter: View {
                     HStack(alignment: .center) {
                         Text("Quantity")
                         
-                        //Spacer()
+                        Spacer()
                         
                         Stepper(value: $orderProduct.quantity, in: 1...5000) {
                             Text("\(orderProduct.quantity)")
                                 .font(.caption)
                         }
-                        
-                        Image(systemName: "trash")
-                            .foregroundColor(.red)
-                            .onTapGesture {
-                                onDelete()
-                            }
                     }
                     
                 }
@@ -92,8 +84,6 @@ struct CartAdapter: View {
 
 struct CartAdapter_Previews: PreviewProvider {
     static var previews: some View {
-        CartAdapter(orderProduct: .constant(OrderProductObject.example())) {
-            
-        }
+        CartAdapter(orderProduct: .constant(OrderProductObject.example()))
     }
 }

@@ -20,8 +20,7 @@ class ReciptPDF {
 
     init(orderList: [Order]) async {
         self.orderList = orderList
-        let local = LocalInfo()
-        self.myUser = await local.getLocalUser()
+        self.myUser = UserInformation.shared.getUser()
     }
     
     
@@ -32,40 +31,52 @@ class ReciptPDF {
     }
     
     func render() -> URL {
-        // 2: Save it to our documents directory
         let url = URL.documentsDirectory.appending(path: "receipt.pdf")
-        let renderer = ImageRenderer(content: EmptyView())
         var box = CGRect(origin: .zero, size: a5PageSize)
         
         guard let pdf = CGContext(url as CFURL, mediaBox: &box, nil) else {
-                return url
-            }
+            return url
+        }
         
         for order in orderList {
-            // 5: Update the content with the current order
             let updatedRenderer = ImageRenderer(content: PDFReceipt(order: order, myUser: myUser))
-                
-            // 6: Render the SwiftUI view data onto the page
             updatedRenderer.render { size, context in
-                // 6: Start a new PDF page
                 pdf.beginPDFPage(nil)
-                
-                // 7: Render the SwiftUI view data onto the page
                 context(pdf)
-                
-                // 8: End the page and close the file
                 pdf.endPDFPage()
             }
         }
         
+        // --> Create the final page
+        if orderList.count > 1 {
+            let batchSize = 10
+            let totalItems = orderList.getFinalProductList().count
+            
+            for startIndex in stride(from: 0, to: totalItems, by: batchSize) {
+                let endIndex = min(startIndex + batchSize, totalItems)
+                let batchOrders = Array(orderList.getFinalProductList()[startIndex..<endIndex])
+                
+                let updatedRenderer = ImageRenderer(content: PDFFinalPage(products: batchOrders))
+                updatedRenderer.render { size, context in
+                    pdf.beginPDFPage(nil)
+                    context(pdf)
+                    pdf.endPDFPage()
+                }
+            }
+        }
+
+        
+        
         // 7: Close the PDF file
         pdf.closePDF()
-        print("Pdf Created")
-        
         print("Location \(url.absoluteString)")
         return url
     }
+    
+    
 }
+
+
 
 struct PDFViewerUsingUrl: UIViewRepresentable {
     let pdfURL: URL
@@ -101,6 +112,54 @@ struct Rceipts:View {
     }
 }
 
+struct PDFFinalPage : View {
+    var products:[OrderProductObject]
+    
+    var body: some View {
+        
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Text("Product Name")
+                Spacer()
+                Text("Option (Varient)")
+                Spacer()
+                Text("Quantity")
+            }
+            .font(.headline)
+            .padding(.horizontal)
+            .background(Color.gray.opacity(0.3))
+            
+            ForEach(products, id: \.self) { product in
+                HStack(alignment: .center) {
+                    Text(product.name)
+                    Spacer()
+                    Text(product.getVarientsString())
+                    Spacer()
+                    Text("\(product.quantity) Pieces")
+                }
+                .font(.caption)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 2)
+
+                Divider()
+            }
+            
+            HStack(alignment: .center) {
+                Text("Total Pieces")
+                Spacer()
+                Text("")
+                Spacer()
+                Text("\(products.getTotalQuantity()) Pieces")
+            }
+            .font(.headline)
+            .padding(.horizontal)
+            
+        }
+        .frame(width: 400, height: 560)
+        .padding()
+    }
+}
+
 struct PDFReceipt: View {
     var order:Order
     var myUser:UserData?
@@ -113,7 +172,7 @@ struct PDFReceipt: View {
             HStack (alignment: .center){
                 // ORDER ID
                 Text("#\(order.id)")
-                    .font(.body)
+                    .font(.caption)
                     .bold()
                 
                 Spacer()
@@ -135,7 +194,7 @@ struct PDFReceipt: View {
                     
                     VStack(alignment: .center) {
                         Text(myUser?.store?.name ?? "")
-                            .font(.title3)
+                            .font(.caption)
                             .bold()
                         
                         Text(myUser?.store?.slogan ?? "")
@@ -149,7 +208,7 @@ struct PDFReceipt: View {
                 Spacer()
                 
                 // QR CODE
-                Image(uiImage: UIImage(data: generateQR(text: order.id)!))
+                Image(uiImage: order.id.qrCodeUIImage)
                     .resizable()
                     .frame(width: 40, height: 40)
             }
@@ -163,12 +222,13 @@ struct PDFReceipt: View {
                     Text("Name : \(order.name) - Phone Number : \(order.phone)")
                     
                     Text("Address : \(order.gov) - \(order.address)")
-                        
+                     
+                    Text("Purchase Date : \(order.date.toDate().formatted())")
                 }
                 
                 Spacer()
             }
-            .font(.caption)
+            .font(.caption2)
             .lineLimit(nil)
             .fixedSize(horizontal: false, vertical: true)
             .multilineTextAlignment(.leading)
@@ -208,6 +268,7 @@ struct PDFReceipt: View {
                     Spacer()
                     Text("Total")
                 }
+                .font(.caption)
                 .padding(.horizontal)
                 .background(Color.gray.opacity(0.3))
                 
@@ -215,22 +276,22 @@ struct PDFReceipt: View {
                 ForEach(order.listProducts!, id: \.self) { product in
                     HStack(alignment: .center) {
                         Text(product.name)
-                            .font(.caption)
-                            .frame(maxWidth: .infinity)
+                        
+                        Spacer()
                         
                         Text(product.getVarientsString())
-                            .font(.caption)
-                            .frame(maxWidth: .infinity)
-                        
+                           
+                        Spacer()
                         
                         Text("\(product.quantity) x \(Int(product.price))")
-                            .font(.caption)
-                            .frame(maxWidth: .infinity)
+                            
+                        Spacer()
                         
                         Text("\(Int(Double(product.quantity) * product.price)) EGP")
-                            .font(.caption)
-                            .frame(maxWidth: .infinity)
+                        
                     }
+                    .font(.caption2)
+                    .frame(maxWidth: .infinity)
                     .padding(.horizontal, 2)
 
                     Divider()
@@ -240,46 +301,44 @@ struct PDFReceipt: View {
                     // Shipping Fees
                     HStack(alignment: .center) {
                         Text("Shipping Fees")
-                            .font(.caption)
                             .bold()
                             .frame(maxWidth: .infinity)
                         
                         Text("-")
-                            .font(.caption)
                             .frame(maxWidth: .infinity)
                         
                         
                         Text("-")
-                            .font(.caption)
                             .frame(maxWidth: .infinity)
                         
                         Text("+ \(order.clientShippingFees) EGP")
-                            .font(.caption)
                             .bold()
                             .frame(maxWidth: .infinity)
                     }
+                    .font(.caption2)
                     .padding(.horizontal, 2)
+                    
                     Divider()
                     
                     // DISCOUNT
                     if(order.discount ?? 0 > 0) {
                         HStack(alignment: .center) {
                             Text("Discount")
-                                .font(.caption)
+                                .font(.caption2)
                                 .bold()
                                 .frame(maxWidth: .infinity)
                             
                             Text("-")
-                                .font(.caption)
+                                .font(.caption2)
                                 .frame(maxWidth: .infinity)
                             
                             
                             Text("-")
-                                .font(.caption)
+                                .font(.caption2)
                                 .frame(maxWidth: .infinity)
                             
                             Text("- \(order.discount ?? 0) EGP")
-                                .font(.caption)
+                                .font(.caption2)
                                 .bold()
                                 .frame(maxWidth: .infinity)
                         }
@@ -291,21 +350,21 @@ struct PDFReceipt: View {
                     if(order.deposit != nil && order.deposit! > 0) {
                         HStack(alignment: .center) {
                             Text("Deposit")
-                                .font(.caption)
+                                .font(.caption2)
                                 .bold()
                                 .frame(maxWidth: .infinity)
                             
                             Text("-")
-                                .font(.caption)
+                                .font(.caption2)
                                 .frame(maxWidth: .infinity)
                             
                             
                             Text("-")
-                                .font(.caption)
+                                .font(.caption2)
                                 .frame(maxWidth: .infinity)
                             
                             Text("- \(Int(order.deposit!)) EGP")
-                                .font(.caption)
+                                .font(.caption2)
                                 .bold()
                                 .frame(maxWidth: .infinity)
                         }
@@ -316,21 +375,21 @@ struct PDFReceipt: View {
                     // COD
                     HStack(alignment: .center) {
                         Text("COD")
-                            .font(.caption)
+                            .font(.caption2)
                             .bold()
                             .frame(maxWidth: .infinity)
                         
                         Text("-")
-                            .font(.caption)
+                            .font(.caption2)
                             .frame(maxWidth: .infinity)
                         
                         
                         Text("-")
-                            .font(.caption)
+                            .font(.caption2)
                             .frame(maxWidth: .infinity)
                         
                         Text("\(order.amountToGet) EGP")
-                            .font(.caption)
+                            .font(.caption2)
                             .underline(true, color: .blue)
                             .bold()
                             .frame(maxWidth: .infinity)
@@ -344,18 +403,5 @@ struct PDFReceipt: View {
             .multilineTextAlignment(.center)
         }
         
-    }
-    
-    
-    
-    func generateQR(text: String) -> Data? {
-        let filter = CIFilter.qrCodeGenerator()
-        guard let data = text.data(using: .ascii, allowLossyConversion: false) else { return nil }
-        filter.message = data
-        guard let ciimage = filter.outputImage else { return nil }
-        let transform = CGAffineTransform(scaleX: 10, y: 10)
-        let scaledCIImage = ciimage.transformed(by: transform)
-        let uiimage = UIImage(ciImage: scaledCIImage)
-        return uiimage.pngData()!
     }
 }

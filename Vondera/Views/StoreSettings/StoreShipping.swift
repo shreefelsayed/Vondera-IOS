@@ -22,6 +22,9 @@ struct StoreShipping: View {
     
     var body: some View {
         List {
+            Text("This is the prices you charge your customers for shipping, note that if you deal with courier please add his info and shipping fees for better net profit calculations")
+                .font(.body)
+            
             HStack {
                 Text("Government")
                 
@@ -33,32 +36,23 @@ struct StoreShipping: View {
             
             ForEach(govManager.getDefaultCourierList(), id: \.self) { item in
                 HStack(alignment: .center) {
-                    Toggle("\(item.govName)", isOn: Binding(
-                        get: {
-                            viewModel.list.contains { $0 == item }
-                        },
-                        set: { isChecked in
-                            if isChecked {
-                                if !viewModel.list.contains(item) {
-                                    viewModel.list.append(item)
-                                }
-                            } else {
-                                viewModel.list.removeAll { $0 == item }
-                            }
-                        }))
+                    Toggle("\(item.govName)", isOn: Binding(items: $viewModel.list, currentItem: item))
                     
-                    if let selectedItem = viewModel.list.first(where: { $0 == item }) {
-                        TextField("Price", value: Binding(
-                                        get: { viewModel.list[viewModel.list.firstIndex(of: selectedItem)!].price },
-                                        set: { newValue in
-                                            if let index = viewModel.list.firstIndex(of: selectedItem) {
-                                                viewModel.list[index].price = newValue
-                                            }
-                                        }
-                        ), formatter: NumberFormatter())
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 60)
-                    }
+                    let selectedItem = viewModel.list.first(where: { $0 == item })
+                    
+                    FloatingTextField(title: "Price", text: .constant(""), required: nil, isNumric: true, number: Binding(
+                        get: { viewModel.list.contains(where: { place in
+                            place.govName == item.govName
+                        }) ? (selectedItem?.price ?? 0) : 0 },
+                        set: { newValue in
+                            if let index = viewModel.list.firstIndex(of: selectedItem!) {
+                                viewModel.list[index].price = newValue
+                            }
+                        }
+                    ), isDiabled : !viewModel.list.contains(where: { place in
+                        place.govName == item.govName
+                    }))
+                    .frame(width: 60)
                 }
             }
         }

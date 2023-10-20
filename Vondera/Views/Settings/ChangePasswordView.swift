@@ -20,27 +20,26 @@ struct ChangePasswordView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center, spacing: 12) {
-                SecureField("Current Password", text: $viewModel.oldPass)
-                    .textFieldStyle(.roundedBorder)
-                    
+        List {
+            Section("Password") {
+            
+                FloatingTextField(title: "Current Password", text: $viewModel.oldPass, required: true, secure: true)
                 
-                SecureField("New Password", text: $viewModel.pass1)
-                    .textFieldStyle(.roundedBorder)
+                FloatingTextField(title: "New Password", text: $viewModel.pass1, required: true, secure: true)
                 
-                SecureField("Repeat Passsword", text: $viewModel.pass2)
-                    .textFieldStyle(.roundedBorder)
-                
-                LoadingButton(action: {
-                    save()
-                }, isLoading: $viewModel.isSaving, style: LoadingButtonStyle(width: .infinity, cornerRadius: 16, backgroundColor: .accentColor, loadingColor: .white)) {
-                    Text("Change Password")
-                        .foregroundColor(.white)
-                }
+                FloatingTextField(title: "Repeat Password", text: $viewModel.pass2, required: true, secure: true)
             }
         }
-        .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("Update")
+                    .bold()
+                    .foregroundStyle(Color.accentColor)
+                    .onTapGesture {
+                        save()
+                    }
+            }
+        }
         .navigationTitle("Change Password")
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
@@ -48,7 +47,7 @@ struct ChangePasswordView: View {
             }
         }
         .toast(isPresenting: $viewModel.showToast){
-            AlertToast(displayMode: .banner(.slide),
+            AlertToast(displayMode: .alert,
                        type: .regular,
                        title: viewModel.msg)
         }

@@ -29,7 +29,7 @@ class EmployeeProfileViewModel: ObservableObject {
         
         Task {
             await getData()
-            self.myUser = await LocalInfo().getLocalUser()
+            self.myUser = UserInformation.shared.getUser()
         }
     }
     
@@ -67,7 +67,6 @@ class EmployeeProfileViewModel: ObservableObject {
                 
                 self.isLoading = false
             }
-            
         } catch {
             print(error.localizedDescription)
         }

@@ -11,15 +11,6 @@ class SettingsFragmentViewModel: ObservableObject {
     lazy var user:UserData? = nil
 
     init() {
-        initalize()
+        user = UserInformation.shared.getUser()
     }
-    
-    func initalize()  {
-        Task {
-            do {
-                user = await LocalInfo().getLocalUser()!
-            }
-        }
-    }
-    
 }

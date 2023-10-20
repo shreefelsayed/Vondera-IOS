@@ -22,49 +22,47 @@ struct CourierEdit: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Courier Name", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.words)
-                    
-                TextField("Courier Phone", text: $viewModel.phone)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.phonePad)
+        List {
+            Section("Courier Info") {
+                FloatingTextField(title: "Courier Name", text: $viewModel.name, caption: "This is the courier company name", required: true, autoCapitalize: .words)
                 
-                Toggle("Courier Active", isOn: $viewModel.active)
-                
-                Text("By turning this off you will disable adding any order to this courier")
-                    .font(.caption)
-                
+                FloatingTextField(title: "Courier Contact Phone", text: $viewModel.phone, caption: "This will help you contact the courier company easily", required: true, keyboard: .phonePad)
             }
-            .isHidden(viewModel.isLoading)
             
-        }.padding()
-            .navigationTitle("Edit Employee")
-            .overlay(alignment: .center, content: {
-                ProgressView()
-                    .isHidden(!viewModel.isLoading)
-            })
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Update") {
-                        update()
-                    }
-                    .disabled(viewModel.isLoading)
+            Section("Active") {
+                VStack(alignment: .leading) {
+                    Toggle("Courier Active", isOn: $viewModel.active)
+                    Text("By turning this off you will disable adding any order to this courier")
+                        .font(.caption)
                 }
             }
-            .willProgress(saving: viewModel.isSaving)
-            .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-                if shouldDismiss {
-                    self.presentationMode.wrappedValue.dismiss()
+        }
+        .isHidden(viewModel.isLoading)
+        .navigationTitle("Edit Courier")
+        .navigationBarBackButtonHidden(viewModel.isSaving)
+        .overlay(alignment: .center, content: {
+            ProgressView()
+                .isHidden(!viewModel.isLoading)
+        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Update") {
+                    update()
                 }
+                .disabled(viewModel.isLoading)
             }
-            .toast(isPresenting: $viewModel.showToast){
-                AlertToast(displayMode: .banner(.slide),
-                           type: .regular,
-                           title: viewModel.msg)
+        }
+        .willProgress(saving: viewModel.isSaving)
+        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
+            if shouldDismiss {
+                self.presentationMode.wrappedValue.dismiss()
             }
+        }
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
+            AlertToast(displayMode: .banner(.slide),
+                       type: .regular,
+                       title: viewModel.msg)
+        }
     }
     
     func update() {

@@ -22,7 +22,7 @@ class StoreOptionsViewModel: ObservableObject {
     @Published var website:Bool = false
     
     @Published var editPrice:Bool = false
-    @Published var indec:String = ""
+    @Published var indec:Int = 20
     @Published var reset = false
     
     @Published var isSaving:Bool = false
@@ -48,7 +48,7 @@ class StoreOptionsViewModel: ObservableObject {
         chat = store.chatEnabled ?? true
         reset = store.canWorkersReset ?? false
         editPrice = store.canEditPrice ?? false
-        indec = "\(store.almostOut ?? 20)"
+        indec = store.almostOut ?? 20
     }
     
     func save() async {
@@ -68,7 +68,7 @@ class StoreOptionsViewModel: ObservableObject {
                                     "chatEnabled":chat,
                                     "canWorkersReset":reset,
                                     "canEditPrice":editPrice,
-                                    "almostOut":Int(indec)!]
+                                    "almostOut":indec]
             
             try await storesDao.update(id: store.ownerId, hashMap: map)
             store.canOrder = map["canOrder"] as? Bool ?? false
@@ -84,10 +84,9 @@ class StoreOptionsViewModel: ObservableObject {
             store.almostOut = map["almostOut"] as? Int ?? 0
             
             // Saving local
-            var myUser = await LocalInfo().getLocalUser()
-            if myUser!.storeId == store.ownerId {
-                myUser!.store = self.store
-                _ = await LocalInfo().saveUser(user: myUser!)
+            if var myUser = UserInformation.shared.getUser() {
+                myUser.store = store
+                UserInformation.shared.updateUser(myUser)
             }
             
             showTosat(msg: "Store Name Changed")

@@ -14,7 +14,7 @@ class CartManager {
     let decoder = JSONDecoder()
     
     func getCart() async -> [SavedItems] {
-        let myUser = await LocalInfo().getLocalUser()
+        let myUser = UserInformation.shared.getUser()
 
         if let encodedData = UserDefaults.standard.data(forKey: "\(myUser?.id ?? "") - \(CART_KEY)") {
             if let savedItemsList = try? decoder.decode([SavedItems].self, from: encodedData) {
@@ -26,7 +26,7 @@ class CartManager {
     }
     
     func saveCart(listCart: [SavedItems]) async {
-        let myUser = await LocalInfo().getLocalUser()
+        let myUser = UserInformation.shared.getUser()
         if let encodedData = try? encoder.encode(listCart) {
             UserDefaults.standard.set(encodedData, forKey: "\(myUser?.id ?? "") - \(CART_KEY)")
         }

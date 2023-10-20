@@ -9,26 +9,25 @@ import Foundation
 import FirebaseFirestoreSwift
 import FirebaseFirestore
 
-class StoresDao {
-    let collection = Firestore.firestore().collection("stores")
+class StaticsDao {
+    var collection:CollectionReference
     
-    func addStore(store: Store) async throws {
-        return try! collection.document(store.ownerId).setData(from: store)
+    init(storeId:String) {
+        self.collection = Firestore.firestore().collection("stores").document(storeId).collection("statics")
     }
     
-    func deleteStore(id:String) async throws {
-        return try await collection.document(id).delete()
+    func getLastDays(days:Int) async throws -> [StoreStatics] {
+        return convertToList(snapShot: try await collection.order(by: "date", descending: true)
+            .limit(to: days)
+            .getDocuments())
     }
     
-    func getStore(uId:String) async throws -> Store? {
-        let doc = try await collection.document(uId).getDocument()
-        if !doc.exists {return nil}
-        return try doc.data(as: Store.self)
+    func convertToList(snapShot:QuerySnapshot) -> [StoreStatics] {
+        let arr = snapShot.documents.compactMap{doc -> StoreStatics? in
+            return try! doc.data(as: StoreStatics.self)
+        }
+        
+        return arr
     }
-    
-    func update(id:String, hashMap:[String:Any]) async throws {
-        return try await collection.document(id).updateData(hashMap)
-    }
-    
 }
 

@@ -65,7 +65,7 @@ struct UpdateCard: View {
         .onAppear {
             Task {
                 do {
-                    user = try await UsersDao().getUser(uId: update.uId)
+                    user = try await UsersDao().getUser(uId: update.uId).item
                 } catch {
                     print(error.localizedDescription)
                 }

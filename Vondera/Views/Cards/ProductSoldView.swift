@@ -9,9 +9,10 @@ import SwiftUI
 import NetworkImage
 
 struct ProductSoldView: View {
-    var prod:Product
+    @Binding var prod:StoreProduct
+    
     var body: some View {
-        NavigationLink(destination: ProductDetails(product: prod)) {
+        NavigationLink(destination: ProductDetails(product: $prod)) {
             VStack {
                 HStack(alignment: .center) {
                     NetworkImage(url: URL(string: prod.listPhotos[0] )) { image in
@@ -45,6 +46,6 @@ struct ProductSoldView: View {
 
 struct ProductSoldView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductSoldView(prod: Product.example())
+        ProductSoldView(prod: .constant(StoreProduct.example()))
     }
 }

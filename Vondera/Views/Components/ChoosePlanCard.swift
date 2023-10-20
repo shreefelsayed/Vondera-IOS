@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChoosePlanCard: View {
     var plan:Plan
-    var currentPlan:String = ""
+    @Binding var currentPlan:String
     var onSubscribeClciked:(() -> ())
     
     var body: some View {
@@ -46,7 +46,7 @@ struct ChoosePlanCard: View {
                     .foregroundColor(.accentColor)
                     .bold()
             } else {
-                ButtonLarge(label: "Subscribe for \(plan.price) LE") {
+                ButtonLarge(label: "\(plan.price) LE / Monthly") {
                     onSubscribeClciked()
                 }
             }

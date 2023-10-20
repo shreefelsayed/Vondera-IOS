@@ -7,14 +7,13 @@
 
 import SwiftUI
 import AlertToast
-import AdvancedList
 
 struct StoreCategories: View {
     var store:Store
     @ObservedObject var viewModel:StoreCategoriesViewModel
     @State private var draggingIndex: Int?
     @State var draggedItem : Category?
-    @State var editCategory:Category?
+    @State var editCategory: Category?
     
     init(store: Store) {
         self.store = store
@@ -22,59 +21,90 @@ struct StoreCategories: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            if !viewModel.items.isEmpty {
-                LazyVStack {
-                    Text("Swipe right on any category to edit it, and you can drag and drop to re arrange categories based on your needs.")
-                        .font(.caption)
-                        .padding(.vertical, 6)
-                    
-                    ForEach(viewModel.items) { item in
-                        CategoryLinear(category: item, onClick: {
-                        })
-                        .onDrag({
-                            self.draggedItem = item
-                            return NSItemProvider(item: nil, typeIdentifier: item.id)
-                        })
-                        .onDrop(of: [.text], delegate: MyDropDelegate(item: item, items: $viewModel.items, draggedItem: $draggedItem, onMoved: {
-                            Task {
-                                await viewModel.updateIndexes()
-                            }
-                        }))
-                        .mySwipeAction(color: .blue, icon: "pencil" ) { // custom color + icon
-                            self.editCategory = item
-                        }
+        List {
+            ForEach($viewModel.items) { item in
+                CategoryLinear(category: item)
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button {
+                        self.editCategory = item.wrappedValue
+                    } label: {
+                        Image(systemName: "pencil")
                     }
+                    .tint(.blue)
                 }
+                .onDrag({
+                    self.draggedItem = item.wrappedValue
+                    return NSItemProvider(item: nil, typeIdentifier: item.id)
+                })
+                .onDrop(of: [.text], delegate: MyDropDelegate(item: item.wrappedValue, items: $viewModel.items, draggedItem: $draggedItem, onMoved: {
+                    Task {
+                        await viewModel.updateIndexes()
+                    }
+                }))
             }
-            
         }
-        .animation(.default, value: viewModel.items)
-        .padding()
+        .refreshable {
+            await viewModel.getData()
+        }
+        .listStyle(.plain)
         .navigationTitle("Categories")
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: CreateCategory(storeId: store.ownerId, listCategories: $viewModel.items)) {
+                NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
+                    onItemAdded(newValue)
+                })) {
                     Image(systemName: "plus")
                 }
             }
         }
-        
-        .sheet(item: $editCategory, onDismiss: {
-            Task {
-                await viewModel.getData()
-            }
-        }, content: { cat in
-            NavigationView {
-                EditCategory(storeId: store.ownerId, category: cat)
+        .sheet(item: $editCategory, content: { cat in
+            NavigationStack {
+                EditCategory(category: cat, storeId: store.ownerId) { newValue in
+                    onItemUpdated(newValue)
+                } onDeleted: { deletedItem in
+                    onDelete(deletedItem)
+                }
             }
         })
-        
         .overlay(alignment: .center, content: {
-            EmptyMessageView(msg: "No categories were added to your store yet !")
-                .isHidden(!viewModel.items.isEmpty)
+            if !viewModel.loading && viewModel.items.count == 0 {
+                EmptyMessageView(msg: "No categories were added to your store yet !")
+            } else if viewModel.loading {
+                ProgressView()
+            }
         })
-        .navigationBarTitleDisplayMode(.large)
+    }
+    
+    func onItemAdded(_ item:Category) {
+        withAnimation {
+            viewModel.items.append(item)
+            viewModel.msg = "New Category Added"
+        }
+    }
+    
+    func onItemUpdated(_ item:Category) {
+        let index = viewModel.items.firstIndex { $0.id == item.id }
+        if let index = index {
+            DispatchQueue.main.async {
+                withAnimation {
+                    viewModel.items[index] = item
+                    viewModel.msg = "Updated"
+                }
+            }
+        }
+        
+        editCategory = nil
+    }
+    
+    func onDelete(_ item:Category) {
+        withAnimation {
+            if let index = viewModel.items.firstIndex(where: { $0.id == item.id }) {
+                viewModel.items.remove(at: index)
+                viewModel.msg = "Category Deleted"
+            }
+        }
+        
+        editCategory = nil
     }
 }
 

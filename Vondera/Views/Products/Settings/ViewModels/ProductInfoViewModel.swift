@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 class ProductInfoViewModel : ObservableObject {
-    @Published var product:Product
+    @Published var product:StoreProduct
     var categorysDao:CategoryDao
     var productsDao:ProductsDao
     
@@ -33,10 +33,9 @@ class ProductInfoViewModel : ObservableObject {
     
     @Published var isSaving = false
     @Published var isLoading = false
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     
-    init(product:Product) {
+    init(product:StoreProduct) {
         self.product = product
         self.productsDao = ProductsDao(storeId: product.storeId)
         self.categorysDao = CategoryDao(storeId: product.storeId)
@@ -44,7 +43,7 @@ class ProductInfoViewModel : ObservableObject {
         // --> Set the published values
         Task {
             await getStoreCategories()
-            await getData()
+            getData()
         }
     }
     
@@ -54,26 +53,24 @@ class ProductInfoViewModel : ObservableObject {
         }
         
         do {
-            categories = try await categorysDao.getAll()
-            category = categories.first
+            let categories = try await categorysDao.getAll()
+            DispatchQueue.main.async {
+                self.categories = categories
+                self.category = categories.first
+            }
         } catch {
             print(error.localizedDescription)
         }
     }
     
-    func getData() async {
-        do {
-            self.product = try await productsDao.getProduct(id: product.id)!
-            self.name = product.name
-            self.desc = product.desc ?? ""
-            self.alwaysStocked = product.alwaysStocked ?? true
-            self.category = getCategory()
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        DispatchQueue.main.async {
-            self.isLoading = false
+    func getData() {
+        DispatchQueue.main.async { [self] in
+            name = product.name
+            desc = product.desc ?? ""
+            alwaysStocked = product.alwaysStocked ?? true
+            if let productCategory = getCategory() {
+                category = productCategory
+            }
         }
     }
     
@@ -104,7 +101,7 @@ class ProductInfoViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            var map:[String:Any] = ["name": name,
+            let map:[String:Any] = ["name": name,
                                     "desc": desc,
                                     "alwaysStocked": alwaysStocked,
                                     "categoryId": category!.id,
@@ -125,11 +122,9 @@ class ProductInfoViewModel : ObservableObject {
         DispatchQueue.main.async {
             self.isSaving = false
         }
-        
     }
     
     func showTosat(msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
 }

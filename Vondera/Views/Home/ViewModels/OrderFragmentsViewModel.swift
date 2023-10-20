@@ -9,7 +9,7 @@ import Foundation
 
 class OrderFragmentViewModel : ObservableObject {
     lazy var ordersDao:OrdersDao? = nil
-    lazy var user:UserData? = nil
+    lazy var user = UserInformation.shared.getUser()
     
     @Published var listOrders = [Order]()
     @Published var isLoading = true
@@ -22,7 +22,7 @@ class OrderFragmentViewModel : ObservableObject {
     func initalize()  {
         Task {
             do {
-                user = await LocalInfo().getLocalUser()!
+                user = UserInformation.shared.getUser()
                 ordersDao = OrdersDao(storeId: user!.storeId)
                 
                 await getOrdersList()

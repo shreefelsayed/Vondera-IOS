@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct StoreDeletedOrders: View {
     var storeId:String
@@ -18,39 +17,33 @@ struct StoreDeletedOrders: View {
     }
     
     var body: some View {
-        AdvancedList(viewModel.items, listView: { rows in
-            if #available(iOS 14, macOS 11, *) {
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(alignment: .leading, content: rows)
-                        .padding()
+        List {
+            ForEach(viewModel.searchText.isBlank ? $viewModel.items : $viewModel.result) { order in
+                OrderCard(order: order)
+                
+                if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        loadItem()
+                    }
                 }
-            } else {
-                List(content: rows)
             }
-        }, content: { item in
-            OrderCard(order: item)
-        }, emptyStateView: {
-            if viewModel.isLoading == false {
-                EmptyMessageView(msg: "No deleted orders found")
-            }
-        }, errorStateView: { error in
-            Text(error.localizedDescription).lineLimit(nil)
-        }, loadingStateView: {
-            ProgressView()
-        }).pagination(.init(type: .thresholdItem(offset: 5), shouldLoadNextPage: {
-            loadItem()
-        }) {
-            if viewModel.isLoading {
-                ProgressView()
-            }
-        }).onAppear {
-            loadItem()
-        }.refreshable(action: {
+        }
+        .searchable(text: $viewModel.searchText, prompt: "Search by name, phone or id")
+        .refreshable {
             await refreshData()
-        })
-        .padding(.vertical)
+        }
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "No orders were deleted")
+            }
+        }
         .navigationTitle("Deleted Orders")
-        .navigationBarTitleDisplayMode(.large)
     }
     
     func refreshData() async {
@@ -61,11 +54,5 @@ struct StoreDeletedOrders: View {
         Task {
             await viewModel.getData()
         }
-    }
-}
-
-struct StoreDeletedOrders_Previews: PreviewProvider {
-    static var previews: some View {
-        StoreDeletedOrders(storeId: "")
     }
 }

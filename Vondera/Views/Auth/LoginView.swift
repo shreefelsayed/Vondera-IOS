@@ -12,98 +12,184 @@ import GoogleSignIn
 import FacebookLogin
 import OmenTextField
 import CocoaTextField
+import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
-    @State private var sheetHeight: CGFloat = .zero
     @State var creatingAccount = false
-    
-    let images = ["home_intro_01", "home_intro_02", "home_intro_03", "home_intro_04", "home_intro_05"]
-    
-    var timer: Timer {
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { _ in
-            withAnimation {
-                viewModel.currentSlide = (viewModel.currentSlide + 1) % images.count
-            }
-        }
-    }
+    @Environment(\.colorScheme) var colorScheme
+    @State var showSavedItems = false
+    @State var count = 0
     
     var body: some View {
-        ZStack {
-            VStack {
-                // Header
-                Image("logo_horz")
-                    .resizable()
-                    .scaledToFit()
-                
+        VStack(alignment: .center) {
+            // Header
+            Image("vondera_no_slogan")
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(colorScheme == .dark ? Color.white : Color.accentColor)
+            
+            
                 .padding(.top, 30)
+            
+            Spacer().frame(height: 36)
+            
+            VStack {
+                Text("Welcome back")
+                    .font(.title3)
+                    .bold()
                 
-                
-                Image(images[viewModel.currentSlide])
-                    .resizable()
-                    .scaledToFit()
-                    .onAppear(perform: {
-                        _ = timer
-                    })
-                    .padding(.vertical, 20)
+                Text("Please enter your details to sign in")
+            }
+            
+            
+            
+            Spacer().frame(height: 24)
+            
+            //MARK : Login/Create account Methods
+            /*
+            HStack {
+                RoundedImageButton(assetName: "apple-logo", assetSize: 25)
+                    .onTapGesture {
+                        #warning("Apple log in")
+                    }
                 
                 Spacer()
                 
-                
-                // Login Form
-                VStack(spacing: 10) {
-                    ButtonLarge(label: "Login",action: showEmail)
-                    ButtonLarge(label: "Create a new Store", background: .white, textColor: .blue) {
-                        creatingAccount = true
-                    }
-                    
+                RoundedImageButton(assetName: "google", assetSize: 25)
+                .onTapGesture {
+                    googleSignIn()
                 }
                 
                 Spacer()
                 
-                Text("By singing in you agree to Vondera terms and conditions")
-                    .multilineTextAlignment(.center)
-                
+                RoundedImageButton(assetName: "facebook", assetSize: 25)
+                    .onTapGesture {
+                        #warning("Facebook log in")
+                    }
             }
-            .padding()
+            .frame(height: 40)
             
-            NavigationLink(destination: CreateAccountView(), isActive: $creatingAccount) { EmptyView() }
             
-            BottomSheet(isShowing: $viewModel.isShowingSheet, content: {
-                AnyView(currentSheet)
-            }())
+            // Login Form
+            
+            HStack {
+                Rectangle()
+                    .fill(Color.gray.opacity(0.5))
+                    .frame(height: 2)
+                
+                Text("Or")
+                
+                Rectangle()
+                    .fill(Color.gray.opacity(0.5))
+                    .frame(height: 2)
+            }
+            */
+            
+            VStack(spacing: 22) {
+                FloatingTextField(title: "Email address", text: $viewModel.email, required: nil ,autoCapitalize: .never, keyboard: .emailAddress)
+                
+                FloatingTextField(title: "Password", text: $viewModel.password, required: nil, secure: true)
+                
+                //TODO : Add the forget password screen
+                HStack {
+                    Spacer()
+                    
+                    Text("Forget Password ?")
+                        .underline()
+                }
+                .hidden()
+                
+                ButtonLarge(label: "Sign in", action: callLogin)
+                
+                if count > 0 {
+                    Button("Or Login to saved account") {
+                        showSavedItems = true
+                    }
+                }
+            }
+            
+            Spacer().frame(height: 14)
+            
+            HStack (spacing: 0) {
+                Text("Don't have an account ? ")
+                
+                Text("Sign Up")
+                    .bold()
+                    .onTapGesture {
+                        creatingAccount = true
+                    }
+            }
+            
+            
+            
+            Spacer()
+            
+            VStack {
+                Text("By signing in, you agree to our ")
+                    .font(.system(size: 16))
+                
+                HStack(spacing:0) {
+                    Text("Terms & Conditions")
+                        .font(.system(size: 16))
+                        .foregroundStyle(Color.accentColor)
+                        .underline()
+                        .onTapGesture {
+                            openTermsAndConditionsLink()
+                        }
+                    
+                    Text(" and our ")
+                        .font(.system(size: 16))
+                    
+                    Text("Privacy Policy")
+                        .font(.system(size: 16))
+                        .foregroundStyle(Color.accentColor)
+                        .underline()
+                        .onTapGesture {
+                            openPrivacyPolicyLink()
+                        }
+                }
+            }
+            
         }
-        
-        .toast(isPresenting: $viewModel.showToast){
-            AlertToast(displayMode: .hud,
+        .padding()
+        .navigationDestination(isPresented: $creatingAccount) {
+            CreateAccountView()
+        }
+        .toast(isPresenting: Binding(value: $viewModel.errorMsg)){
+            AlertToast(displayMode: .alert,
                        type: .error(.red),
                        title: viewModel.errorMsg)
         }
-    }
-    
-    func showEmail() {
-        withAnimation {
-            viewModel.showEmailSheet()
+        .sheet(isPresented: $showSavedItems) {
+            NavigationStack {
+                SwitchAccountView(show: $showSavedItems)
+                    .presentationDetents([.fraction(0.3)])
+            }
+        }
+        .onAppear {
+            Task {
+                let savedUsers = await SavedAccountManager().getAllUsers()
+                count = savedUsers.count
+            }
         }
     }
     
-    func showLoginSheet() {
-        withAnimation {
-            viewModel.showLoginSheet()
+    func openTermsAndConditionsLink() {
+        let url = "https://vondera.app/terms.html"
+        if let Url = URL(string: url) {
+            UIApplication.shared.open(Url)
         }
     }
     
-    func showCreateAccountSheet() {
-        withAnimation {
-            viewModel.showSignUpSheet()
+    func openPrivacyPolicyLink() {
+        let url = "https://vondera.app/policy.html"
+        if let Url = URL(string: url) {
+            UIApplication.shared.open(Url)
         }
     }
     
-    func hideSheet() {
-        withAnimation {
-            viewModel.hideSheet()
-        }
-    }
     
     func callLogin() {
         Task {
@@ -117,99 +203,28 @@ struct LoginView: View {
         }
     }
     
-    @ViewBuilder
-    var currentSheet: some View {
-        switch viewModel.sheetType {
-        case "Login":
-            loginDialog
-        case "SignUp":
-            createAccountSheet
-        default:
-            emailSheet
-        }
-    }
-    
-    var createAccountSheet: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Start your journey by creating your store now")
-                    .foregroundColor(.black.opacity(0.9))
-                    .font(.system(size: 20, weight: .bold))
-                
-                Spacer()
-            }
-            .padding(.top, 16)
-            .padding(.bottom, 4)
-            
-            Text("Create a new store account to access all the great features of Vondera, and start controlling your business")
-                .font(.caption)
-                .padding(.bottom, 24)
-            
-            ButtonLarge(label: "Continue with Google", action: {
-                
-            })
-            
-            ButtonLarge(label: "Continue with Email") {
-                creatingAccount = true
-            }
-        }
-        .padding(.horizontal, 16)
-    }
-    
-    
-    var emailSheet: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text("Login to with your Email")
-                    .foregroundColor(.black.opacity(0.9))
-                    .font(.system(size: 20, weight: .bold))
-                
-                Spacer()
-            }
-            .padding(.top, 16)
-            .padding(.bottom, 4)
-            
-            
-            TextField("Email Address", text: $viewModel.email)
-                .textFieldStyle(.roundedBorder)
-                .autocapitalization(.none)
-                .keyboardType(.emailAddress)
-            
-            
-            SecureField("Password", text: $viewModel.password)
-                .textFieldStyle(.roundedBorder)
-                .autocapitalization(.none)
-            
-            ButtonLarge(label: "Login", action: callLogin)
-            
-        }
-        .padding(.horizontal, 16)
-    }
-    
-    var loginDialog: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Login to your store")
-                    .foregroundColor(.black.opacity(0.9))
-                    .font(.system(size: 20, weight: .bold))
-                
-                Spacer()
-            }
-            .padding(.top, 16)
-            .padding(.bottom, 4)
-            
-            Text("Login to your account using google, or email and password to access your store.")
-                .font(.caption)
-                .padding(.bottom, 24)
-            
-            ButtonLarge(label: "Sign in with Google", action: googleSignIn)
-            
-            ButtonLarge(label: "Sign in with Email", action: showEmail)
-        }
-        .padding(.horizontal, 16)
-    }
 }
 
+
+struct RoundedImageButton: View {
+    var assetName = "apple.logo"
+    var assetSize:CGFloat = 25
+    var radius:CGFloat = 6
+    var strokeColor:Color = Color.gray.opacity(0.5)
+    var strokeWidth:CGFloat = 1
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: radius)
+            .stroke(strokeColor, lineWidth: strokeWidth)
+            .overlay(
+                Image(assetName)
+                    .resizable()
+                    .frame(width: assetSize)
+                    .scaledToFit()
+                    .padding(8)
+            )
+    }
+}
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {

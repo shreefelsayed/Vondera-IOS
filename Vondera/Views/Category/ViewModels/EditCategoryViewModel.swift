@@ -16,12 +16,12 @@ class EditCategoryViewModel : NSObject, ObservableObject, PHPickerViewController
     var categoryDao:CategoryDao
 
     @Published var name:String = ""
+    @Published var desc:String = ""
     @Published var link:String = ""
     @Published var selectedImage:UIImage?
     
     @Published var deleteDialog = false
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     @Published var isSaving = false
     
     init(storeId: String, category:Category) {
@@ -31,6 +31,7 @@ class EditCategoryViewModel : NSObject, ObservableObject, PHPickerViewController
         
         self.name = category.name
         self.link = category.url
+        self.desc = category.desc ?? ""
     }
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
@@ -54,8 +55,12 @@ class EditCategoryViewModel : NSObject, ObservableObject, PHPickerViewController
     
     func setData() {
         Task {
-            var data:[String:Any] = ["name": name, "url" : link]
+            let data:[String:Any] = ["name": name, "url" : link, "desc": desc]
             try! await categoryDao.update(id: category.id, hash: data)
+            
+            self.category.name = name
+            self.category.url = link
+            self.category.desc = desc
             
             DispatchQueue.main.async {
                 print("category Updated")
@@ -95,15 +100,13 @@ class EditCategoryViewModel : NSObject, ObservableObject, PHPickerViewController
         configuration.selectionLimit = 1
         configuration.filter = .images
         configuration.selection = .ordered
-        
+
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
-        
-        // Present the photo picker
+
         UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
     }
-    
-    
+
     internal func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         

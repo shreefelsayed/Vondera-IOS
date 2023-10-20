@@ -10,11 +10,11 @@ import SwiftXLSX
 
 class WarehouseExcel {
     var name = "Warehouse Report"
-    var list:[Product]
+    var list:[StoreProduct]
     let book = XWorkBook()
     var sheet:XSheet
     
-    init(name: String = "Warehouse Report", list: [Product]) {
+    init(name: String = "Warehouse Report", list: [StoreProduct]) {
         self.name = name
         self.list = list
         sheet = book.NewSheet(name)
@@ -43,6 +43,7 @@ class WarehouseExcel {
             cell.Cols(txt: .white, bg: .darkGray)
             cell.value = .text(title.uppercased(with: .autoupdatingCurrent))
             cell.Font = XFont(.TrebuchetMS, 10, true)
+            cell.width = 100
             cell.alignmentHorizontal = .center
         }
     }
@@ -53,6 +54,7 @@ class WarehouseExcel {
             cell.Cols(txt: .black, bg: .white)
             cell.value = .text(title.uppercased(with: .autoupdatingCurrent))
             cell.Font = XFont(.TrebuchetMS, 8, true)
+            cell.width = 100
             cell.alignmentHorizontal = .left
         }
     }

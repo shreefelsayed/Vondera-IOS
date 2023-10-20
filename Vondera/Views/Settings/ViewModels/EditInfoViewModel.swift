@@ -45,7 +45,7 @@ class EditInfoViewModel : ObservableObject {
             // --> Update the database
             try await usersDao.update(id: user.id, hash: ["name": name])
             user.name = name
-            let _ = await LocalInfo().saveUser(user: user)
+            UserInformation.shared.updateUser(user)
             showTosat(msg: "Name Changed")
             
             DispatchQueue.main.async {

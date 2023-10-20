@@ -6,13 +6,85 @@
 //
 
 import SwiftUI
+import NetworkImage
 
-struct ImagePlaceholder: View {
+struct ImagePickupHolder: View {
+    var currentImageURL:String?
+    var selectedImage:UIImage?
+    var currentImagePlaceHolder:UIImage?
+    
+    var reduis:CGFloat = 60
+    var iconOverly:String = "photo.fill.on.rectangle.fill"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if selectedImage != nil {
+            Image(uiImage: selectedImage)
+                .centerCropped()
+                .overlay(alignment: .center) {
+                    Image(systemName: iconOverly)
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .opacity(0.4)
+                    
+                }
+                .background(Color.gray)
+                .frame(width: reduis, height: reduis)
+                .clipShape(Circle())
+        } else {
+            NetworkImage(url: URL(string: currentImageURL ?? "")) { image in
+                image.centerCropped()
+            } placeholder: {
+                ProgressView()
+            } fallback: {
+                Image(uiImage: currentImagePlaceHolder)
+                    .resizable()
+            }
+            .overlay(alignment: .center) {
+                if iconOverly != nil {
+                    Image(systemName: iconOverly)
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .opacity(0.4)
+                }
+            }
+            .background(Color.gray)
+            .frame(width: reduis, height: reduis)
+            .clipShape(Circle())
+        }
+        
+    }
+}
+struct ImagePlaceHolder: View {
+    @State var url:String
+    var placeHolder:UIImage?
+    
+    var reduis:CGFloat = 60
+    
+    var iconOverly:String?
+    
+    var body: some View {
+        NetworkImage(url: URL(string: url )) { image in
+            image.centerCropped()
+        } placeholder: {
+            ProgressView()
+        } fallback: {
+            if placeHolder != nil {
+                Image(uiImage: placeHolder)
+                    .resizable()
+            }
+        }
+        .overlay(alignment: .center) {
+            if iconOverly != nil {
+                Image(systemName: iconOverly)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .opacity(0.4)
+            }
+        }
+        .background(Color.gray)
+        .frame(width: reduis, height: reduis)
+        .clipShape(Circle())
     }
 }
 
-#Preview {
-    ImagePlaceholder()
-}
+

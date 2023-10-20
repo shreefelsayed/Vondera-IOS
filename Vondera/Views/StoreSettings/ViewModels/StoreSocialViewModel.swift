@@ -52,10 +52,9 @@ class StoreSocialViewModel : ObservableObject {
             store.website = web
 
             // Saving local
-            var myUser = await LocalInfo().getLocalUser()
-            if myUser!.storeId == store.ownerId {
-                myUser!.store = self.store
-                _ = await LocalInfo().saveUser(user: myUser!)
+            if var myUser = UserInformation.shared.getUser() {
+                myUser.store = store
+                UserInformation.shared.updateUser(myUser)
             }
             
             showTosat(msg: "Social Links Changed")

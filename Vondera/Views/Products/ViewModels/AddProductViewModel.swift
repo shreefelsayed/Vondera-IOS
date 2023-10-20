@@ -8,13 +8,36 @@
 import Foundation
 import Firebase
 import FirebaseStorage
-import PhotosUI
 import Combine
 
-class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDelegate {
+class AddProductViewModel : ObservableObject {
     var storeId:String = ""
     var categorysDao:CategoryDao
     var productsDao:ProductsDao
+    
+    var productId = ""
+    @Published var page = 1
+    @Published var categories = [Category]()
+    @Published var category:Category?
+    @Published var isSheetPresented = false
+
+    @Published var selectedPhotos: [UIImage] = []
+    
+    @Published var name = ""
+    @Published var desc = ""
+
+    @Published var alwaysStocked = false
+    @Published var sellingPrice = "0"
+    @Published var cost = "0"
+    @Published var quantity = "0"
+    @Published var isSaving = false
+    
+    @Published var listVarients = [[String:[String]]]()
+    @Published var listTitles = [String]()
+    @Published var listOptions = [[String]]()
+    var myUser = UserInformation.shared.getUser()
+    @Published var showToast = false
+    @Published var msg = ""
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
@@ -27,36 +50,15 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
         self.storeId = storeId
         self.categorysDao = CategoryDao(storeId: storeId)
         self.productsDao = ProductsDao(storeId: storeId)
-        
-        super.init()
-        
+        self.myUser = UserInformation.shared.getUser()
+
         Task {
             await createProductId()
             await getStoreCategories()
         }
     }
     
-    var productId = ""
-    @Published var page = 1
-    @Published var categories = [Category]()
-    @Published var category:Category?
-    @Published var isSheetPresented = false
-
-    @Published var selectedPhotos: [UIImage] = []
     
-    @Published var name = ""
-    @Published var alwaysStocked = false
-    @Published var sellingPrice = "0"
-    @Published var cost = "0"
-    @Published var quantity = "0"
-    @Published var isSaving = false
-    
-    @Published var listVarients = [[String:[String]]]()
-    @Published var listTitles = [String]()
-    @Published var listOptions = [[String]]()
-    
-    @Published var showToast = false
-    @Published var msg = ""
     
     func deleteVarient(i:Int) {
         listTitles.remove(at: i)
@@ -89,7 +91,7 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
         showToast.toggle()
     }
     
-    func nextPage() async {
+    func nextPage() {
         if page == 1 {
             if (check1()) {page = 2}
         } else if page == 2 {
@@ -101,8 +103,17 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
                 }
             }
         } else if page == 3 {
-            if(check3()) {uploadPhotos()}
+            if(check3()) { uploadPhotos() }
         }
+    }
+    
+    func showPrevPage() {
+        if page == 1 {
+            shouldDismissView = true
+            return
+        }
+        
+        page -= 1
     }
     
     func check1() -> Bool {
@@ -123,6 +134,11 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
         
         guard sellingPrice.isNumeric else {
             showMessage("Enter a valid price amount")
+            return false
+        }
+        
+        guard sellingPrice != "0" else {
+            showMessage("Selling price can't be Zero LE")
             return false
         }
         
@@ -182,7 +198,7 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
             self.isSaving = true
         }
         
-        let storageRef = Storage.storage().reference().child("products").child(productId)
+        let storageRef = Storage.storage().reference().child("stores").child(myUser!.storeId).child("products").child(productId)
         FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: storageRef) { imageURLs, error in
             if let error = error {
                 DispatchQueue.main.async {
@@ -198,8 +214,9 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
     func saveProduct(uris: [URL]) {
         Task {
             // MARK : Create a product Object
-            var product = Product(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
+            var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
             
+            product.desc = desc
             product.storeId = storeId
             product.listPhotos = uris.map { $0.absoluteString }
             product.hashVarients = listVarient()
@@ -213,12 +230,11 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
                 showMessage("Product has been added")
                 
                 // --> Saving Local
-                var myUser = await LocalInfo().getLocalUser()
-                if myUser?.storeId == storeId {
-                    if var productsCount = myUser?.store?.productsCount {
+                if var myUser = UserInformation.shared.getUser() {
+                    if var productsCount = myUser.store?.productsCount {
                         productsCount = productsCount + 1
-                        myUser?.store?.productsCount = productsCount
-                        _ = await LocalInfo().saveUser(user: myUser!)
+                        myUser.store?.productsCount = productsCount
+                        UserInformation.shared.updateUser(myUser)
                     }
                 }
                 
@@ -244,18 +260,6 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
         }
     }
     
-    func pickPhotos() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 6 - selectedPhotos.count
-        configuration.filter = .images
-        configuration.selection = .ordered
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        // Present the photo picker
-        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
-    }
     
     func removePhoto(image: UIImage) {
         if let index = selectedPhotos.firstIndex(of: image) {
@@ -268,26 +272,10 @@ class AddProductViewModel : NSObject, ObservableObject, PHPickerViewControllerDe
         selectedPhotos.removeAll()
     }
     
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-        
-        for result in results {
-            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                    if let image = image as? UIImage {
-                        DispatchQueue.main.async {
-                            self?.selectedPhotos.append(image)
-                        }
-                    }
-                }
-            }
-        }
-    }
-        
     func createProductId() async {
         let id:String = "\(generateRandomNumber())"
-        let isExist = await productsDao.productExist(id: id)
-        if isExist {
+        let isExist = try? await productsDao.productExist(id: id)
+        if (isExist ?? true) {
             await createProductId()
             return
         }

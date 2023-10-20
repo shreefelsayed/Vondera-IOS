@@ -7,20 +7,16 @@
 
 import Foundation
 import FirebaseFirestore
-import AdvancedList
 
 class InStockViewModel: ObservableObject {
-    var storeId:String
-    var productsDao:ProductsDao
-    var storesDao = StoresDao()
-
-    @Published var state:ListState = .items
-    @Published var items = [Product]()
-    @Published var canLoadMore = true
-    @Published var error = ""
-    
+    private var storeId:String
+    private var productsDao:ProductsDao
     private var lastSnapshot:DocumentSnapshot?
     
+    @Published var isLoading = false
+    @Published var items = [StoreProduct]()
+    @Published var canLoadMore = true
+    @Published var error = ""
     
     init( storeId:String) {
         self.storeId = storeId
@@ -28,7 +24,6 @@ class InStockViewModel: ObservableObject {
         
         Task {
             await getData()
-
         }
     }
     
@@ -36,31 +31,25 @@ class InStockViewModel: ObservableObject {
         self.canLoadMore = true
         self.lastSnapshot = nil
         self.items.removeAll()
-        await getData(refreshing: true)
+        await getData()
     }
     
-    func getData(refreshing:Bool = false) async {
-        guard state != .loading || !canLoadMore else {
+    func getData() async {
+        guard !isLoading && canLoadMore else {
             return
         }
         
         do {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil { state = .loading }
-            }
-           
+            isLoading = true
+            
             let result = try await productsDao.getInStock(lastSnapShot: lastSnapshot)
             
-            DispatchQueue.main.sync {
-                lastSnapshot = result.1
-                items.append(contentsOf: result.0)
-                self.canLoadMore = !result.0.isEmpty
-                state = .items
-            }
+            lastSnapshot = result.1
+            items.append(contentsOf: result.0)
+            self.canLoadMore = !result.0.isEmpty
+            isLoading = false
         } catch {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil  { state = .error(error as NSError) }
-            }
+            isLoading = false
         }
     }
 }

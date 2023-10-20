@@ -33,7 +33,7 @@ class StoreEmployeesViewModel: ObservableObject {
         self.storeId = storeId
         
         Task {
-            user = await LocalInfo().getLocalUser()
+            user = UserInformation.shared.getUser()
             await getData()
         }
     }

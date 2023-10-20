@@ -11,7 +11,7 @@ import PhotosUI
 import FirebaseStorage
 
 class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControllerDelegate {
-    @Published var product:Product
+    @Published var product:StoreProduct
     var productsDao:ProductsDao
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
@@ -32,23 +32,19 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
     @Published var isLoading = false
 
     @Published var showToast = false
+    var myUser = UserInformation.shared.getUser()
     @Published var msg = ""
     
-    init(product:Product) {
+    init(product:StoreProduct) {
         self.product = product
         self.productsDao = ProductsDao(storeId: product.storeId)
+        self.myUser = UserInformation.shared.getUser()
         super.init()
         
-        // --> Set the published values
-        load()
-    }
-    
-    func load() {
         Task {
             await getData()
         }
     }
-    
     
     
     func removePhoto(image: String) {
@@ -123,7 +119,7 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
             return
         }
         
-        let storageRef = Storage.storage().reference().child("products").child(product.id)
+        let storageRef = Storage.storage().reference().child("stores").child(myUser!.storeId).child("products").child(product.id)
         FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: storageRef) { imageURLs, error in
             if let error = error {
                 DispatchQueue.main.async {

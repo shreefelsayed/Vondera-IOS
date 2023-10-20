@@ -1,6 +1,6 @@
 import Foundation
 
-struct CourierPrice: Codable, Hashable, Equatable {
+struct CourierPrice: Codable, Equatable, Hashable {
     var govName: String = ""
     var price: Int = 0
     
@@ -12,6 +12,6 @@ struct CourierPrice: Codable, Hashable, Equatable {
     }
     
     static func ==(lhs: CourierPrice, rhs: CourierPrice) -> Bool {
-            return lhs.govName == rhs.govName
-        }
+        return lhs.govName == rhs.govName
+    }
 }

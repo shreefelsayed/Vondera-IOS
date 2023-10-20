@@ -9,7 +9,7 @@ import SwiftUI
 import NetworkImage
 
 struct ProductCard: View {
-    var product:Product
+    @Binding var product:StoreProduct
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -19,7 +19,6 @@ struct ProductCard: View {
             } placeholder: {
                 ZStack(alignment: .center) {
                     Color.gray
-                    
                     ProgressView()
                 }
                 
@@ -59,6 +58,6 @@ struct ProductCard: View {
 
 struct ProductCard_Previews: PreviewProvider {
     static var previews: some View {
-        ProductCard(product: Product.example())
+        ProductCard(product: .constant(StoreProduct.example()))
     }
 }

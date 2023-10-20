@@ -10,18 +10,18 @@ import Combine
 import FirebaseStorage
 import PhotosUI
 
-class CreateCategoryViewModel : NSObject, ObservableObject, PHPickerViewControllerDelegate {
+class CreateCategoryViewModel : ObservableObject {
     var storeId:String
     
     var categoryDao:CategoryDao
     @Published var selectedImage: UIImage?
     @Published var name = ""
-    
+    @Published var desc = ""
+
     @Published var category:Category?
 
-    @Published var msg = ""
+    @Published var msg:String?
     @Published var isSaving = false
-    @Published var showToast = false
     
     init(storeId: String) {
         self.storeId = storeId
@@ -40,7 +40,6 @@ class CreateCategoryViewModel : NSObject, ObservableObject, PHPickerViewControll
         guard selectedImage != nil else {
             showMessage("Please select a category image")
             self.isSaving = false
-            pickPhotos()
             return
         }
         
@@ -74,8 +73,10 @@ class CreateCategoryViewModel : NSObject, ObservableObject, PHPickerViewControll
     func addCategory(url:URL) async {
         do {
             print("store id \(storeId)")
-            var myUser = await LocalInfo().getLocalUser()
+            let myUser = UserInformation.shared.getUser()
             var created = Category(id: "",name: name, url: url.absoluteString, sortValue: myUser?.store!.categoriesCount ?? 0)
+            created.desc = desc
+            
             try await categoryDao.add(category: &created)
             
             // --> Saving Local
@@ -84,12 +85,12 @@ class CreateCategoryViewModel : NSObject, ObservableObject, PHPickerViewControll
                 if var categoriesCount = myUser?.store?.categoriesCount {
                     categoriesCount = categoriesCount + 1
                     myUser?.store?.categoriesCount = categoriesCount
-                    _ = await LocalInfo().saveUser(user: myUser!)
+                    UserInformation.shared.updateUser(myUser)
                 }
             }
 
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [created] in
                 print("category created")
                 self.category = created
                 self.shouldDismissView = true
@@ -106,35 +107,5 @@ class CreateCategoryViewModel : NSObject, ObservableObject, PHPickerViewControll
     
     private func showMessage(_ msg: String) {
         self.msg = msg
-        showToast.toggle()
-    }
-    
-    internal func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-        
-        for result in results {
-            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                    if let image = image as? UIImage {
-                        DispatchQueue.main.sync {
-                            self?.selectedImage = image
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func pickPhotos() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 1
-        configuration.filter = .images
-        configuration.selection = .ordered
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        // Present the photo picker
-        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
     }
 }

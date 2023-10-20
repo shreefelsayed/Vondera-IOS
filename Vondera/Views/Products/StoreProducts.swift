@@ -2,7 +2,7 @@
 //  StoreProducts.swift
 //  Vondera
 //
-//  Created by Shreif El Sayed on 22/06/2023.
+//  Created by Shreif El Sayed on 22/06/2023
 //
 
 import SwiftUI
@@ -19,13 +19,9 @@ struct StoreProducts: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            PullToRefreshOld(coordinateSpaceName: "scrollView") {
-                Task {
-                    await viewModel.selectCategory(id: viewModel.selectedCategory)
-                }
-            }
-            
             VStack(alignment: .leading) {
+                
+                // MARK : Categories
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(alignment: .center) {
                         ForEach(viewModel.categories) { category in
@@ -50,18 +46,13 @@ struct StoreProducts: View {
                     if viewModel.products.isEmpty {
                         EmptyMessageView(msg: "No Products are in this category")
                     } else {
-                        VStack(alignment: .center) {
-                            if !viewModel.products.isEmpty {
-                                SearchBar(text: $viewModel.searchText, hint: "Search \(viewModel.products.count) Products")
-                                    .padding(.horizontal, 8)
-                            }
-                            
-                            LazyVGrid(columns: [GridItem(.flexible()),
-                                                GridItem(.flexible())]) {
-                                ForEach(viewModel.filteredItems) { product in
-                                    NavigationLink(destination: ProductDetails(product: product)) {
-                                        ProductCard(product: product)
-                                    }.buttonStyle(PlainButtonStyle())
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                            ForEach($viewModel.products.indices, id: \.self) { index in
+                                if $viewModel.products[index].wrappedValue.filter(viewModel.searchText) {
+                                    NavigationLink(destination: ProductDetails(product: $viewModel.products[index])) {
+                                        ProductCard(product: $viewModel.products[index])
+                                    }
+                                    .buttonStyle(.plain)
                                     
                                 }
                             }
@@ -71,9 +62,32 @@ struct StoreProducts: View {
             }
            
         }
-        .coordinateSpace(name: "scrollView")
+        .refreshable {
+            await viewModel.selectCategory(id: viewModel.selectedCategory)
+        }
+        .searchable(text: $viewModel.searchText, prompt: Text("Search \(viewModel.products.count) Products"))
         .navigationTitle("Products")
         .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Picker("Sort Option", selection: $viewModel.sortIndex) {
+                        Text("Name")
+                            .tag("name")
+                        
+                        Text("Quantity")
+                            .tag("quantity")
+                        
+                        Text("Most Selling")
+                            .tag("sold")
+                        
+                        Text("Last Order Date")
+                            .tag("lastOrderDate")
+                    }
+                } label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                }
+            }
+            
             if myUser != nil && myUser!.canAccessAdmin {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink("Add") {
@@ -84,9 +98,8 @@ struct StoreProducts: View {
             
         }
         .onAppear {
-            Task {
-                self.myUser = await LocalInfo().getLocalUser()
-            }
+                self.myUser = UserInformation.shared.getUser()
+            
         }
     }
     

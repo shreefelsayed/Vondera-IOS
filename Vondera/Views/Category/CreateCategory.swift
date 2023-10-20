@@ -8,84 +8,76 @@
 import SwiftUI
 import AlertToast
 import LoadingButton
+import PhotosUI
 
 struct CreateCategory: View {
     var storeId:String
+    var onAdded : ((Category) -> ())? = nil
     
-    @Binding var listCategories:[Category]
-    
+    @State var picker:PhotosPickerItem?
     @ObservedObject var viewModel:CreateCategoryViewModel
     @Environment(\.presentationMode) private var presentationMode
     
-    init(storeId: String, listCategories:Binding<[Category]>) {
+    init(storeId: String, onAdded : ((Category) -> ())?) {
         self.storeId = storeId
-        self._listCategories = listCategories
+        self.onAdded = onAdded
         self.viewModel = CreateCategoryViewModel(storeId: storeId)
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center) {
-                HStack {
-                    if viewModel.selectedImage != nil {
-                        Image(uiImage: viewModel.selectedImage)
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .clipShape(Circle())
-                            .overlay(alignment: .center) {
-                                Image(systemName: "photo.fill.on.rectangle.fill")
-                                    .resizable()
-                                    .foregroundColor(.white)
-                                    .frame(width: 40, height: 40)
-                                    .opacity(0.4)
-                            }.onTapGesture {
-                                viewModel.pickPhotos()
-                            }
-                    } else {
-                        Rectangle().foregroundColor(.gray)
-                            .frame(width: 60, height: 60)
-                            .clipShape(Circle())
-                            .overlay(alignment: .center) {
-                                Image(systemName: "photo.fill.on.rectangle.fill")
-                                    .resizable()
-                                    .foregroundColor(.white)
-                                    .frame(width: 40, height: 40)
-                                    .opacity(0.4)
-                            }.onTapGesture {
-                                viewModel.pickPhotos()
-                            }
+        List {
+            Section("Category Info") {
+                FloatingTextField(title: "Category Name", text: $viewModel.name, required: nil, autoCapitalize: .words)
+                
+                PhotosPicker(selection: $picker) {
+                    HStack {
+                        Text("Thumbnail")
+                        Spacer()
+                        
+                        ImagePickupHolder(currentImageURL: "", selectedImage: viewModel.selectedImage, currentImagePlaceHolder: UIImage(named: "defaultCateogry"), reduis: 30)
                     }
-                    
-                    
-                    TextField("Category name", text: $viewModel.name)
-                        .roundedTextFieldStyle()
-                        .autocapitalization(.words)
                 }
                 
-                
-                
-                LoadingButton(action: {
-                    save()
-                }, isLoading: $viewModel.isSaving, style: LoadingButtonStyle(width: .infinity, cornerRadius: 16, backgroundColor: .accentColor, loadingColor: .white)) {
-                    Text("Create Category")
-                        .foregroundColor(.white)
-                }
-                .disabled(viewModel.isSaving)
-            }
             
+                
+                FloatingTextField(title: "Category Describtion", text: $viewModel.desc, caption: "This will be visible in your website, make it from 10 to 50 words max", required: false, multiLine: true)
+            }
         }
-        .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("Create")
+                    .bold()
+                    .disabled(viewModel.isSaving)
+                    .foregroundStyle(Color.accentColor )
+                    .onTapGesture {
+                        save()
+                    }
+            }
+        }
+        .onChange(of: picker, perform: { _ in
+            Task {
+                if let data = try? await picker?.loadTransferable(type: Data.self) {
+                    if let uiImage = UIImage(data: data) {
+                        viewModel.selectedImage = uiImage
+                        return
+                    }
+                }
+            }
+        })
         .navigationTitle("New Category")
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
-                if viewModel.category != nil {
-                    listCategories.append(viewModel.category!)
+                if let newItem = viewModel.category  {
+                    if onAdded != nil {
+                        onAdded!(newItem)
+                    }
                 }
                 
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .navigationBarBackButtonHidden(viewModel.isSaving)
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
                        title: viewModel.msg)
@@ -99,3 +91,4 @@ struct CreateCategory: View {
         }
     }
 }
+

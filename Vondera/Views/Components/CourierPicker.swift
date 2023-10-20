@@ -15,24 +15,21 @@ struct CourierPicker: View {
     
     var body: some View {
         NavigationView {
-            if items == nil || items.isEmpty {
+            if items.isEmpty {
                 ProgressView()
             } else {
-                ScrollView (showsIndicators: false) {
-                    VStack {
-                        ForEach(items) { courier in
-                            CourierCard(courier: courier)
-                                .onTapGesture {
-                                    selectedOption = courier
-                                    presentationMode.wrappedValue.dismiss()
-                                }
-                        }
+                List {
+                    ForEach(items) { courier in
+                        CourierCard(courier: courier)
+                            .onTapGesture {
+                                selectedOption = courier
+                                presentationMode.wrappedValue.dismiss()
+                            }
                     }
-                    
                 }
+                .listStyle(.plain)
             }
         }
-        .padding()
         .navigationTitle("Select Courier")
         .onAppear {
             Task {

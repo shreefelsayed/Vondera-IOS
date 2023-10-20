@@ -11,14 +11,12 @@ import SwipeCell
 import PDFViewer
 
 struct OrderSelect: View {
-    var order:Order
+    @Binding var order:Order
     @Binding var checked:Bool
-    var onSelected:(() -> ())
-    var onDeselect:(() -> ())
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            NavigationLink(destination: OrderDetails(id: order.id, storeId: order.storeId ?? "")) {
+            NavigationLink(destination: NavigationLazyView(OrderDetails(order: $order))) {
                 VStack {
                     //MARK : Top View
                     HStack {
@@ -64,11 +62,7 @@ struct OrderSelect: View {
                         
                         Spacer()
                         
-                        CheckBoxView(checked: $checked, onSelected: {
-                            onSelected()
-                        }, onDeselect: {
-                            onDeselect()
-                        })
+                        CheckBoxView(checked: $checked)
                         .padding(.horizontal)
                         
                     }
@@ -76,8 +70,6 @@ struct OrderSelect: View {
             }
             .buttonStyle(PlainButtonStyle())
            
-            
-            Divider()
         }
     }
 }

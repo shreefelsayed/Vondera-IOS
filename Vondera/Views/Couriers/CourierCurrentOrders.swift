@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct CourierCurrentOrders: View {
     var courier:Courier
     var storeId:String
     @State var myUser:UserData?
+    @State var selectOrders = false
     @StateObject var viewModel:CourierCurrentOrdersViewModel
     
+
     
     init(storeId: String, courier:Courier) {
         self.storeId = storeId
@@ -22,44 +23,31 @@ struct CourierCurrentOrders: View {
     }
     
     var body: some View {
-        ScrollView {
-            PullToRefreshOld(coordinateSpaceName: "scrollView") {
-                Task {
-                    await viewModel.getCourierOrders()
+        List {
+            ForEach($viewModel.items.indices, id: \.self) { index in
+                if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
+                    OrderCard(order: $viewModel.items[index], allowSelect: {
+                        selectOrders.toggle()
+                    })
                 }
             }
-            
-            VStack(spacing: 12) {
-                HStack {
-                    SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.orders.count) Orders")
-                    
-                
-                    
-                    NavigationLink(destination: OrderSelectView(list: $viewModel.orders)) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.accentColor)
-                    }
-                    
-                }
-                
-                ForEach(viewModel.filteredItems) {order in
-                    OrderCard(order: order)
-                }
-            }.isHidden(viewModel.orders.isEmpty)
+           
         }
-        .coordinateSpace(name: "scrollView")
-        .padding()
-        .overlay(alignment: .center, content: {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if viewModel.orders.isEmpty {
+        .listStyle(.plain)
+        .searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.items.count) Orders")
+        .overlay(alignment: .center) {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
                 EmptyMessageView(msg: "The courier has no ongoing orders")
             }
-        })
+        }
+        .refreshable {
+            await viewModel.getCourierOrders()
+        }
+        .task {
+            myUser = UserInformation.shared.getUser()
+        }
         .navigationTitle("Courier Orders 🛵")
-        .toolbar(content: {
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if myUser != nil && myUser!.canAccessAdmin {
                     NavigationLink("Settings") {
@@ -67,19 +55,11 @@ struct CourierCurrentOrders: View {
                     }
                 }
             }
-        })
-        .navigationBarTitleDisplayMode(.large)
-        .onAppear {
-            Task {
-                myUser = await LocalInfo().getLocalUser()
-            }
         }
-    }
-    
-    func loadItem() {
-        Task {
-            await viewModel.getCourierOrders()
+        .navigationDestination(isPresented: $selectOrders) {
+            OrderSelectView(list: $viewModel.items)
         }
+        
     }
 }
 

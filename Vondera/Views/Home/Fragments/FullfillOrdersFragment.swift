@@ -18,7 +18,6 @@ struct FullfillOrdersFragment: View {
     @State private var ready = ReadyOrdersFragment()
     
     
-    
     var body: some View {
         VStack(spacing: 0){
             CustomTopTabBar(tabIndex: $selectedTab, titles: ["New Orders", "Confirmed", "Ready"])
@@ -38,9 +37,7 @@ struct FullfillOrdersFragment: View {
             Spacer()
         }
         .onAppear {
-            Task {
-                self.user = await LocalInfo().getLocalUser()
-            }
+            self.user = UserInformation.shared.getUser()
         }
         .navigationTitle("Orders to Fullfil")
         .navigationBarTitleDisplayMode(.large)

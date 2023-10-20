@@ -12,6 +12,8 @@ import NetworkImage
 
 struct AddProductView: View {
     var storeId:String = ""
+    
+    @State var images:[PhotosPickerItem] = [PhotosPickerItem]()
     @StateObject private var viewModel:AddProductViewModel
     @Environment(\.presentationMode) private var presentationMode
 
@@ -25,10 +27,20 @@ struct AddProductView: View {
             currentPage
         }
         .sheet(isPresented: $viewModel.isSheetPresented) {
-            CategoryPicker(items: viewModel.categories, selectedItem: $viewModel.category)
+            NavigationStack {
+                CategoryPicker(items: $viewModel.categories, storeId: viewModel.myUser?.storeId ?? "", selectedItem: $viewModel.category)
+            }
         }
         .padding()
         .navigationTitle("New Product")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action : {
+            withAnimation {
+                viewModel.showPrevPage()
+            }
+        }){
+            Image(systemName: "arrow.left")
+        })
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
@@ -48,16 +60,12 @@ struct AddProductView: View {
                 .font(.title)
                 .bold()
             
-            TextField("Quantity", text: $viewModel.quantity)
-                .roundedTextFieldStyle()
-                .autocapitalization(.words)
+            FloatingTextField(title: "Quantity", text:  $viewModel.quantity, caption: "TEnter how many of this product do you have right now in the warehouse", required: nil, keyboard: .numberPad)
             
-            Text("Enter how many of this product do you have right now in the warehouse")
-                .font(.caption)
             
             ButtonLarge(label:"Create Product") {
-                Task {
-                    await viewModel.nextPage()
+                withAnimation {
+                    viewModel.nextPage()
                 }
             }
         }
@@ -89,16 +97,10 @@ struct AddProductView: View {
 
             ForEach(Array($viewModel.listVarients.indices), id: \.self) { i in
                 VStack(alignment: .leading, spacing: 6) {
-                    TextField("Variant Title", text: $viewModel.listTitles[i])
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    FloatingTextField(title: "Varient Title", text: $viewModel.listTitles[i], caption: "This is your varient title for example (Color, Size, ..)", required: true, autoCapitalize: .words)
                     
-                    Spacer().frame(height: 6)
-                    
-                    ChipView(chips: $viewModel.listOptions[i], placeholder: "Enter Varients", useSpaces: true)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    Spacer().frame(height: 6)
-
+                                        
+                    OptionsView(items: $viewModel.listOptions[i])
                     
                     HStack {
                         ButtonLarge(label: "Delete Varient", background: .gray) {
@@ -114,11 +116,56 @@ struct AddProductView: View {
         
             
             ButtonLarge(label: viewModel.alwaysStocked ? "Create Product" : viewModel.listVarients.isEmpty ? "Skip" : "Next") {
-                Task {
-                    await viewModel.nextPage()
+                withAnimation {
+                    viewModel.nextPage()
                 }
             }
             
+        }
+    }
+    
+    
+    var page1: some View {
+        VStack(alignment: .leading) {
+            Text("Main info")
+                .font(.title)
+                .bold()
+            
+            VStack(alignment: .leading, spacing: 24) {
+                FloatingTextField(title: "Product Name", text:  $viewModel.name, caption: "This is the name of the product, which will appear on the website and the app", required: true, autoCapitalize: .words)
+                
+                FloatingTextField(title: "Product Describtion", text:  $viewModel.desc, caption: "Your product describtion will be visible for users in your website and in the app", required: false, multiLine: true, autoCapitalize: .sentences)
+               
+                // MARK : Pick up photos
+                
+                photos
+                
+                
+                // MARK : Stock Options
+                VStack(alignment: .leading) {
+                    Toggle(isOn: $viewModel.alwaysStocked) {
+                        Text("Always in stock")
+                    }
+                    
+                    Text("Enabling this will not track your items in the warehouse")
+                        .font(.caption)
+                }
+                
+                
+                // MARK : Select the Category
+                categories
+                
+                // MARK : Pricing
+                pricing
+            }
+            
+            
+            ButtonLarge(label:"Next") {
+                withAnimation {
+                    viewModel.nextPage()
+                }
+            }
+
         }
     }
     
@@ -135,45 +182,6 @@ struct AddProductView: View {
         }
     }
     
-    var page1: some View {
-        VStack(alignment: .leading) {
-            Text("Main info")
-                .font(.title)
-                .bold()
-            VStack(alignment: .leading) {
-                TextField("Product Name", text: $viewModel.name)
-                    .roundedTextFieldStyle()
-                    .autocapitalization(.words)
-                
-                Spacer().frame(height: 12)
-                
-                // MARK : Pick up photos
-                photos
-                Spacer().frame(height: 12)
-                
-                // MARK : Stock Options
-                Toggle(isOn: $viewModel.alwaysStocked) {
-                    Text("Always in stock")
-                }
-                
-                // MARK : Select the Category
-                categories
-                Spacer().frame(height: 12)
-                
-                // MARK : Pricing
-                pricing
-                Spacer().frame(height: 12)
-            }
-            
-            
-            ButtonLarge(label:"Next") {
-                Task {
-                    await viewModel.nextPage()
-                }
-            }
-
-        }
-    }
     
     var categories: some View {
         VStack(alignment: .leading) {
@@ -198,19 +206,9 @@ struct AddProductView: View {
             Text("Price and cost")
                 .font(.title2)
             
-            TextField("Product Price", text: $viewModel.sellingPrice)
-                .keyboardType(.numberPad)
-                .roundedTextFieldStyle()
+            FloatingTextField(title: "Product Price", text:  $viewModel.sellingPrice, caption: "This is how much you are selling your product for", required: true, keyboard: .numberPad)
             
-            Text("This is how much you are selling your product for")
-                .font(.caption)
-            
-            TextField("Product Cost", text: $viewModel.cost)
-                .keyboardType(.numberPad)
-                .roundedTextFieldStyle()
-            
-            Text("This is how much your product costs you")
-                .font(.caption)
+            FloatingTextField(title: "Product Cost", text:  $viewModel.cost, caption: "This is how much your product costs you", required: true, keyboard: .numberPad)
         }
     }
     
@@ -224,29 +222,29 @@ struct AddProductView: View {
                 
                 Spacer()
                 
-                if viewModel.selectedPhotos.count < 6 {
-                    Button {
-                        viewModel.pickPhotos()
-                    } label: {
-                        Text("Add")
-                    }
+                PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                    Text("Add")
                 }
+                .disabled(images.count >= 6)
             }
             
             // MARK : Selected Photos
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(viewModel.selectedPhotos, id: \.self) { image in
-                        ImageView(image: image, removeClicked: {
-                            viewModel.removePhoto(image: image)
+                    ForEach(viewModel.selectedPhotos.indices, id: \.self) { index in
+                        ImageView(image: viewModel.selectedPhotos[index], removeClicked: {
+                            images.remove(at: index)
                         })
                     }
                     
-                    if viewModel.selectedPhotos.count < 6 {
-                        ImageView(removeClicked: {
-                        }, showDelete: false) {
-                            viewModel.pickPhotos()
+                    if images.count < 6 {
+                        PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                            ImageView(removeClicked: {
+                            }, showDelete: false) {
+                                
+                            }
                         }
+                        .disabled(images.count >= 6)
                     }
                 }
             }
@@ -254,13 +252,23 @@ struct AddProductView: View {
             Text("At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.")
                 .font(.caption)
         }
+        .onChange(of: images) { newValue in
+            Task {
+                viewModel.selectedPhotos.removeAll()
+                for picker in newValue {
+                    if let image = try? await picker.getImage() {
+                        viewModel.selectedPhotos.append(image)
+                    }
+                }
+            }
+        }
     }
 }
 
 struct AddProductView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddProductView(storeId: "")
+            AddProductView(storeId: Store.Qotoofs())
         }
     }
 }
@@ -273,28 +281,22 @@ struct ImageView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if image != nil {
-                Image(uiImage: image)
-                    .centerCropped()
-                    .frame(width: 100, height: 100)
-                    .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.accentColor, lineWidth: 2)
-                    ).onTapGesture {
-                        if onImageClick != nil {onImageClick!()}
-                    }
-            } else {
-                Image(systemName: "photo")
-                    .frame(width: 100, height: 100)
-                    .cornerRadius(12)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.accentColor, lineWidth: 2)
-                    ).onTapGesture {
-                        if onImageClick != nil {onImageClick!()}
-                    }
+            Group {
+                if image != nil {
+                    Image(uiImage: image)
+                        .centerCropped()
+                        .onTapGesture {
+                            if onImageClick != nil {onImageClick!()}
+                        }
+                } else {
+                    Image(systemName: "photo")
+                        .onTapGesture {
+                            if onImageClick != nil {onImageClick!()}
+                        }
+                }
             }
+            .frame(width: 100, height: 100)
+
             
             
             if showDelete {
@@ -324,22 +326,17 @@ struct ImageViewNetwork: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if image != nil {
-                NetworkImage(url: URL(string: image)) { image in
-                  image.centerCropped()
-                } placeholder: {
-                  ProgressView()
-                }
-                .frame(width: 100, height: 100)
-                .cornerRadius(12)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.accentColor, lineWidth: 2)
-                ).onTapGesture {
-                    if onImageClick != nil {onImageClick!()}
-                }
+            NetworkImage(url: URL(string: image)) { image in
+              image.centerCropped()
+            } placeholder: {
+              ProgressView()
             }
-            
+            .frame(width: 100, height: 100)
+            .background(RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.gray, lineWidth: 1))
+            .onTapGesture {
+                if onImageClick != nil {onImageClick!()}
+            }
             
             if showDelete {
                 Button(action: {

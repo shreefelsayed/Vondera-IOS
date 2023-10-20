@@ -9,38 +9,33 @@ import SwiftUI
 import AlertToast
 
 struct AddExpanse: View {
-    var storeId:String
+    private var storeId:String
+    private var onAdded:((Expense) -> ())
+
     @ObservedObject var viewModel:AddExpansesViewModel
-    @Binding var currentList:[Expense]
     @Environment(\.presentationMode) private var presentationMode
     
-    init(storeId: String, currentList: Binding<[Expense]>) {
+    init(storeId: String, onAdded: @escaping ((Expense) -> ())) {
         self.storeId = storeId
-        self._currentList = currentList
+        self.onAdded = onAdded
         self.viewModel = AddExpansesViewModel(storeId: storeId)
     }
     
     var body: some View {
-        ScrollView (showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Price", text: $viewModel.price)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
-                
-                TextField("Address", text: $viewModel.desc, axis: .vertical)
-                    .lineLimit(5, reservesSpace: true)
-                    .textFieldStyle(.roundedBorder)
-            }
+        List {
+            FloatingTextField(title: "Amount", text: .constant(""), caption: "How much have you spents", required: true, isNumric: true, number: $viewModel.price)
+            
+            FloatingTextField(title: "Description", text: $viewModel.desc, caption: "Describe what is this expanses for ex (Marketing fees, employee salary)", required: true, multiLine: true)
+            
         }
-        .padding()
         .navigationTitle("New Expanse")
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
-                if viewModel.newItem != nil {
-                    currentList.insert(viewModel.newItem!, at: 0)
+                if let newItem = viewModel.newItem {
+                    onAdded(newItem)
                 }
-                
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
@@ -57,6 +52,14 @@ struct AddExpanse: View {
                     }
                 }
             }
+        }
+    }
+}
+
+#Preview {
+    NavigationView {
+        AddExpanse(storeId: Store.Qotoofs()) { newValue in
+            
         }
     }
 }

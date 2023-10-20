@@ -65,7 +65,7 @@ struct ContactDialog: View {
                     Spacer()
                 }
                 .onTapGesture {
-                    Contact().openWhatsApp(phoneNumber: phone, message: message)
+                    _ = Contact().openWhatsApp(phoneNumber: phone, message: message)
                     toggle.toggle()
                 }
                 

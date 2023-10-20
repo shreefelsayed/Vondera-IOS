@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 import SkeletonUI
 
 struct UserOrders: View {
@@ -21,35 +20,33 @@ struct UserOrders: View {
     }
     
     var body: some View {
-        
-        AdvancedList(viewModel.items, listView: { rows in
-            if #available(iOS 14, macOS 11, *) {
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(alignment: .leading, content: rows)
-                        .padding()
+        List {
+            
+            ForEach($viewModel.items) { order in
+                OrderCard(order: order)
+                
+                if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        loadItem()
+                    }
                 }
-            } else {
-                List(content: rows)
             }
-        }, content: { item in
-            OrderCard(order: item)
-        }, listState: viewModel.state, emptyStateView: {
-            EmptyMessageView(msg: "You haven't added any orders yet !")
-        }, errorStateView: { error in
-            Text(error.localizedDescription).lineLimit(nil)
-        }, loadingStateView: {
-            ProgressView()
-        }).pagination(.init(type: .thresholdItem(offset: 5), shouldLoadNextPage: {
-            loadItem()
-        }) {
-        }).onAppear {
-            loadItem()
-        }.refreshable(action: {
+        }
+        .refreshable {
             await refreshData()
-        })
-        .padding(.vertical)
+        }
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "You haven't added any orders yet !")
+            }
+        }
         .navigationTitle("Your Orders 📦")
-        .navigationBarTitleDisplayMode(.large)
     }
     
     func refreshData() async {

@@ -28,6 +28,7 @@ struct UserData: Codable, Identifiable {
     var storesCount: Int? = 0
     var numberVerfied: Bool? = false
     var messageCounter: Int? = 0
+    var ios: Bool? = true
     
     init() {}
     
@@ -41,6 +42,10 @@ struct UserData: Codable, Identifiable {
         self.pass = pass
     }
     
+    var isStoreUser:Bool {
+        return accountType == "Owner" || accountType == "Store Admin" || accountType == "Marketing" || accountType == "Worker"
+    }
+    
     var canAccessAdmin:Bool {
         return accountType == "Store Admin" || accountType == "Owner"
     }
@@ -48,6 +53,11 @@ struct UserData: Codable, Identifiable {
     var isShreif: Bool {
         return email == "admin@armjld.co"
     }
+    
+    static func ==(lhs: UserData, rhs: UserData) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
 }
 
 extension UserData {
@@ -67,6 +77,10 @@ extension UserData {
 
 extension UserData {
     func filter(_ searchText:String) -> Bool {
+        if searchText.isBlank {
+            return true
+        }
+        
         return self.name.localizedCaseInsensitiveContains(searchText) ||
         self.phone.localizedCaseInsensitiveContains(searchText)
     }
@@ -96,3 +110,4 @@ extension UserData {
         }
     }
 }
+

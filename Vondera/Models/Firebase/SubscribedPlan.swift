@@ -41,3 +41,25 @@ struct SubscribedPlan: Codable {
         return planId == "Ngub3Hv7wLNp9SJjTY3z"
     }
 }
+
+extension SubscribedPlan {
+
+    static func example() -> SubscribedPlan {
+        var plan = SubscribedPlan()
+        plan.currentOrders = 100
+        plan.maxOrders = 125
+        return plan
+    }
+    
+    func getPercentage() -> Float {
+        return max(0.0, min(1.0, Float(self.currentOrders) / Float(self.maxOrders)))
+    }
+    
+    func isUsageAlert() -> Bool {
+        return getPercentage() > 0.8
+    }
+    
+    func isDateAlert() -> Bool {
+        return self.expireDate.timeIntervalSince(Date()) <= 3 * 24 * 60 * 60
+    }
+}

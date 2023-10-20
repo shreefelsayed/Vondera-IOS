@@ -9,7 +9,7 @@ import SwiftUI
 import NetworkImage
 
 struct ProductBuyingCard: View {
-    var product:Product
+    @Binding var product:StoreProduct
     var action:(() -> ())
     @Environment(\.colorScheme) var colorScheme
     
@@ -63,7 +63,7 @@ struct ProductBuyingCard: View {
 
 struct ProductBuyingCard_Previews: PreviewProvider {
     static var previews: some View {
-        ProductBuyingCard(product: Product.example()) {
+        ProductBuyingCard(product: .constant(StoreProduct.example())) {
             
         }
     }

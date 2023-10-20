@@ -8,12 +8,11 @@
 import Foundation
 
 class StoreCouriersViewModel : ObservableObject {
-    var storeId:String
-    var couriersDao:CouriersDao
+    private var storeId:String
+    private var couriersDao:CouriersDao
     
     @Published var couriers = [Courier]()
     @Published var searchText = ""
-
     @Published var errorMsg = ""
     @Published var isLoading = false
     

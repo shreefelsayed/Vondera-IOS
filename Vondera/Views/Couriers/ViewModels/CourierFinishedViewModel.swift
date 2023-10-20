@@ -25,6 +25,10 @@ class CourierFinishedViewModel : ObservableObject {
     init(courier:Courier) {
         self.courier = courier
         self.ordersDao = OrdersDao(storeId: courier.storeId!)
+        
+        Task {
+            await refreshData()
+        }
     }
     
     func refreshData() async {
@@ -45,14 +49,16 @@ class CourierFinishedViewModel : ObservableObject {
         }
         
         self.isLoading = true
+        
         do {
             let result = try await ordersDao.getCouriersFinished(id: courier.id, lastSnapShot: lastSnapshot)
-            lastSnapshot = result.1
-            items.append(contentsOf: result.0)
-            
-            if result.0.count == 0 {
-                self.canLoadMore = false
-                print("Can't load more data")
+            DispatchQueue.main.async {
+                self.lastSnapshot = result.lastDocument
+                self.items.append(contentsOf: result.items)
+                
+                if result.items.count == 0 {
+                    self.canLoadMore = false
+                }
             }
         } catch {
             self.error = error.localizedDescription

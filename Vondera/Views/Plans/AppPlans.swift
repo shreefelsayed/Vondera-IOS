@@ -8,41 +8,39 @@
 import SwiftUI
 
 struct AppPlans: View {
-    @State var myUser:UserData?
+    @ObservedObject var myUser = UserInformation.shared
+    @State var currentPlanId = ""
+    
+    @StateObject var storeVM = StoreVM()
     @State var plans:[Plan] = []
     @State var isLoading = false
-    @State var showContactDialog = false
-    var customerServiceNumber = "01551542514"
     
     var body: some View {
         ZStack {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 24) {
-                    Text("Choose your plan")
-                        .font(.title3)
-                        .bold()
-                                    
-                    // MARK : PLANS
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack() {
-                            ForEach(plans) { plan in
-                                ChoosePlanCard(plan: plan, currentPlan: myUser?.store?.subscribedPlan?.planId ?? "") {
-                                    showContactDialog.toggle()
+            if let myUser = myUser.getUser() {
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 24) {
+                        Text("Choose your plan")
+                            .font(.title3)
+                            .bold()
+                                        
+                        // MARK : PLANS
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack() {
+                                ForEach(plans) { plan in
+                                    ChoosePlanCard(plan: plan, currentPlan: $currentPlanId) {
+                                        subscribe(plan.id ?? "")
+                                    }
+                                    .padding(8)
                                 }
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 8)
                             }
                         }
+                        
+                        //
                     }
-                    
-                    //
                 }
+                .padding()
             }
-            .padding()
-            
-            BottomSheet(isShowing: $showContactDialog, content: {
-                AnyView(ContactDialog(phone:customerServiceNumber, toggle: $showContactDialog))
-            }())
         }
         .onAppear {
             getData()
@@ -54,17 +52,55 @@ struct AppPlans: View {
         .navigationTitle("Plans")
     }
     
+    func subscribe(_ planId:String) {
+        Task {
+            do {
+                let result = try await storeVM.purchase(planId: planId)
+                isLoading = true
+                if result {
+                    await refreshData()
+                }
+                isLoading = false
+            } catch {
+                print("Error happened")
+            }
+        }
+    }
+    
     func getData() {
         Task {
-            self.myUser = await LocalInfo().getLocalUser()
-            
             self.isLoading = true
-            
-            // --> Get Plan Data
             self.plans = try! await PlanDao().getPaid()
-            
+            await refreshData()
             self.isLoading = false
         }
+    }
+    
+    func refreshData() async {
+        guard let id = myUser.user?.id else {
+            return
+        }
+        
+        guard let user = await reloadUser() else {
+            print("Couldn't get user with \(id)")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.currentPlanId = user.store?.subscribedPlan?.planId ?? ""
+            UserInformation.shared.updateUser(user)
+            self.isLoading = false
+        }
+        
+    }
+    
+    func reloadUser() async -> UserData? {
+        // id
+        guard let id = myUser.user?.id else {
+            return nil
+        }
+        
+        return try? await UsersDao().getUserWithStore(userId: id)
     }
 }
 

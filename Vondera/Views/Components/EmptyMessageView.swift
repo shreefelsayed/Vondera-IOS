@@ -8,37 +8,49 @@
 import SwiftUI
 
 struct EmptyMessageView: View {
-    var systemName:String = "bag.fill.badge.minus"
+    var systemName:String = "bag.badge.minus"
     var msg = "No Orders are added by you"
     var onClick :(() -> ())?
     
     var body: some View {
-        VStack(alignment: .center) {
-            Spacer()
-            VStack(alignment: .center) {
-                Image(systemName: systemName)
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                
-                Spacer().frame(height: 40)
-                
-                HStack {
-                    Text(msg)
-                        .lineLimit(4)
-                        .multilineTextAlignment(.center)
-                        .bold()
+        if #available(iOS 17.0, *) {
+            
+            ContentUnavailableView(msg, systemImage: systemName)
+                .onTapGesture {
+                    if onClick != nil {
+                        onClick!()
+                    }
                 }
-                
+        } else {
+            VStack(alignment: .center) {
+                Spacer()
+                VStack(alignment: .center) {
+                    Image(systemName: systemName)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                    
+                    Spacer().frame(height: 40)
+                    
+                    HStack {
+                        Text(msg)
+                            .lineLimit(4)
+                            .multilineTextAlignment(.center)
+                            .bold()
+                    }
+                    
+                }
+                Spacer()
             }
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .opacity(0.3)
-        .onTapGesture {
-            if onClick != nil {
-                onClick!()
+            .frame(maxWidth: .infinity)
+            .opacity(0.3)
+            .onTapGesture {
+                if onClick != nil {
+                    onClick!()
+                }
             }
         }
+        
+        
     }
 }
 

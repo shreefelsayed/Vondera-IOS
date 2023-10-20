@@ -29,7 +29,6 @@ class CategoryDao {
     func add(category: inout Category) async throws {
         category.id = collection.document().documentID
         try await collection.document(category.id).setData(category.asDicitionry())
-        print("Added to database")
     }
     
     func get(id:String) async throws -> Category {
@@ -37,21 +36,8 @@ class CategoryDao {
     }
     
     func getAll() async throws -> [Category] {
-        print("Data ref \(collection.path)")
-        let docs = try await collection
+        return try await collection
             .order(by: "sortValue", descending: false)
-            .getDocuments()
-        
-        print("Docs found \(docs.count)")
-        return convertToList(snapShot: docs)
-        
-    }
-    
-    func convertToList(snapShot:QuerySnapshot) -> [Category] {
-        let arr = snapShot.documents.compactMap{doc -> Category? in
-            return try! doc.data(as: Category.self)
-        }
-        
-        return arr
+            .getDocuments(as: Category.self)
     }
 }

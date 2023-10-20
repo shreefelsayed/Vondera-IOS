@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct CourierFinishedOrders: View {
+    
+    
     var courier:Courier
     
     @StateObject var viewModel:CourierFinishedViewModel
@@ -19,37 +20,31 @@ struct CourierFinishedOrders: View {
     }
     
     var body: some View {
-        AdvancedList(viewModel.items, listView: { rows in
-            if #available(iOS 14, macOS 11, *) {
-                ScrollView {
-                    LazyVStack(alignment: .leading, content: rows)
-                        .padding()
+        List {
+            ForEach($viewModel.items) { order in
+                OrderCard(order: order)
+                
+                if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        loadItem()
+                    }
                 }
-            } else {
-                List(content: rows)
             }
-        }, content: { item in
-            OrderCard(order: item)
-        }, emptyStateView: {
-            if viewModel.isLoading == false {
+        }
+        .refreshable {
+            await refreshData()
+        }
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
                 EmptyMessageView(msg: "No orders were delivered by this courier")
             }
-        }, errorStateView: { error in
-            Text(error.localizedDescription).lineLimit(nil)
-        }, loadingStateView: {
-            ProgressView()
-        }).pagination(.init(type: .thresholdItem(offset: 5), shouldLoadNextPage: {
-            loadItem()
-        }) {
-            if viewModel.isLoading {
-                ProgressView()
-            }
-        }).onAppear {
-            loadItem()
-        }.refreshable(action: {
-            await refreshData()
-        })
-        .padding(.vertical)
+        }
         .navigationTitle("Finished Orders ✅")
     }
     

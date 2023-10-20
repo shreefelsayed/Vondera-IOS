@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct MarketCheckCard: View {
+    var market:Markets
+    @Binding var checked:Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack() {
+            Image(market.icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40)
+            
+            Text(market.name)
+                .bold()
+            
+            Spacer()
+            
+            Toggle("", isOn: $checked)
+        }
+        .padding()
     }
 }
 
 #Preview {
-    MarketCheckCard()
+    MarketCheckCard(market: Markets.example(), checked: .constant(false))
 }

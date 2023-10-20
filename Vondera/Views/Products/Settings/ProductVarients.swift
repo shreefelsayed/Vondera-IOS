@@ -9,74 +9,67 @@ import SwiftUI
 import AlertToast
 
 struct ProductVarients: View {
-    var product:Product
+    var product:StoreProduct
     @ObservedObject var viewModel:ProductVarientsViewModel
     @Environment(\.presentationMode) private var presentationMode
     
-    init(product: Product) {
+    init(product: StoreProduct) {
         self.product = product
         self.viewModel = ProductVarientsViewModel(product: product)
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            if !viewModel.isLoading {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Variants are used to create different versions of the same product. For example, if you have a t-shirt, you can create a variant for each size and color, just click next if you don\'t have any variants")
-                        .font(.caption)
+        List {
+            ForEach($viewModel.listTitles.indices, id: \.self) { i in
+                Section {
+                    FloatingTextField(title: "Variant Title", text: $viewModel.listTitles[i], required: nil, autoCapitalize: .words)
                     
-                    ForEach(Array($viewModel.listTitles.indices), id: \.self) { i in
-                        VStack(alignment: .leading, spacing: 6) {
-                            TextField("Variant Title", text: $viewModel.listTitles[i])
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                            
-                            Spacer().frame(height: 6)
-                            
-                            ChipView(chips: $viewModel.listOptions[i], placeholder: "Enter Variants", useSpaces: true)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                            
-                            Spacer().frame(height: 6)
-                            
-                            
-                            HStack {
-                                ButtonLarge(label: "Delete Varient", background: .gray) {
-                                    viewModel.deleteVarient(i : i)
-                                }
+                    OptionsView(items: $viewModel.listOptions[i])
+                } header: {
+                    HStack {
+                        Text("Option \(i + 1) : \(viewModel.listTitles[i])")
+                        
+                        Spacer()
+                        
+                        Button(role: .destructive) {
+                            withAnimation {
+                                viewModel.deleteVarient(i : i)
                             }
-                            
-                            Divider()
+                        } label: {
+                            Text("Delete")
                         }
                     }
-                    
-                    ButtonLarge(label: "Add New Variant") {
+                }
+            }
+            
+            HStack {
+                Button {
+                    withAnimation {
                         viewModel.addVarient()
                     }
-                    
+                } label: {
+                    Label("New Option", systemImage: "plus")
                 }
-                .isHidden(viewModel.isLoading)
+                Spacer()
             }
+            
         }
-        .padding()
         .navigationTitle("Product Varients")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
                     update()
                 }
-                .disabled(viewModel.isLoading)
+                .disabled(viewModel.isSaving)
             }
         }
-        .overlay(alignment: .center, content: {
-            ProgressView()
-                .isHidden(!viewModel.isLoading)
-        })
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
                        title: viewModel.msg)
@@ -90,8 +83,50 @@ struct ProductVarients: View {
     }
 }
 
+struct OptionsView : View {
+    @Binding var items: [String]
+    @State private var newOption: String = ""
+    
+    var body: some View {
+        ForEach(items.indices, id: \.self) { index in
+            FloatingTextField(title: "Option \(index + 1)", text: $items[index], required: nil, autoCapitalize: .words)
+                .listRowSeparator(.hidden)
+                .listRowSpacing(6)
+        }
+        .onMove(perform: { before, After in
+            
+        })
+        .onDelete { index in
+            withAnimation {
+                items.remove(atOffsets: index)
+            }
+        }
+                
+        HStack(alignment: .center) {
+            FloatingTextField(title: "Option \(items.count + 1)", text: $newOption, required: nil, autoCapitalize: .words)
+            
+            Button {
+                if newOption.isBlank {
+                    return
+                }
+                
+                items.append(newOption)
+                newOption = ""
+            } label: {
+                Image(systemName: "plus")
+            }
+            .disabled(newOption.isBlank)
+            .padding(.horizontal, 6)
+        }
+        .onChange(of: items) { newValue in
+            items = items.filter{ !$0.isBlank }
+        }
+    }
+}
+
+
 struct ProductVarients_Previews: PreviewProvider {
     static var previews: some View {
-        ProductVarients(product: Product.example())
+        ProductVarients(product: StoreProduct.example())
     }
 }

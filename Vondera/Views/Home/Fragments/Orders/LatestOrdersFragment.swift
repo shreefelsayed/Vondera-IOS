@@ -9,46 +9,35 @@ import SwiftUI
 
 struct LatestOrdersFragment: View {
     @ObservedObject var viewModel = LatestViewModel()
+    @State var selectOrders = false
+    
+    
     
     var body: some View {
-        ScrollView {
-            PullToRefreshOld(coordinateSpaceName: "scrollView") {
-                Task {
-                    await viewModel.getOrdersList()
-                }
-            }
+        List {
+            SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Orders")
             
-            VStack(spacing: 12) {
-                    HStack {
-                        SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Orders")
-                        
-                    
-                        
-                        NavigationLink(destination: OrderSelectView(list: $viewModel.items)) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.accentColor)
-                        }
-                        
+            ForEach($viewModel.items.indices, id: \.self) { index in
+                if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
+                    OrderCard(order: $viewModel.items[index]) {
+                        selectOrders.toggle()
                     }
-                
-                
-                ForEach(viewModel.filteredItems) {order in
-                    OrderCard(order: order)
                 }
             }
         }
-        .isHidden(viewModel.items.isEmpty)
-        .coordinateSpace(name: "scrollView")
+        .listStyle(.plain)
+        .refreshable {
+            await viewModel.getData()
+        }
         .overlay(alignment: .center) {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if viewModel.items.isEmpty {
+            if viewModel.items.isEmpty {
                 EmptyMessageView(msg: "No new orders found")
             }
         }
         
+        .navigationDestination(isPresented: $selectOrders) {
+            OrderSelectView(list: $viewModel.items)
+        }
     }
 }
 

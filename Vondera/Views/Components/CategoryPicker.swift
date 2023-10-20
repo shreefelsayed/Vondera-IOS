@@ -8,25 +8,39 @@
 import SwiftUI
 
 struct CategoryPicker: View {
-    let items: [Category]
+    @Binding var items: [Category]
+    let storeId:String
     @Binding var selectedItem: Category?
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var showAdd = false
     var body: some View {
-        NavigationView {
-            ScrollView (showsIndicators: false) {
-                VStack {
-                    ForEach(items) { category in
-                        CategoryLinear(category: category, isSelected: category.id == selectedItem?.id ?? "") {
-                            selectedItem = category
-                            presentationMode.wrappedValue.dismiss()
-                        }
+        List {
+            ForEach($items.indices, id: \.self) { index in
+                CategoryLinear(category: $items[index], isSelected: items[index].id == selectedItem?.id ?? "")
+                    .onTapGesture {
+                        selectedItem = items[index]
+                        presentationMode.wrappedValue.dismiss()
                     }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("New") {
+                    showAdd.toggle()
                 }
             }
-            .padding()
-            .navigationTitle("Categories")
-            
         }
+        .sheet(isPresented: $showAdd, content: {
+            NavigationStack {
+                CreateCategory(storeId: storeId) { newValue in
+                    items.append(newValue)
+                }
+            }
+            
+        })
+        .listStyle(.plain)
+        .navigationTitle("Categories")
+        
+        
     }
 }

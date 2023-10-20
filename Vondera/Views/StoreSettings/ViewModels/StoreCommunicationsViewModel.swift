@@ -40,14 +40,13 @@ class StoreCommunicationsViewModel : ObservableObject {
         do {
             // --> Update the database
             try await storesDao.update(id: store.ownerId, hashMap: ["phone": phone, "address":address, "governorate": gov])
-            store.phone = phone
-            store.address = address
 
             // Saving local
-            var myUser = await LocalInfo().getLocalUser()
-            if myUser!.storeId == store.ownerId {
-                myUser!.store = self.store
-                _ = await LocalInfo().saveUser(user: myUser!)
+            if let myUser = UserInformation.shared.getUser() {
+                myUser.store?.phone = phone
+                myUser.store?.address = address
+
+                UserInformation.shared.updateUser(myUser)
             }
             
             showTosat(msg: "Info updated")

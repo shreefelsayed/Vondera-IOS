@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct EmployeeProfile: View {
     var user:UserData
@@ -18,36 +17,33 @@ struct EmployeeProfile: View {
     }
     
     var body: some View {
-        AdvancedList(viewModel.items, listView: { rows in
-            if #available(iOS 14, macOS 11, *) {
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(alignment: .leading, content: rows)
-                        .padding()
+        List {
+            
+            ForEach($viewModel.items) { order in
+                OrderCard(order: order)
+                    .listRowSeparator(.hidden)
+                
+                if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        loadItem()
+                    }
                 }
-            } else {
-                List(content: rows)
             }
-        }, content: { item in
-            OrderCard(order: item)
-        }, emptyStateView: {
-            if viewModel.isLoading == false {
-               EmptyMessageView(msg: "This user doesn't have any orders")
-            }
-        }, errorStateView: { error in
-            Text(error.localizedDescription).lineLimit(nil)
-        }, loadingStateView: {
-            ProgressView()
-        }).pagination(.init(type: .thresholdItem(offset: 5), shouldLoadNextPage: {
-            if viewModel.canLoadMore {
-                loadItem()
-            }
-        }) {
-            if viewModel.isLoading {
-                ProgressView()
-            }
-        }).refreshable(action: {
+        }
+        .refreshable {
             await refreshData()
-        })
+        }
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "This user doesn't have any orders")
+            }
+        }
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if viewModel.myUser != nil && viewModel.myUser!.canAccessAdmin {
@@ -64,12 +60,12 @@ struct EmployeeProfile: View {
     func refreshData() async {
         await viewModel.refreshData()
     }
+    
     func loadItem() {
         Task {
             await viewModel.getData()
         }
     }
-                                 
 }
 
 struct EmployeeProfile_Previews: PreviewProvider {

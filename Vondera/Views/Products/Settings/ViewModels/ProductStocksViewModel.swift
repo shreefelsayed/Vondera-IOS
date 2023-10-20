@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class ProductStocksViewModel : ObservableObject {
-    @Published var product:Product
+    @Published var product:StoreProduct
     var productsDao:ProductsDao
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
@@ -27,7 +27,7 @@ class ProductStocksViewModel : ObservableObject {
     @Published var showToast = false
     @Published var msg = ""
     
-    init(product:Product) {
+    init(product:StoreProduct) {
         self.product = product
         self.productsDao = ProductsDao(storeId: product.storeId)
     }

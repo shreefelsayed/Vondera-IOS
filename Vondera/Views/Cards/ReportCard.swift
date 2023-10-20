@@ -28,10 +28,10 @@ struct ReportCard: View {
                 Spacer()
                 
                 Text("\(amount) \(prefix ?? "")")
-                    .foregroundStyle(amount > 0 ? Color.green : Color.red)
+                    .foregroundStyle(amount > 0 ? Color.green : amount < 0 ? Color.red : Color.black)
                 
             }
-                    }
+        }
     }
 }
 

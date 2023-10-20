@@ -9,7 +9,7 @@ import SwiftUI
 import NetworkImage
 
 struct ProductBuyingSheet: View {
-    var product:Product
+    @Binding var product:StoreProduct
     
     @State private var selectedDetent = PresentationDetent.large
     @State var listOption:[String] = []
@@ -21,7 +21,6 @@ struct ProductBuyingSheet: View {
                 ZStack (alignment: .bottom){
                     // MARK : Slider
                     NavigationLink(destination: FullScreenImageView(imageURLs: product.listPhotos)) {
-                        
                         SlideNetworkView(imageUrls: product.listPhotos)
                     }
                     
@@ -145,7 +144,9 @@ struct ProductBuyingSheet: View {
         
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ProductSettings(product: product, storeId: product.storeId)) {
+                NavigationLink(destination: ProductSettings(product: product, onDeleted : { item in
+                    
+                })) {
                     Text("Settings")
                 }
             }

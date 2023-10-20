@@ -16,17 +16,17 @@ struct TopTaps: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(Array(tabs.enumerated()), id: \.element) { index, tabName in
-                    Text(tabName) // Example usage of index and tabName
+                    Text(tabName)
                         .foregroundColor(.white)
                         .font(.body)
                         .bold()
-                        .padding(5)
+                        .padding(6)
                         .background {
                             Rectangle()
                                 .foregroundColor(selection == index ? .accentColor : .gray)
                                 .cornerRadius(12)
                         }
-                        .padding(5)
+                        .padding(.horizontal, 2)
                         .onTapGesture {
                             selection = index
                         }

@@ -10,11 +10,11 @@ struct OrderProductObject: Codable, Hashable {
     var buyingPrice: Double = 0
     var hashVaraients: [String: String]? = [:]
     var savedItemId: String? = ""
-    var product: Product?
+    var product: StoreProduct?
     
     init() {}
     
-    init(productId: String, name: String, storeId: String?, quantity: Int, price: Double, image: String?, buyingPrice: Double, hashVaraients: [String: String]?, savedItemId: String?, product: Product?) {
+    init(productId: String, name: String, storeId: String?, quantity: Int, price: Double, image: String?, buyingPrice: Double, hashVaraients: [String: String]?, savedItemId: String?, product: StoreProduct?) {
             self.productId = productId
             self.name = name
             self.storeId = storeId
@@ -61,7 +61,7 @@ struct OrderProductObject: Codable, Hashable {
         buyingPrice = try container.decode(Double.self, forKey: .buyingPrice)
         hashVaraients = try container.decodeIfPresent([String:String].self, forKey: .hashVaraients)
         savedItemId = try container.decodeIfPresent(String.self, forKey: .savedItemId)
-        product = try container.decodeIfPresent(Product.self, forKey: .product)
+        product = try container.decodeIfPresent(StoreProduct.self, forKey: .product)
     }
     
     func encode(to encoder: Encoder) throws {

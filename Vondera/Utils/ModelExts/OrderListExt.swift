@@ -8,12 +8,56 @@
 import SwiftUI
 import Foundation
 
+extension Array where Element == OrderProductObject {
+    
+    func getTotalQuantity() -> Int {
+        var total = 0
+        
+        for prod in self {
+            total += prod.quantity
+        }
+        
+        return total
+    }
+}
+
 
 // MARK : Extenstions on lists
 extension Array where Element == Order {
     func getValidOrders() -> [Order] {
         return self.filter { $0.statue != "Deleted"}
     }
+    
+    func getFinalProductList() -> [OrderProductObject] {
+        var finalList:[OrderProductObject] = []
+        
+        for order in self {
+            for orderProductObject in order.listProducts! {
+                if let index = finalList.firstIndex(where: { $0.isEqual(orderProductObject) }) {
+                                finalList[index].quantity += orderProductObject.quantity
+                            } else {
+                                finalList.append(orderProductObject)
+                            }
+            }
+        }
+        
+        finalList.sort { 
+            $0.quantity > $1.quantity
+        }
+        
+        return finalList
+    }
+    
+    private func isItemAlreadyInList(_ listFinal: [OrderProductObject], _ orderProductObject: OrderProductObject) -> OrderProductObject? {
+        
+        for listItem in listFinal {
+            if listItem.productId == orderProductObject.productId && listItem.hashVaraients == orderProductObject.hashVaraients {
+                return listItem
+            }
+        }
+        return nil
+    }
+
     
     func totalNetProfit() -> Int {
         let valid = self.getValidOrders()

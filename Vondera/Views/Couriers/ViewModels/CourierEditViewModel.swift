@@ -29,8 +29,7 @@ class CourierEditViewModel : ObservableObject {
     @Published var isSaving = false
     @Published var isLoading = false
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:String?
     
     init(id:String, storeId:String) {
         self.id = id
@@ -49,7 +48,7 @@ class CourierEditViewModel : ObservableObject {
             self.isLoading = true
         }
         do {
-            var courier = try await couriersDao.getCourier(id: id)
+            let courier = try await couriersDao.getCourier(id: id)
             name = courier.name
             phone = courier.phone
             active = courier.visible
@@ -79,7 +78,7 @@ class CourierEditViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            var map:[String:Any] = ["name": name,
+            let map:[String:Any] = ["name": name,
                                     "phone": phone,
                                     "visible":active]
             
@@ -102,7 +101,6 @@ class CourierEditViewModel : ObservableObject {
     
     func showToast(_ msg: String) {
         self.msg = msg
-        showToast.toggle()
     }
 }
 

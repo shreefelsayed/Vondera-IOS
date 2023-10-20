@@ -11,69 +11,58 @@ import AlertToast
 struct NewEmployee: View {
     var storeId:String
     @ObservedObject var viewModel:NewEmployeeViewModel
-    @Binding var currentList:[UserData]
     @Environment(\.presentationMode) private var presentationMode
     
-    init(storeId: String, currentList: Binding<[UserData]>) {
+    init(storeId: String) {
         self.storeId = storeId
-        self._currentList = currentList
         self.viewModel = NewEmployeeViewModel(storeId: storeId)
     }
     
     var body: some View {
-        ScrollView (showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Employee name", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.words)
+        List {
+            Section("User Info") {
+                FloatingTextField(title: "Name", text: $viewModel.name, caption: "The name of the emloyee you want to add", required: true, autoCapitalize: .words)
+
                 
-                TextField("Phone Number", text: $viewModel.phone)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.phonePad)
+                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "Use the whatsapp number of the employee", required: true, keyboard: .phonePad)
+            }
+            
+            Section("Auth Credntials") {
+                FloatingTextField(title: "Email Address", text: $viewModel.email, required: true, autoCapitalize: .never, keyboard: .emailAddress)
                 
-                TextField("Email Address", text: $viewModel.email)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
+                FloatingTextField(title: "Password", text: $viewModel.pass, required: true, secure: true)
                 
-                
-                SecureField("Password", text: $viewModel.pass)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.none)
-                
-                if viewModel.selectedAccountType == .sales {
-                    TextField("Commission", text: Binding(
-                        get: { String(viewModel.perc) },
-                        set: { if let newValue = Double($0) { viewModel.perc = newValue } }
-                    ))
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
-                }
-                
+            }
+            
+            Section("Access") {
                 Picker("Account Type", selection: $viewModel.selectedAccountType) {
                         Text("Admin").tag(AccountType.admin)
                         Text("Employee").tag(AccountType.employee)
                         Text("Sales Account").tag(AccountType.sales)
                 }
-                .pickerStyle(.segmented)
+                .pickerStyle(.menu)
+                
                 
                 Text(desc)
                     .font(.caption)
+                
+                if viewModel.selectedAccountType == .sales {
+                    HStack {
+                        FloatingTextField(title: "Commission", text: .constant(""), caption: "This commission will be calculate from the order's netprofit From 1% to 99%", required: false, isNumric: true, number: $viewModel.perc)
+                        
+                        Text("%")
+                    }
+                }
             }
         }
-        .padding()
         .navigationTitle("Create Employee")
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
-                if viewModel.newItem != nil {
-                    currentList.append(viewModel.newItem!)
-                }
-                
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
                        title: viewModel.msg)
@@ -97,6 +86,12 @@ struct NewEmployee: View {
         } else {
             return "Sales account can only add orders, search for orders. and you can add a sales commission based on the net profit of each order the account adds."
         }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        NewEmployee(storeId: Store.Qotoofs())
     }
 }
 

@@ -15,11 +15,9 @@ struct ChangePhoneView: View {
     
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading) {
-                TextField("Phone Number", text: $phoneNumber)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.namePhonePad)
+        List {
+            Section("Phone number") {
+                FloatingTextField(title: "Phone Number", text: $phoneNumber, required: true, keyboard: .phonePad)
             }
         }
         .toolbar {
@@ -33,7 +31,6 @@ struct ChangePhoneView: View {
                     }
             }
         }
-        .padding()
         .navigationTitle("Change Phone")
         .willProgress(saving: isSaving)
         .onAppear {
@@ -42,30 +39,31 @@ struct ChangePhoneView: View {
     }
     
     func loadData() {
-        Task {
-            self.myUser = await LocalInfo().getLocalUser()
-            self.phoneNumber = myUser?.phone ?? ""
-        }
+        self.myUser = UserInformation.shared.getUser()
+        self.phoneNumber = myUser?.phone ?? ""
     }
     
     func updateNumber() {
         Task {
-            isSaving = true
-            var data:[String: Any] = ["phone": phoneNumber]
-            try! await UsersDao().update(id: myUser!.id, hash:data)
-            myUser!.phone = phoneNumber
-            await LocalInfo().saveUser(user: myUser)
-            isSaving = false
-            
-            DispatchQueue.main.async {
-                presentationMode.wrappedValue.dismiss()
+            if var myUser = myUser {
+                isSaving = true
+                let data:[String: Any] = ["phone": phoneNumber]
+                try? await UsersDao().update(id: myUser.id, hash:data)
+                myUser.phone = phoneNumber
+
+                DispatchQueue.main.async { [myUser] in
+                    UserInformation.shared.updateUser(myUser)
+                    isSaving = false
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
+            
         }
     }
 }
 
-struct ChangePhoneView_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    NavigationView {
         ChangePhoneView()
     }
 }

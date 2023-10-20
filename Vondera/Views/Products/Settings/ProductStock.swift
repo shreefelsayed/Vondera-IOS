@@ -9,39 +9,27 @@ import SwiftUI
 import AlertToast
 
 struct ProductStock: View {
-    var product:Product
+    var product:StoreProduct
     @ObservedObject var viewModel:ProductStocksViewModel
     @Environment(\.presentationMode) private var presentationMode
     
-    init(product: Product) {
+    init(product: StoreProduct) {
         self.product = product
         self.viewModel = ProductStocksViewModel(product: product)
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Amount to add", text: Binding(
-                    get: { String(viewModel.stock) },
-                    set: { newValue in
-                        viewModel.stock = Int(newValue) ?? 0
-                    }
-                ))
-                .textFieldStyle(.roundedBorder)
-                .keyboardType(.numberPad)
-                
-                Text("Enter how many pieces you want to add to your stock")
-                    .font(.caption)
-            }
+        List {
+            FloatingTextField(title: "Amount to add", text: .constant(""), caption: "Enter how many pieces you want to add to your stock", required: true, isNumric: true, number: $viewModel.stock)
         }
-        .padding()
+        .isHidden(viewModel.isLoading)
         .navigationTitle("Product Stocks")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Add") {
                     update()
                 }
-                .disabled(viewModel.isSaving)
+                .disabled(viewModel.isSaving || viewModel.isLoading)
             }
         }
         .willProgress(saving: viewModel.isSaving)
@@ -64,8 +52,6 @@ struct ProductStock: View {
     }
 }
 
-struct ProductStock_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductStock(product: Product.example())
-    }
+#Preview {
+    ProductStock(product: StoreProduct.example())
 }

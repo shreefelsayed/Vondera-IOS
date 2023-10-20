@@ -7,15 +7,14 @@
 
 import Foundation
 import FirebaseFirestore
-import AdvancedList
 
 class AlmostOutViewModel: ObservableObject {
     var storeId:String
     var productsDao:ProductsDao
     var storesDao = StoresDao()
 
-    @Published var state:ListState = .items
-    @Published var items = [Product]()
+    @Published var isLoading = false
+    @Published var items = [StoreProduct]()
     @Published var canLoadMore = true
     @Published var error = ""
     
@@ -28,7 +27,6 @@ class AlmostOutViewModel: ObservableObject {
         
         Task {
             await getData()
-
         }
     }
     
@@ -36,18 +34,16 @@ class AlmostOutViewModel: ObservableObject {
         self.canLoadMore = true
         self.lastSnapshot = nil
         self.items.removeAll()
-        await getData(refreshing: true)
+        await getData()
     }
     
-    func getData(refreshing:Bool = false) async {
-        guard state != .loading || !canLoadMore else {
+    func getData() async {
+        guard !isLoading && canLoadMore else {
             return
         }
         
         do {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil { state = .loading }
-            }
+            isLoading = true
            
             let store = try await storesDao.getStore(uId: storeId)
             let result = try await productsDao.getStockLessThen(almostOut: store!.almostOut ?? 20, lastSnapShot: lastSnapshot)
@@ -56,12 +52,10 @@ class AlmostOutViewModel: ObservableObject {
                 lastSnapshot = result.1
                 items.append(contentsOf: result.0)
                 self.canLoadMore = !result.0.isEmpty
-                state = .items
+                isLoading = false
             }
         } catch {
-            DispatchQueue.main.sync {
-                if lastSnapshot == nil  { state = .error(error as NSError) }
-            }
+            isLoading = false
         }
     }
 }

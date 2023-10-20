@@ -18,23 +18,19 @@ struct OrderSearchView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack {
-                SearchBar(text: $viewModel.searchText, hint: "Search by order number, name, phone number ...")
-                
-                ForEach(viewModel.result) { order in
-                    OrderCard(order: order)
-                }
-                
-                Spacer()
+        List {
+            ForEach($viewModel.result) { order in
+                OrderCard(order: order)
             }
-        }.overlay(alignment: .center, content: {
+        }
+        .listStyle(.plain)
+        .searchable(text: $viewModel.searchText, prompt: "Search by name, phone or id")
+        .overlay(alignment: .center, content: {
             if viewModel.result.isEmpty {
-                EmptyMessageView(msg: "No result is avilable for your search")
+                EmptyMessageView(msg: "No result is avilable for \(viewModel.searchText)")
             }
         })
         .navigationTitle("Search for order")
-        .padding()
     }
 }
 

@@ -13,22 +13,25 @@ struct EditInfoView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center, spacing: 12) {
-                TextField("Name", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.words)
+        List {
+            Section("Your personal name") {
                 
-                LoadingButton(action: {
-                    save()
-                }, isLoading: $viewModel.isSaving, style: LoadingButtonStyle(width: .infinity, cornerRadius: 16, backgroundColor: .accentColor, loadingColor: .white)) {
-                    Text("Change name")
-                        .foregroundColor(.white)
-                }
+                FloatingTextField(title: "Name", text: $viewModel.name, required: true, autoCapitalize: .words)
+
             }
-            
         }
-        .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Text("Update")
+                    .bold()
+                    .disabled(viewModel.name.isEmpty || viewModel.isSaving)
+                    .onTapGesture {
+                        save()
+                    }
+                
+            }
+        }
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .navigationTitle("Edit Info")
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
@@ -51,10 +54,6 @@ struct EditInfoView: View {
     }
 }
 
-struct EditInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            EditInfoView(user: UserData.example())
-        }
-    }
+#Preview {
+    EditInfoView(user: UserData.example())
 }

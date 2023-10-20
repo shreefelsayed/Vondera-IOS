@@ -9,98 +9,124 @@ import SwiftUI
 import NetworkImage
 
 struct UserHome: View {
+    @State var myUser = UserInformation.shared.getUser()
+    @State var selectedTab = 0
+    
     @StateObject var viewModel = UserHomeViewModel()
     @Environment(\.scenePhase) var scenePhase
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             HomeFragment()
                 .tabItem {
-                    Image(systemName: "house.fill")
+                    Image(systemName: selectedTab == 0 ? "house.fill" : "house")
+                        .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
                     Text("Home")
-                }.padding()
+                }
+                .tag(0)
+            
             OrdersFragment()
                 .tabItem {
-                    Image(systemName: "backpack.fill")
+                    Image(systemName: selectedTab == 1 ? "cart.fill" : "cart")
+                        .environment(\.symbolVariants, selectedTab == 1 ? .fill : .none)
                     Text("Orders")
                 }
+                .tag(1)
             
-            StoreFragment()
+            ProductsFragment()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: selectedTab == 2 ? "bag.fill" : "bag")
+                        .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
+                    Text("Products")
+                }
+                .tag(2)
+            
+            SettingsFragment()
+                .tabItem {
+                    Image(systemName: selectedTab == 3 ? "ellipsis.rectangle.fill" : "ellipsis.rectangle")
+                        .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)
+                    
                     Text("Settings")
                 }
+                .tag(3)
+        }
+        .task {
+            await getUser()
         }
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            if viewModel.myUser != nil {
-                ToolbarItem(placement: .navigationBarLeading, content: {
-                    NavigationLink(destination: Dashboard(store: viewModel.myUser!.store!)) {
-                        NetworkImage(url: URL(string: viewModel.myUser?.store!.logo ?? "" )) { image in
-                            image.centerCropped()
-                        } placeholder: {
-                            ProgressView()
-                        } fallback: {
-                            Image("defaultPhoto")
-                                .resizable()
-                                .centerCropped()
-                        }
-                        .background(Color.white)
-                        .frame(width: 30, height: 30, alignment: .bottomTrailing)
-                        .clipShape(Circle())
-                    }
-                })
-                
-                ToolbarItem(placement: .navigationBarLeading, content: {
-                    Text(viewModel.myUser?.store?.name ?? "")
-                        .font(.title)
-                        .bold()
-                })
-                
-                ToolbarItem(placement: .navigationBarTrailing, content: {
-                    NavigationLink(destination: OrderSearchView(storeId: viewModel.myUser!.storeId)) {
-                        Image(systemName: "magnifyingglass.circle.fill")
-                            .resizable()
-                    }
-                })
-                
-                ToolbarItem(placement: .navigationBarTrailing, content: {
-                    NavigationLink(destination: QrCodeScanner(storeId: viewModel.myUser?.storeId ?? "")) {
-                        Image(systemName: "qrcode.viewfinder")
-                            .resizable()
-                    }
-                })
-                
-                ToolbarItem(placement: .navigationBarTrailing, content: {
-                    NavigationLink(destination: AddToCart(storeId: viewModel.myUser!.storeId)) {
-                        Image(systemName: "cart")
-                            .resizable()
-                    }
-                })
-            }
-        }
-        .onAppear {
-            Task {
-                await viewModel.getUser()
-            }
-        }
         .onChange(of: scenePhase) { newPhase in
-            if newPhase == .active {
-                online()
-            } else if newPhase == .background {
-                offline()
-            }
+            handleOnlineState(phase: newPhase)
+        }
+    }
+    
+    func handleOnlineState(phase:ScenePhase) {
+        if phase == .active {
+            online()
+        } else if phase == .background {
+            offline()
         }
     }
     
     func online() {
-        Task { await viewModel.userOnline() }
+        Task {
+            if let user = myUser {
+                try? await UsersDao().update(id: user.id, hash: ["online": true])
+            }
+        }
     }
     
     func offline() {
-        Task { await viewModel.userOffline() }
+        Task {
+            if let user = myUser {
+                try? await UsersDao().update(id: user.id, hash: ["online": false])
+            }
+        }
+    }
+    
+    func getUser() async {
+        guard let user = UserInformation.shared.getUser() else {
+            await AuthManger().logOut()
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.myUser = user
+        }
     }
 }
+
+struct MyLeadingView: View {
+    @Binding var myUser: UserData?
+    
+    var body: some View {
+        if let user = myUser {
+            if user.canAccessAdmin {
+                NavigationLink(destination: Dashboard(store: user.store!)) {
+                    IconAndName(myUser: myUser)
+                }
+                .buttonStyle(.plain)
+            } else {
+                IconAndName(myUser: myUser)
+            }
+        } else {
+            EmptyView()
+        }
+    }
+}
+
+struct IconAndName : View {
+    var myUser: UserData?
+    var body: some View {
+        HStack {
+            ImagePlaceHolder(url: myUser?.store?.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis:42)
+            
+            
+            Text(myUser?.store?.name ?? "")
+                .bold()
+        }
+    }
+}
+
 
 struct UserHome_Previews: PreviewProvider {
     static var previews: some View {

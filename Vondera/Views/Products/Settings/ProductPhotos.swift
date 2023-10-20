@@ -9,11 +9,11 @@ import SwiftUI
 import AlertToast
 
 struct ProductPhotos: View {
-    var product:Product
+    var product:StoreProduct
     @ObservedObject var viewModel:ProductPhotosViewModel
     @Environment(\.presentationMode) private var presentationMode
     
-    init(product: Product) {
+    init(product: StoreProduct) {
         self.product = product
         self.viewModel = ProductPhotosViewModel(product: product)
     }
@@ -109,6 +109,6 @@ struct ProductPhotos: View {
 
 struct ProductPhotos_Previews: PreviewProvider {
     static var previews: some View {
-        ProductPhotos(product: Product.example())
+        ProductPhotos(product: StoreProduct.example())
     }
 }

@@ -22,6 +22,10 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var categoryId: String? = ""
     var categoryName: String? = ""
     
+    var crossedPrice:Double? = 0
+    var featured:Bool? = false
+    var views:Int? = 0
+    
     func hash(into hasher: inout Hasher) {
             hasher.combine(id)
         }
@@ -46,7 +50,7 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case name, id, desc, quantity, addedBy, collectionId, price, buyingPrice, sold, lastOrderDate, createDate, hashVarients, visible, alwaysStocked, storeId, listPhotos, listOrder, categoryId, categoryName
+        case name, id, desc, quantity, addedBy, collectionId, price, buyingPrice, sold, lastOrderDate, createDate, hashVarients, visible, alwaysStocked, storeId, listPhotos, listOrder, categoryId, categoryName, crossedPrice, featured, views
     }
     
     init(from decoder: Decoder) throws {
@@ -71,6 +75,10 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
         listOrder = try container.decodeIfPresent([ProductOrderObject].self, forKey: .listOrder)
         categoryId = try container.decodeIfPresent(String.self, forKey: .categoryId)
         categoryName = try container.decodeIfPresent(String.self, forKey: .categoryName)
+    }
+    
+    func getProductLink(storeLink:String) -> URL {
+        return URL(string: "\(storeLink)/product/product:\(id)")!
     }
     
     func defualtPhoto() -> String {
@@ -108,6 +116,10 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
 
 extension StoreProduct {
     func filter(_ searchText:String) -> Bool {
+        if searchText.isBlank {
+            return true
+        }
+        
         return self.name.localizedCaseInsensitiveContains(searchText) ||
         self.desc?.localizedCaseInsensitiveContains(searchText) ?? false
     }
@@ -129,6 +141,7 @@ extension StoreProduct {
         var prod = StoreProduct(name: "Wegz Tshirt", id: "1234", quantity: 40, addedBy: "", price: 400, buyingPrice: 50)
         prod.hashVarients = [["Color": ["Black", "White", "Gray"]], ["Size": ["Large", "Small"]]]
         prod.sold = 100
+        prod.crossedPrice = 500
         prod.categoryName = "Tshirts"
         prod.desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         prod.listPhotos = ["https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/61/805162/1.jpg?1359", "https://cdn.shopify.com/s/files/1/0441/7378/7294/files/TEE55_394x.jpg?v=1683365748"]

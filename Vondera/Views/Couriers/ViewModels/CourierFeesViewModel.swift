@@ -48,8 +48,8 @@ class CourierFeesViewModel : ObservableObject {
             self.isLoading = true
         }
         do {
-            var courier = try await couriersDao.getCourier(id: id)
-            items = courier.listPrices
+            let courier = try await couriersDao.getCourier(id: id)
+            items = courier.listPrices.uniqueElements()
         } catch {
             print(error.localizedDescription)
         }
@@ -66,7 +66,7 @@ class CourierFeesViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            let map:[String:[CourierPrice]] = ["listPrices": items]
+            let map:[String:[CourierPrice]] = ["listPrices": items.uniqueElements()]
             let encoded: [String: Any]
             encoded = try! Firestore.Encoder().encode(map)
             

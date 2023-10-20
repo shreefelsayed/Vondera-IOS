@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct StoreCouriers: View {
     var storeId:String
@@ -18,24 +17,16 @@ struct StoreCouriers: View {
     }
     
     var body: some View {
-        VStack {
-            if !viewModel.couriers.isEmpty {
-                ScrollView {
-                    VStack(spacing: 12) {
-                        SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.couriers.count) Couriers")
-                        
-                        ForEach(viewModel.filteredItems) { item in
-                            NavigationLink(destination: CourierCurrentOrders(storeId: storeId, courier: item)) {
-                                CourierCard(courier: item)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                           
-                        }
-                    }
-                }
+        List {
+            ForEach(viewModel.filteredItems) { item in
+                CourierCardWithNavigation(courier: item)
             }
         }
-        .padding()
+        .refreshable {
+            await viewModel.getCouriers()
+        }
+        .listStyle(.plain)
+        .searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.couriers.count) Couriers")
         .navigationTitle("Couriers 🛵")
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -46,7 +37,7 @@ struct StoreCouriers: View {
             if viewModel.isLoading {
                 ProgressView()
             } else if viewModel.couriers.isEmpty {
-                EmptyMessageView(msg: "You haven't added any couriers yet")
+                EmptyMessageView(systemName: "bicycle.circle", msg: "You haven't added any couriers yet")
             }
         }
         

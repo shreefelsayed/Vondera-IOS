@@ -21,7 +21,7 @@ class ExpansesDao {
         let query = collection
             .order(by: "description", descending: true)
             .start(at: [search])
-            .end(at: ["\(search)\u{f8ff}"])  // Pass the value as an array
+            .end(at: ["\(String(describing: search))\u{f8ff}"])  // Pass the value as an array
             .limit(to: pageSize)
         
         let docs = try await query.getDocuments()

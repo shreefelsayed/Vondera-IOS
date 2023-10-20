@@ -55,17 +55,17 @@ class NewCourierViewModel : ObservableObject {
         do {
             // --> Update the database
             var courier = Courier(id: "", name: name, phone: phone, storeId: storeId)
-            courier.listPrices = items
+            courier.listPrices = items.uniqueElements()
             
             try await couriersDao.addCourier(courier: &courier)
             
             // --> Saving Local
-            var myUser = await LocalInfo().getLocalUser()
+            let myUser = UserInformation.shared.getUser()
             if myUser?.storeId == storeId {
                 if var couriersCount = myUser?.store?.couriersCount {
                     couriersCount = couriersCount + 1
                     myUser?.store?.couriersCount = couriersCount
-                    _ = await LocalInfo().saveUser(user: myUser!)
+                    UserInformation.shared.updateUser(myUser)
                 }
             }
             

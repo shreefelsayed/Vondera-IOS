@@ -7,21 +7,27 @@
 
 import Foundation
 import FirebaseFirestore
-import AdvancedList
 import Combine
 
 class ClientsViewModel: ObservableObject {
     var storeId:String
     
     var clientsDao:ClientsDao
-    @Published var state:ListState = .items
     @Published var items = [Client]()
     @Published var canLoadMore = true
-    @Published var error = ""
-    
-    // --> Server search
+    @Published var isLoading = false
     private var cancellables = Set<AnyCancellable>()
+
+    // --> Server search
     @Published var searchText = ""
+    @Published var sortIndex = "lastOrder" {
+        didSet {
+            Task {
+                await refreshData()
+            }
+        }
+    }
+    
     @Published var result = [Client]()
 
     private var lastSnapshot:DocumentSnapshot?
@@ -41,47 +47,53 @@ class ClientsViewModel: ObservableObject {
     }
     
     func refreshData() async {
-        self.canLoadMore = true
         self.lastSnapshot = nil
+        self.canLoadMore = true
+        self.isLoading = false
         self.items.removeAll()
+        self.searchText = ""
+        
         await getData()
     }
     
+    
     func getData() async {
-        guard state != .loading || !canLoadMore else {
+        guard !isLoading || !canLoadMore else {
             return
         }
         
-        do {
-            if lastSnapshot == nil { state = .loading }
-            
-            let result = try await clientsDao.getClients(lastSnapShot: lastSnapshot)
-            lastSnapshot = result.1
-            items.append(contentsOf: result.0)
-            print("Got \(result.0.count) Clients")
-            if result.0.count == 0 {
-                self.canLoadMore = false
-                print("Can't load more data")
-            }
-            
-            initSearch()
-            
-            state = .items
-        } catch {
-            if lastSnapshot == nil { state = .error(error as NSError) }
+        DispatchQueue.main.async { [self] in
+            isLoading = true
         }
         
+        do {
+            let result = try await clientsDao.getClients(sort: sortIndex, lastSnapShot: lastSnapshot)
+            DispatchQueue.main.async { [self] in
+                lastSnapshot = result.1
+                items.append(contentsOf: result.0)
+                if result.0.count == 0 {
+                    self.canLoadMore = false
+                }
+                initSearch()
+                isLoading = false
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func initSearch() {
         $searchText
-            .sink { newValue in
-                self.searchClient(newValue)
+            .debounce(for: .seconds(1.2), scheduler: RunLoop.main) // Adjust the debounce time as needed
+            .removeDuplicates() // To avoid duplicate values
+            .sink { [weak self] newValue in
+                if !newValue.isBlank {
+                    self?.searchClient(newValue)
+                }
             }
             .store(in: &cancellables)
     }
     
-    //01503312121
     func searchClient(_ name:String) {
         guard !name.isBlank else {
             return

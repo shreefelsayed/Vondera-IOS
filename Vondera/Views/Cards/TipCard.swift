@@ -25,11 +25,8 @@ struct TipCard: View {
             Spacer()
         }
         .padding()
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.accentColor, lineWidth: 2)
-        )
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(12)
     }
 }
 

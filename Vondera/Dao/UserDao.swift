@@ -12,6 +12,22 @@ import FirebaseFirestore
 class UsersDao {
     let collection = Firestore.firestore().collection("users")
     
+    func getUserWithStore(userId:String) async throws -> UserData? {
+        var result = try await collection.document(userId).getDocument(as: UserData.self)
+        guard result.exists else {
+            return nil
+        }
+        
+        var user = result.item
+        let store = try await StoresDao().getStore(uId: user.storeId)
+        if let store = store {
+            user.store = store
+            return user
+        } else {
+            return nil
+        }
+    }
+    
     func storeEmployees(expect:String, storeId:String, active:Bool) async throws -> [UserData] {
         return convertToList(snapShot: try await collection
             .whereField("id", isNotEqualTo: expect)
@@ -42,12 +58,11 @@ class UsersDao {
     }
     
     func getOnlineUser(expectId:String, storeId:String) async throws -> [UserData] {
-        return convertToList(snapShot: try await collection
+        return try await collection
             .whereField("storeId", isEqualTo: storeId)
             .whereField("online", isEqualTo: true)
             .whereField("id", isNotEqualTo: expectId)
-            .getDocuments()
-        )
+            .getDocuments(as: UserData.self)
     }
     
     func update(id:String, hash:[String:Any]) async throws {
@@ -58,10 +73,8 @@ class UsersDao {
         return try collection.document(user.id).setData(from: user)
     }
     
-    func getUser(uId:String) async throws -> UserData? {
-        let doc = try await collection.document(uId).getDocument()
-        if !doc.exists {return nil}
-        return try doc.data(as: UserData.self)
+    func getUser(uId:String) async throws -> (item: UserData?, exists:Bool) {
+        return try await collection.document(uId).getDocument(as: UserData.self)
     }
     
     func convertToList(snapShot:QuerySnapshot) -> [UserData] {

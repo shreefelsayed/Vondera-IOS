@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
-
+import FirebaseMessaging
 class AuthManger {
     let usersDao: UsersDao
     let storesDao:StoresDao
@@ -20,21 +20,15 @@ class AuthManger {
     }
     
     func logOut() async {
-        /*
-         mail : erey@fools.com
-         Password : ##erey322003##
-         */
         do {
-            if mAuth.currentUser != nil {
-                do {
-                    try await usersDao.update(id: mAuth.currentUser!.uid, hash: ["online": false])
-                } catch {
-                    
-                }
+            guard let currentUser = UserInformation.shared.getUser() else {
+                return
             }
-
-            print("Logging out")
-            await LocalInfo().saveUser(user: nil)
+            
+            try! await usersDao.update(id: currentUser.id, hash: ["online": false])
+            await removeFCM()
+            
+            UserInformation.shared.clearUser()
             try! mAuth.signOut()
         }
     }
@@ -72,7 +66,9 @@ class AuthManger {
             store.ownerId = fbUserCreated!.uid
             try await storesDao.addStore(store: store)
                         
-            return try await getData()
+            let data = try await getData()
+            
+            return data != nil
         } catch {
             return false
         }
@@ -103,7 +99,8 @@ class AuthManger {
             var loggedIn:Bool = false
             
             do {
-                loggedIn = try await getData()
+                let data = try await getData()
+                loggedIn = data != nil
             } catch {
                 print(error.localizedDescription)
                 return false
@@ -123,7 +120,7 @@ class AuthManger {
         }
     }
     
-    func getData() async throws -> Bool {
+    func getData() async throws -> UserData? {
         let uId = Auth.auth().currentUser?.uid
         print("Current user is \(String(describing: uId))")
         
@@ -131,57 +128,77 @@ class AuthManger {
         guard uId != nil else {
             print("No user id not found")
             await logOut()
-            return false
+            return nil
         }
         
-        
-        var user = try await usersDao.getUser(uId: uId!)
-        
-        guard user != nil else {
+        if var user = try await usersDao.getUser(uId: uId!).item {
+            guard user.isStoreUser else {
+                print("Unsporrted user type")
+                await logOut()
+                return nil
+            }
+            
+            print("User \(user.name)")
+                        
+            if let store = try await storesDao.getStore(uId: user.storeId) {
+                print("Loggin to store \(store.name)")
+                user.store = store
+                UserInformation.shared.updateUser(user)
+                try! await usersDao.update(id: user.id, hash: ["online": true, "ios": true])
+                
+                // Save FCM
+                await saveFCM()
+                
+                return user
+            } else {
+                print("Failed to get store")
+                await logOut()
+                return nil
+            }
+        } else {
             print("Failed to get user")
             await logOut()
-            return false
-        }
-        
-        if user!.accountType != "Owner" && user!.accountType != "Store Admin" && user!.accountType != "Marketing" && user!.accountType != "Worker" {
-        
-            print("Unsporrted user type")
-            await logOut()
+            return nil
+        }        
+    }
+    
+    func removeFCM() async {
+        if let userUID = Auth.auth().currentUser?.uid {
+            do {
+                try await UsersDao().update(id: userUID, hash: ["device_token" : ""])
+                print("FCM token Cleared")
+            } catch {
+                print("FCM token Couldn't be Cleared")
+            }
             
-            return false
         }
-        
-        let store = try await storesDao.getStore(uId: user!.storeId)
-        
-        
-        guard store != nil else {
-            print("Failed to get store")
-            await logOut()
-            return false
+    }
+    
+    func saveFCM() async {
+        if let userUID = Auth.auth().currentUser?.uid {
+            do {
+                let token = try await Messaging.messaging().token()
+                try await UsersDao().update(id: userUID, hash: ["device_token" : token])
+                print("FCM token Attached")
+            } catch {
+                print("FCM token error \(error.localizedDescription)")
+            }
+            
         }
-        
-        user?.store = store
-        
-        let saved = await LocalInfo().saveUser(user: user!)
-        guard saved else {
-            print("Failed to save user")
-            await logOut()
-            return false
-        }
-        
-        try! await usersDao.update(id: user!.id, hash: ["online": true, "ios": true])
-        
-        // Assign Notifications
-        let pushManager = PushNotificationManager(userID: user!.id)
-        await pushManager.registerForPushNotifications()
-        
-        return true
     }
     
     func signUserInViaMail(email:String, password:String) async -> Bool {
         do {
             try await Auth.auth().signIn(withEmail: email, password: password)
-            return try await getData()
+            let data = try await getData()
+            guard let userData = data else {
+                return false
+            }
+            
+            // SAVE the user for later access
+            await SavedAccountManager().addUser(savedItems: LoginInfo(id: userData.id, name: userData.name, email: userData.email, password: userData.pass, url: userData.userURL, accountType: userData.accountType, storeName: userData.store?.name ?? ""))
+            
+            return true
         } catch {
             print(error.localizedDescription)
             return false

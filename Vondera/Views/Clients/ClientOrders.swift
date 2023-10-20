@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AdvancedList
 
 struct ClientOrders: View {
     var client:Client
@@ -21,31 +20,24 @@ struct ClientOrders: View {
     }
     
     var body: some View {
-        AdvancedList(viewModel.items, listView: { rows in
-            if #available(iOS 14, macOS 11, *) {
-                ScrollView(showsIndicators: false) {
-                    LazyVStack(alignment: .leading, content: rows)
-                        .padding()
+        List {
+            ForEach($viewModel.items.indices, id: \.self) { index in
+                if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
+                    OrderCard(order: $viewModel.items[index])
                 }
-            } else {
-                List(content: rows)
             }
-        }, content: { item in
-            OrderCard(order: item)
-            
-        }, listState: viewModel.state, emptyStateView: {
-            EmptyMessageView(msg: "This shopper doesn't has any orders")
-        }, errorStateView: { error in
-            Text(error.localizedDescription).lineLimit(nil)
-        }, loadingStateView: {
-            ProgressView()
-        }).onAppear {
-            loadItem()
-        }.refreshable(action: {
+        }
+        .refreshable {
             await refreshData()
-        })
+        }
+        .searchable(text: $viewModel.searchText)
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "This shopper doesn't has any orders")
+            }
+        }
         .navigationTitle(client.name)
-        .navigationBarTitleDisplayMode(.large)
     }
     
     func refreshData() async {
@@ -59,8 +51,6 @@ struct ClientOrders: View {
     }
 }
 
-struct ClientOrders_Previews: PreviewProvider {
-    static var previews: some View {
-        ClientOrders(client: Client.example(), storeId: "")
-    }
+#Preview {
+    ClientOrders(client: Client.example(), storeId: Store.Qotoofs())
 }

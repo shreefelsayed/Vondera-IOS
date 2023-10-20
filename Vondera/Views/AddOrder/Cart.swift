@@ -8,15 +8,17 @@
 import SwiftUI
 
 class CartViewModel : ObservableObject {
-    var storeId:String
-    var productsDao:ProductsDao
-    
+    @Published var myUser = UserInformation.shared.getUser()
     @Published var list = [OrderProductObject]()
     @Published var isLoading = false
+
     
-    init(storeId: String) {
-        self.storeId = storeId
-        self.productsDao = ProductsDao(storeId: storeId)
+    init() {
+        Task {
+            if let user = UserInformation.shared.getUser() {
+                self.myUser = user
+            }
+        }
     }
     
     var totalPrice : Int {
@@ -45,68 +47,70 @@ class CartViewModel : ObservableObject {
         self.list.removeAll()
     }
     
-    func deleteItem(_ item:Binding<OrderProductObject>, _ indext:Int) async {
+    func deleteItem(_ item:OrderProductObject) async {
+        let index = list.firstIndex {$0.productId == item.productId}
+        
         // --> Remove from saved Item
-        await CartManager().removeItemFromCart(randomId: item.savedItemId.wrappedValue!, hashMap: item.hashVaraients.wrappedValue!)
+        await CartManager().removeItemFromCart(randomId: item.savedItemId!, hashMap: item.hashVaraients!)
         
         // --> Remove from list
-        list.remove(at: indext)
+        if let index = index {
+            list.remove(at: index)
+        }
     }
     
     func getCartItems() async {
-        let savedList = await CartManager().getCart()
-        list.removeAll()
-        self.isLoading = true
-        
-        
-        for item in savedList {
-            let exist = await productsDao.productExist(id: item.productId)
-            if exist {
-                let prod = try! await productsDao.getProduct(id: item.productId)
-                let obj = prod!.mapToOrderProduct(q:item.quantity, varient: item.hashMap, savedId: item.randomId)
-                list.append(obj)
+        if let storeId = myUser?.storeId {
+            let savedList = await CartManager().getCart()
+            list.removeAll()
+            self.isLoading = true
+            
+            
+            for item in savedList {
+                let exist = try? await ProductsDao(storeId: storeId).productExist(id: item.productId)
+                if (exist ?? false) {
+                    let prod = try! await ProductsDao(storeId: storeId).getProduct(id: item.productId)
+                    let obj = prod!.mapToOrderProduct(q:item.quantity, varient: item.hashMap, savedId: item.randomId)
+                    list.append(obj)
+                }
             }
+            
+            self.isLoading = false
         }
         
-        self.isLoading = false
     }
 }
 
 
 struct Cart: View {
-    var storeId:String
-    @ObservedObject var viewModel:CartViewModel
-    
-    init(storeId: String) {
-        self.storeId = storeId
-        viewModel = CartViewModel(storeId: storeId)
-    }
-    
+    @State var myUser = UserInformation.shared.getUser()
+    @State var shipping:Bool = true
+    @ObservedObject var viewModel = CartViewModel()
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         VStack {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 12) {
-                    ForEach(viewModel.list.indices, id: \.self) { index in
-                        let itemBinding = Binding<OrderProductObject>(
-                            get: {
-                                viewModel.list[index]
-                            },
-                            set: { newItem in
-                                viewModel.list[index] = newItem
-                            }
-                        )
-                        
-                        CartAdapter(orderProduct: itemBinding) {
-                            // On Item Deleted
-                            Task {
-                                await deleteItem(itemBinding, index)
+            List {
+                ForEach($viewModel.list, id: \.self) { item in
+                    CartAdapter(orderProduct: item)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                Task {
+                                    await viewModel.deleteItem(item.wrappedValue)
+                                }
+                            } label: {
+                                Image(systemName: "trash.fill")
                             }
                         }
-                    }
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
                 }
             }
+            .listStyle(.plain)
             .padding()
             
+            
+            // MARK : Pricing
             if !viewModel.list.isEmpty {
                 VStack(alignment: .center) {
                     VStack (alignment: .leading) {
@@ -128,15 +132,24 @@ struct Cart: View {
                             Text("\(viewModel.totalPrice) LE")
                         }
                         
-
+                        if myUser != nil && !(myUser!.store!.onlyOnline ?? false) {
+                            
+                            Toggle("This order require shipping", isOn: $shipping)
+                        }
+                        
                         if !viewModel.list.isEmpty {
-                            NavigationLink(destination: CheckOut(storeId: storeId, listItems: viewModel.list, shipping: true)) {
-                                Text("Check out")
-                                    .frame(maxWidth: .infinity)
-                                    .multilineTextAlignment(.center)
-                                    .bold()
+                            if let storeId = viewModel.myUser?.storeId {
+                                NavigationLink(destination: CheckOut(storeId: storeId, listItems: viewModel.list, shipping: shipping, onSubmited: {
+                                    
+                                    self.presentationMode.wrappedValue.dismiss()
+                                })) {
+                                    Text("Check out")
+                                        .frame(maxWidth: .infinity)
+                                        .multilineTextAlignment(.center)
+                                        .bold()
+                                }
+                                .padding(.top, 12)
                             }
-                            .padding(.top, 12)
                         }
                         
                         
@@ -150,6 +163,7 @@ struct Cart: View {
         }
         .onAppear {
             Task {
+                self.myUser = UserInformation.shared.getUser()
                 await viewModel.getCartItems()
             }
         }
@@ -175,14 +189,10 @@ struct Cart: View {
         }
         .navigationTitle("Cart 🛒")
     }
-    
-    func deleteItem(_ item:Binding<OrderProductObject>, _ index:Int) async {
-        await viewModel.deleteItem(item,index)
-    }
 }
 
 struct Cart_Previews: PreviewProvider {
     static var previews: some View {
-        Cart(storeId: Store.Qotoofs())
+        Cart()
     }
 }

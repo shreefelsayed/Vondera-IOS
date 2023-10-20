@@ -18,7 +18,7 @@ class StoreSettingsViewModel : ObservableObject {
     }
     
     func initalize() async  {
-        let localUser = await LocalInfo().getLocalUser()!
+        let localUser = UserInformation.shared.getUser()
         
         DispatchQueue.main.async {
             self.user = localUser

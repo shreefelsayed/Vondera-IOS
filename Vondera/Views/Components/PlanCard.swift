@@ -13,24 +13,39 @@ struct PlanCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(store.subscribedPlan?.planName ?? "")
-                    .bold()
                 
-                Spacer()
                 
-                NavigationLink("Change your plan") {
+                NavigationLink {
                     AppPlans()
+                } label: {
+                    HStack {
+                        Text(store.subscribedPlan?.planName ?? "")
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Text("Change Plan")
+                            .bold()
+                    }
                 }
-                .buttonStyle(PlainButtonStyle())
-                .foregroundStyle(Color.accentColor)
+                .buttonStyle(.plain)
             }
             
-            ProgressView(value: Float(((store.subscribedPlan?.currentOrders ?? 0) / (store.subscribedPlan?.maxOrders ?? 0))))
-                .accentColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                .frame(maxWidth: .infinity)
-                .progressViewStyle(LinearProgressViewStyle())
-                .padding(.vertical, 4)
+            
+            HStack {
+                ProgressView(value: store.subscribedPlan?.getPercentage() ?? 0)
+                    .accentColor(
+                        (store.subscribedPlan?.isUsageAlert() ?? false) ?
+                        Color.red : Color.accentColor
+                    )
+                    .frame(maxWidth: .infinity)
+                    .progressViewStyle(LinearProgressViewStyle())
+                    .padding(.vertical, 4)
                 
+                Text("\(Int(((store.subscribedPlan?.getPercentage() ?? 0) * 100)))%")
+                    .font(.caption)
+                
+            }
             
             HStack {
                 Text("Monthly Limit")
@@ -39,6 +54,7 @@ struct PlanCard: View {
                 Spacer()
                 
                 Text("\(store.subscribedPlan?.currentOrders ?? 0) Of \(store.subscribedPlan?.maxOrders ?? 0) Orders")
+                    .foregroundStyle( (store.subscribedPlan?.isUsageAlert() ?? false) ? .red : .secondary)
             }
             
             Divider()
@@ -50,6 +66,7 @@ struct PlanCard: View {
                 Spacer()
                 
                 Text("\(store.subscribedPlan!.expireDate.toFirestoreTimestamp().toString())")
+                    .foregroundStyle( (store.subscribedPlan?.isDateAlert() ?? false) ? .red : .secondary)
             }
             
         }
@@ -58,6 +75,10 @@ struct PlanCard: View {
 
 struct PlanCard_Previews: PreviewProvider {
     static var previews: some View {
-        PlanCard(store: Store.example())
+        NavigationView {
+            PlanCard(store: Store.example())
+                .padding()
+        }
+        
     }
 }

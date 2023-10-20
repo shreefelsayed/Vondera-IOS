@@ -12,23 +12,32 @@ struct QrCodeScanner: View {
     var storeId: String
     @State private var scannedCode: String?
     @State private var navigateToOrderDetails = false
+    @State var order:Order?
 
     var body: some View {
         NavigationView {
             VStack {
                 
-                NavigationLink(destination: NavigationLazyView(OrderDetails(id: scannedCode!, storeId: storeId)), isActive: $navigateToOrderDetails) {
-                    EmptyView()
-                }
+                NavigationLink(destination: NavigationLazyView(OrderDetails(order: .constant(order!))), isActive: $navigateToOrderDetails) {
+                        EmptyView()
+                    }
+                
+                
 
                 CodeScannerView(codeTypes: [.qr], scanMode: .continuous, showViewfinder: true) { response in
                     if case let .success(result) = response {
                         scannedCode = result.string
-                        navigateToOrderDetails = true // Trigger navigation to OrderDetails
+                        getOrder(id:scannedCode ?? "")
                     }
                 }
             }
             .navigationBarHidden(true)
+        }
+    }
+    
+    func getOrder(id:String) {
+        Task {
+            
         }
     }
 }

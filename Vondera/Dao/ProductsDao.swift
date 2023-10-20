@@ -21,24 +21,23 @@ class ProductsDao {
         return try await collection.document(id).delete()
     }
     
-    func create(_ product:Product) async throws {
+    func create(_ product:StoreProduct) async throws {
         try collection.document(product.id).setData(from: product)
     }
     
-    func productExist(id:String) async -> Bool {
-        let doc = try! await  collection.document(id).getDocument()
+    func productExist(id:String) async throws -> Bool {
+        let doc = try await  collection.document(id).getDocument()
         return doc.exists
     }
     
-    func getInStock() async throws -> [Product] {
-        return convertToList(snapShot: try await collection
+    func getInStock() async throws -> [StoreProduct] {
+        return try await collection
             .whereField("quantity", isGreaterThan: 0)
             .order(by: "quantity", descending: true)
-            .getDocuments()
-        )
+            .getDocuments(as: StoreProduct.self)
     }
     
-    func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([Product], QueryDocumentSnapshot?) {
+    func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], QueryDocumentSnapshot?) {
         var query:Query = collection
             .order(by: "quantity", descending: true)
             .whereField("quantity", isGreaterThan: 0)
@@ -52,15 +51,14 @@ class ProductsDao {
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
-    func getOutOfStock() async throws -> [Product] {
-        return convertToList(snapShot: try await collection
+    func getOutOfStock() async throws -> [StoreProduct] {
+        try await collection
             .order(by: "quantity", descending: false)
             .whereField("quantity", isLessThanOrEqualTo: 0)
-            .getDocuments()
-        )
+            .getDocuments(as: StoreProduct.self)
     }
     
-    func getOutOfStock(lastSnapShot:DocumentSnapshot?) async throws -> ([Product], QueryDocumentSnapshot?) {
+    func getOutOfStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], QueryDocumentSnapshot?) {
         var query:Query = collection
             .order(by: "quantity", descending: false)
             .whereField("quantity", isLessThanOrEqualTo: 0)
@@ -76,16 +74,15 @@ class ProductsDao {
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
-    func getStockLessThen(almostOut:Int) async throws -> [Product] {
-        return convertToList(snapShot: try await collection
+    func getStockLessThen(almostOut:Int) async throws -> [StoreProduct] {
+        return try await collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
             .order(by: "quantity", descending: true)
-            .getDocuments()
-        )
+            .getDocuments(as: StoreProduct.self)
     }
     
-    func getStockLessThen(almostOut:Int, lastSnapShot:DocumentSnapshot?) async throws -> ([Product], QueryDocumentSnapshot?) {
+    func getStockLessThen(almostOut:Int, lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], QueryDocumentSnapshot?) {
         var query:Query = collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
@@ -102,17 +99,17 @@ class ProductsDao {
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
-    func getByCategory(id:String) async throws -> [Product] {
-        return convertToList(snapShot: try await collection
+    func getByCategory(id:String) async throws -> [StoreProduct] {
+        return try await collection
             .whereField("categoryId", isEqualTo: id)
-            .getDocuments())
+            .getDocuments(as: StoreProduct.self)
         
     }
     
-    func getAll(sort:String = "name") async throws -> [Product] {
-        return convertToList(snapShot: try await collection
+    func getAll(sort:String = "name") async throws -> [StoreProduct] {
+        return try await collection
             .order(by: sort, descending: true)
-            .getDocuments())
+            .getDocuments(as: StoreProduct.self)
     }
     
     func addToStock(id:String, q:Double) async throws {
@@ -128,21 +125,26 @@ class ProductsDao {
         return try await collection.document(id).updateData(hashMap)
     }
     
-    func getTopSelling() async throws -> [Product] {
-        let docs =  try await collection
+    func getTopSelling(limit:Int = 10) async throws -> [StoreProduct] {
+        return  try await collection
             .order(by: "sold", descending: true)
             .whereField("sold", isGreaterThan: 0)
-            .limit(to: 10)
-            .getDocuments()
-        
-        return convertToList(snapShot: docs)
-        
+            .limit(to: limit)
+            .getDocuments(as: StoreProduct.self)
     }
     
-    func getProduct(id:String) async throws -> Product? {
+    func getMostVieweed(limit:Int = 10) async throws -> [StoreProduct] {
+        return  try await collection
+            .order(by: "views", descending: true)
+            .whereField("views", isGreaterThan: 0)
+            .limit(to: limit)
+            .getDocuments(as: StoreProduct.self)
+    }
+    
+    func getProduct(id:String) async throws -> StoreProduct? {
         let doc = try await collection.document(id).getDocument()
         if !doc.exists { return nil }
-        return try doc.data(as: Product.self)
+        return try doc.data(as: StoreProduct.self)
     }
     
     func removeOrderItem(orderId:String, productId:String, q:Int) async throws -> Bool {
@@ -169,9 +171,9 @@ class ProductsDao {
         return false
     }
     
-    func convertToList(snapShot:QuerySnapshot) -> [Product] {
-        let arr = snapShot.documents.compactMap{doc -> Product? in
-            return try! doc.data(as: Product.self)
+    func convertToList(snapShot:QuerySnapshot) -> [StoreProduct] {
+        let arr = snapShot.documents.compactMap{doc -> StoreProduct? in
+            return try! doc.data(as: StoreProduct.self)
         }
         
         return arr

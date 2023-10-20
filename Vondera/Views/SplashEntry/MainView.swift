@@ -10,21 +10,21 @@ import SwiftUI
 
 struct LoadingScreen: View {
     @State var loggedIn = false
+    
     var body: some View {
         if loggedIn {
             AccountHomeScreen()
-            UserHome()
         } else {
             SplashScreen()
                 .onAppear {
-                    Task {
-                        do {
-                            self.loggedIn = try await AuthManger().getData()
-                        } catch {
-                            await AuthManger().logOut()
-                        }
+                Task {
+                    do {
+                        self.loggedIn = try await AuthManger().getData() != nil
+                    } catch {
+                        await AuthManger().logOut()
                     }
                 }
+            }
         }
         
     }
@@ -35,23 +35,18 @@ struct AccountHomeScreen : View {
     
     var body : some View {
         ZStack {
-            if myUser != nil {
-                if myUser!.accountType == "Owner" || myUser!.accountType == "Store Admin" ||
-                    myUser!.accountType == "Employee" ||
-                    myUser!.accountType == "Marketing" {
-                    
+            if let myUser = myUser {
+                if myUser.isStoreUser {
                     UserHome()
-                } else if myUser!.accountType == "Sales" {
-                    
-                } else if myUser!.accountType == "Admin" {
-                    
+                } else if myUser.accountType == "Sales" {
+                    #warning("Set the sales Dashboard")
+                } else if myUser.accountType == "Admin" {
+                    #warning("Set the Admin Dashboard")
                 }
             }
         }
         .onAppear {
-            Task {
-                self.myUser = await LocalInfo().getLocalUser()
-            }
+            self.myUser = UserInformation.shared.getUser()
         }
     }
 }
@@ -79,7 +74,7 @@ struct SplashScreen : View {
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()
     @State var didSignIn = false
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
