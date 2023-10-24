@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StoreMarketPlaces: View {
+struct StoreMarketPlacesSheet: View {
     @Binding var selectedItems:[String]
     @State var myUser:UserData?
     
@@ -72,6 +72,6 @@ struct StoreMarketPlaces: View {
 
 #Preview {
     NavigationStack {
-        StoreMarketPlaces(selectedItems: .constant(["instagram", "facebook"]))
+        StoreMarketPlacesSheet(selectedItems: .constant(["instagram", "facebook"]))
     }
 }
