@@ -22,6 +22,8 @@ class ProductInfoViewModel : ObservableObject {
     }
     
     
+    
+    
     @Published var name = ""
     @Published var desc = ""
     @Published var alwaysStocked = false

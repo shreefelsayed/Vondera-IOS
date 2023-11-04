@@ -1,6 +1,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftUI
 
 struct UserData: Codable, Identifiable {
     var id: String = ""
@@ -10,7 +11,7 @@ struct UserData: Codable, Identifiable {
     var storeId: String = ""
     var phone: String = ""
     var addedBy: String? = ""
-    var accountType: String = "Worker" // Admin - Owner - Store Admin - Marketing - Worker
+    var accountType: String = "Worker" // Admin - Owner - Store Admin - Marketing - Worker - Courier
     var active: Bool = true
     var percentage: Double? = 0
     var pass: String = ""
@@ -24,6 +25,7 @@ struct UserData: Codable, Identifiable {
     var notiSettings: NotiSettingPojo? = NotiSettingPojo()
     var facebookId: String? = ""
     var googleId: String? = ""
+    var appleId:String? = ""
     var store: Store?
     var storesCount: Int? = 0
     var numberVerfied: Bool? = false
@@ -43,15 +45,30 @@ struct UserData: Codable, Identifiable {
     }
     
     var isStoreUser:Bool {
-        return accountType == "Owner" || accountType == "Store Admin" || accountType == "Marketing" || accountType == "Worker"
+        return accountType == "Owner" || accountType == "Store Admin" || accountType == "Marketing" || accountType == "Worker" || accountType == "Courier"
     }
     
     var canAccessAdmin:Bool {
         return accountType == "Store Admin" || accountType == "Owner"
     }
     
+    var canAssignToCourier: Bool {
+        return accountType == "Store Admin" || accountType == "Owner" || accountType == "Worker" || accountType == "Courier"
+    }
+    
     var isShreif: Bool {
         return email == "admin@armjld.co"
+    }
+    
+    func connectedToFB() -> Bool {
+        return !(facebookId?.isBlank ?? true)
+    }
+    
+    func connectedToGoogle() -> Bool {
+        return !(googleId?.isBlank ?? true)
+    }
+    func connectedToApple() -> Bool {
+        return !(appleId?.isBlank ?? true)
     }
     
     static func ==(lhs: UserData, rhs: UserData) -> Bool {
@@ -61,7 +78,7 @@ struct UserData: Codable, Identifiable {
 }
 
 extension UserData {
-    func getAccountTypeString() -> String {
+    func getAccountTypeString() -> LocalizedStringKey {
         if self.accountType == "Store Admin" {
             return "Store Admin"
         } else if self.accountType == "Owner" {
@@ -93,7 +110,7 @@ extension UserData {
         return user
     }
     
-    func stringAccountType() -> String {
+    func stringAccountType() -> LocalizedStringKey {
         switch self.accountType {
         case "Owner" :
             return "Store Owner"

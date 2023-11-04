@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import FirebaseFirestore
+import SwiftUI
 
 class StoreExpansesViewModel : ObservableObject {
     var storeId:String
@@ -19,7 +20,7 @@ class StoreExpansesViewModel : ObservableObject {
     @Published var result = [Expense]()
 
     @Published var canLoadMore = true
-    @Published var msg:String?
+    @Published var msg:LocalizedStringKey?
     
     // --> Server search
     private var cancellables = Set<AnyCancellable>()
@@ -85,7 +86,7 @@ class StoreExpansesViewModel : ObservableObject {
                 if !newValue.isBlank {
                     Task {
                         do {
-                            result = try await self.expansesDao.search(text: searchText).sorted(by: { $0.date!.toDate() < $1.date!.toDate() })
+                            result = try await self.expansesDao.search(text: searchText).sorted(by: { $0.date.toDate() < $1.date.toDate() })
                         } catch {
                             print(error.localizedDescription)
                         }

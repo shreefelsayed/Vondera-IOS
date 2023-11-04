@@ -20,6 +20,8 @@ struct StoreCouriers: View {
         List {
             ForEach(viewModel.filteredItems) { item in
                 CourierCardWithNavigation(courier: item)
+                    .padding(.vertical)
+                    .listRowInsets(EdgeInsets())
             }
         }
         .refreshable {
@@ -29,8 +31,10 @@ struct StoreCouriers: View {
         .searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.couriers.count) Couriers")
         .navigationTitle("Couriers 🛵")
         .toolbar{
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Add", destination: NewCourier(storeId: storeId, currentList: $viewModel.couriers))
+            if UserInformation.shared.user?.canAccessAdmin ?? false {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink("Add", destination: NewCourier(storeId: storeId, currentList: $viewModel.couriers))
+                }
             }
         }
         .overlay(alignment: .center) {

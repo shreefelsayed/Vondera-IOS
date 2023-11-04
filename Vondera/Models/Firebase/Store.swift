@@ -1,7 +1,6 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-
 class Store: Codable {
     @DocumentID var id:String?
     var name: String = ""
@@ -11,18 +10,21 @@ class Store: Codable {
     var phone: String = ""
     var logo: String? = ""
     var merchantId: String = ""
-    var whatsappPojo: WhatsappPojo? = WhatsappPojo()
-    var shopify: ShopifyPojo? = ShopifyPojo()
-    var subscribedPlan: SubscribedPlan?
+
     var ownerId: String = ""
     var cardToken: String? = ""
-    var active: Bool? = true
     var addBy: String? = ""
-    var wallet: Int? = 0
+    
+    var active: Bool? = true
+    
     var fbLink: String? = ""
     var instaLink: String? = ""
     var tiktokLink: String? = ""
     var website: String? = ""
+    
+ 
+    var onlineStore: Bool? = true
+    var offlineStore: Bool? = true
     var canOrder: Bool? = true
     var onlyOnline: Bool? = false
     var localWhatsapp: Bool? = true
@@ -33,6 +35,15 @@ class Store: Codable {
     var websiteEnabled: Bool? = true
     var cantOpenPackage: Bool? = false
     var chatEnabled: Bool? = true
+    var sellerName:Bool? = false
+    
+    var customMessage: String? = ""
+
+    var date: Date = Date()
+
+    var ios:Bool? = true
+    
+    var wallet: Int? = 0 // Cashback wallet
     var ordersCount: Int? = 0
     var couriersCount: Int? = 0
     var clientsCount: Int? = 0
@@ -40,28 +51,21 @@ class Store: Codable {
     var productsCount: Int? = 0
     var categoriesCount: Int? = 0
     var agelWallet: Int? = 0
-    var date: Date = Date()
-    var onlineStore: Bool? = true
-    var offlineStore: Bool? = true
-    var customMessage: String? = ""
-    var listAreas: [CourierPrice]? = GovsUtil().getStoreDefault()
-    var ordersCountObj: OrdersCount? = OrdersCount()
     var almostOut:Int? = 0
-    var ios:Bool? = true
+    var categoryNo:Int? = 0
     
     var listMarkets:[StoreMarketPlace]? = MarketsManager().getDefaultMarkets()
-    var categoryNo:Int? = 0
+    var listAreas: [CourierPrice]? = GovsUtil().getStoreDefault()
+
+    
+    var siteData:SiteData? = SiteData()
+    var whatsappPojo: WhatsappPojo? = WhatsappPojo()
+    var shopify: ShopifyPojo? = ShopifyPojo()
+    var subscribedPlan: SubscribedPlan?
+    var ordersCountObj: OrdersCount? = OrdersCount()
+    var paymentOptions: PaymentsOptions? = PaymentsOptions()
 
     init() {
-    }
-    
-    enum CodingKeys: String, CodingKey {
-            case name, slogan, address, governorate, phone, logo, merchantId, whatsappPojo, shopify
-            case subscribedPlan, ownerId, cardToken, active, addBy, wallet, fbLink, instaLink, tiktokLink
-            case website, canOrder, onlyOnline, localWhatsapp, canWorkersReset, orderAttachments
-            case canEditPrice, canPrePaid, cantOpenPackage, chatEnabled, ordersCount, couriersCount
-            case clientsCount, employeesCount, productsCount, categoriesCount, date, onlineStore, ios, agelWallet
-            case offlineStore, customMessage, listAreas, ordersCountObj, almostOut, websiteEnabled, categoryNo, listMarkets
     }
     
     init(name: String, address: String, governorate: String, phone: String, subscribedPlan: SubscribedPlan, ownerId: String) {
@@ -72,8 +76,6 @@ class Store: Codable {
         self.subscribedPlan = subscribedPlan
         self.ownerId = ownerId
     }
-    
-    
     
     func finishedSteps() -> Bool {
         return !(logo?.isEmpty ?? true) && ordersCount ?? 0 > 0 && productsCount ?? 0 > 0 && categoriesCount ?? 0 > 0 && couriersCount ?? 0 > 0 && listAreas?.count ?? 0 > 0
@@ -87,7 +89,7 @@ class Store: Codable {
     }
     
     func storeLink() -> String {
-        return "https://stores.vondera.app/#/mid:\(merchantId)"
+        return "https://vondera.store/\(merchantId)"
     }
     
     func storeLinkURL() -> URL {

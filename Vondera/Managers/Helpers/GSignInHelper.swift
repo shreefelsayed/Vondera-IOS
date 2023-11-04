@@ -11,10 +11,12 @@ import FirebaseAuth
 import Foundation
 
 class GSignInHelper {
-    func signIn() async -> AuthCredential? {
+    func signIn() async -> AuthProviderInfo? {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
-            fatalError("No client ID found in Firebase configuration")
+            print("No client ID found in Firebase configuration")
+            return nil
         }
+        
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
@@ -29,13 +31,16 @@ class GSignInHelper {
             let userAuthentication = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
             
             let user = userAuthentication.user
+            
             guard let idToken = user.idToken else {
                 return nil
             }
+            
+            
             let accessToken = user.accessToken
             
             // --> Get Credentails
-            return GoogleAuthProvider.credential(withIDToken: idToken.tokenString,accessToken: accessToken.tokenString)
+            return AuthProviderInfo(id: user.userID ?? "", name: user.profile?.name ?? "", url: user.profile?.imageURL(withDimension: 500)?.absoluteString ?? "", email: user.profile?.email ?? "", provider: "google", cred: GoogleAuthProvider.credential(withIDToken: idToken.tokenString,accessToken: accessToken.tokenString))
         }
         catch {
             print(error.localizedDescription)

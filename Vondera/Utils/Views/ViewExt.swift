@@ -50,79 +50,18 @@ extension Image {
     }
 }
 
-extension Date {
-    func isSameDay(as otherDate: Date?) -> Bool {
-        guard otherDate != nil else {
-            return false
-        }
-        
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day], from: self)
-        let otherComponents = calendar.dateComponents([.year, .month, .day], from: otherDate!)
-        
-        return components.year == otherComponents.year &&
-        components.month == otherComponents.month &&
-        components.day == otherComponents.day
-    }
-    
-    func isSameWeek(as otherDate: Date?) -> Bool {
-        guard otherDate != nil else {
-            return false
-        }
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-        let otherComponents = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: otherDate!)
-        
-        return components.yearForWeekOfYear == otherComponents.yearForWeekOfYear &&
-        components.weekOfYear == otherComponents.weekOfYear
-    }
-    
-    func isSameMonth(as otherDate: Date?) -> Bool {
-        guard otherDate != nil else {
-            return false
-        }
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: self)
-        let otherComponents = calendar.dateComponents([.year, .month], from: otherDate!)
-        
-        return components.year == otherComponents.year &&
-        components.month == otherComponents.month
-    }
-    
-    func isSameYear(as otherDate: Date) -> Bool {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year], from: self)
-        let otherComponents = calendar.dateComponents([.year], from: otherDate)
-        
-        return components.year == otherComponents.year
-    }
-    
-    func timeAgoString() -> String {
-            let interval = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: self, to: Date())
-            
-            if let year = interval.year, year > 0 {
-                return year == 1 ? "1 yr ago" : "\(year) yrs ago"
-            } else if let month = interval.month, month > 0 {
-                return month == 1 ? "1 month ago" : "\(month) months ago"
-            } else if let day = interval.day, day > 0 {
-                return day == 1 ? "1 day ago" : "\(day) days ago"
-            } else if let hour = interval.hour, hour > 0 {
-                return hour == 1 ? "1 hr ago" : "\(hour) hrs ago"
-            } else if let minute = interval.minute, minute > 0 {
-                return minute == 1 ? "1 min ago" : "\(minute) mins ago"
-            } else if let second = interval.second, second > 0 {
-                return second < 5 ? "Just now" : "\(second) seconds ago"
-            } else {
-                return "Just now"
-            }
-        }
-}
 
 // Disable the view and show a progress dialog
 extension View {
-    func willProgress(saving: Bool) -> some View {
+    func willProgress(saving: Bool, handleBackButton:Bool = true) -> some View {
+        
         ZStack {
-            self
+            if handleBackButton {
+                self
+                .navigationBarBackButtonHidden(saving)
+            } else {
+                self
+            }
             
             if saving {
                 NonDismiss()
@@ -134,7 +73,7 @@ extension View {
     
     func eraseToAnyView() -> AnyView {
            return AnyView(self)
-       }
+    }
 }
 
 extension Array where Element: Equatable {

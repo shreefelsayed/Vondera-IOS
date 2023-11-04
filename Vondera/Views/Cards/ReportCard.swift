@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct ReportCard: View {
-    var title:String
+    var title:LocalizedStringKey
     var amount:Int
-    var prefix:String?
+    var prefix:LocalizedStringKey?
     var iconName:String?
+    var desc:LocalizedStringKey?
+    var nutural = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,9 +29,17 @@ struct ReportCard: View {
                 
                 Spacer()
                 
-                Text("\(amount) \(prefix ?? "")")
-                    .foregroundStyle(amount > 0 ? Color.green : amount < 0 ? Color.red : Color.black)
+                Group {
+                    Text("\(amount) ") + Text(prefix ?? "".localize())
+                }
+                .foregroundColor(nutural ? .black : amount > 0 ? Color.green : amount < 0 ? Color.red : Color.black)
                 
+            }
+            
+            if let desc = desc {
+                Text(desc)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
     }

@@ -54,6 +54,8 @@ struct ProductVarients: View {
             }
             
         }
+        .willProgress(saving: viewModel.isSaving)
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .navigationTitle("Product Varients")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -63,7 +65,6 @@ struct ProductVarients: View {
                 .disabled(viewModel.isSaving)
             }
         }
-        .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
@@ -89,13 +90,15 @@ struct OptionsView : View {
     
     var body: some View {
         ForEach(items.indices, id: \.self) { index in
-            FloatingTextField(title: "Option \(index + 1)", text: $items[index], required: nil, autoCapitalize: .words)
+            FloatingTextField(title: "Option \(index + 1)", text: $items[index], required: nil, autoCapitalize: .words, isDiabled: true)
                 .listRowSeparator(.hidden)
                 .listRowSpacing(6)
         }
-        .onMove(perform: { before, After in
-            
-        })
+        .onMove { indexSet, index in
+            withAnimation {
+                items.move(fromOffsets: indexSet, toOffset: index)
+            }
+        }
         .onDelete { index in
             withAnimation {
                 items.remove(atOffsets: index)

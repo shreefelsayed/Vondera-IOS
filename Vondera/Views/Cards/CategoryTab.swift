@@ -21,25 +21,20 @@ struct CategoryTab: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            NetworkImage(url: URL(string: category.url)) { image in
-                image.centerCropped()
-            } placeholder : {
-                Color.gray
-            } fallback: {
-                Color.gray
-            }
-            .background(Color.white)
-            .frame(width: 60, height: 60)
-            .clipShape(Circle())
-            .overlay(
-                Circle().stroke(selected ? Color.accentColor : Color.clear, lineWidth: 2)
-            )
+            ImagePlaceHolder(url: category.url, placeHolder: UIImage(named: "defaultCategory"), reduis: 60, iconOverly: nil)
+                .overlay(
+                    Circle().stroke(selected ? Color.accentColor : Color.clear, lineWidth: 2)
+                )
             
             Text(category.name)
+                .lineLimit(2, reservesSpace: false)
+                .minimumScaleFactor(0.2) // value is up to you
+                .multilineTextAlignment(.center)
                 .foregroundColor(selected ? .accentColor : .gray)
-                .font(.headline)
+                .font(.body)
                 .bold(selected)
         }
+        .frame(width: 80)
         .onTapGesture {
             onClick()
         }

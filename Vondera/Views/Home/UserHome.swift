@@ -95,33 +95,13 @@ struct UserHome: View {
     }
 }
 
-struct MyLeadingView: View {
-    @Binding var myUser: UserData?
-    
-    var body: some View {
-        if let user = myUser {
-            if user.canAccessAdmin {
-                NavigationLink(destination: Dashboard(store: user.store!)) {
-                    IconAndName(myUser: myUser)
-                }
-                .buttonStyle(.plain)
-            } else {
-                IconAndName(myUser: myUser)
-            }
-        } else {
-            EmptyView()
-        }
-    }
-}
-
 struct IconAndName : View {
-    var myUser: UserData?
+    var myUser: UserData
     var body: some View {
         HStack {
-            ImagePlaceHolder(url: myUser?.store?.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis:42)
+            ImagePlaceHolder(url: myUser.store?.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis:42)
             
-            
-            Text(myUser?.store?.name ?? "")
+            Text(myUser.store?.name ?? "")
                 .bold()
         }
     }

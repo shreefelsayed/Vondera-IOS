@@ -20,25 +20,51 @@ struct StoreEmployees: View {
     }
     
     var body: some View {
-        List {
-            ForEach($viewModel.items.indices, id: \.self) { index in
-                if $viewModel.items[index].wrappedValue.filter(viewModel.searchText) {
-                    EmployeeCard(user: viewModel.items[index])
+        VStack {
+            // MARK : Online Users
+            if viewModel.items.filter( { $0.online ?? false } ).count > 0 {
+                Text("Online Employees 🧑‍💼")
+                    .font(.title2.bold())
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(alignment: .center, spacing: 12) {
+                        ForEach(viewModel.items.filter({$0.online ?? false})) { user in
+                            UserCircle(user: user)
+                        }
+                    }
+                }
+                
+                Spacer().frame(height: 20)
+            }
+            
+            List {
+                ForEach($viewModel.items.indices, id: \.self) { index in
+                    if $viewModel.items[index].wrappedValue.filter(viewModel.searchText) {
+                        EmployeeCard(user: viewModel.items[index])
+                            .padding(.vertical)
+                            .listRowInsets(EdgeInsets())
+                    }
                 }
             }
+            .listStyle(.plain)
+            
         }
-        .listStyle(.plain)
         .searchable(text: $viewModel.searchText, prompt: Text("Search \($viewModel.items.count) Employees"))
         .padding()
         .navigationTitle("Employees 🧑‍💼")
-        .toolbar{
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Add", destination: NewEmployee(storeId: storeId))
+        .toolbar {
+            if let store = UserInformation.shared.user?.store {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink("Add") {
+                        store.employeesCount ?? 0 < store.subscribedPlan?.employeesCount ?? 0 ? 
+                        AnyView(NewEmployee(storeId: storeId)) : AnyView(AppPlans(selectedSlide: 4))
+                    }
+                }
             }
+            
         }
         .sheet(item: $contactUser, content: { user in
             ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
-                .fixedInnerHeight($sheetHeight)
         })
         .refreshable {
             await viewModel.getData()

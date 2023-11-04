@@ -26,7 +26,7 @@ struct CreateCategory: View {
     
     var body: some View {
         List {
-            Section("Category Info") {
+            Section("Category info") {
                 FloatingTextField(title: "Category Name", text: $viewModel.name, required: nil, autoCapitalize: .words)
                 
                 PhotosPicker(selection: $picker) {
@@ -80,7 +80,7 @@ struct CreateCategory: View {
         .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: viewModel.msg?.toString())
         }
         .willProgress(saving: viewModel.isSaving)
     }

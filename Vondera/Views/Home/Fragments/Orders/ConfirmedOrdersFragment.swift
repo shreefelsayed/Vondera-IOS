@@ -32,8 +32,10 @@ struct ConfirmedOrdersFragment: View {
                 EmptyMessageView(msg: "No Confirmed orders found")
             }
         }
-        .navigationDestination(isPresented: $selectOrders) {
-            OrderSelectView(list: $viewModel.items)
+        .sheet(isPresented: $selectOrders) {
+            NavigationStack {
+                OrderSelectView(list: $viewModel.items)
+            }
         }
     }
 }

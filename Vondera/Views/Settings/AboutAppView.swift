@@ -9,32 +9,28 @@ import SwiftUI
 
 struct AboutAppView: View {
     var appVersion: String {
-            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                return version
-            }
-            return "N/A"
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return version
         }
+        return "N/A"
+    }
     
     var body: some View {
-        List() {
-            Section("") {
-                HStack {
-                    Text("App Version")
-                    
-                    Spacer()
-                    
-                    Text("\(appVersion)")
-                }
+        List {
+            HStack {
+                Text("App Version")
+                
+                Spacer()
+                
+                Text("\(appVersion)")
             }
             
-            Section("") {
-                HStack {
-                    Text("Created By")
-                    
-                    Spacer()
-                    
-                    Text("Armjld Co.")
-                }
+            HStack {
+                Text("Created By")
+                
+                Spacer()
+                
+                Text("Armjld Co.")
             }
         }
         .navigationTitle("About app")

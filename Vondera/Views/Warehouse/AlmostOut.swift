@@ -20,10 +20,19 @@ struct AlmostOut: View {
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
             List {
-                ForEach($viewModel.items) { item in
-                    WarehouseCard(prod: item)
+                ForEach($viewModel.items) { product in
+                    NavigationLink(destination: ProductDetails(product: product, onDelete: { item in
+                        if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
+                            viewModel.items.remove(at: index)
+                        }
+                    })) {
+                        WarehouseCard(prod: product)
+                    }
+                    .buttonStyle(.plain)
                     
-                    if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
+                    
+                    
+                    if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
                         HStack {
                             Spacer()
                             ProgressView()
@@ -35,6 +44,7 @@ struct AlmostOut: View {
                     }
                 }
             }
+            .scrollIndicators(.hidden)
             .refreshable {
                 await refreshData()
             }
@@ -47,10 +57,14 @@ struct AlmostOut: View {
                 }
             }
             
-            FloatingActionButton(symbolName: "square.and.arrow.up.fill") {
-                
-                WarehouseExcel(list: viewModel.items)
-                    .generateReport()
+            if !viewModel.items.isEmpty {
+                FloatingActionButton(symbolName: "square.and.arrow.up.fill") {
+                    if let url = WarehouseExcel(list: viewModel.items).generateReport() {
+                        DispatchQueue.main.async {
+                            FileUtils().shareFile(url: url)
+                        }
+                    }
+                }
             }
         }
     }

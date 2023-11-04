@@ -9,11 +9,8 @@ import Foundation
 import UIKit
 
 class HomeFragmentViewModel : ObservableObject {
-    @Published var myUser:UserData?
-    
-    var productsDao:ProductsDao?
-    var govStaticsDao:GovStaticsDao?
-    
+    var myUser = UserInformation.shared.user
+        
     var usersDao = UsersDao()
     var storesDao = StoresDao()
     var tipDao = TipDao()
@@ -21,9 +18,7 @@ class HomeFragmentViewModel : ObservableObject {
     @Published var isLoading = true
     
     @Published var tip:Tip? = nil
-    @Published var topSelling = [StoreProduct]()
     @Published var topAreas = [GovStatics]()
-    @Published var onlineUser = [UserData]()
     @Published var storeStatics = [StoreStatics]()
     @Published var staticsDays = 7 {
         didSet {
@@ -41,25 +36,16 @@ class HomeFragmentViewModel : ObservableObject {
     
     func refreshData() async {
         await updateUser()
-        
-        productsDao = ProductsDao(storeId: myUser!.storeId)
-        govStaticsDao = GovStaticsDao(storeId: myUser!.storeId)
-        
+                
         await getTipOfDay()
-        
-        await getTopProducts()
-        
+                
         await getTopCities()
-        
-        await getOnlineUsers()
-        
+                
         await getStatics()
     }
     
     func initalize()  {
         self.isLoading = true
-        self.myUser = UserInformation.shared.getUser()
-        
         Task {
             do {
                 guard myUser != nil else {
@@ -73,7 +59,6 @@ class HomeFragmentViewModel : ObservableObject {
                 DispatchQueue.main.async {
                     self.isLoading = false
                 }
-                
             }
         }
     }
@@ -84,9 +69,11 @@ class HomeFragmentViewModel : ObservableObject {
         }
         
         do {
-            let items = try await StaticsDao(storeId: myUser!.storeId).getLastDays(days: staticsDays)
-            DispatchQueue.main.async {
-                self.storeStatics = items
+            if let storeId = myUser?.storeId {
+                let items = try await StaticsDao(storeId: storeId).getLastDays(days: staticsDays)
+                DispatchQueue.main.async {
+                    self.storeStatics = items
+                }
             }
         } catch {
             print(error.localizedDescription)
@@ -97,24 +84,10 @@ class HomeFragmentViewModel : ObservableObject {
         do {
             if let myUser = myUser {
                 if let userDoc = try await usersDao.getUserWithStore(userId: myUser.id) {
-                    UserInformation.shared.updateUser(userDoc)
                     DispatchQueue.main.async { [userDoc] in
+                        UserInformation.shared.updateUser(userDoc)
                         self.myUser = userDoc
                     }
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-    }
-    
-    func getOnlineUsers() async {
-        do {
-            if let myUser = myUser {
-                let items = try await usersDao.getOnlineUser(expectId: myUser.id, storeId: myUser.storeId)
-                DispatchQueue.main.async {
-                    self.onlineUser = items
                 }
             }
         } catch {
@@ -130,21 +103,10 @@ class HomeFragmentViewModel : ObservableObject {
         }
     }
     
-    func getTopProducts() async {
-        do {
-            if let items = try await productsDao?.getTopSelling() {
-                DispatchQueue.main.async {
-                    self.topSelling = items
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
     func getTopCities() async {
         do {
-            if let items = try await govStaticsDao?.getStatics() {
+            if let id = myUser?.storeId {
+                let items = try await GovStaticsDao(storeId: id).getStatics()
                 DispatchQueue.main.async {
                     self.topAreas = items
                 }

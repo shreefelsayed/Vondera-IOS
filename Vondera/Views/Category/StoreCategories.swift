@@ -32,15 +32,12 @@ struct StoreCategories: View {
                     }
                     .tint(.blue)
                 }
-                .onDrag({
-                    self.draggedItem = item.wrappedValue
-                    return NSItemProvider(item: nil, typeIdentifier: item.id)
-                })
-                .onDrop(of: [.text], delegate: MyDropDelegate(item: item.wrappedValue, items: $viewModel.items, draggedItem: $draggedItem, onMoved: {
-                    Task {
-                        await viewModel.updateIndexes()
-                    }
-                }))
+            }
+            .onMove { indexSet, index in
+                viewModel.items.move(fromOffsets: indexSet, toOffset: index)
+                Task {
+                    await viewModel.updateIndexes()
+                }
             }
         }
         .refreshable {
@@ -49,11 +46,13 @@ struct StoreCategories: View {
         .listStyle(.plain)
         .navigationTitle("Categories")
         .toolbar{
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
-                    onItemAdded(newValue)
-                })) {
-                    Image(systemName: "plus")
+            if UserInformation.shared.user?.accountType != "Marketing" {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
+                        onItemAdded(newValue)
+                    })) {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }

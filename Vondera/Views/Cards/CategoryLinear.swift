@@ -25,7 +25,7 @@ struct CategoryLinear: View {
                 .background(Color.white)
                 .frame(width: 60, height: 60)
                 .clipShape(Circle())
-                
+                .id(category.url)
                 
                 Text(category.name)
                     .font(.headline)

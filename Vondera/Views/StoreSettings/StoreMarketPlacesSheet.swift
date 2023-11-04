@@ -7,6 +7,73 @@
 
 import SwiftUI
 
+struct StoreMarketPlacesUpdate : View {
+    @ObservedObject var userInfo = UserInformation.shared
+
+    @State var selectedItems = [String]()
+    @State var isSaving = false
+    
+    let markets = MarketsManager().getAllMarketPlaces()
+    @Environment(\.presentationMode) private var presentationMode
+
+    var body: some View {
+        List {
+            ForEach(markets) { market in
+                VStack(alignment: .leading) {
+                    NavigationLink(destination: MarketPlaceOrders(marketPlaceId: market.id)) {
+                        MarketCheckCard(market: market, checked: Binding(items: $selectedItems, currentItem: market.id))
+                    }
+                }
+            }
+        }
+        .willProgress(saving: isSaving)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Update") {
+                    Task {
+                        await update()
+                    }
+                }
+            }
+        }
+        .task {
+            if let markets = userInfo.user?.store?.listMarkets {
+                for market in markets {
+                    if market.active {
+                        selectedItems.append(market.id)
+                    }
+                }
+            }
+        }
+        .navigationBarBackButtonHidden(isSaving)
+        .navigationTitle("Sales Channels")
+    }
+    
+    func update() async {
+        let storeMarketPlaces = selectedItems.map { id in
+            return StoreMarketPlace(id: id, active: true)
+        }
+        
+        if let user = userInfo.user {
+            self.isSaving = true
+            Task {
+                let data = storeMarketPlaces.map { market in
+                    return market.dictionary()
+                }
+                
+                try? await StoresDao().update(id: user.storeId, hashMap: ["listMarkets" : data])
+                
+                DispatchQueue.main.async {
+                    user.store?.listMarkets = storeMarketPlaces
+                    UserInformation.shared.updateUser(user)
+                    self.isSaving = false
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
+    }
+}
+
 struct StoreMarketPlacesSheet: View {
     @Binding var selectedItems:[String]
     @State var myUser:UserData?
@@ -15,13 +82,7 @@ struct StoreMarketPlacesSheet: View {
         VStack {
             List(MarketsManager().getAllMarketPlaces()) { market in
                 VStack(alignment: .leading) {
-                    if myUser != nil {
-                        NavigationLink(destination: EmptyView()) {
-                            MarketCheckCard(market: market, checked: bindingForMarket(market))
-                        }
-                    } else {
-                        MarketCheckCard(market: market, checked: bindingForMarket(market))
-                    }
+                    MarketCheckCard(market: market, checked: bindingForMarket(market))
                 }
                 .padding(.trailing, 12)
                 .listRowInsets(EdgeInsets())

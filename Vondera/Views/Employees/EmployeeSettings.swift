@@ -19,85 +19,87 @@ struct EmployeeSettings: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Employee name", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.words)
+        List {
+            Section("User Info") {
+                FloatingTextField(title: "Name", text: $viewModel.name, caption: "The name of the emloyee you want to add", required: true, autoCapitalize: .words)
                 
-                TextField("Phone Number", text: $viewModel.phone)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.phonePad)
+                
+                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "Use the whatsapp number of the employee", required: true, keyboard: .phonePad)
+            }
+            
+            Section("Access") {
+                Picker("Account Type", selection: $viewModel.selectedAccountType) {
+                    Text("Admin").tag(AccountType.admin)
+                    Text("Employee").tag(AccountType.employee)
+                    Text("Sales Account").tag(AccountType.sales)
+                }
+                .pickerStyle(.menu)
+                
+                
+                Text(desc)
+                    .font(.caption)
                 
                 if viewModel.selectedAccountType == .sales {
-                    TextField("Commission", text: Binding(
-                        get: { String(viewModel.perc) },
-                        set: { if let newValue = Double($0) { viewModel.perc = newValue } }
-                    ))
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
-                }
-                
-
-                if viewModel.myUser != nil {
-                    VStack(alignment: .leading) {
-                        Picker("Account Type", selection: $viewModel.selectedAccountType) {
-                            Text("Admin").tag(AccountType.admin)
-                            Text("Employee").tag(AccountType.employee)
-                            Text("Sales Account").tag(AccountType.sales)
-                        }
-                        .pickerStyle(.segmented)
-                        Text(desc)
-                            .font(.caption)
+                    HStack {
+                        FloatingTextField(title: "Commission", text: .constant(""), caption: "This commission will be calculate from the order's netprofit From 1% to 99%", required: false, isNumric: true, number: $viewModel.perc)
+                        
+                        Text("%")
                     }
-                    .isHidden(viewModel.myUser!.accountType != "Owner" && viewModel.myUser!.accountType != "Store Admin")
-                    
                 }
-                
-                
+            }
+            
+            Section("App Access") {
                 Toggle("Account Active", isOn: $viewModel.active)
                     .isHidden(viewModel.myUser!.accountType != "Owner" && viewModel.myUser!.accountType != "Store Admin")
                 
-                VStack(alignment: .leading) {
-                    Text("Email address")
-                        .bold()
-                    
-                    Text(viewModel.email)
-                    
-                    Text("Password")
-                        .bold()
-                    
-                    Text(viewModel.pass)
-                }.isHidden(viewModel.myUser!.accountType != "Store Admin" && viewModel.myUser!.accountType != "Owner")
-                
-            }
-            .isHidden(viewModel.isLoading)
-            
-        }.padding()
-            .navigationTitle("Edit Employee")
-            .overlay(alignment: .center, content: {
-                ProgressView()
-                    .isHidden(!viewModel.isLoading)
-            })
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Update") {
-                        update()
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Email address : \(viewModel.email)")
+                            .bold()
+                        
+                        Text("Password : \(viewModel.pass)")
+                            .bold()
                     }
-                    .disabled(viewModel.isLoading)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "doc.on.clipboard")
+                        .font(.callout)
+                        .bold()
+                        .onTapGesture {
+                            CopyingData().copyToClipboard("Email : \(viewModel.email)\n Password: \(viewModel.pass)")
+                            viewModel.showToast("Copied to clipboard")
+                        }
                 }
             }
-            .willProgress(saving: viewModel.isSaving)
-            .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-                if shouldDismiss {
-                    self.presentationMode.wrappedValue.dismiss()
+            
+            
+        }
+        .isHidden(viewModel.isLoading)
+        .navigationTitle("Edit Employee")
+        .overlay(alignment: .center) {
+            ProgressView()
+                .isHidden(!viewModel.isLoading)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Update") {
+                    update()
                 }
+                .disabled(viewModel.isLoading || viewModel.isSaving)
             }
-            .toast(isPresenting: $viewModel.showToast){
-                AlertToast(displayMode: .banner(.slide),
-                           type: .regular,
-                           title: viewModel.msg)
+        }
+        .willProgress(saving: viewModel.isSaving)
+        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
+            if shouldDismiss {
+                self.presentationMode.wrappedValue.dismiss()
             }
+        }
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
+            AlertToast(displayMode: .banner(.slide),
+                       type: .regular,
+                       title: viewModel.msg?.toString())
+        }
     }
     
     func update() {

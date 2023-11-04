@@ -10,13 +10,13 @@ import SwiftUI
 
 struct TopTaps: View {
     @Binding var selection:Int
-    var tabs:[String]
+    var tabs:[LocalizedStringKey]
     
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(Array(tabs.enumerated()), id: \.element) { index, tabName in
-                    Text(tabName)
+                ForEach(tabs.indices, id: \.self) { index in
+                    Text(tabs[index])
                         .foregroundColor(.white)
                         .font(.body)
                         .bold()

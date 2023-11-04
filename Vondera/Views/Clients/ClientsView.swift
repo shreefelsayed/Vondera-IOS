@@ -21,7 +21,7 @@ struct ClientsView: View {
             ForEach(viewModel.filteredItems) { item in
                 ClientCard(client: item, storeId: store.ownerId)
                 
-                if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
+                if viewModel.searchText.isBlank && viewModel.canLoadMore && viewModel.filteredItems.last?.id == item.id {
                     HStack {
                         Spacer()
                         ProgressView()
@@ -41,6 +41,8 @@ struct ClientsView: View {
         .overlay {
             if !viewModel.isLoading && viewModel.items.isEmpty {
                 EmptyMessageView(msg: "No one shopped from your store yet :(")
+            } else if !viewModel.searchText.isBlank && viewModel.filteredItems.isEmpty {
+                SearchEmptyView(searchText: viewModel.searchText)
             }
         }
         .toolbar {

@@ -26,17 +26,19 @@ struct LatestOrdersFragment: View {
             }
         }
         .listStyle(.plain)
-        .refreshable {
-            await viewModel.getData()
-        }
         .overlay(alignment: .center) {
             if viewModel.items.isEmpty {
                 EmptyMessageView(msg: "No new orders found")
             }
         }
+        .refreshable {
+            await viewModel.getData()
+        }
         
-        .navigationDestination(isPresented: $selectOrders) {
-            OrderSelectView(list: $viewModel.items)
+        .sheet(isPresented: $selectOrders) {
+            NavigationStack {
+                OrderSelectView(list: $viewModel.items)
+            }
         }
     }
 }

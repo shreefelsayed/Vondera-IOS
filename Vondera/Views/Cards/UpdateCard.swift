@@ -7,52 +7,49 @@
 
 import SwiftUI
 import NetworkImage
+
 struct UpdateCard: View {
     var update:Updates
     
     @State var user:UserData?
+    @State var deleted = false
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
-                if user != nil {
-                    NetworkImage(url: URL(string: user?.userURL ?? "")) { image in
-                        image.centerCropped()
-                    } placeholder : {
-                        Image("defaultPhoto")
-                            .resizable()
-                            .centerCropped()
-                    }
-                    .background(Color.white)
-                    .frame(width: 60, height: 60)
-                    .clipShape(Circle())
+                if let user  = user {
+                    ImagePlaceHolder(url: user.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
+                } else if update.uId == "Shopify" {
+                    Image("shopify")
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                } else if update.uId == "System" ||  update.uId == "Website"{
+                    Image("app_icon")
+                        .resizable()
+                        .frame(width: 60, height: 60)
+                } else if deleted {
+                    ImagePlaceHolder(url: "", placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
                 } else {
-                    if update.uId == "Shopify" {
-                        Image("shopify")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                    } else if update.uId == "System" ||  update.uId == "Website"{
-                        Image("app_icon")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                    } else {
-                        Circle()
-                            .foregroundColor(.gray)
-                            .frame(width: 60, height: 60)
-                    }
+                    Circle()
+                        .foregroundColor(.gray)
+                        .frame(width: 60, height: 60)
                 }
-                 
+                
                 
                 VStack(alignment:.leading) {
                     Text(update.desc())
-                        .font(.body)
+                        .font(.headline)
                     
                     HStack {
-                        Text("By : \(getBy())")
+                        Text("By : \(getBy().toString())")
+                            .font(.body)
+                            .foregroundStyle(deleted ? .red : .black)
                         
                         Spacer()
                         
                         Text(update.date.toDate().timeAgoString())
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
                     .font(.caption)
                     .foregroundColor(.secondary)
@@ -62,27 +59,36 @@ struct UpdateCard: View {
             
             Divider()
         }
-        .onAppear {
-            Task {
-                do {
-                    user = try await UsersDao().getUser(uId: update.uId).item
-                } catch {
-                    print(error.localizedDescription)
+        .task {
+            do {
+                let result = try await UsersDao().getUser(uId: update.uId)
+                DispatchQueue.main.async {
+                    if result.exists {
+                        self.user = result.item
+                        return
+                    }
+                    self.deleted = true
                 }
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }
     
-    func getBy() -> String {
+    func getBy() -> LocalizedStringKey {
         if update.uId == "Shopify" {
             return "Shopify"
         } else if update.uId == "System" {
             return "Vondera"
         } else if update.uId == "Website" {
             return "Website"
+        } else if let user = user {
+            return user.name.localize()
+        } else if deleted {
+            return "Deleted User"
         }
         
-        return user?.name ?? ""
+        return "Unknown"
     }
 }
 

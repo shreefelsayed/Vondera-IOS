@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FacebookAppID</key>
+	<string>666265371768600</string>
+	<key>FacebookClientToken</key>
+	<string>4258a531c79ffa05d8827a8414841cae</string>
+	<key>FacebookDisplayName</key>
+	<string>Vondera</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -14,11 +20,19 @@
 				<string>com.googleusercontent.apps.473830923339-ochj42vmm0qtjp3n0ijj1gakhdhja463</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb666265371768600</string>
+			</array>
+		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>whatsapp</string>
 		<string>tg</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

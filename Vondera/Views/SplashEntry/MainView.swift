@@ -9,22 +9,28 @@ import SwiftUI
 
 
 struct LoadingScreen: View {
-    @State var loggedIn = false
+    @ObservedObject var user = UserInformation.shared
     
     var body: some View {
-        if loggedIn {
+        if let _ = user.user {
             AccountHomeScreen()
         } else {
             SplashScreen()
-                .onAppear {
-                Task {
+                .task {
                     do {
-                        self.loggedIn = try await AuthManger().getData() != nil
+                        let loggedUser = try await AuthManger().getData()
+                        if loggedUser == nil {
+                            await AuthManger().logOut()
+                        }
                     } catch {
                         await AuthManger().logOut()
                     }
                 }
-            }
+        }
+        if user.user != nil {
+            
+        } else {
+            
         }
         
     }
@@ -38,6 +44,7 @@ struct AccountHomeScreen : View {
             if let myUser = myUser {
                 if myUser.isStoreUser {
                     UserHome()
+                    
                 } else if myUser.accountType == "Sales" {
                     #warning("Set the sales Dashboard")
                 } else if myUser.accountType == "Admin" {
@@ -73,6 +80,7 @@ struct SplashScreen : View {
 
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()
+    @StateObject var lang = LocalizationService.shared
     @State var didSignIn = false
     
     var body: some View {
@@ -85,6 +93,8 @@ struct MainView: View {
                 }
             }
         }
+        .environment(\.locale, Locale(identifier: lang.currentLanguage.rawValue))
+        .environment(\.layoutDirection, lang.currentLanguage == .arabic ? .rightToLeft : .leftToRight)
     }
     
     func signIn() {

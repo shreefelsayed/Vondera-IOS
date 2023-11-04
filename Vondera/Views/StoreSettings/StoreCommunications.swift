@@ -47,17 +47,17 @@ struct StoreCommunications: View {
                         }
                 }
             }
-            .navigationTitle("Communications")
+            .navigationTitle("Communication")
             .willProgress(saving: viewModel.isSaving)
             .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
                 if shouldDismiss {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }
-            .toast(isPresenting: $viewModel.showToast){
+            .toast(isPresenting: Binding(value: $viewModel.msg)){
                 AlertToast(displayMode: .banner(.slide),
                            type: .regular,
-                           title: viewModel.msg)
+                           title: viewModel.msg?.toString())
             }
             
         }

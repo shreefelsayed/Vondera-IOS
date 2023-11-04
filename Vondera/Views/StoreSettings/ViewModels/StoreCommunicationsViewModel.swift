@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import SwiftUI
 
 class StoreCommunicationsViewModel : ObservableObject {
     var store:Store
@@ -11,9 +12,8 @@ class StoreCommunicationsViewModel : ObservableObject {
         }
     }
     
-    @Published var showToast = false
     @Published var gov = ""
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     @Published var phone = ""
     @Published var address = ""
 
@@ -54,7 +54,7 @@ class StoreCommunicationsViewModel : ObservableObject {
                 self.shouldDismissView = true
             }
         } catch {
-            showTosat(msg: error.localizedDescription)
+            showTosat(msg: error.localizedDescription.localize())
         }
         
         
@@ -64,8 +64,7 @@ class StoreCommunicationsViewModel : ObservableObject {
         
     }
     
-    func showTosat(msg: String) {
+    func showTosat(msg: LocalizedStringKey) {
         self.msg = msg
-        showToast.toggle()
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 import FirebaseFirestore
-
+import SwiftUI
 class StoreShippingViewModel : ObservableObject {
     var storeId:String
     var storesDao = StoresDao()
@@ -25,8 +25,7 @@ class StoreShippingViewModel : ObservableObject {
     @Published var isSaving = false
     @Published var isLoading = false
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     
     init(storeId:String) {
         self.storeId = storeId
@@ -41,10 +40,15 @@ class StoreShippingViewModel : ObservableObject {
         DispatchQueue.main.async {
             self.isLoading = true
         }
+        
         do {
-            store = try await storesDao.getStore(uId: storeId)!
-            if var list = store?.listAreas  {
-                self.list = list.uniqueElements()
+            if let storeId = UserInformation.shared.user?.storeId {
+                let store = try await storesDao.getStore(uId: storeId)
+                if let list = store.listAreas {
+                    DispatchQueue.main.async {
+                        self.list = list.uniqueElements()
+                    }
+                }
             }
         } catch {
             print(error.localizedDescription)
@@ -68,12 +72,16 @@ class StoreShippingViewModel : ObservableObject {
             
             try await storesDao.update(id: storeId, hashMap: encoded)
             
-            showToast("Store Shipping info changed")
+            
             DispatchQueue.main.async {
+                UserInformation.shared.user?.store?.listAreas = self.list.uniqueElements()
+                UserInformation.shared.updateUser()
+                
+                self.showToast("Store Shipping info changed".localize())
                 self.shouldDismissView = true
             }
         } catch {
-            showToast(error.localizedDescription)
+            showToast(error.localizedDescription.localize())
         }
         
         
@@ -83,8 +91,7 @@ class StoreShippingViewModel : ObservableObject {
         
     }
     
-    func showToast(_ msg: String) {
+    func showToast(_ msg: LocalizedStringKey) {
         self.msg = msg
-        showToast.toggle()
     }
 }

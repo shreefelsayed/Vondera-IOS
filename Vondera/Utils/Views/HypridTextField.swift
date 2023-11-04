@@ -11,7 +11,7 @@ import SwiftUI
 struct HybridTextField: View {
     @Binding var text: String
     @State var isSecure: Bool = true
-    var titleKey: String
+    var titleKey: LocalizedStringKey
     
     var body: some View {
         HStack{

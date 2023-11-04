@@ -12,14 +12,13 @@ struct OrderOptionsSheet: View {
     @Binding var order:Order
     @Binding var isPreseneted:Bool
 
-    @State private var myUser:UserData?
     
     // Child Sheets
     @State private var qrCode = false
     @State private var contact = false
     @State private var comment = false
     @State private var editClient = false
-
+    @State private var editProducts = false
     
     @State private var deleteAlert = false
 
@@ -27,104 +26,120 @@ struct OrderOptionsSheet: View {
     @State private var uiMessage:String?
     
     var body: some View {
-        List {
-            
-            Text("#\(order.id)")
-                .font(.title2)
-            
-            
-            //MARK : Show Sheet
-            Label("Show order QRCode", systemImage: "qrcode.viewfinder")
-                .onTapGesture {
-                    qrCode = true
-                }
-            
-            //MARK : Show Sheet
-            Label("Contact Client", systemImage: "ellipsis.message.fill")
-                .onTapGesture {
-                    contact = true
-                }
-            
-            // MARK : Copy Order info
-            Label("Copy Order Details", systemImage: "doc.on.clipboard")
-                .onTapGesture {
-                    CopyingData().copyToClipboard(order.toString())
-                    uiMessage = "Order Data copied to clipboard"
-                }
-            
-            //TODO
-            Label("Edit Client Info", systemImage: "pencil")
-                .onTapGesture {
-                    editClient.toggle()
-                }
-            
-            //TODO
-            Label("Edit Products", systemImage: "backpack.fill")
-            
-            //MARK : Show Sheet
-            Label("Add new Comment", systemImage: "text.bubble")
-                .onTapGesture {
-                    comment = true
-                }
-            
-            // TODO
-            if order.canDeleteOrder(accountType: myUser?.accountType ?? "Owner") {
-                Label("Delete Order", systemImage: "trash.fill")
-                    .onTapGesture {
-                        deleteAlert = true
+        NavigationStack {
+            List {
+                if let myUser = UserInformation.shared.user {
+                    //MARK : Show Sheet
+                    Label("Print Receipt", systemImage: "printer.fill")
+                        .onTapGesture {
+                            Task {
+                                if let uri = await ReciptPDF(orderList: [order]).render() {
+                                    DispatchQueue.main.async {
+                                        FileUtils().shareFile(url: uri)
+                                    }
+                                }
+                            }
+                        }
+                    
+                    Label("Show order QRCode", systemImage: "qrcode.viewfinder")
+                        .onTapGesture {
+                            qrCode = true
+                        }
+                    
+                    //MARK : Show Sheet
+                    Label("Contact Client", systemImage: "ellipsis.message.fill")
+                        .onTapGesture {
+                            contact = true
+                        }
+                    
+                    // MARK : Copy Order info
+                    Label("Copy Order Details", systemImage: "doc.on.clipboard")
+                        .onTapGesture {
+                            CopyingData().copyToClipboard(order.toString())
+                            uiMessage = "Order Data copied to clipboard"
+                        }
+                    
+                    if let images = order.listAttachments, !images.isEmpty {
+                        Label("Download \(images.count) attachments", systemImage: "paperclip")
+                            .onTapGesture {
+                                uiMessage = "Downloading started"
+                                DownloadManager().saveImagesToDevice(imageURLs: images.map({ URL(string: $0)! }))
+                            }
                     }
+                    
+                    if order.canEditProducts(accountType: myUser.accountType) {
+                        Label("Edit Client Info", systemImage: "pencil")
+                            .onTapGesture {
+                                editClient.toggle()
+                            }
+                        
+                        Label("Edit Products", systemImage: "backpack.fill")
+                            .onTapGesture {
+                                editProducts.toggle()
+                            }
+                    }
+                    
+                    //MARK : Show Sheet
+                    Label("Add new Comment", systemImage: "text.bubble")
+                        .onTapGesture {
+                            comment = true
+                        }
+                    
+                    // TODO
+                    if order.canDeleteOrder(accountType: myUser.accountType) {
+                        Label("Delete Order", systemImage: "trash.fill")
+                            .onTapGesture {
+                                deleteAlert = true
+                            }
+                    }
+                    
+                    
+                    
+                }
             }
-            
-            Label("Print Receipt", systemImage: "printer.fill")
-                .onTapGesture {
+            .listStyle(.plain)
+            .navigationTitle("#\(order.id)")
+            .sheet(isPresented: $contact) {
+                ContactDialog(phone: order.phone, toggle: $contact)
+            }
+            .sheet(isPresented: $qrCode) {
+                OrderQRCode(order: order)
+            }
+            .sheet(isPresented: $comment) {
+                AddCommentSheet(order: $order, isPresented: $comment)
+                    
+            }
+            .sheet(isPresented: $editClient) {
+                NavigationStack {
+                    EditOrder(order: $order, isPreseneted: $editClient)
+                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+            }
+            .sheet(isPresented: $editProducts) {
+                NavigationStack {
+                    EditOrderProducts(order: $order, isPreseneted: $editProducts)
+                }
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+            }
+            .confirmationDialog("Are you sure you want to delete the order ?", isPresented: $deleteAlert, titleVisibility: .visible) {
+                
+                Button("Delete", role: .destructive) {
                     Task {
-                        await ReciptPDF(orderList: [order]).generateAndOpenPDF()
-                        isPreseneted.toggle()
+                        await deleteOrder()
                     }
                 }
-        }
-        .sheet(isPresented: $contact) {
-            ContactDialog(phone: order.phone, toggle: $contact)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $qrCode) {
-            OrderQRCode(order: order)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-
-        }
-        .sheet(isPresented: $comment) {
-            AddCommentSheet(order: $order, isPresented: $comment, myUser: myUser)
-                .presentationDetents([.height(150), .height(250)])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $editClient) {
-            NavigationStack {
-                EditOrder(order: $order, isPreseneted: $editClient)
-
-            }
-            .presentationDetents([.large])
-            .presentationDragIndicator(.visible)
-        }
-        .confirmationDialog("Are you sure you want to delete the order ?", isPresented: $deleteAlert, titleVisibility: .visible) {
-            
-            Button("Delete", role: .destructive) {
-                Task {
-                    await deleteOrder()
+                
+                Button("Later", role: .cancel) {
                 }
             }
-            
-            Button("Later", role: .cancel) {
-            }
+            .toast(isPresenting: Binding(value: $uiMessage), alert: {
+                AlertToast(displayMode: .banner(.pop), type: .regular, title: uiMessage)
+            })
         }
-        .toast(isPresenting: Binding(value: $uiMessage), alert: {
-            AlertToast(displayMode: .banner(.pop), type: .regular, title: uiMessage)
-        })
-        .task {
-            myUser = UserInformation.shared.getUser()
-        }
-        .listStyle(.plain)
+        .presentationDetents([.medium, .fraction(0.75)])
+        
     }
     
     func deleteOrder() async {
@@ -138,8 +153,8 @@ struct OrderOptionsSheet: View {
 struct AddCommentSheet : View {
     @Binding var order:Order
     @Binding var isPresented:Bool
-    var myUser:UserData?
     
+    @State private var sheetHeight: CGFloat = .zero
     @State private var addingComment = false
     @State private var comment = ""
     @State private var uiMessage:String?
@@ -174,26 +189,28 @@ struct AddCommentSheet : View {
             AlertToast(displayMode: .banner(.pop), type: .regular, title: uiMessage)
         })
         .padding()
+        .navigationTitle("Add Comment")
+        .presentationDetents([.fraction(0.25)])
     }
     
     func addComment() async {
-        guard !comment.isBlank && myUser != nil else {
-            return
+        if let _ = UserInformation.shared.user, !comment.isBlank {
+            addingComment = true
+            
+            let newOrder = await OrderManager().addComment(order: &order, msg: comment, code: 0)
+            
+            order = newOrder
+            uiMessage = "Comment Added"
+            comment = ""
+            addingComment = false
         }
-        addingComment = true
-        
-        var newOrder = await OrderManager().addComment(order: &order, msg: comment, code: 0)
-        
-        order = newOrder
-        uiMessage = "Comment Added"
-        comment = ""
-        addingComment = false
     }
 }
 
 struct OrderQRCode : View {
     let order:Order
-    
+    @State private var sheetHeight: CGFloat = .zero
+
     var body: some View {
         VStack(alignment: .center) {
             Text("#\(order.id)")
@@ -211,6 +228,7 @@ struct OrderQRCode : View {
             }
             
         }
+        .presentationDetents([.fraction(0.45)])
     }
 }
 

@@ -31,6 +31,8 @@ class ProductVarientsViewModel : ObservableObject {
         setArrayData()
     }
     
+    
+    
     func setArrayData() {
         listOptions.removeAll()
         listTitles.removeAll()

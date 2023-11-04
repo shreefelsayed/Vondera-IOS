@@ -18,7 +18,19 @@ class AddProductViewModel : ObservableObject {
     var productId = ""
     @Published var page = 1
     @Published var categories = [Category]()
-    @Published var category:Category?
+    
+    @Published var recentProducts = [StoreProduct]()
+    @Published var selectedTemplate:StoreProduct?
+
+    
+    @Published var selectedCategory:Category? {
+        didSet {
+            Task {
+                await updateRecentProducts()
+            }
+        }
+    }
+    
     @Published var isSheetPresented = false
 
     @Published var selectedPhotos: [UIImage] = []
@@ -36,8 +48,8 @@ class AddProductViewModel : ObservableObject {
     @Published var listTitles = [String]()
     @Published var listOptions = [[String]]()
     var myUser = UserInformation.shared.getUser()
-    @Published var showToast = false
-    @Published var msg = ""
+    
+    @Published var msg:String?
     
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
@@ -88,7 +100,6 @@ class AddProductViewModel : ObservableObject {
     
     func showMessage(_ msg:String) {
         self.msg = msg
-        showToast.toggle()
     }
     
     func nextPage() {
@@ -127,7 +138,7 @@ class AddProductViewModel : ObservableObject {
             return false
         }
         
-        guard category != nil else {
+        guard selectedCategory != nil else {
             showMessage("Select the product category")
             return false
         }
@@ -198,17 +209,49 @@ class AddProductViewModel : ObservableObject {
             self.isSaving = true
         }
         
-        let storageRef = Storage.storage().reference().child("stores").child(myUser!.storeId).child("products").child(productId)
-        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: storageRef) { imageURLs, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.isSaving = false
-                    self.showMessage(error.localizedDescription)
+        if let storeId = myUser?.storeId {
+            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "stores/\(storeId)/products/\(productId)") { imageURLs, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self.isSaving = false
+                        self.showMessage(error.localizedDescription)
+                    }
+                } else if let imageURLs = imageURLs {
+                    self.saveProduct(uris: imageURLs)
                 }
-            } else if let imageURLs = imageURLs {
-                self.saveProduct(uris: imageURLs)
             }
         }
+        
+    }
+    
+    func updateRecentProducts() async {
+        DispatchQueue.main.async {
+            self.selectedTemplate = nil
+            self.recentProducts.removeAll()
+        }
+        
+        if let id = selectedCategory?.id {
+            if let templetes = try? await ProductsDao(storeId: storeId).getCategoryRecent(categoryId: id) {
+                DispatchQueue.main.async {
+                    self.recentProducts = templetes
+                }
+            }
+        }
+    }
+    
+    func chooseTemplete(product:StoreProduct) {
+        self.selectedTemplate = product
+        self.desc = product.desc ?? ""
+        self.cost = "\(Int(product.buyingPrice))"
+        self.sellingPrice = "\(Int(product.price))"
+        self.alwaysStocked = product.alwaysStocked ?? false
+        self.quantity = "\(product.quantity)"
+        
+        self.listVarients = product.hashVarients ?? []
+        self.listTitles = product.hashVarients?.getTitles() ?? []
+        self.listOptions = product.hashVarients?.getOptions() ?? []
+        
+        self.msg = "Product data filled"
     }
     
     func saveProduct(uris: [URL]) {
@@ -221,8 +264,8 @@ class AddProductViewModel : ObservableObject {
             product.listPhotos = uris.map { $0.absoluteString }
             product.hashVarients = listVarient()
             product.alwaysStocked = alwaysStocked
-            product.categoryId = category?.id ?? ""
-            product.categoryName = category?.name ?? ""
+            product.categoryId = selectedCategory?.id ?? ""
+            product.categoryName = selectedCategory?.name ?? ""
             
             // MARK : Save the product to database
             do {
@@ -230,7 +273,7 @@ class AddProductViewModel : ObservableObject {
                 showMessage("Product has been added")
                 
                 // --> Saving Local
-                if var myUser = UserInformation.shared.getUser() {
+                if let myUser = UserInformation.shared.getUser() {
                     if var productsCount = myUser.store?.productsCount {
                         productsCount = productsCount + 1
                         myUser.store?.productsCount = productsCount
@@ -254,7 +297,7 @@ class AddProductViewModel : ObservableObject {
     func getStoreCategories() async {
         do {
             categories = try await categorysDao.getAll()
-            category = categories.first
+            selectedCategory = categories.first
         } catch {
             print(error.localizedDescription)
         }

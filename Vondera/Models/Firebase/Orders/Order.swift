@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import CoreLocation
+import SwiftUI
 
 struct Order: Codable, Identifiable, Equatable {
     var id: String = ""
@@ -46,7 +47,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     var percPaid: Bool? = false
     var part: Bool? = false
-    var isPaid: Bool? = false
+    var paid: Bool? = false
     
     var listProducts: [OrderProductObject]? = []
     var listAttachments: [String]? = []
@@ -70,6 +71,29 @@ struct Order: Codable, Identifiable, Equatable {
         self.clientShippingFees = clientShippingFees
     }
     
+    func getStatueLocalized() -> LocalizedStringKey {
+        switch statue {
+            //Pending - Confirmed - Assembled - Out For Delivery - Delivered - Failed - Deleted
+        case "Pending" :
+            return "Pending"
+        case "Confirmed" :
+            return "Confirmed"
+        case "Assembled" :
+            return "Assembled"
+        case "Out For Delivery" :
+            return "Out For Delivery"
+        case "Delivered" :
+            return "Delivered"
+        case "Failed" :
+            return "Failed"
+        case "Deleted" :
+            return "Deleted"
+            
+        default :
+            return "".localize()
+        }
+    }
+    
     var netProfitFinal: Int {
         if statue == "Failed" && (part != nil) && part == false {
             return netProfit
@@ -81,10 +105,14 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     var netProfit: Int {
-        return Int(COD - (courierShippingFees ?? 0) - finalCommission - buyingPrice)
+        return Int(COD  - (courierShippingFees ?? 0) - finalCommission - buyingPrice)
     }
     
     var CODAfterCourier: Int {
+        if statue == "Failed" {
+            return 0 - (courierShippingFees ?? 0)
+        }
+        
         return Int(COD - (courierShippingFees ?? 0))
     }
     
@@ -115,11 +143,16 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     var buyingPrice: Int {
-        if listProducts == nil { return 0 }
+        if statue == "Failed" && !(part ?? false) {
+            return 0
+        }
         
         var total: Int = 0
-        for product in listProducts! {
-            total += Int(product.buyingPrice) * product.quantity
+            
+        if let listProducts = listProducts {
+            for product in listProducts {
+                total += Int(product.buyingPrice) * product.quantity
+            }
         }
         return total
     }
@@ -133,11 +166,11 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     var quantity: Int {
-        if listProducts == nil {return 0}
-        
-        var total: Int = 0
-        for product in listProducts! {
-            total += product.quantity
+        var total = 0
+        if let listProducts = listProducts {
+            for product in listProducts {
+                total += product.quantity
+            }
         }
         return total
     }
@@ -151,20 +184,21 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     var defaultPhoto: String {
-        if listProducts == nil {return ""}
-        
-        if listProducts!.isEmpty {
-            return ""
-        } else {
-            return listProducts![0].image ?? ""
+        if let listProducts = listProducts, !listProducts.isEmpty {
+            return listProducts[0].image
         }
+        
+        return ""
     }
     
     var productsCount: Int {
         var count = 0
-        for orderProductObject in listProducts! {
-            count += orderProductObject.quantity
+        if let listProducts = listProducts {
+            for orderProductObject in listProducts {
+                count += orderProductObject.quantity
+            }
         }
+        
         return count
     }
     
@@ -172,12 +206,14 @@ struct Order: Codable, Identifiable, Equatable {
         if listProducts == nil {return ""}
         
         var str = ""
-        for productOrderObject in listProducts! {
-            str += productOrderObject.name
-            if !productOrderObject.getVarientsString().isBlank {
-                str += " ( \(productOrderObject.getVarientsString() ) "
+        if let listProducts = listProducts {
+            for productOrderObject in listProducts {
+                str += productOrderObject.name
+                if !productOrderObject.getVarientsString().isBlank {
+                    str += " ( \(productOrderObject.getVarientsString() ) "
+                }
+                str += " x \(productOrderObject.quantity)\n"
             }
-            str += " x \(productOrderObject.quantity)\n"
         }
         return str
     }
@@ -192,8 +228,10 @@ struct Order: Codable, Identifiable, Equatable {
         }
         
         var totalMoney: Double = 0
-        listProducts!.forEach { product in
-            totalMoney += product.price * Double(product.quantity)
+        if let listProducts = listProducts {
+            listProducts.forEach { product in
+                totalMoney += product.price * Double(product.quantity)
+            }
         }
         
         return (totalMoney - Double((discount ?? 0)))
@@ -208,15 +246,11 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     var latLang: CLLocationCoordinate2D? {
-        guard lat != nil && lang != nil else {
-            return nil
+        if let lat = lat, let lang = lang, lang != 0, lat != 0 {
+            return CLLocationCoordinate2D(latitude: lat, longitude: lang)
         }
         
-        if lat == 0 {
-            return nil
-        } else {
-            return CLLocationCoordinate2D(latitude: lat!, longitude: lang!)
-        }
+        return nil
     }
     
     func canEditPrice() -> Bool {
@@ -225,6 +259,37 @@ struct Order: Codable, Identifiable, Equatable {
         }
         
         return true
+    }
+    
+    func getMargin() -> String {
+        var cost = 0.0
+        let totalPrice = getSellingPrice()
+        
+        if let listProducts = listProducts {
+            for item in listProducts {
+                cost += item.buyingPrice
+            }
+        }
+        
+        let margin =  ((totalPrice - cost) / totalPrice) * 100
+        return String(format: "%.1f", margin)
+    }
+    
+    func getPaidStatue() -> (LocalizedStringKey, Color) {
+        if let paid = paid, paid {
+            return ("Prepaid", Color.yellow)
+        }
+        
+        if statue == "Delivered" {
+            return ("Paid", Color.green)
+        }
+        
+        return ("Not Paid", Color.red)
+    }
+    
+    func getLink(mId:String) -> URL {
+        let link = "https://vondera.store/order?store=\(mId)&id=\(id)"
+        return URL(string: link)!
     }
     
     func canDeleteOrder(accountType: String) -> Bool {

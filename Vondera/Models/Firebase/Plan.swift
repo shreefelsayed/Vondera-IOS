@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 import FirebaseFirestoreSwift
 
 struct Plan: Codable, Identifiable {
-    @DocumentID var id: String?
+    var id: String = ""
     var price: Int = 0
     var planName: String = ""
     var planNameAr: String = ""
@@ -35,25 +36,24 @@ struct Plan: Codable, Identifiable {
 extension Plan {
     var features: [Feature] {
         var features: [Feature] = []
-        features.append(Feature(name: "\(employeesCount) Employees", available: (self.employeesCount > 0)))
-        features.append(Feature(name: "\(maxOrders) Monthly Orders", available: (self.maxOrders > 0)))
+        features.append(Feature(id: 0,name: "\(employeesCount) Team members", available: (self.employeesCount > 0)))
+        features.append(Feature(id: 1,name: "\(maxOrders) Orders / month", available: (self.maxOrders > 0)))
         
         //DEFAULT
-        features.append(Feature(name: "Unlimited Products", available: true))
-        features.append(Feature(name: "Sales Reports", available: true))
-        features.append(Feature(name: "Order Receipts", available: true))
-        features.append(Feature(name: "Clients Data", available: clients ?? false))
-        features.append(Feature(name: "Access Stock Report", available: accessStockReport ?? false))
-        features.append(Feature(name: "Access Expenses", available: accessExpanses ?? false))
-        features.append(Feature(name: "ECommerce Website", available: website ?? false))
+        features.append(Feature(id: 2,name: "Vonder's ecommerce website", available: website ?? false))
+        features.append(Feature(id: 3,name: "Shoppers data", available: clients ?? false))
+        
+        features.append(Feature(id: 4,name: "Warehouse & Stock Report", available: accessStockReport ?? false))
+        features.append(Feature(id: 5,name: "Expanses records", available: accessExpanses ?? false))
 
-        features.append(Feature(name: "Custom Message", available: customMessage ?? false))
-        features.append(Feature(name: "Access APIs", available: accessApis ?? false))
+        features.append(Feature(id: 6,name: "Customize receipt", available: customMessage ?? false))
+        features.append(Feature(id: 7,name: "Access our api and end-points and webhooks", available: accessApis ?? false))
         return features
     }
 }
 
-struct Feature: Hashable {
-    var name: String
+struct Feature: Identifiable {
+    var id: Int
+    var name: LocalizedStringKey
     var available: Bool
 }

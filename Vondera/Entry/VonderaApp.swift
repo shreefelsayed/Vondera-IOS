@@ -11,11 +11,11 @@ import FirebaseCore
 @main
 struct VonderaApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
     var body: some Scene {
         WindowGroup {
             MainView()
                 .preferredColorScheme(.light)
+                
         }
     }
 }

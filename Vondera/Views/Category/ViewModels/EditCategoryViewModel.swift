@@ -86,6 +86,7 @@ class EditCategoryViewModel : NSObject, ObservableObject, PHPickerViewController
         FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,name: name ,ref: ref) { url, error in
             if let error = error {
                 DispatchQueue.main.async {
+                    self.msg = error.localizedDescription
                     self.isSaving = false
                 }
             } else if let url = url {

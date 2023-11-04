@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import FirebaseFirestore
+import SwiftUI
 
 class CourierFeesViewModel : ObservableObject {
     var id:String
@@ -27,9 +28,7 @@ class CourierFeesViewModel : ObservableObject {
     
     @Published var isSaving = false
     @Published var isLoading = false
-    
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     
     init(id:String, storeId:String) {
         self.id = id
@@ -77,7 +76,7 @@ class CourierFeesViewModel : ObservableObject {
                 self.shouldDismissView = true
             }
         } catch {
-            showToast(error.localizedDescription)
+            showToast(error.localizedDescription.localize())
         }
         
         
@@ -87,9 +86,8 @@ class CourierFeesViewModel : ObservableObject {
         
     }
     
-    func showToast(_ msg: String) {
+    func showToast(_ msg: LocalizedStringKey) {
         self.msg = msg
-        showToast.toggle()
     }
 }
 

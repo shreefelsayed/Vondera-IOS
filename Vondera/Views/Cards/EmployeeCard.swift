@@ -40,7 +40,6 @@ struct EmployeeCard: View {
         }
         .sheet(isPresented: $showContact) {
             ContactDialog(phone: user.phone, toggle: $showContact)
-                .fixedInnerHeight($sheetHeight)
         }
         .buttonStyle(.plain)
         

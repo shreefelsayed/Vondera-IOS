@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct Expense: Codable, Identifiable, Equatable, Hashable {
     var id: String = ""
-    @ServerTimestamp var date:Timestamp? = Timestamp(date: Date())
+    var date:Timestamp = Timestamp(date: Date())
     var amount: Int = 0
     var description: String = ""
     var madeBy: String = ""

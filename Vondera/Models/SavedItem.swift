@@ -19,9 +19,4 @@ struct SavedItems: Codable, Equatable, Hashable {
         self.hashMap = hashMap
         self.quantity = quantity
     }
-    
-    // Custom CodingKeys in case you want to change the property names in the JSON representation
-    private enum CodingKeys: String, CodingKey {
-        case randomId, productId, hashMap, quantity
-    }
 }

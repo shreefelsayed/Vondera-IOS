@@ -50,6 +50,10 @@ class MarketsManager {
     }
 
     func getById(id: String) -> Markets? {
+        if id == "ecommerce" {
+            return Markets(id: "ecommerce", name: "Website", icon: "icon", startColor: "FFFFFF", endColor: "#FFFFFF")
+        }
+        
         let list = getAllMarketPlaces()
         for market in list {
             if market.id == id {

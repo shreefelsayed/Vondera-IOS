@@ -307,12 +307,30 @@
       }
     },
     {
+      "identity" : "richtextkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielsaidi/RichTextKit",
+      "state" : {
+        "revision" : "71b4d2c9bbc83b920ef5d4be262496e066fce5c8",
+        "version" : "0.9.1"
+      }
+    },
+    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
         "revision" : "633996a807442ec28df9d33b0f88ce57a0e2fdbf",
         "version" : "5.17.0"
+      }
+    },
+    {
+      "identity" : "siren",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ArtSabintsev/Siren",
+      "state" : {
+        "revision" : "dfee0e0e29ce3b1dcb138dd467a3580e3380f579",
+        "version" : "6.1.2"
       }
     },
     {

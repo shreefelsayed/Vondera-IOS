@@ -39,8 +39,7 @@ struct FullfillOrdersFragment: View {
         .onAppear {
             self.user = UserInformation.shared.getUser()
         }
-        .navigationTitle("Orders to Fullfil")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle("Orders to fullfil")
     }
 }
 

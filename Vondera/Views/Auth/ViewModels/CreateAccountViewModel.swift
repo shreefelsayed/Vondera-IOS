@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 class CreateAccountViewModel: ObservableObject {
+    var authInfo:AuthProviderInfo?
+    
     @Published var email = ""
     @Published var gov:String = GovsUtil().govs.first!
     @Published var name = ""
@@ -19,6 +21,8 @@ class CreateAccountViewModel: ObservableObject {
     @Published var currentPage = 1
     @Published var slogan = ""
     @Published var refferCode = ""
+    
+    
     @Published var selectedCateogry:Int? = 0
     @Published var selectedMarkets:[String] = []
 
@@ -31,6 +35,7 @@ class CreateAccountViewModel: ObservableObject {
     
     @Published var errorMsg:String?
 
+    let authManger = AuthManger()
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
         didSet {
@@ -38,10 +43,20 @@ class CreateAccountViewModel: ObservableObject {
         }
     }
     
-    let authManger:AuthManger
+    // Username
+    @Published var validName = false
+    @Published var validatingName = false
+    @Published var userName = "" {
+        didSet {
+           // --> Validate it on chage
+            Task {
+                await validateUserName()
+            }
+        }
+    }
     
-    init() {
-        authManger = AuthManger()
+    init(authInfo:AuthProviderInfo?) {
+        self.authInfo = authInfo
     }
     
     
@@ -66,6 +81,18 @@ class CreateAccountViewModel: ObservableObject {
         }
     }
     
+    func validateUserName() async {
+        validName = false
+        validatingName = true
+        
+        if let valid = try? await StoresDao().validId(id: userName) {
+            DispatchQueue.main.async {
+                self.validName = valid
+                self.validatingName = false
+            }
+        }
+    }
+    
     func createAccount() async {
         isSaving = true
         
@@ -81,9 +108,18 @@ class CreateAccountViewModel: ObservableObject {
             // --> Create user Object
             var user = UserData(id: "", name: name, email: email, phone: phone, addedBy: refferCode, accountType: "Owner", pass: password)
             
+            if let authInfo = authInfo {
+                user.userURL = authInfo.url
+                user.facebookId = authInfo.provider == "facebook" ? authInfo.id : ""
+                user.appleId = authInfo.provider == "apple" ? authInfo.id : ""
+                user.googleId = authInfo.provider == "google" ? authInfo.id : ""
+            }
+            
             // --> Create Store Object
             let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, subscribedPlan: SubscribedPlan(), ownerId: "")
             
+            store.almostOut = 5
+            store.merchantId = userName.replacingOccurrences(of: " ", with: "").lowercased()
             store.categoryNo = selectedCateogry
             store.listMarkets = selectedMarkets.map { id in
                 return StoreMarketPlace(id: id, active: true)
@@ -96,6 +132,10 @@ class CreateAccountViewModel: ObservableObject {
                 showError(err: "Something wrong happened")
                 isSaving = false
                 return
+            }
+            
+            if let authInfo = authInfo {
+                _ = await AuthManger().connectToCred(cred: authInfo.cred)
             }
             
             
@@ -117,6 +157,11 @@ class CreateAccountViewModel: ObservableObject {
     func checkSecondPage() -> Bool {
         guard storeName.isValidName else {
             showError(err: "Enter a valid store name")
+            return false
+        }
+        
+        guard validName, userName.count > 2 else {
+            showError(err: "Enter your site username")
             return false
         }
         
@@ -144,10 +189,10 @@ class CreateAccountViewModel: ObservableObject {
             return false
         }
         
-        guard phone.isPhoneNumber else {
+        /*guard phone.isPhoneNumber else {
             showError(err: "Enter a valid phone number")
             return false
-        }
+        }*/
         
         guard email.isValidEmail else {
             showError(err: "Enter a valid email")

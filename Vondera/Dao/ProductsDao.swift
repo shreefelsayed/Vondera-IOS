@@ -26,7 +26,7 @@ class ProductsDao {
     }
     
     func productExist(id:String) async throws -> Bool {
-        let doc = try await  collection.document(id).getDocument()
+        let doc = try await collection.document(id).getDocument()
         return doc.exists
     }
     
@@ -37,7 +37,28 @@ class ProductsDao {
             .getDocuments(as: StoreProduct.self)
     }
     
-    func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], QueryDocumentSnapshot?) {
+    func getFeatured() async throws -> [StoreProduct] {
+        return try await collection
+            .whereField("featured", isEqualTo: true)
+            .order(by: "createDate", descending: true)
+            .getDocuments(as: StoreProduct.self)
+    }
+    
+    func getVisible() async throws -> [StoreProduct] {
+        return try await collection
+            .whereField("visible", isEqualTo: true)
+            .getDocuments(as: StoreProduct.self)
+    }
+    
+    func getCategoryRecent(categoryId:String, limit:Int = 5) async throws -> [StoreProduct] {
+        return try await collection
+            .whereField("categoryId", isEqualTo: categoryId)
+            .order(by: "createDate", descending: true)
+            .limit(to: limit)
+            .getDocuments(as: StoreProduct.self)
+    }
+    
+    func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
         var query:Query = collection
             .order(by: "quantity", descending: true)
             .whereField("quantity", isGreaterThan: 0)
@@ -47,8 +68,8 @@ class ProductsDao {
             query = query.start(afterDocument: lastSnapShot!)
         }
                 
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
+        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
+        return (data.items, data.lastDocument)
     }
     
     func getOutOfStock() async throws -> [StoreProduct] {
@@ -58,7 +79,7 @@ class ProductsDao {
             .getDocuments(as: StoreProduct.self)
     }
     
-    func getOutOfStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], QueryDocumentSnapshot?) {
+    func getOutOfStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
         var query:Query = collection
             .order(by: "quantity", descending: false)
             .whereField("quantity", isLessThanOrEqualTo: 0)
@@ -70,8 +91,8 @@ class ProductsDao {
         
         query.limit(to: pageSize)
         
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
+        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
+        return (data.items, data.lastDocument)
     }
     
     func getStockLessThen(almostOut:Int) async throws -> [StoreProduct] {
@@ -82,7 +103,7 @@ class ProductsDao {
             .getDocuments(as: StoreProduct.self)
     }
     
-    func getStockLessThen(almostOut:Int, lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], QueryDocumentSnapshot?) {
+    func getStockLessThen(almostOut:Int, lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
         var query:Query = collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
@@ -95,8 +116,8 @@ class ProductsDao {
         
         query.limit(to: pageSize)
         
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
+        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
+        return (data.items, data.lastDocument)
     }
     
     func getByCategory(id:String) async throws -> [StoreProduct] {
@@ -129,6 +150,13 @@ class ProductsDao {
         return  try await collection
             .order(by: "sold", descending: true)
             .whereField("sold", isGreaterThan: 0)
+            .limit(to: limit)
+            .getDocuments(as: StoreProduct.self)
+    }
+    
+    func getLastOrdered(limit:Int = 10) async throws -> [StoreProduct] {
+        return try await collection
+            .order(by: "lastOrderDate", descending: true)
             .limit(to: limit)
             .getDocuments(as: StoreProduct.self)
     }

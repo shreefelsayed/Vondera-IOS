@@ -12,19 +12,91 @@ import LineChartView
 
 struct StoreStatics: Identifiable, Codable {
     var id = ""
-    var income = 0
-    var orders = 0
-    var delivered = 0
-    var failed = 0
+    var income:Int? = 0
+    var orders:Int? = 0
+    var delivered:Int? = 0
+    var failed:Int? = 0
+    var sales:Int? = 0
+    var site:Int? = 0
+    var site_orders:Int? = 0
+    var added_to_cart:Int? = 0
+    var site_products_view:Int? = 0
     var date:Timestamp = Timestamp(date: Date())
 }
 
 extension Array where Element == StoreStatics {
+    func getProductsViewsData() -> [LineChartData] {
+        var items:[LineChartData] = []
+        for item in self {
+            items.append(LineChartData(Double(item.site_products_view ?? 0), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
+        }
+        return items
+    }
+    
+    func getTotalProductsView() -> Int {
+        var total = 0
+        for item in self {
+            total += item.site_products_view ?? 0
+        }
+        
+        return total
+    }
+    
+    func getAddedToCartData() -> [LineChartData] {
+        var items:[LineChartData] = []
+        for item in self {
+            items.append(LineChartData(Double(item.added_to_cart ?? 0), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
+        }
+        return items
+    }
+    
+    func getTotalAddedToCart() -> Int {
+        var total = 0
+        for item in self {
+            total += item.added_to_cart ?? 0
+        }
+        
+        return total
+    }
+    
+    func getVisitorsData() -> [LineChartData] {
+        var items:[LineChartData] = []
+        for item in self {
+            items.append(LineChartData(Double(item.site ?? 0), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
+        }
+        return items
+    }
+    
+    func getTotalVisitors() -> Int {
+        var total = 0
+        for item in self {
+            total += item.site ?? 0
+        }
+        
+        return total
+    }
+    
+    func getLinechartSales() -> [LineChartData] {
+        var items:[LineChartData] = []
+        for item in self {
+            items.append(LineChartData(Double(item.sales ?? 0), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
+        }
+        return items
+    }
+    
+    func getTotalSales() -> Int {
+        var total = 0
+        for item in self {
+            total += item.sales ?? 0
+        }
+        
+        return total
+    }
     
     func getLinearChartIncome() -> [LineChartData] {
         var items:[LineChartData] = []
         for item in self {
-                items.append(LineChartData(Double(item.income), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
+            items.append(LineChartData(Double(item.income ?? 0), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
                 
             
         }
@@ -34,7 +106,7 @@ extension Array where Element == StoreStatics {
     func getTotalIncome() -> Int {
         var total = 0
         for item in self {
-            total += item.income
+            total += item.income ?? 0
         }
         
         return total
@@ -43,7 +115,7 @@ extension Array where Element == StoreStatics {
     func getLinearChartOrder() -> [LineChartData] {
         var items:[LineChartData] = []
         for item in self {
-            items.append(LineChartData(Double(item.orders), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
+            items.append(LineChartData(Double(item.orders ?? 0), timestamp: item.date.toDate(), label: item.date.toDate().formatted(date: .abbreviated, time: .shortened)))
                 
             
         }
@@ -53,7 +125,7 @@ extension Array where Element == StoreStatics {
     func getTotalOrders() -> Int {
         var total = 0
         for item in self {
-            total += item.orders
+            total += item.orders ?? 0
         }
         
         return total

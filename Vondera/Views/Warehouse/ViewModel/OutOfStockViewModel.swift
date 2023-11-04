@@ -42,14 +42,21 @@ class OutOfStockViewModel: ObservableObject {
         }
         
         do {
-            isLoading = true
+            DispatchQueue.main.async { [self] in
+                isLoading = true
+            }
             let result = try await productsDao.getOutOfStock(lastSnapShot: lastSnapshot)
-            lastSnapshot = result.1
-            items.append(contentsOf: result.0)
-            self.canLoadMore = !result.0.isEmpty
-            isLoading = false
+            DispatchQueue.main.async { [self] in
+                lastSnapshot = result.1
+                items.append(contentsOf: result.0)
+                self.canLoadMore = !result.0.isEmpty
+                isLoading = false
+            }
+           
         } catch {
-            isLoading = false
+            DispatchQueue.main.async { [self] in
+                isLoading = false
+            }
         }
     }
 }

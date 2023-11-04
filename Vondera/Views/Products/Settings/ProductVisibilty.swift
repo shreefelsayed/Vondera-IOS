@@ -9,49 +9,80 @@ import SwiftUI
 import AlertToast
 
 struct ProductVisibilty: View {
-    var product:StoreProduct
-    @ObservedObject var viewModel:ProductVisibiltyViewModel
+    @State var product:StoreProduct
     @Environment(\.presentationMode) private var presentationMode
     
-    init(product: StoreProduct) {
-        self.product = product
-        self.viewModel = ProductVisibiltyViewModel(product: product)
-    }
+    
+    @State private var toogle = true
+    
+    @State private var isSaving = false
+    @State private var isLoading = false
+    @State private var msg:String?
+
     
     var body: some View {
         List {
             VStack(alignment: .leading) {
-                Toggle("Product Visibility", isOn: $viewModel.toogle)
+                Toggle("Product Visibility", isOn: $toogle)
                 
                 Text("Turning this off will hide this product and no one can make an order with it")
                     .font(.caption)
             }
         }
+        .isHidden(isLoading)
+        .overlay {
+            ProgressView()
+                .isHidden(!isLoading)
+        }
         .navigationTitle("Product Visibility")
+        .navigationBarBackButtonHidden(isSaving)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
-                    update()
+                    Task {
+                        await update()
+                    }
                 }
-                .disabled(viewModel.isSaving)
+                .disabled(isSaving)
             }
         }
-        .willProgress(saving: viewModel.isSaving)
-        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-            if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
-            }
+        .task {
+            await updateData()
+            updateUI()
         }
-        .toast(isPresenting: Binding(value: $viewModel.msg)){
+        .willProgress(saving: isSaving)
+        .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: msg)
         }
     }
     
-    func update() {
-        Task {
-            await viewModel.update()
+    func updateData() async {
+        self.isLoading = true
+        if let product = try? await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
+            DispatchQueue.main.async {
+                self.product = product
+                self.isLoading = false
+            }
+        }
+    }
+    
+    func updateUI() {
+        toogle = product.visible ?? true
+    }
+    
+    func update() async {
+        isSaving = true
+        
+        // --> Update the database
+        let map:[String:Any] = ["visible": toogle]
+        try? await ProductsDao(storeId: product.storeId).update(id: product.id, hashMap: map)
+        
+        DispatchQueue.main.async {
+            self.msg = "Store Name Changed"
+            self.isSaving = false
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
 }

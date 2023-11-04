@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class AddExpansesViewModel : ObservableObject {
     var storeId:String
@@ -25,8 +26,7 @@ class AddExpansesViewModel : ObservableObject {
     @Published var price = 0
     @Published var desc = ""
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
     
     
@@ -76,10 +76,9 @@ class AddExpansesViewModel : ObservableObject {
         
     }
     
-    func showTosat(msg: String) {
+    func showTosat(msg: LocalizedStringKey) {
         DispatchQueue.main.async {
             self.msg = msg
-            self.showToast.toggle()
         }
     }
 }

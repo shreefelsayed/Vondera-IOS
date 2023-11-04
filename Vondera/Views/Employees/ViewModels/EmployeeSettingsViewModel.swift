@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class EmployeeSettingsViewModel : ObservableObject {
     @Published var id:String
@@ -26,14 +27,13 @@ class EmployeeSettingsViewModel : ObservableObject {
     @Published var email = ""
     @Published var pass = ""
     @Published var selectedAccountType = AccountType.admin
-    @Published var perc:Double = 0
+    @Published var perc:Int = 0
     @Published var active:Bool = false
     
     @Published var isSaving = false
     @Published var isLoading = false
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     
     init(id:String) {
         self.id = id
@@ -49,6 +49,7 @@ class EmployeeSettingsViewModel : ObservableObject {
         DispatchQueue.main.async {
             self.isLoading = true
         }
+        
         do {
             let editUser = try await usersDao.getUser(uId: id).item!
             name = editUser.name
@@ -56,7 +57,7 @@ class EmployeeSettingsViewModel : ObservableObject {
             email = editUser.email
             pass = editUser.pass
             selectedAccountType = AccountType.fromValue(editUser.accountType)!
-            perc = editUser.percentage ?? 0
+            perc = Int((editUser.percentage ?? 0) * 100)
             active = editUser.active
         } catch {
             print(error.localizedDescription)
@@ -87,7 +88,7 @@ class EmployeeSettingsViewModel : ObservableObject {
             let map:[String:Any] = ["name": name,
                                     "phone": phone,
                                     "accountType": selectedAccountType.rawValue,
-                                    "perc": perc,
+                                    "perc": (perc / 100),
                                     "active":active]
             
             try await usersDao.update(id: id, hash: map)
@@ -97,7 +98,7 @@ class EmployeeSettingsViewModel : ObservableObject {
                 self.shouldDismissView = true
             }
         } catch {
-            showToast(error.localizedDescription)
+            showToast(error.localizedDescription.localize())
         }
         
         
@@ -107,8 +108,7 @@ class EmployeeSettingsViewModel : ObservableObject {
         
     }
     
-    func showToast(_ msg: String) {
+    func showToast(_ msg: LocalizedStringKey) {
         self.msg = msg
-        showToast.toggle()
     }
 }

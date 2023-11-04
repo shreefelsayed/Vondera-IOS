@@ -20,7 +20,7 @@ class SalesExcel {
         sheet = book.NewSheet(name)
     }
     
-    func generateReport() {
+    func generateReport() -> URL? {
         // MARK : Create the header
         createHeader(["Order ID", "Name", "Government", "Order Price", "Courier Commission", "COD", "Product Cost", "Sales Commission", "Net Profit", "Statue", "Sold By"])
         
@@ -30,6 +30,8 @@ class SalesExcel {
             
             addRow(rowNumber: (index + 2), items: data)
         }
+        
+        addFinalRow()
               
         // MARK : Create file and save
         let fileid = book.save("\(name).xlsx")
@@ -37,7 +39,40 @@ class SalesExcel {
         print("File path \(fileid)")
         
         let url = URL(fileURLWithPath: fileid)
-        FileUtils().shareFile(url: url)
+        return url
+    }
+    
+    func addFinalRow() {
+        var totalPrice = 0
+        var courierShippingFees = 0
+        var cod = 0
+        var buyingPrice = 0
+        var finalCommission = 0
+        var netProfitFinal = 0
+        
+        listOrders.forEach { order in
+            totalPrice += order.totalPrice
+            courierShippingFees += order.courierShippingFees ?? 0
+            cod += order.COD
+            buyingPrice += order.buyingPrice
+            finalCommission += order.finalCommission
+            netProfitFinal += order.netProfitFinal
+        }
+        
+        let data:[String] = [
+            "\(listOrders.count) Orders",
+            "",
+            "",
+            "\(totalPrice) LE",
+            "\(courierShippingFees) LE",
+            "\(cod) LE",
+            "\(buyingPrice) LE",
+            "\(finalCommission) LE",
+            "\(netProfitFinal) LE",
+            "",
+            ""]
+        
+        addRow(rowNumber: listOrders.count + 2, items: data)
     }
     
     func createHeader(_ items:[String]) {

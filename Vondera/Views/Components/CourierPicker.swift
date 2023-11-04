@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CourierPicker: View {
-    let storeId:String
     @State var items = [Courier]()
     @Binding var selectedOption: Courier?
     @Environment(\.presentationMode) var presentationMode
@@ -31,9 +30,13 @@ struct CourierPicker: View {
             }
         }
         .navigationTitle("Select Courier")
-        .onAppear {
-            Task {
-                items = try! await CouriersDao(storeId: storeId).getByVisibility()
+        .task {
+            if let storeId = UserInformation.shared.user?.storeId {
+                if let items = try? await CouriersDao(storeId: storeId).getByVisibility() {
+                    DispatchQueue.main.async {
+                        self.items = items
+                    }
+                }
             }
         }
     }

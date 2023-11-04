@@ -10,35 +10,57 @@ import NetworkImage
 
 struct ProductDetails: View {
     @Binding var product:StoreProduct
-    @State var myUser:UserData?
+    var onDelete:((StoreProduct) -> ())?
+    @State var myUser = UserInformation.shared.getUser()
     
+    @State var settings = false
     @Environment(\.presentationMode) private var presentationMode
-
+    
     
     var body: some View {
+        
+        
         ScrollView(showsIndicators: false) {
             VStack (alignment: .leading) {
                 ZStack (alignment: .bottom){
                     NavigationLink(destination: FullScreenImageView(imageURLs: product.listPhotos)) {
-                        SlideNetworkView(imageUrls: product.listPhotos)
+                        SlideNetworkView(imageUrls: product.listPhotos, autoChange: true)
+                            .id(product.id)
                     }
                     
                     HStack {
                         VStack(alignment: .leading) {
                             VStack(alignment: .leading) {
-                                Text(product.name.uppercased())
-                                    .font(.title2)
-                                    .bold()
-                                    .foregroundColor(.white)
+                                HStack {
+                                    Text(product.name.uppercased())
+                                        .font(.title2)
+                                        .bold()
+                                        .foregroundColor(.white)
+                                    
+                                    Spacer()
+                                    
+                                    Image(systemName: (product.visible ?? true) ? "eye" : "eye.slash")
+                                        .foregroundStyle(.white)
+                                }
+                                
                                 
                                 Text(product.categoryName?.uppercased() ?? "None")
                                     .font(.title3)
                                     .foregroundColor(.white.opacity(0.8))
                                 
+                                HStack {
+                                    if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
+                                        Text("\(Int(crossedPrice)) LE")
+                                            .foregroundColor(.white)
+                                            .font(.body)
+                                            .strikethrough()
+                                    }
+                                    
+                                    Text("\(Int(product.price)) LE")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
                                 
-                                Text("\(Int(product.price)) LE")
-                                    .foregroundColor(.white)
-                                    .font(.headline)
                             }
                             .padding(.horizontal)
                         }
@@ -69,10 +91,7 @@ struct ProductDetails: View {
                         
                         Spacer().frame(height: 8)
                         
-                        let description = product.desc ?? ""
-                        let isEmptyOrBlank = description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                        
-                        Text(isEmptyOrBlank ? "No Description provided" : description)
+                        Text((product.desc?.isBlank ?? true) ? "No Description provided".localize() : (product.desc ?? "").localize())
                             .font(.body)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.leading)
@@ -82,7 +101,7 @@ struct ProductDetails: View {
                     
                     
                     // MARK : Product Varients
-                    if product.hashVarients != nil && !product.hashVarients!.isEmpty {
+                    if let options = product.hashVarients, !options.isEmpty  {
                         VStack(alignment: .leading) {
                             Text("Varients")
                                 .font(.title2)
@@ -91,25 +110,25 @@ struct ProductDetails: View {
                             
                             Spacer().frame(height: 8)
                             
-                            if product.hashVarients != nil {
-                                ForEach(product.hashVarients!, id: \.self) { hash in
-                                    VStack {
-                                        HStack {
-                                            Text("\(hash.keys.first?.capitalizeFirstLetter() ?? "")")
-                                                .font(.headline)
-                                                .bold()
-                                            
-                                            Spacer()
-                                            
-                                            Text("\(getVarientOptions(hash: hash))")
-                                            
-                                        }
+                            
+                            ForEach(options, id: \.self) { hash in
+                                VStack {
+                                    HStack {
+                                        Text("\(hash.keys.first?.capitalizeFirstLetter() ?? "")")
+                                            .font(.headline)
+                                            .bold()
                                         
-                                        Divider()
+                                        Spacer()
+                                        
+                                        Text("\(getVarientOptions(hash: hash))")
+                                        
                                     }
                                     
+                                    Divider()
                                 }
+                                
                             }
+                            
                             
                         }
                         
@@ -155,57 +174,79 @@ struct ProductDetails: View {
                     //MARK : Settings
                     if (myUser?.canAccessAdmin ?? false) {
                         HStack {
-                            Spacer()
-                            
-                            NavigationLink("Settings") {
-                                ProductSettings(product: product, onDeleted: { value in
-                                    self.presentationMode.wrappedValue.dismiss()
-                                })
+                            VStack(alignment: .leading) {
+                                Text("Margin")
+                                    .bold()
+                                
+                                Text("\(product.getMargin())%")
                             }
+                            .padding(24)
+                            .background(.secondary.opacity(0.2))
+                            .cornerRadius(12)
                             
-                            Spacer()
+                            VStack(alignment: .leading) {
+                                Text("Profit")
+                                    .bold()
+                                
+                                Text("EGP \(product.getProfit())")
+                            }
+                            .padding(24)
+                            .background(.secondary.opacity(0.2))
+                            .cornerRadius(12)
                         }
                     }
                 }
-                .frame(maxWidth: .infinity)
                 .padding()
             }
-            .frame(maxWidth: .infinity)
         }
         .refreshable {
             await refreshProduct()
         }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if (myUser?.store?.websiteEnabled ?? false) {
-                    if let storeUrl =  myUser?.store?.storeLink() {
-                        ShareLink(item: product.getProductLink(storeLink: storeUrl)) {
-                            Image(systemName : "square.and.arrow.up.fill")
-                                .font(.title2)
-                                .bold()
-                        }
-                        .buttonStyle(.plain)
+        .sheet(isPresented: $settings) {
+            NavigationStack {
+                ProductSettings(product: product, onDeleted: { value in
+                    if let onDelete = onDelete {
+                        onDelete(value)
                     }
-                }
+                    self.presentationMode.wrappedValue.dismiss()
+                })
             }
         }
-        .task {
-            if let user = UserInformation.shared.getUser() {
-                self.myUser = user
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    if (myUser?.store?.websiteEnabled ?? false) && (product.visible ?? true) {
+                        if let storeUrl =  myUser?.store?.merchantId {
+                            ShareLink(item: product.getProductLink(mId: storeUrl)) {
+                                Label("Share Product", systemImage: "square.and.arrow.up")
+                            }
+                            
+                            Link(destination: product.getProductLink(mId: storeUrl)) {
+                                Label("Visit Product", systemImage: "link")
+                            }
+                        }
+                    }
+                    
+                    if (myUser?.canAccessAdmin ?? false) {
+                        Button {
+                            settings.toggle()
+                        } label: {
+                            Label("Options", systemImage: "gearshape")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
+                }
             }
         }
         .navigationTitle("Product info")
     }
     
     func refreshProduct() async {
-        do {
-            if let productData = try await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
-                DispatchQueue.main.async {
-                    self.product = productData
-                }
+        if let productData = try? await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
+            DispatchQueue.main.async {
+                self.product = productData
             }
-        } catch {
-            print(error.localizedDescription)
         }
     }
     

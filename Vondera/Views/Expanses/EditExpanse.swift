@@ -18,7 +18,7 @@ struct EditExpanse: View {
     @State private var desc = ""
     
     @State private var isSaving = false
-    @State private var msg:String?
+    @State private var msg:LocalizedStringKey?
     @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
@@ -32,7 +32,7 @@ struct EditExpanse: View {
         .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: msg)
+                       title: msg?.toString())
         }
         .task {
             price = expanse.amount
@@ -70,7 +70,7 @@ struct EditExpanse: View {
             }
             
         } catch {
-            msg = error.localizedDescription
+            msg = error.localizedDescription.localize()
             isSaving = false
         }
     }

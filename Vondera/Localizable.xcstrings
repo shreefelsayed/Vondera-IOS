@@ -1,5 +1,7342 @@
 {
   "sourceLanguage" : "en",
-  "strings" : {},
+  "strings" : {
+    "" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    " , %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    " and our " : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "و"
+          }
+        }
+      }
+    },
+    "-" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "- %lld EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- %lld جنيه"
+          }
+        }
+      }
+    },
+    "-%lld LE" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- %lld جنيه"
+          }
+        }
+      }
+    },
+    "(Delivered Order / Total Orders finished) * 100" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(الطلبات التي تم تسليمها / اجمالي عدد الطلبات المنتهيه) x ١٠٠"
+          }
+        }
+      }
+    },
+    "@%@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "#%@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%@ at %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ في %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ at %2$@"
+          }
+        }
+      }
+    },
+    "%@ Report" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير %@"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@، %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@'s website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع %@"
+          }
+        }
+      }
+    },
+    "%@%%" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld " : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld %%" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld 📦" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "%lld Attachment" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld مرفق"
+          }
+        }
+      }
+    },
+    "%lld days ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %lld يوم"
+          }
+        }
+      }
+    },
+    "%lld EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld جنيه"
+          }
+        }
+      }
+    },
+    "%lld hrs ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %lld ساعه"
+          }
+        }
+      }
+    },
+    "%lld Items added" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه %lld منتج"
+          }
+        }
+      }
+    },
+    "%lld LE" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld جنيه"
+          }
+        }
+      }
+    },
+    "%lld LE / Monthly" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld جنيه / شهري"
+          }
+        }
+      }
+    },
+    "%lld Markets" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld اسواق"
+          }
+        }
+      }
+    },
+    "%lld mins ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %lld دقيقه"
+          }
+        }
+      }
+    },
+    "%lld months ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %lld شهر"
+          }
+        }
+      }
+    },
+    "%lld Of %lld Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld من %2$lld طلب"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Of %2$lld Orders"
+          }
+        }
+      }
+    },
+    "%lld Of %lld Used" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدم %1$lld من %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld Of %2$lld Used"
+          }
+        }
+      }
+    },
+    "%lld Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld طلب"
+          }
+        }
+      }
+    },
+    "%lld Orders / month" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld اوردر شهري"
+          }
+        }
+      }
+    },
+    "%lld Orders with Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld طلب مع المندوب"
+          }
+        }
+      }
+    },
+    "%lld Pieces" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld قطعه"
+          }
+        }
+      }
+    },
+    "%lld seconds ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %lld ثانيه"
+          }
+        }
+      }
+    },
+    "%lld Selected Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld طلب"
+          }
+        }
+      }
+    },
+    "%lld Team members" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حتي %lld شخص في فريقك"
+          }
+        }
+      }
+    },
+    "%lld Views" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld مشاهده"
+          }
+        }
+      }
+    },
+    "%lld Visits" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld زياره"
+          }
+        }
+      }
+    },
+    "%lld x %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld x %2$lld"
+          }
+        }
+      }
+    },
+    "%lld yrs ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ %lld سنه"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "+ %lld EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld جنيه"
+          }
+        }
+      }
+    },
+    "+%lld LE" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld جنيه"
+          }
+        }
+      }
+    },
+    "$ %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "1 day ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ يوم"
+          }
+        }
+      }
+    },
+    "1 hr ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ ساعه"
+          }
+        }
+      }
+    },
+    "1 min ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ دقيقه"
+          }
+        }
+      }
+    },
+    "1 month ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ شهر"
+          }
+        }
+      }
+    },
+    "1 yr ago" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منذ عام"
+          }
+        }
+      }
+    },
+    "100%" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "١٠٠٪"
+          }
+        }
+      }
+    },
+    "About app" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عن التطبيق"
+          }
+        }
+      }
+    },
+    "Accept Prepaid Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قبول الطلبات مسبوقه الدفع"
+          }
+        }
+      }
+    },
+    "Access" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الصلاحيات"
+          }
+        }
+      }
+    },
+    "Access apis" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوصول للنقط الربط بالسيرفر"
+          }
+        }
+      }
+    },
+    "Access our api and end-points and webhooks" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربط عن طريق الAPI خالص ب فونديرا، و التوصيل بمتجر شوبيفاي"
+          }
+        }
+      }
+    },
+    "Access your shoppers data, and export it to excel file" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك الوصول لبيانات المتسوقين، و استخراجها في ملف اكسيل"
+          }
+        }
+      }
+    },
+    "Account Active" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحساب مفعل"
+          }
+        }
+      }
+    },
+    "Account Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الحساب"
+          }
+        }
+      }
+    },
+    "Account Type" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نوع الحساب"
+          }
+        }
+      }
+    },
+    "Actions" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاختيارات"
+          }
+        }
+      }
+    },
+    "Active" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه"
+          }
+        }
+      }
+    },
+    "Add a description for your expanse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف وصف للمصروف الخاص بك"
+          }
+        }
+      }
+    },
+    "Add Attachments" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه مرفقات"
+          }
+        }
+      }
+    },
+    "Add Comment" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه تعليق"
+          }
+        }
+      }
+    },
+    "Add comment to order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف تعليق للطلب"
+          }
+        }
+      }
+    },
+    "Add item" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه منتج"
+          }
+        }
+      }
+    },
+    "Add new Comment" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف تعليق جديد"
+          }
+        }
+      }
+    },
+    "Add Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه منتجات"
+          }
+        }
+      }
+    },
+    "Add to cart" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف للسله"
+          }
+        }
+      }
+    },
+    "Add to Cart" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف الي السله"
+          }
+        }
+      }
+    },
+    "Add to stock" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف للمخزن"
+          }
+        }
+      }
+    },
+    "Add unlimited products number for free" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم باضافه عدد لا نهائي من المنتجات مجانا"
+          }
+        }
+      }
+    },
+    "Add your categories" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف تصنيفات منتجاتك"
+          }
+        }
+      }
+    },
+    "Add your couriers info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف بيانات المندوب"
+          }
+        }
+      }
+    },
+    "Add your first product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف منتجك الاول الي المتجر"
+          }
+        }
+      }
+    },
+    "Add your store logo" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف شعار (لوجو) متجرك"
+          }
+        }
+      }
+    },
+    "Add your supported shipping areas" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم باضافه مصاريف شحن المناطق"
+          }
+        }
+      }
+    },
+    "Added to cart" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الاضافه للسله"
+          }
+        }
+      }
+    },
+    "Address" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنوان"
+          }
+        }
+      }
+    },
+    "Address : %@ - %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنوان : %1$@ - %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Address : %1$@ - %2$@"
+          }
+        }
+      }
+    },
+    "Admin" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إدارة"
+          }
+        }
+      }
+    },
+    "After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعد الشراكة بين Vondera وشركة Agel، يمكنك شراء السلع من أي مورد تختاره والدفع من خلال محفظة Agel Cash. يمكنك أيضًا تمويل سعر السلع لشركة Agel مقابل رسم صغير بنسبة 1.5% من مبلغ الفاتورة. رصيد محفظتك في Agel يعتمد على حجم مبيعاتك."
+          }
+        }
+      }
+    },
+    "Agel Wallet" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محفظة أجل"
+          }
+        }
+      }
+    },
+    "All Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جميع الطلبات"
+          }
+        }
+      }
+    },
+    "All Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جميع المنتجات"
+          }
+        }
+      }
+    },
+    "All Store Orders 📦" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات المتجر 📦"
+          }
+        }
+      }
+    },
+    "Almost Out" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قارب علي الانتهاء"
+          }
+        }
+      }
+    },
+    "Always Stokced" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دائما بالمخزن"
+          }
+        }
+      }
+    },
+    "Amount" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكميه"
+          }
+        }
+      }
+    },
+    "Amount to add" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكميه التي سيتم اضافتها"
+          }
+        }
+      }
+    },
+    "Another Phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم هاتف اخر"
+          }
+        }
+      }
+    },
+    "API Key" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "App Access" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صلاحيات التطبيق"
+          }
+        }
+      }
+    },
+    "App Admin" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب اداره"
+          }
+        }
+      }
+    },
+    "App Language" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لغه التطبيق"
+          }
+        }
+      }
+    },
+    "App Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات التطبيق"
+          }
+        }
+      }
+    },
+    "App Version" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاصدار"
+          }
+        }
+      }
+    },
+    "Apple" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أبل"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete the order ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متاكد من انك تريد حذف هذا الطلب ؟"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this category ? your products won't be deleted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متأكد أنك ترغب في حذف هذا الفئة؟ منتجاتك لن تتم حذفها."
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this code ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل انت متأكد انك تريد حذف هذا الكود ؟"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this page ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل تريد حذف هذه الصفحه ؟"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete this product ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل انت متأكد من انك تريد حذف المنتج ؟"
+          }
+        }
+      }
+    },
+    "Are you sure you want to delete your accont ? this will delete all of your data, we can't recover them later." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متأكد أنك ترغب في حذف حسابك؟ سيتم حذف جميع بياناتك، ولن يتمكن من استعادتها لاحقًا."
+          }
+        }
+      }
+    },
+    "Areas and shipping fees" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المناطق و مصاريف الشحن"
+          }
+        }
+      }
+    },
+    "Armjld Co." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Armjld Co."
+          }
+        }
+      }
+    },
+    "Assemble orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجهيز الاوردرات للشحن"
+          }
+        }
+      }
+    },
+    "Assembled" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاهز"
+          }
+        }
+      }
+    },
+    "Assign Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسليم الاوردرات للمندوب"
+          }
+        }
+      }
+    },
+    "Assign orders to courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسليم الاوردرات للمندوب"
+          }
+        }
+      }
+    },
+    "Assign to Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسليم للمندوب"
+          }
+        }
+      }
+    },
+    "Assigned to courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعيين مندوب توصيل"
+          }
+        }
+      }
+    },
+    "At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب على الأقل اختيار صورة واحدة للمنتج الخاص بك، يمكنك اختيار ما يصل إلى 6 صور. يرجى ملاحظة أنه يمكنك تنزيلها لاحقًا بسهولة."
+          }
+        }
+      }
+    },
+    "Attachments" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المرفقات"
+          }
+        }
+      }
+    },
+    "Auth Credntials" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات تسجيل الدخول"
+          }
+        }
+      }
+    },
+    "Available Balance" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرصيد المتاح"
+          }
+        }
+      }
+    },
+    "Business phone number" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم هاتف العمل"
+          }
+        }
+      }
+    },
+    "By : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بواسطه : %@"
+          }
+        }
+      }
+    },
+    "By signing in, you agree to our " : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بتسجيل الدخول ف انت موافق علي"
+          }
+        }
+      }
+    },
+    "By turning this off you will disable adding any order to this courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "من خلال إيقاف هذا الخيار، ستقوم بتعطيل إمكانية إضافة أي طلب إلى هذه الشركة النقل."
+          }
+        }
+      }
+    },
+    "Can your employees accounts reset orders to the intial state ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل يمكن لحسابات موظفيك إعادة ضبط الطلبات إلى الحالة الأولية؟"
+          }
+        }
+      }
+    },
+    "Can't open package label" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملصق عدم فتح الشحنه"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الغاء"
+          }
+        }
+      }
+    },
+    "Cart 🛒" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السله 🛒"
+          }
+        }
+      }
+    },
+    "Cash on Delivery" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التحصيل عند التسليم"
+          }
+        }
+      }
+    },
+    "Cash With Couriers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كاش مع المندوب"
+          }
+        }
+      }
+    },
+    "Categories" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التصنيفات"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصنيف"
+          }
+        }
+      }
+    },
+    "Category Deleted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم حذف التصنيف"
+          }
+        }
+      }
+    },
+    "Category Describtion" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصف التصنيف"
+          }
+        }
+      }
+    },
+    "Category info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات التصنيف"
+          }
+        }
+      }
+    },
+    "Category Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم التصنيف"
+          }
+        }
+      }
+    },
+    "Change app language" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير لغه التطبيق"
+          }
+        }
+      }
+    },
+    "Change Configuration?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير اللغه ؟"
+          }
+        }
+      }
+    },
+    "Change Password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير كلمه السر"
+          }
+        }
+      }
+    },
+    "Change Phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير الهاتف"
+          }
+        }
+      }
+    },
+    "Change Plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير خطتي"
+          }
+        }
+      }
+    },
+    "Change Username" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير اسم المستخدم"
+          }
+        }
+      }
+    },
+    "Chaning your username will cause in changing your website link, are you sure you want to do this" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير اسم المستخدم سيقوم بتغيير رابط موقعك لدينا، هل انت متأكد من انك تريد تغيير اسم المستخدم ؟"
+          }
+        }
+      }
+    },
+    "Check out" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أتمام عمليه الشراء"
+          }
+        }
+      }
+    },
+    "Check the order id" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاكد من رقم الطلب"
+          }
+        }
+      }
+    },
+    "Choose a strong password, it must be 6 chars at least" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل كلمه مرور تكون علي الاقل من ٦ احرف"
+          }
+        }
+      }
+    },
+    "Choose Date" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اهتار التاريخ"
+          }
+        }
+      }
+    },
+    "Choose your category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار التصنيف"
+          }
+        }
+      }
+    },
+    "Choose your contact method" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار طريقه التواصل"
+          }
+        }
+      }
+    },
+    "Choose your language" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار لغتك"
+          }
+        }
+      }
+    },
+    "Choose your package" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار الباقه المناسبه لك"
+          }
+        }
+      }
+    },
+    "Clear cart" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفريغ سله التسوق"
+          }
+        }
+      }
+    },
+    "Click on the below photo to pick your new logo" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضغط علي الصوره لاختيار لوجو جديد"
+          }
+        }
+      }
+    },
+    "Client info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات العميل"
+          }
+        }
+      }
+    },
+    "COD" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاجمالي"
+          }
+        }
+      }
+    },
+    "Code added" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه الكود"
+          }
+        }
+      }
+    },
+    "Code Deleted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم حذف الكود"
+          }
+        }
+      }
+    },
+    "Code Updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تعديل الكود"
+          }
+        }
+      }
+    },
+    "Commission" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العموله"
+          }
+        }
+      }
+    },
+    "Communication" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التواصل"
+          }
+        }
+      }
+    },
+    "Confirm" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأكيد"
+          }
+        }
+      }
+    },
+    "Confirm orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأكيد الطلبات"
+          }
+        }
+      }
+    },
+    "Confirmed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم التاكيد"
+          }
+        }
+      }
+    },
+    "Connect" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توصيل"
+          }
+        }
+      }
+    },
+    "Connect to social media" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توصيل بمواقع التواصل"
+          }
+        }
+      }
+    },
+    "Connect to your webhooks, or to your shopify store using our api end points" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بتوصيل الwebhooks الخاصه بك و متجر شوبيفاي"
+          }
+        }
+      }
+    },
+    "Connected" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم التوصيل"
+          }
+        }
+      }
+    },
+    "Contact" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تواصل"
+          }
+        }
+      }
+    },
+    "Contact Client" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تواصل مع العميل"
+          }
+        }
+      }
+    },
+    "Contact customer service" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تواصل مع خدمه العملاء"
+          }
+        }
+      }
+    },
+    "Copied to clipboard" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم النسخ"
+          }
+        }
+      }
+    },
+    "Copy Order Details" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ بيانات الطلب"
+          }
+        }
+      }
+    },
+    "Copy Order Link" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ لينك الطلب"
+          }
+        }
+      }
+    },
+    "Courier Active" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحساب فعال"
+          }
+        }
+      }
+    },
+    "Courier Added" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه المندوب"
+          }
+        }
+      }
+    },
+    "Courier Contact Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات التواصل مع المندوب"
+          }
+        }
+      }
+    },
+    "Courier Contact Phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم هاتف المندوب"
+          }
+        }
+      }
+    },
+    "Courier Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المندوب"
+          }
+        }
+      }
+    },
+    "Courier info changed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تغيير بيانات المندوب"
+          }
+        }
+      }
+    },
+    "Courier Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المندوب"
+          }
+        }
+      }
+    },
+    "Courier Orders 🛵" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات المندوب 🛵"
+          }
+        }
+      }
+    },
+    "Courier Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات المندوب"
+          }
+        }
+      }
+    },
+    "Couriers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المناديب"
+          }
+        }
+      }
+    },
+    "Couriers 🛵" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المناديب 🛵"
+          }
+        }
+      }
+    },
+    "Cover photos" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صور الغلاف"
+          }
+        }
+      }
+    },
+    "Create" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه"
+          }
+        }
+      }
+    },
+    "Create Employee" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه موظف"
+          }
+        }
+      }
+    },
+    "Create New Store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه متجر جديد"
+          }
+        }
+      }
+    },
+    "Create Product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف المنتج"
+          }
+        }
+      }
+    },
+    "Create your first order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بأضافه طلبك الاول"
+          }
+        }
+      }
+    },
+    "Created By" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انشئ بواسطه"
+          }
+        }
+      }
+    },
+    "Crossed Price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السعر المظطوب"
+          }
+        }
+      }
+    },
+    "Current Cashback" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكاش باك الحالي"
+          }
+        }
+      }
+    },
+    "Current Password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمه المرور الحاليه"
+          }
+        }
+      }
+    },
+    "Current plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخطه الحاليه"
+          }
+        }
+      }
+    },
+    "Custom Pages" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صفحات مخصصه"
+          }
+        }
+      }
+    },
+    "Custom Receipt Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نص مخصص علي الفاتوره"
+          }
+        }
+      }
+    },
+    "Custom Receipt Text" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رساله مخصصه علي الفاتوره"
+          }
+        }
+      }
+    },
+    "Custom text" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تخصيص نص"
+          }
+        }
+      }
+    },
+    "Customers can prepaid out of stock products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن طلب المنتجات المنتهيه من الموقع"
+          }
+        }
+      }
+    },
+    "Customize a text to be printed on any of your receipts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بتخصيص رساله سيتم طباعتها علي كل الفواتير"
+          }
+        }
+      }
+    },
+    "Customize receipt" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل علي الفاتوره"
+          }
+        }
+      }
+    },
+    "Dashboard" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لوحه التحكم"
+          }
+        }
+      }
+    },
+    "Dashboard 💼" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لوحه التحكم 💼"
+          }
+        }
+      }
+    },
+    "Date Range" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نطاق التاريخ"
+          }
+        }
+      }
+    },
+    "Default Payment Gateway" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بوابه الدفع الحاليه"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف"
+          }
+        }
+      }
+    },
+    "Delete Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف التصنيف"
+          }
+        }
+      }
+    },
+    "Delete my account" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف حسابي"
+          }
+        }
+      }
+    },
+    "Delete Order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف الطلب"
+          }
+        }
+      }
+    },
+    "Delete Product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف المنتج"
+          }
+        }
+      }
+    },
+    "Delete Varient" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف الخيار"
+          }
+        }
+      }
+    },
+    "Delete your account" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف حسابك"
+          }
+        }
+      }
+    },
+    "Deleted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محذوف"
+          }
+        }
+      }
+    },
+    "Deleted by us" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم حذف الطلب"
+          }
+        }
+      }
+    },
+    "Deleted Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات المحذوفه"
+          }
+        }
+      }
+    },
+    "Deleted Orders Notificaton" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشعارات الطلبات المحذوفه"
+          }
+        }
+      }
+    },
+    "Deleted User" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف المستخدم"
+          }
+        }
+      }
+    },
+    "Deliver orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسليم الطلبات"
+          }
+        }
+      }
+    },
+    "Delivered" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم التسليم"
+          }
+        }
+      }
+    },
+    "Delivered to the client" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سلم للعميل"
+          }
+        }
+      }
+    },
+    "Delivery Success Rate" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسبه التسليمات الناجحه"
+          }
+        }
+      }
+    },
+    "Deposit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عربون"
+          }
+        }
+      }
+    },
+    "Describe what is this expanses for ex (Marketing fees, employee salary)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل وصف الصرف"
+          }
+        }
+      }
+    },
+    "Description" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوصف"
+          }
+        }
+      }
+    },
+    "Dicount must be between 1 and 100" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخصم يجب ان يكون بين ١ الي ١٠٠"
+          }
+        }
+      }
+    },
+    "Discount" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خصم"
+          }
+        }
+      }
+    },
+    "Discount Code" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كود خصم"
+          }
+        }
+      }
+    },
+    "Discount Codes" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكواد خصم"
+          }
+        }
+      }
+    },
+    "Display a can't open this package label on the orders receipt" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عرض ملصق \"لا يمكن فتح هذه الحزمة\" على إيصال الطلبات."
+          }
+        }
+      }
+    },
+    "Don't have a paytab account ? Sign Up now !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد لديك حساب في باي تابس ؟ قم بالتسجيل الان"
+          }
+        }
+      }
+    },
+    "Don't have an account ? " : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد لديك حساب ؟"
+          }
+        }
+      }
+    },
+    "Download %lld attachments" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحميل %lld مرفق"
+          }
+        }
+      }
+    },
+    "Download attachments" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحميل المرفقات"
+          }
+        }
+      }
+    },
+    "Ecommerce Website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع الكتروني مخصص"
+          }
+        }
+      }
+    },
+    "Edit Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل التصنيف"
+          }
+        }
+      }
+    },
+    "Edit Client Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل بيانات العميل"
+          }
+        }
+      }
+    },
+    "Edit Code" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل الكود"
+          }
+        }
+      }
+    },
+    "Edit Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل بيانات المندوب"
+          }
+        }
+      }
+    },
+    "Edit Employee" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل بيانات الموظف"
+          }
+        }
+      }
+    },
+    "Edit Expanse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل المصروف"
+          }
+        }
+      }
+    },
+    "Edit Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل البيانات"
+          }
+        }
+      }
+    },
+    "Edit my info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل بياناتي"
+          }
+        }
+      }
+    },
+    "Edit Order Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل بيانات الطلب"
+          }
+        }
+      }
+    },
+    "Edit Page" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل الصفحه"
+          }
+        }
+      }
+    },
+    "Edit Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل المنتج"
+          }
+        }
+      }
+    },
+    "EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جنيه"
+          }
+        }
+      }
+    },
+    "EGP %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld جنيه"
+          }
+        }
+      }
+    },
+    "Email address" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البريد الالكتروني"
+          }
+        }
+      }
+    },
+    "Email Address" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البريد الالكتروني"
+          }
+        }
+      }
+    },
+    "Email address : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البريد الالكتروني : %@"
+          }
+        }
+      }
+    },
+    "Employee" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موظف"
+          }
+        }
+      }
+    },
+    "Employee Added" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه الموظف"
+          }
+        }
+      }
+    },
+    "Employee info changed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تعديل بيانات الموظف"
+          }
+        }
+      }
+    },
+    "Employees" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موظفون"
+          }
+        }
+      }
+    },
+    "Employees 🧑‍💼" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موظفون 🧑‍💼"
+          }
+        }
+      }
+    },
+    "Employees can reset orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن للموظف ارجاع حاله الاوردر"
+          }
+        }
+      }
+    },
+    "Enable Attachments" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه مرفقات"
+          }
+        }
+      }
+    },
+    "Enable Ordering" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن قبول الطلبات"
+          }
+        }
+      }
+    },
+    "Enable sending a WhatsApp message to your client from your phone, once the order is submitted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمكين إرسال رسالة واتساب للعميل من هاتفك بمجرد تقديم الطلب."
+          }
+        }
+      }
+    },
+    "Enable this to optionlly not require address when sumbiting an order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمكين هذا الخيار لجعل العنوان اختياري عند تقديم الطلب."
+          }
+        }
+      }
+    },
+    "Enabling this will not track your items in the warehouse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمكين هذا الخيار سيقوم بعدم تتبع العناصر في المستودع."
+          }
+        }
+      }
+    },
+    "English" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    },
+    "Enter a valid amount" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل مبلغ صحيح"
+          }
+        }
+      }
+    },
+    "Enter a valid commission percentage" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل عموله التسويق"
+          }
+        }
+      }
+    },
+    "Enter a valid email address" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل بريد الكتروني صحيح"
+          }
+        }
+      }
+    },
+    "Enter a valid employee email" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل بريد الكتروني سليم"
+          }
+        }
+      }
+    },
+    "Enter a valid password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل كلمه مرور صحيه"
+          }
+        }
+      }
+    },
+    "Enter a valid username" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم مستخدم سليم"
+          }
+        }
+      }
+    },
+    "Enter how many pieces you want to add to your stock" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كم عدد القطع التي ترغب باضافتها للمخزن"
+          }
+        }
+      }
+    },
+    "Error Happened" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حصل خطأ ما"
+          }
+        }
+      }
+    },
+    "Every package has orders quote, select the most suitable one for you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كل باقه لديها سعه الطلبات الخاصه بها، اختر الباقه المناسبه لحجم عملك"
+          }
+        }
+      }
+    },
+    "Expanses" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المصروفات"
+          }
+        }
+      }
+    },
+    "Expanses 💳" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المصروفات 💳"
+          }
+        }
+      }
+    },
+    "Expanses records" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل المصروفات"
+          }
+        }
+      }
+    },
+    "Expanses Reports" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير المصروفات"
+          }
+        }
+      }
+    },
+    "Expanses reports from %@ to %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير المصروفات من %1$@ الي %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Expanses reports from %1$@ to %2$@"
+          }
+        }
+      }
+    },
+    "Expire Date" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ الانتهاء"
+          }
+        }
+      }
+    },
+    "Facebook" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فيس بوك"
+          }
+        }
+      }
+    },
+    "Facebook Link" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب الفيس بوك"
+          }
+        }
+      }
+    },
+    "Failed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرتجع"
+          }
+        }
+      }
+    },
+    "Failed to delivered the order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل في تسليم الطلب"
+          }
+        }
+      }
+    },
+    "Featured Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات المميزه"
+          }
+        }
+      }
+    },
+    "Fill all the data" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "املئ البيانات"
+          }
+        }
+      }
+    },
+    "Fill from recent products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملئ من اخر المنتجات"
+          }
+        }
+      }
+    },
+    "Fill the courier name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم المندوب"
+          }
+        }
+      }
+    },
+    "Fill the Courier name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم المندوب"
+          }
+        }
+      }
+    },
+    "Fill the courier phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل رقم هاتف المندوب"
+          }
+        }
+      }
+    },
+    "Fill the Courier phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل رقم هاتف المندوب"
+          }
+        }
+      }
+    },
+    "Fill the Employee name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم الموظف"
+          }
+        }
+      }
+    },
+    "Fill the Employee phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل رقم هاتف الموظف"
+          }
+        }
+      }
+    },
+    "Fill your store name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم متجرك"
+          }
+        }
+      }
+    },
+    "Finished Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات المنتهيه"
+          }
+        }
+      }
+    },
+    "Finished Orders ✅" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات المنتيه ✅"
+          }
+        }
+      }
+    },
+    "Forget Password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استرجاع كلمه المرور"
+          }
+        }
+      }
+    },
+    "Forget Password ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسيت كلمه المرور ؟"
+          }
+        }
+      }
+    },
+    "From" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "من"
+          }
+        }
+      }
+    },
+    "Full Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم بالكامل"
+          }
+        }
+      }
+    },
+    "Google" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جوجل"
+          }
+        }
+      }
+    },
+    "Government" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المحافظة"
+          }
+        }
+      }
+    },
+    "Hello again! 👋" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اهلا مجددا 👋"
+          }
+        }
+      }
+    },
+    "Help us expand and get a free subscribtion, by refferring other stores you will gain cashback from each payment they make which is used automaticlky to renew your monthly subscribtion." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ساعدنا في التوسع واحصل على اشتراك مجاني، من خلال الإحالة على المزيد من المتاجر، ستحصل على استرداد نقدي من كل دفعة يقومون بها، والذي سيتم استخدامه تلقائيًا لتجديد اشتراكك الشهري."
+          }
+        }
+      }
+    },
+    "Home" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرئيسية"
+          }
+        }
+      }
+    },
+    "How much have you spents" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كم صرفت"
+          }
+        }
+      }
+    },
+    "If one of Vondera team invited you, enter his refer code" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لو تم دعوتك من اي شخص، قم بإدخال كود الدعوه الخاصه به"
+          }
+        }
+      }
+    },
+    "Image Load Error" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشكله في تحميل الصوره"
+          }
+        }
+      }
+    },
+    "In Stock" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في المخزن"
+          }
+        }
+      }
+    },
+    "Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البيانات"
+          }
+        }
+      }
+    },
+    "Info updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تعديل البيانات"
+          }
+        }
+      }
+    },
+    "Instagram Link" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب الانستجرام"
+          }
+        }
+      }
+    },
+    "Item Added" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه المنتج"
+          }
+        }
+      }
+    },
+    "Items" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات"
+          }
+        }
+      }
+    },
+    "Just now" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الان"
+          }
+        }
+      }
+    },
+    "Last Order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخر طلب"
+          }
+        }
+      }
+    },
+    "Last order %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخر طلب %@"
+          }
+        }
+      }
+    },
+    "Last Order Date" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ اخر طلب"
+          }
+        }
+      }
+    },
+    "Last Ordered" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخر الطلبات"
+          }
+        }
+      }
+    },
+    "Later" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لاحقا"
+          }
+        }
+      }
+    },
+    "Latest Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخر الطلبات"
+          }
+        }
+      }
+    },
+    "Latest Updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخر التحديثات"
+          }
+        }
+      }
+    },
+    "Link" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لينك"
+          }
+        }
+      }
+    },
+    "Live website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل الموقع"
+          }
+        }
+      }
+    },
+    "Local Whatsapp" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "واتس اب الجهاز"
+          }
+        }
+      }
+    },
+    "Log Out" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الخروج"
+          }
+        }
+      }
+    },
+    "Logged in" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسجل حاليا"
+          }
+        }
+      }
+    },
+    "Login Credintals" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات تسجيل الدخول"
+          }
+        }
+      }
+    },
+    "Login Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الدخول"
+          }
+        }
+      }
+    },
+    "Logo" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الشعار"
+          }
+        }
+      }
+    },
+    "Low Stocks Indecator" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المنتج قبل الانتهاء"
+          }
+        }
+      }
+    },
+    "Main info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البيانات الاساسيه"
+          }
+        }
+      }
+    },
+    "Margin" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هامش الربح"
+          }
+        }
+      }
+    },
+    "MarketPlaces" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المعارض"
+          }
+        }
+      }
+    },
+    "max use number must be more than zero" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكثر عدد الاستخدام، يجب ان لا يكون صفر"
+          }
+        }
+      }
+    },
+    "Max Uses" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكثر عدد للاستخدام"
+          }
+        }
+      }
+    },
+    "Min Quantity" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اقل كميه"
+          }
+        }
+      }
+    },
+    "Monthly Limit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحد الشهري"
+          }
+        }
+      }
+    },
+    "More options" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المزيد من الاعدادات"
+          }
+        }
+      }
+    },
+    "Most Selling" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاكثر مبيعا"
+          }
+        }
+      }
+    },
+    "Most Selling Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات الاكثر مبيعا"
+          }
+        }
+      }
+    },
+    "Most viewed items" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات الاكثر مشاهده"
+          }
+        }
+      }
+    },
+    "My Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلباتي"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم"
+          }
+        }
+      }
+    },
+    "Name : %@ - Phone Number : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم : %1$@ - رقم الهاتف : %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Name : %1$@ - Phone Number : %2$@"
+          }
+        }
+      }
+    },
+    "Name & Slogan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم و الشعار"
+          }
+        }
+      }
+    },
+    "Name and Slogan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم و الشعار"
+          }
+        }
+      }
+    },
+    "Navigate" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتقل"
+          }
+        }
+      }
+    },
+    "Net Profit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صافي الربح"
+          }
+        }
+      }
+    },
+    "Net profit is the orders profit - expanses" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صافي الربح - المصروفات"
+          }
+        }
+      }
+    },
+    "New" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جديد"
+          }
+        }
+      }
+    },
+    "New Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصنيف جديد"
+          }
+        }
+      }
+    },
+    "New Category Added" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه التصنيف"
+          }
+        }
+      }
+    },
+    "New Code" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كود جديد"
+          }
+        }
+      }
+    },
+    "New Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مندوب جديد"
+          }
+        }
+      }
+    },
+    "New Expanse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل مصروف"
+          }
+        }
+      }
+    },
+    "New Option" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خيار جديد"
+          }
+        }
+      }
+    },
+    "New Order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلب جديد"
+          }
+        }
+      }
+    },
+    "New Order Complaint Notificaton" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشعار شكاوي الطلبات"
+          }
+        }
+      }
+    },
+    "New Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات جديده"
+          }
+        }
+      }
+    },
+    "New Orders Notificaton" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشعار الطلبات الجديد"
+          }
+        }
+      }
+    },
+    "New Page" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صفحه جديده"
+          }
+        }
+      }
+    },
+    "New Password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمه المرور الجديده"
+          }
+        }
+      }
+    },
+    "New Product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلب جديد"
+          }
+        }
+      }
+    },
+    "Next" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التالي"
+          }
+        }
+      }
+    },
+    "No" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا"
+          }
+        }
+      }
+    },
+    "No categories were added to your store yet !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم اضافه اي تصنيفات الي متجرك بعد"
+          }
+        }
+      }
+    },
+    "No Confirmed orders found" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد اي طلبات مؤكده"
+          }
+        }
+      }
+    },
+    "No custom pages were added to your website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد اي صفحات مضافه الي موقعك"
+          }
+        }
+      }
+    },
+    "No items are in the cart" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد منتجات ف السله"
+          }
+        }
+      }
+    },
+    "No items are in the warehouse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد منتجات في المخزن"
+          }
+        }
+      }
+    },
+    "No new orders found" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد طلبات جديده"
+          }
+        }
+      }
+    },
+    "No notifications" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد إشعارات"
+          }
+        }
+      }
+    },
+    "No one shopped from your store yet :(" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتسوق احد من متجرك بعد"
+          }
+        }
+      }
+    },
+    "No Orders are added by you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تقم بأضافه اي طلب"
+          }
+        }
+      }
+    },
+    "No orders from this marketplace" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد اي طلبات من نقطه البيع"
+          }
+        }
+      }
+    },
+    "No orders to select from" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد طلبات"
+          }
+        }
+      }
+    },
+    "No orders were added to your store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم اضافه اي طلب الي متجرك"
+          }
+        }
+      }
+    },
+    "No orders were deleted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم حذف اي طلب"
+          }
+        }
+      }
+    },
+    "No orders were delivered by this courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم تسليم اي طلبات من المندوب"
+          }
+        }
+      }
+    },
+    "No Products are added to the store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم اضافه اي منتجات الي متجر"
+          }
+        }
+      }
+    },
+    "No products are added to the store yet !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم اضافه اي منتجات للمتجر بعد"
+          }
+        }
+      }
+    },
+    "No Products are featured on the website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد منتجات مميزه علي موقعك"
+          }
+        }
+      }
+    },
+    "No Products are in this category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد منتجات في التصنيف"
+          }
+        }
+      }
+    },
+    "No ready orders found" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد اي طلبات جاهزه"
+          }
+        }
+      }
+    },
+    "No result for your search %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد نتاج بحث ل %lld"
+          }
+        }
+      }
+    },
+    "No Thanks !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا شكرا !"
+          }
+        }
+      }
+    },
+    "Not Paid" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يدفع"
+          }
+        }
+      }
+    },
+    "Note that the courier shipping fees will be detected from your net proft, this is the price that the couriers get for his service for you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يرجى ملاحظة أن رسوم شحن الشركة النقل ستكون مخصومة من صافي الربح الخاص بك، وهذا هو السعر الذي يتلقاه مزودو الخدمة لشحن الطلبات الخاصة بك."
+          }
+        }
+      }
+    },
+    "Notes" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الملاحظات"
+          }
+        }
+      }
+    },
+    "Notification Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الاشعارات"
+          }
+        }
+      }
+    },
+    "Notifications" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاشعارات"
+          }
+        }
+      }
+    },
+    "Number of orders assigned to courier in the time range" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد الاوردرات التي تم تسليمها للمندوب في مده زمنيه"
+          }
+        }
+      }
+    },
+    "Number of orders created in the time range" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد الطلبات التي تم تسجيلها في فتره محدده"
+          }
+        }
+      }
+    },
+    "Number of products sold" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المنتجات المباعه"
+          }
+        }
+      }
+    },
+    "Offline Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات لا تحتاج توصيل"
+          }
+        }
+      }
+    },
+    "On Going Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات جاري تسليمها"
+          }
+        }
+      }
+    },
+    "Online Employees 🧑‍💼" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الموظفون الاونلاين 🧑‍💼"
+          }
+        }
+      }
+    },
+    "Only english lowercased letter, no spaces, no special chatcters" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "احرف انجليزيه بدون مسافات او ارقام"
+          }
+        }
+      }
+    },
+    "Option (Varient)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيار"
+          }
+        }
+      }
+    },
+    "Option %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختيار %lld"
+          }
+        }
+      }
+    },
+    "Option %lld : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيار %1$lld : %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Option %1$lld : %2$@"
+          }
+        }
+      }
+    },
+    "Optional" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختياري"
+          }
+        }
+      }
+    },
+    "Options" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاختيارات"
+          }
+        }
+      }
+    },
+    "Or Login to saved account" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "او تسجيل لحساب مسجل مسبقا"
+          }
+        }
+      }
+    },
+    "Order already with courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلب بالفعل مع المندوب"
+          }
+        }
+      }
+    },
+    "Order assigned to courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه الطلب للمندوب"
+          }
+        }
+      }
+    },
+    "Order By : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلب بواسطه : %@"
+          }
+        }
+      }
+    },
+    "Order confirmed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تأكيد الطلب"
+          }
+        }
+      }
+    },
+    "Order Details" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات الطلب"
+          }
+        }
+      }
+    },
+    "Order doesn't need delivery" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يحتاج شحن"
+          }
+        }
+      }
+    },
+    "Order id doesn't exist" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا الطلب غير موجود"
+          }
+        }
+      }
+    },
+    "Order infos was edited" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تعديل بيانات الطلب"
+          }
+        }
+      }
+    },
+    "Order is deleted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محذوف"
+          }
+        }
+      }
+    },
+    "Order is partial returned" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استرجاع جزئي"
+          }
+        }
+      }
+    },
+    "Order items" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منتجات الطلب"
+          }
+        }
+      }
+    },
+    "Order prepaid" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسبق الدفع"
+          }
+        }
+      }
+    },
+    "order profit * (%lf / 100) \n * Note that if you changed the employee commission it takes effect for the new orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صافي الربح * (%lf / ١٠٠)"
+          }
+        }
+      }
+    },
+    "Order reports for orders assigned to courier from %@ to %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير الطلبات التي تم تسليمها للمندوب من %1$@ الي %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Order reports for orders assigned to courier from %1$@ to %2$@"
+          }
+        }
+      }
+    },
+    "Order reports for orders created from %@ to %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير الطلبات الي تم اضافتها من %1$@ الي %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Order reports for orders created from %1$@ to %2$@"
+          }
+        }
+      }
+    },
+    "Order Statue" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حاله الطلب"
+          }
+        }
+      }
+    },
+    "Order Summery" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملخص الطلب"
+          }
+        }
+      }
+    },
+    "Order Updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث الطلب"
+          }
+        }
+      }
+    },
+    "Order was reseted to intial value" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم استعاده الطلب لحالته الاوليه"
+          }
+        }
+      }
+    },
+    "Order was submitted" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه الطلب"
+          }
+        }
+      }
+    },
+    "Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات"
+          }
+        }
+      }
+    },
+    "Orders %lld" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات %lld"
+          }
+        }
+      }
+    },
+    "Orders Cash" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كاش الطلبات"
+          }
+        }
+      }
+    },
+    "Orders Count" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد الطلبات"
+          }
+        }
+      }
+    },
+    "Orders Profit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربح الطلبات"
+          }
+        }
+      }
+    },
+    "Orders Quote" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باقه الطلبات"
+          }
+        }
+      }
+    },
+    "Orders shipped" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات المشحونه"
+          }
+        }
+      }
+    },
+    "Orders still with Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات ما ذالت مع المندوب"
+          }
+        }
+      }
+    },
+    "Orders to fullfil" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات للتجهيز"
+          }
+        }
+      }
+    },
+    "Other Phone Number" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم هاتف اخر"
+          }
+        }
+      }
+    },
+    "Others" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخري"
+          }
+        }
+      }
+    },
+    "Out For Delivery" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع المندوب"
+          }
+        }
+      }
+    },
+    "Out of stock" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير موجود"
+          }
+        }
+      }
+    },
+    "Out of Stock" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد بالمخزن"
+          }
+        }
+      }
+    },
+    "Overview" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملخص"
+          }
+        }
+      }
+    },
+    "Paid" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الدفع"
+          }
+        }
+      }
+    },
+    "Password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمه المرور"
+          }
+        }
+      }
+    },
+    "Password : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمه المرور : %@"
+          }
+        }
+      }
+    },
+    "Payment" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الدفع"
+          }
+        }
+      }
+    },
+    "Payment Options" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خيارات الدفع"
+          }
+        }
+      }
+    },
+    "Payment Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الدفع"
+          }
+        }
+      }
+    },
+    "Paytabs" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باي تابس"
+          }
+        }
+      }
+    },
+    "Paytabs Gateway" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بوابه دفع باي تابس"
+          }
+        }
+      }
+    },
+    "Pending" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلب جديد"
+          }
+        }
+      }
+    },
+    "Pending Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات الجديده"
+          }
+        }
+      }
+    },
+    "Personal Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البيانات الشخصيه"
+          }
+        }
+      }
+    },
+    "Phone Call" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مكالمه هاتفيه"
+          }
+        }
+      }
+    },
+    "Phone number" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم الهاتف"
+          }
+        }
+      }
+    },
+    "Phone Number" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم الهاتف"
+          }
+        }
+      }
+    },
+    "Plans" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الباقات"
+          }
+        }
+      }
+    },
+    "Please but a describtion for the amount" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل وصف للمبلغ لامصروف"
+          }
+        }
+      }
+    },
+    "Please choose which action you want to make on the orders, note that this action is not reversible" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يرجى اختيار الإجراء الذي ترغب في اتخاذه بشأن الطلبات، ويرجى ملاحظة أن هذا الإجراء لا يمكن عكسه."
+          }
+        }
+      }
+    },
+    "Please enter a valid amount" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل رقم سليم"
+          }
+        }
+      }
+    },
+    "Please enter the category name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم التصنيف"
+          }
+        }
+      }
+    },
+    "Please enter the client address" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء ادخل عنوان العميل"
+          }
+        }
+      }
+    },
+    "Please enter the client name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء ادخال اسم العميل"
+          }
+        }
+      }
+    },
+    "Please enter the client phone" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء ادخال هاتف العميل"
+          }
+        }
+      }
+    },
+    "Please enter the client state" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء ادخال محافظه العميل"
+          }
+        }
+      }
+    },
+    "Please enter your details to sign in" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء ادخال بياناتك لتسجيل الدخول"
+          }
+        }
+      }
+    },
+    "Please make sure you inputed a valid promocode" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأكد من ادخال كود صحيح"
+          }
+        }
+      }
+    },
+    "Please repick the image" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعد اختيار الصوره"
+          }
+        }
+      }
+    },
+    "Please select a category image" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار صوره تعبر عن التصنيف"
+          }
+        }
+      }
+    },
+    "Please select the new logo" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار الشعار الجديد"
+          }
+        }
+      }
+    },
+    "Prepaid" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسبق الدفع"
+          }
+        }
+      }
+    },
+    "Price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السعر"
+          }
+        }
+      }
+    },
+    "Price and cost" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السعر و التكلفه"
+          }
+        }
+      }
+    },
+    "Primary Color" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اللون الاساسي"
+          }
+        }
+      }
+    },
+    "Print a receipt with a QR code for your orders for free" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اطبع فواتير مجانيه لطلباتك برمز الاستجابه السريع"
+          }
+        }
+      }
+    },
+    "Print QR Receipts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طباعه فواتير برمز كيو ار كود"
+          }
+        }
+      }
+    },
+    "Print Receipt" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طباعه فاتوره"
+          }
+        }
+      }
+    },
+    "Print Receipts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طباعه فواتير"
+          }
+        }
+      }
+    },
+    "Print Seller name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طباعه اسم البائع"
+          }
+        }
+      }
+    },
+    "Print the seller name on the receipt of the order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طباعه اسم البائع علي الفاتوره"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سياسه الخصوصيه"
+          }
+        }
+      }
+    },
+    "Product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منتج"
+          }
+        }
+      }
+    },
+    "Product Cost" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تكلفه المنتج"
+          }
+        }
+      }
+    },
+    "Product Describtion" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصف المنتج"
+          }
+        }
+      }
+    },
+    "Product Description" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصف المنتج"
+          }
+        }
+      }
+    },
+    "Product Editable Prices" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن تعديل سعر المنتج"
+          }
+        }
+      }
+    },
+    "Product info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المنتج"
+          }
+        }
+      }
+    },
+    "Product Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المنتج"
+          }
+        }
+      }
+    },
+    "Product photos" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صور المنتج"
+          }
+        }
+      }
+    },
+    "Product Price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سع"
+          }
+        }
+      }
+    },
+    "Product Report" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير المنتجات"
+          }
+        }
+      }
+    },
+    "Product Stock Finished Notificaton" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشعارات انتهاء المنتجات"
+          }
+        }
+      }
+    },
+    "Product Stocks" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مخزون المنتج"
+          }
+        }
+      }
+    },
+    "Product Title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان المنتج"
+          }
+        }
+      }
+    },
+    "Product Varients" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خيارات المنتج"
+          }
+        }
+      }
+    },
+    "Product Visibility" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ظهور المنتج"
+          }
+        }
+      }
+    },
+    "Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات"
+          }
+        }
+      }
+    },
+    "Products Details" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المنتج"
+          }
+        }
+      }
+    },
+    "Products price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سعر المنتجات"
+          }
+        }
+      }
+    },
+    "Products prices" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسعار المنتجات"
+          }
+        }
+      }
+    },
+    "Products Shipped" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منتج تم شحنه"
+          }
+        }
+      }
+    },
+    "Products Sold" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المنتجات التي تم بيعها"
+          }
+        }
+      }
+    },
+    "Products view" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المنتج"
+          }
+        }
+      }
+    },
+    "Profile Id" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم الملف"
+          }
+        }
+      }
+    },
+    "Profit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الربح"
+          }
+        }
+      }
+    },
+    "Profit calculated using this formula (Product Price + the shipping fees of the client) - (Discount on the order - Courier Fees - Seller Comission) \n * Make sure you add your courier with their fees" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الربح يتم حسابه باستخدام هذه الصيغة (سعر المنتج + رسوم الشحن للعميل) - (الخصم على الطلب - رسوم الناقل - عمولة البائع)\n* تأكد من إضافة مندوب التوصيل الخاص بك مع رسومهم."
+          }
+        }
+      }
+    },
+    "Purchase Date : %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ الشراء : %@"
+          }
+        }
+      }
+    },
+    "Quantity" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكميه"
+          }
+        }
+      }
+    },
+    "Ready" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاهز"
+          }
+        }
+      }
+    },
+    "Ready to be shipped" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاهز للشحن"
+          }
+        }
+      }
+    },
+    "Ready to ship" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاهز للشحن"
+          }
+        }
+      }
+    },
+    "Receipt custom message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تخصيص رساله علي الفاتوره"
+          }
+        }
+      }
+    },
+    "Receipts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الفواتير"
+          }
+        }
+      }
+    },
+    "Record your expanses for more accurate net profit and reports" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتبع مصاريفك لحساب صافي ربحك بشكل دقيق"
+          }
+        }
+      }
+    },
+    "Refer Code" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كود الدعوه"
+          }
+        }
+      }
+    },
+    "Reffer Program" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برنامج الدعوات"
+          }
+        }
+      }
+    },
+    "Renew Now" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجديد الان"
+          }
+        }
+      }
+    },
+    "Repeat Password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعاده كلمه المرور"
+          }
+        }
+      }
+    },
+    "Reports" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التقارير"
+          }
+        }
+      }
+    },
+    "Require user to input email address" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجبار المتسوق علي اضافه بريده الالكتروني"
+          }
+        }
+      }
+    },
+    "Required" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مطلوب"
+          }
+        }
+      }
+    },
+    "Reset Order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استعاده حاله الطلب"
+          }
+        }
+      }
+    },
+    "Sales" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مبيعات"
+          }
+        }
+      }
+    },
+    "Sales & Profit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المبيعات و الربح"
+          }
+        }
+      }
+    },
+    "Sales Account" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب مسوق"
+          }
+        }
+      }
+    },
+    "Sales Channels" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسواق البيع"
+          }
+        }
+      }
+    },
+    "Sales Employee" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسوق"
+          }
+        }
+      }
+    },
+    "Sales Report" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير المبيعات"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفظ"
+          }
+        }
+      }
+    },
+    "Search %lld Couriers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في %lld مندوب"
+          }
+        }
+      }
+    },
+    "Search %lld Employees" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في %lld موظف"
+          }
+        }
+      }
+    },
+    "Search %lld Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في %lld طلبات"
+          }
+        }
+      }
+    },
+    "Search %lld Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في %lld منتج"
+          }
+        }
+      }
+    },
+    "Search by name, phone or id" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث بالاسم، رقم الهاتف او الكود"
+          }
+        }
+      }
+    },
+    "Search for expanse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث عن مصروف"
+          }
+        }
+      }
+    },
+    "Search for order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في الطلبات"
+          }
+        }
+      }
+    },
+    "Search Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في المنتجات"
+          }
+        }
+      }
+    },
+    "Search your shoppers by name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث في المتسوقين بالاسم"
+          }
+        }
+      }
+    },
+    "Secondary Color" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اللون الثانوي"
+          }
+        }
+      }
+    },
+    "See All" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المزيد"
+          }
+        }
+      }
+    },
+    "Select All" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختيار الكل"
+          }
+        }
+      }
+    },
+    "Select Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار المندوب"
+          }
+        }
+      }
+    },
+    "Select orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختيار الطلبات"
+          }
+        }
+      }
+    },
+    "Select the category that this product belongs too" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار التصنيف الذي ينتمي المنتج له"
+          }
+        }
+      }
+    },
+    "Select your action" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيارات"
+          }
+        }
+      }
+    },
+    "Selling Commission" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عموله البيع"
+          }
+        }
+      }
+    },
+    "Send Email" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسل بريد الكتروني"
+          }
+        }
+      }
+    },
+    "Send email to customer" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال ميل للعميل بعد الطلب"
+          }
+        }
+      }
+    },
+    "Send SMS" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال رساله"
+          }
+        }
+      }
+    },
+    "Send Telegram Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تواصل علي تلجرام"
+          }
+        }
+      }
+    },
+    "Send Whatsapp message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تواصل علي الواتس اب"
+          }
+        }
+      }
+    },
+    "Send Whatsapp Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال رساله واتس اب"
+          }
+        }
+      }
+    },
+    "Set up an indecator to track your low stocks" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أعد ضبط مؤشر لتتبع المخزون المنخفض لديك."
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاعدادات"
+          }
+        }
+      }
+    },
+    "Share Product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاركه المنتج"
+          }
+        }
+      }
+    },
+    "Shipping Fees" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مصاريف الشحن"
+          }
+        }
+      }
+    },
+    "Shipping info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات الشحن"
+          }
+        }
+      }
+    },
+    "Shipping Price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سعر الشحن"
+          }
+        }
+      }
+    },
+    "Shipping price changed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تغيير مصاريف الشحن"
+          }
+        }
+      }
+    },
+    "Shipping Prices" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسعار الشحن"
+          }
+        }
+      }
+    },
+    "Shopify" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شوبيفاي"
+          }
+        }
+      }
+    },
+    "Shoppers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتسوقين"
+          }
+        }
+      }
+    },
+    "Shoppers data" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات العملاء"
+          }
+        }
+      }
+    },
+    "Show order QRCode" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كيو ار كود الطلب"
+          }
+        }
+      }
+    },
+    "Show whatsapp contact button" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اظهر زر التواصل"
+          }
+        }
+      }
+    },
+    "Sign in" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الدخول"
+          }
+        }
+      }
+    },
+    "Sign Up" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل حساب جديد"
+          }
+        }
+      }
+    },
+    "Site Options" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الموقع"
+          }
+        }
+      }
+    },
+    "Skip" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تخطي"
+          }
+        }
+      }
+    },
+    "Slogan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الشعار"
+          }
+        }
+      }
+    },
+    "Social" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مواقع التواصل"
+          }
+        }
+      }
+    },
+    "Social Media Account" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب مسوق الكتروني"
+          }
+        }
+      }
+    },
+    "Sold Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات المباعه"
+          }
+        }
+      }
+    },
+    "Sort Option" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الترتيب"
+          }
+        }
+      }
+    },
+    "Spent %lld EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم صرف %lld جنيه"
+          }
+        }
+      }
+    },
+    "Start typing to search" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدء الكتابه للبحث"
+          }
+        }
+      }
+    },
+    "Stock Handling" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل حركه المخزن"
+          }
+        }
+      }
+    },
+    "Store Admin" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اداره المتجر"
+          }
+        }
+      }
+    },
+    "Store Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصنيف المتجر"
+          }
+        }
+      }
+    },
+    "Store Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المتجر"
+          }
+        }
+      }
+    },
+    "Store Logo" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شعار المتجر"
+          }
+        }
+      }
+    },
+    "Store Logo Changed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تغيير لوجو المتجر"
+          }
+        }
+      }
+    },
+    "Store Name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المتجر"
+          }
+        }
+      }
+    },
+    "Store Name Changed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تغيير اسم المتجر"
+          }
+        }
+      }
+    },
+    "Store Options" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المتجر"
+          }
+        }
+      }
+    },
+    "Store Owner" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صاحب المتجر"
+          }
+        }
+      }
+    },
+    "Store Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منتجات المتجر"
+          }
+        }
+      }
+    },
+    "Store Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات المتجر"
+          }
+        }
+      }
+    },
+    "Store Users" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستخدمين المتجر"
+          }
+        }
+      }
+    },
+    "Submit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه"
+          }
+        }
+      }
+    },
+    "Subscribtions" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاشتراكات"
+          }
+        }
+      }
+    },
+    "Subscriptions" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاشتراكات"
+          }
+        }
+      }
+    },
+    "Summery" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الملخص"
+          }
+        }
+      }
+    },
+    "Switch Account" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تبديل الحساب"
+          }
+        }
+      }
+    },
+    "Team space" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مساحه لفريق العمل"
+          }
+        }
+      }
+    },
+    "TEnter how many of this product do you have right now in the warehouse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كميه المنتج الموجوده في المخزن في الوقت الحالي"
+          }
+        }
+      }
+    },
+    "Terms & Conditions" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الشروط و الاحكام"
+          }
+        }
+      }
+    },
+    "Text" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النص"
+          }
+        }
+      }
+    },
+    "That's your signed email, we will send a mail to this address with instructions to reset your password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بريدك الالكتروني سيتم ارسال رساله عليه مع خطوات استرجاع كلمه المرور"
+          }
+        }
+      }
+    },
+    "The amount of cash that expected to receive from the coureirs (Order price - Courier Fees)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المبلغ النقدي المتوقع استلامه من شركات الشحن (سعر الطلب - رسوم الناقل)."
+          }
+        }
+      }
+    },
+    "the amount that you should receive after the courier fees detected" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المبلغ الذي يجب ان تستلمه من المندوب بعد مصاريف الشحن"
+          }
+        }
+      }
+    },
+    "The API Key found in your developers / key in the dashboard" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موجود في لوحه التحكم الخاصه بمنصه باي تابس"
+          }
+        }
+      }
+    },
+    "The cash that you should get from the courier for all of the orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المبلغ الذي ستقوم باستلامه من المندوب علي جميع الطلبات بعد خصم عموله الشحن الخاصه بالمندوب"
+          }
+        }
+      }
+    },
+    "The courier fees for all orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عموله المندوب علي الطلبات"
+          }
+        }
+      }
+    },
+    "The courier fees for the delivered orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مصاريف شحن المندوب للمنتجات التي انتهت"
+          }
+        }
+      }
+    },
+    "The courier fees for the on going orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مصاريف شحن المندوب علي الطلبات الحاليه"
+          }
+        }
+      }
+    },
+    "The courier has no ongoing orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد طلبات حاليه مع المندوب"
+          }
+        }
+      }
+    },
+    "The discount percentage that will be applied to the order from 1 to 100" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخصم الذي سيتم تطبيقه علي الطلب من ١٪ حتي ١٠٠٪"
+          }
+        }
+      }
+    },
+    "The maximum number this code will be used" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكثر عدد من المرات لاستخدام الكود"
+          }
+        }
+      }
+    },
+    "The name of the emloyee you want to add" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم الموظف الذي ستقوم باضافته"
+          }
+        }
+      }
+    },
+    "The owner disabled new orders for now" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم ايقاف الطلبات الجديده من صاحب المتجر"
+          }
+        }
+      }
+    },
+    "The Quantity of each product x The cost of the product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كميه المنتجات * تكلفه المنتج عند البيع"
+          }
+        }
+      }
+    },
+    "The Quantity of each product x The price of the product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كميه المنتجات * سعر المنتج"
+          }
+        }
+      }
+    },
+    "The store logo is used to identify your store in the app. It will be displayed on the store page and in the store list. The logo should be a square image with a minimum size of 512x512 pixels. The recommended size is 1024x1024 pixels. The logo will be displayed at a size of 120x120 pixels." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شعار المتجر يُستخدم للتعرف على متجرك في التطبيق. سيتم عرضه على صفحة المتجر وفي قائمة المتاجر. يجب أن يكون الشعار صورة مربعة بحجم أدنى 512x512 بكسل. الحجم الموصى به هو 1024x1024 بكسل. سيتم عرض الشعار بحجم 120x120 بكسل."
+          }
+        }
+      }
+    },
+    "Theme" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثيم"
+          }
+        }
+      }
+    },
+    "This application needs to restart to update the configuration.\n\nDo you want to restart the application?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب غلق التطبيق لتغيير اللغه، هل ترغب في اغلاق التطبيق"
+          }
+        }
+      }
+    },
+    "This code exists before" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكود موجود مسبقا"
+          }
+        }
+      }
+    },
+    "This Code exists before" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الكود مستخدم مسبقا"
+          }
+        }
+      }
+    },
+    "This commission will be calculate from the order's netprofit From 1% to 99%" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم حسابه من صافي ربح الطلب من ١٪ حتي ٩٩٪"
+          }
+        }
+      }
+    },
+    "This how much the product costs you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تكلفه المنتج"
+          }
+        }
+      }
+    },
+    "This is enabled by default, if you turn this off no one will be able to submit new orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا مُمكن بشكل افتراضي، إذا قمت بإيقافه، لن يتمكن أحد من تقديم طلبات جديدة."
+          }
+        }
+      }
+    },
+    "This is how much you are selling your product for" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سعر بيع المنتج"
+          }
+        }
+      }
+    },
+    "This is how much your product costs you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تكلفه قطعه المنتج"
+          }
+        }
+      }
+    },
+    "This is showed in your website, to compare the price this doesn't have any effect on the real price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يظهر علي موقعك الالكتروني لمقارنه السعر، لن يقوم بالتأثير علي اي حسابات"
+          }
+        }
+      }
+    },
+    "This is the courier company name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المندوب"
+          }
+        }
+      }
+    },
+    "This is the discount code itself, it should be unique and never used before" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كود الخصم، يجب ان لا يكون مستخدم مسبقا"
+          }
+        }
+      }
+    },
+    "This is the name of the product, which will appear on the website and the app" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المنتج الذي سيظهر علي موقعك الالتكروني و في التطبيق"
+          }
+        }
+      }
+    },
+    "This is the prices you charge your customers for shipping, note that if you deal with courier please add his info and shipping fees for better net profit calculations" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذه هي الأسعار التي تفرضها على عملائك للشحن. يُلاحظ أنه إذا كنت تتعامل مع شركة شحن، فيرجى إضافة معلوماتها ورسوم الشحن لحسابات أفضل لصافي الربح."
+          }
+        }
+      }
+    },
+    "This is the profile id found in your paytabs dashboard" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم الملف يوجد بملفك الشخصي في باي تابس"
+          }
+        }
+      }
+    },
+    "This is the selling price of the product which the user will be charged at" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سعر بيع المنتج، الذي سيقوم الشاري بدفعه"
+          }
+        }
+      }
+    },
+    "This is your main email address, note you can't change it later, you will use it to login to your store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا حسابك الاساسي، لن يمكنك تغييره لاحقا"
+          }
+        }
+      }
+    },
+    "This is your store name, it will be printed on the receipts and in your website, it can be changed later" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المتجر يظهر علي موقعك الالكتروني و علي فاتورتك الخاصه"
+          }
+        }
+      }
+    },
+    "This is your varient title for example (Color, Size, ..)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان الاختيارات مثل (اللون او المقاس ..)"
+          }
+        }
+      }
+    },
+    "This Month" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا الشهر"
+          }
+        }
+      }
+    },
+    "This order require shipping" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاوردر سيتم شحنه"
+          }
+        }
+      }
+    },
+    "This Quarter" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربع سنوي"
+          }
+        }
+      }
+    },
+    "This shopper doesn't has any orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد طلبات لدى هذا المتسوق"
+          }
+        }
+      }
+    },
+    "This user doesn't have any orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا المستخدم لا يوجد لديه اي طلبات"
+          }
+        }
+      }
+    },
+    "This Week" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا الاسبوع"
+          }
+        }
+      }
+    },
+    "This will be displayed at the end of your receipt" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيظهر في نهايه الفاتره الخاصه بك"
+          }
+        }
+      }
+    },
+    "This will be visible in your website, make it from 10 to 50 words max" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيظهر علي موقعك الالكتروني، من ١٠ الي ٥٠ كلمه"
+          }
+        }
+      }
+    },
+    "This will be your link, it should be english, no spaces, uniquie, no numbers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيكون موجود في رابط موقعك الالكتروني، تاكد من عدم وجود مسافات، و لا احرف و ان يكون باللغه الانجليزيه"
+          }
+        }
+      }
+    },
+    "This will help you contact the courier company easily" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لسهوله التواصل مع المندوب"
+          }
+        }
+      }
+    },
+    "This will not be visible anywere" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لن يظهر لأي شخص اخر"
+          }
+        }
+      }
+    },
+    "This year" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا العام"
+          }
+        }
+      }
+    },
+    "Those are the market places (Sales Channels) you sell on, select only where your brand sell" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذه هي الأسواق (قنوات البيع) التي تبيع علىها، حدد فقط المكان الذي تبيع فيه علامتك."
+          }
+        }
+      }
+    },
+    "Those are the orders that still with you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات التي ما ذالت معك"
+          }
+        }
+      }
+    },
+    "Those are the orders with your couriers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطلبات التي مع المندوب"
+          }
+        }
+      }
+    },
+    "Thumbnail" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الصوره"
+          }
+        }
+      }
+    },
+    "Tik Tok Link" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب التيك توك"
+          }
+        }
+      }
+    },
+    "Tip of the day 💭" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصيحه اليوم 💭"
+          }
+        }
+      }
+    },
+    "Tired of caculating the products of all of (need to be fullfiled) orders ? easy we have got you" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعبت من حساب عدد المنتجات المطلوبه لمجموعه من الطلبات ؟ لا تقلق سنقوم بحسابها لك"
+          }
+        }
+      }
+    },
+    "Title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العنوان"
+          }
+        }
+      }
+    },
+    "To" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الي"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اليوم"
+          }
+        }
+      }
+    },
+    "Tools" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الادوات"
+          }
+        }
+      }
+    },
+    "Top Selling Areas 🏙️" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعلي المناطق طلبا 🏙️"
+          }
+        }
+      }
+    },
+    "Total" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاجمالي"
+          }
+        }
+      }
+    },
+    "Total Cash" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي الكاش"
+          }
+        }
+      }
+    },
+    "Total Cost" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي التكلفه"
+          }
+        }
+      }
+    },
+    "Total Fees" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي المصاريف"
+          }
+        }
+      }
+    },
+    "Total Items" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي القطع"
+          }
+        }
+      }
+    },
+    "Total Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جميع الطلبات"
+          }
+        }
+      }
+    },
+    "Total Pieces" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي القطع"
+          }
+        }
+      }
+    },
+    "Total Products price" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي سعر المنتجات"
+          }
+        }
+      }
+    },
+    "Total Spent" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي المصروفات"
+          }
+        }
+      }
+    },
+    "Track your inventory and export excel reports for your stock cost" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بتتبع المنتجات بالمخزن و استخراج تقارير المخزن و قيمه البضاعه الموجوده به"
+          }
+        }
+      }
+    },
+    "Turning this off will hide this product and no one can make an order with it" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف هذا الخيار سيخفي هذا المنتج، ولن يتمكن أحد من طلبه."
+          }
+        }
+      }
+    },
+    "Turning this on will disable stock handling for this product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل هذا الخيار سيقوم بتعطيل إدارة المخزون لهذا المنتج."
+          }
+        }
+      }
+    },
+    "Unknown" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير معروف"
+          }
+        }
+      }
+    },
+    "Unlimited Products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد لا نهائي من المنتجات"
+          }
+        }
+      }
+    },
+    "Unlock Vondera's Unique ecommerce website, with a lot of settings included and a unqiue link for your store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم باستعمال موقعك المخصص لك، مع الكثير من الاعدادات التي يمكنك تخصيصها به"
+          }
+        }
+      }
+    },
+    "Unselect All" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الغاء الكل"
+          }
+        }
+      }
+    },
+    "Update" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث"
+          }
+        }
+      }
+    },
+    "Updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم التحديث"
+          }
+        }
+      }
+    },
+    "Updates" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخر التحديثات"
+          }
+        }
+      }
+    },
+    "Upgrade your plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترقيه باقتك"
+          }
+        }
+      }
+    },
+    "Upgrade your plan to enable the website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بترقيه خطتك لتفعيل هذه الميزه"
+          }
+        }
+      }
+    },
+    "Use the whatsapp number of the employee" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدم رقم الواتس اب الخاص بالموظف"
+          }
+        }
+      }
+    },
+    "User Info" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات المستخدم"
+          }
+        }
+      }
+    },
+    "Username" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المستخدم"
+          }
+        }
+      }
+    },
+    "Variant Title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان الاختيارات"
+          }
+        }
+      }
+    },
+    "Variants" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيارات"
+          }
+        }
+      }
+    },
+    "Variants are used to create different versions of the same product. For example, if you have a t-shirt, you can create a variant for each size and color, just click next if you don't have any variants" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتغيرات تُستخدم لإنشاء إصدارات مختلفة من نفس المنتج. على سبيل المثال، إذا كان لديك تيشيرت، يمكنك إنشاء متغير لكل حجم ولون، فقط انقر على \"التالي\" إذا لم تكن لديك أي متغيرات."
+          }
+        }
+      }
+    },
+    "Varient" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خيار"
+          }
+        }
+      }
+    },
+    "Varient Title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان الاختيارات"
+          }
+        }
+      }
+    },
+    "Varients" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخيارات"
+          }
+        }
+      }
+    },
+    "Views" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المشاهدات"
+          }
+        }
+      }
+    },
+    "Visit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "زياره"
+          }
+        }
+      }
+    },
+    "Visit Product" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "زياره المنتج"
+          }
+        }
+      }
+    },
+    "Visitors" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الزائرين"
+          }
+        }
+      }
+    },
+    "Visits" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "زياره"
+          }
+        }
+      }
+    },
+    "Vonder's ecommerce website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع الكتروني مخصص لمتجرك"
+          }
+        }
+      }
+    },
+    "Vondera" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فونديرا"
+          }
+        }
+      }
+    },
+    "Warehouse" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المخزن"
+          }
+        }
+      }
+    },
+    "Warehouse & Stock Report" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المخزن و تقارير المنتجات"
+          }
+        }
+      }
+    },
+    "Warehouse Quantity" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كميه المخزن"
+          }
+        }
+      }
+    },
+    "Warehouse Reports" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقرير المخزن"
+          }
+        }
+      }
+    },
+    "WARNING" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحذير"
+          }
+        }
+      }
+    },
+    "We are getting your store ready .." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاري تجهيز متجرك .."
+          }
+        }
+      }
+    },
+    "We will use this number to contact you for any inquaries" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم استعمال الرقم للتواصل معك"
+          }
+        }
+      }
+    },
+    "We won't share your address, we collect it for analyze perpose" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لن يتم مشاركه العنوان، هذا فقط من اجل جمع الاحصائيات"
+          }
+        }
+      }
+    },
+    "Website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع"
+          }
+        }
+      }
+    },
+    "Website Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الموقع"
+          }
+        }
+      }
+    },
+    "Website theme" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثيم الموقع"
+          }
+        }
+      }
+    },
+    "Website Username" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المستخدم الخاص بموقعك"
+          }
+        }
+      }
+    },
+    "Welcome back" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرحبا بك"
+          }
+        }
+      }
+    },
+    "With Courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع المندوب"
+          }
+        }
+      }
+    },
+    "With Courier Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات مع المندوب"
+          }
+        }
+      }
+    },
+    "Withdraw from Agel" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسحب من أجل"
+          }
+        }
+      }
+    },
+    "Yes" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نعم"
+          }
+        }
+      }
+    },
+    "You are only allowed to open the package in front of the courier" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك فقط فتح العبوه امام المندوب"
+          }
+        }
+      }
+    },
+    "You can add your team to collebrate with you, choose a plan suitable for your team size" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك اضافه الفريق الخاص بك الي متجرك، قم باختيار الباقه التي تناسب حجم فريقك"
+          }
+        }
+      }
+    },
+    "You haven't added any couriers yet" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد اي مناديب شحن"
+          }
+        }
+      }
+    },
+    "You haven't added any employees yet" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تقم بأضافه اي شخص في فريقك"
+          }
+        }
+      }
+    },
+    "You haven't added any orders yet !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تقم باضافه اي طلب بعد !"
+          }
+        }
+      }
+    },
+    "You haven't recorded any expanses yet !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم تقم بأضافه اي مصروفات بعد"
+          }
+        }
+      }
+    },
+    "You image updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث الصوره"
+          }
+        }
+      }
+    },
+    "You must add products to order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب ان يحتوي الاوردر علي منتج واحد علي الاقل"
+          }
+        }
+      }
+    },
+    "You need at least 10,000 LE in your wallet to withdraw fund" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحتاج إلى ما لا يقل عن 10,000 جنيه مصري في محفظتك لسحب الأموال."
+          }
+        }
+      }
+    },
+    "Your employees can edit the product prices on the checkout proccess" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موظفوك يمكنهم تعديل أسعار المنتجات في عملية الخروج."
+          }
+        }
+      }
+    },
+    "Your first steps with Vondera" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطواتك الاولي مع فونديرا"
+          }
+        }
+      }
+    },
+    "Your notification settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الاشعارات"
+          }
+        }
+      }
+    },
+    "Your Orders 📦" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاوردراتك 📦"
+          }
+        }
+      }
+    },
+    "Your personal legal name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم الشخصي"
+          }
+        }
+      }
+    },
+    "Your personal name" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم الشخصي"
+          }
+        }
+      }
+    },
+    "Your product describtion will be visible for users in your website and in the app" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيظهر وصف المنتج علي موقعك الالكتروني و في التطبيق"
+          }
+        }
+      }
+    },
+    "Your Quote has been exceeded" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم انتهاء الباقه"
+          }
+        }
+      }
+    },
+    "Your reffer code" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كود الدعوه"
+          }
+        }
+      }
+    },
+    "Your store slogan, it will be shown on your receipts and in your website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شعار المتجر يظهر علي الفاتوره و علي موقعك الالكتروني"
+          }
+        }
+      }
+    },
+    "العربية" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
+    }
+  },
   "version" : "1.0"
 }

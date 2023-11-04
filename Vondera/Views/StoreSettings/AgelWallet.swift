@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AgelWallet: View {
-    @State var myUser:UserData?
+    var myUser = UserInformation.shared.user
     
     let min = 10000
     let max = 150000

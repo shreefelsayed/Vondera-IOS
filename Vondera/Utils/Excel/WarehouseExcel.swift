@@ -20,7 +20,9 @@ class WarehouseExcel {
         sheet = book.NewSheet(name)
     }
     
-    func generateReport() {
+    
+    
+    func generateReport() -> URL? {
         // MARK : Create the header
         createHeader(["Item Id.", "Product Name", "Avilable Quantity", "Sold Quantity", "Current Stock Cost"])
         
@@ -30,11 +32,37 @@ class WarehouseExcel {
             
             addRow(rowNumber: (index + 2), items: data)
         }
+        
+        addFinalRow()
               
         // MARK : Create file and save
         let fileid = book.save("\(name).xlsx")
-        let url = URL(string: fileid)
-        FileUtils().shareFile(url: url!)
+        
+        print("File path \(fileid)")
+        
+        let url = URL(fileURLWithPath: fileid)
+        return url
+    }
+    
+    func addFinalRow() {
+        var quantity = 0
+        var realSold = 0
+        var stock = 0
+        
+        list.forEach { item in
+            quantity += item.quantity
+            realSold += item.realSold
+            stock += (item.quantity * Int(item.buyingPrice))
+        }
+        
+        let data:[String] = [
+            "\(list.count) Products",
+            "",
+            "\(quantity) Pieces",
+            "\(realSold) Pieces",
+            "\(stock) LE"]
+        
+        addRow(rowNumber: list.count + 2, items: data)
     }
     
     func createHeader(_ items:[String]) {

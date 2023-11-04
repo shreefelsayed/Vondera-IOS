@@ -9,20 +9,19 @@ import SwiftUI
 import NetworkImage
 
 struct CartAdapter: View {
-    @State private var priceText: String
     @Binding var orderProduct: OrderProductObject
     
-    init(orderProduct: Binding<OrderProductObject>) {
-        _orderProduct = orderProduct
-        _priceText = State(initialValue: String(orderProduct.wrappedValue.price))
-    }
-    
+    let amountFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.zeroSymbol = ""
+        return formatter
+    }()
     
     var body: some View {
         VStack {
             HStack(alignment: .center) {
                 ZStack {
-                    NetworkImage(url: URL(string: orderProduct.image ?? "" )) { image in
+                    NetworkImage(url: URL(string: orderProduct.image)) { image in
                         image.resizable().scaledToFill()
                     } placeholder: {
                         ProgressView()
@@ -31,9 +30,7 @@ struct CartAdapter: View {
                     }
                     .background(Color.white)
                     .frame(width: 120, height: 160)
-                    
-                    
-                    
+                    .id(orderProduct.productId)
                 }
                 .cornerRadius(20)
                 
@@ -50,16 +47,9 @@ struct CartAdapter: View {
                         
                         Spacer()
                         
-                        TextField("Price", text: $priceText)
-                            .onChange(of: priceText) { newValue in
-                                if let price = Double(newValue) {
-                                    orderProduct.price = price
-                                }
-                            }
-                            .keyboardType(.numberPad)
-                        
+                        TextField ("Price", value: $orderProduct.price, formatter: amountFormatter)
+                            .keyboardType(.decimalPad)
                             .frame(width: 100)
-                        
                     }
                     
                     HStack(alignment: .center) {

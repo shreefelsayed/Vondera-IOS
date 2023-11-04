@@ -54,6 +54,7 @@ struct NetworkImageView: View {
                                     )
                             }
                             .frame(width: geometry.size.width, height: geometry.size.height)
+                            .id(imageUrls[index])
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }

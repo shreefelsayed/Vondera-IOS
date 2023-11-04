@@ -57,16 +57,18 @@ struct OrderSelectView: View {
                     EmptyMessageView(systemName: "magnifyingglass", msg: "No result for your search \(searchText)")
                 }
             }
+            
+            
         }
         .searchable(text: $searchText)
         .sheet(isPresented: $isShowingSheet) {
-            ActionsDialog(list: $checkedItems, isShowen: $isShowingSheet, onActionMade: {
+            ActionsDialog(list: checkedItems, isShowen: $isShowingSheet, onActionMade: { updated in
                 self.isShowingSheet = false
+                updateItems(updated)
                 unselectAll()
             })
             .presentationDetents([.medium])
         }
-        
         .toolbar {
             if !checkedItems.isEmpty {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -78,6 +80,15 @@ struct OrderSelectView: View {
         }
         .navigationTitle("Select orders")
         
+    }
+    
+    func updateItems(_ items:[Order]) {
+        for changedItem in items {
+            if let index = list.firstIndex(where: {$0 == changedItem }) {
+                list[index] = changedItem
+                print("Updated item to statue \(list[index].statue)")
+            }
+        }
     }
     
     func selectAll() {
@@ -102,13 +113,13 @@ struct OrderSelectView: View {
 }
 
 struct ActionsDialog: View {
-    @Binding var list:[Order]
+    @State var list:[Order]
     @State var statue = 0
     @Binding var isShowen:Bool
     @State var courierSheet = false
     @State var selectedOption:Courier?
     @State var toast:String? = nil
-    var onActionMade : (() -> ())
+    var onActionMade : (([Order]) -> ())
     
     var body: some View {
         HStack {
@@ -124,21 +135,25 @@ struct ActionsDialog: View {
                 
                 VStack(alignment: .leading) {
                     Button("Print Receipts") {
-                        showToast("Receipts Genrated")
-                        
                         Task {
-                            await ReciptPDF(orderList: list).generateAndOpenPDF()
+                            if let uri = await ReciptPDF(orderList: list).render() {
+                                DispatchQueue.main.async {
+                                    FileUtils().shareFile(url: uri)
+                                    showToast("Receipts Genrated")
+                                }
+                            }
                         }
-                        
-                        isShowen = false
                     }
                     
                     Divider()
                     
                     Button("Sales Report") {
-                        showToast("Report Genrated")
-                        SalesExcel(listOrders: list).generateReport()
-                        isShowen = false
+                        if let url = SalesExcel(listOrders: list).generateReport() {
+                            DispatchQueue.main.async {
+                                FileUtils().shareFile(url: url)
+                                showToast("Report Genrated")
+                            }
+                        }
                     }
                     
                     Divider()
@@ -152,7 +167,7 @@ struct ActionsDialog: View {
                     Divider()
                 }
                 
-                if statue <= 1 {
+                if statue <= 1 || statue == 4 {
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
                             Button("Confirm orders") {
@@ -161,11 +176,11 @@ struct ActionsDialog: View {
                                     let update = await OrderManager().confirmOrder(list: &list)
                                     DispatchQueue.main.async {
                                         self.list = update
-                                        self.onActionMade()
+                                        print("Statue \(list.first?.statue ?? "")")
+                                        self.onActionMade(update)
                                     }
                                 }
                             }
-                            
                             Divider()
                         }
                     }
@@ -179,7 +194,7 @@ struct ActionsDialog: View {
                                 let update = await OrderManager().assambleOrder(list: &list)
                                 DispatchQueue.main.async {
                                     self.list = update
-                                    self.onActionMade()
+                                    self.onActionMade(update)
                                 }
                             }
                         }
@@ -206,7 +221,7 @@ struct ActionsDialog: View {
                                 let update =  await OrderManager().orderDelivered(list: &list)
                                 DispatchQueue.main.async {
                                     self.list = update
-                                    self.onActionMade()
+                                    self.onActionMade(update)
                                 }
                             }
                         }
@@ -219,7 +234,7 @@ struct ActionsDialog: View {
             Spacer()
         }
         .sheet(isPresented: $courierSheet) {
-            CourierPicker(storeId: list.first!.storeId!, selectedOption: $selectedOption)
+            CourierPicker(selectedOption: $selectedOption)
         }
         .toast(isPresenting: Binding(value: $toast)) {
             AlertToast(displayMode: .alert, type: .complete(.accentColor), title: toast)
@@ -232,7 +247,7 @@ struct ActionsDialog: View {
                     let update = await OrderManager().outForDelivery(list:&list, courier:option)
                     DispatchQueue.main.async {
                         self.list = update
-                        self.onActionMade()
+                        self.onActionMade(update)
                     }
                 }
             }

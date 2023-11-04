@@ -7,9 +7,11 @@
 
 import SwiftUI
 import AlertToast
+import PhotosUI
 
 struct ProductPhotos: View {
     var product:StoreProduct
+    @State var images = [PhotosPickerItem]()
     @ObservedObject var viewModel:ProductPhotosViewModel
     @Environment(\.presentationMode) private var presentationMode
     
@@ -26,7 +28,8 @@ struct ProductPhotos: View {
             .isHidden(viewModel.isLoading)
         }
         .padding()
-        .navigationTitle("Product Photos")
+        .navigationTitle("Product photos")
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
@@ -62,19 +65,16 @@ struct ProductPhotos: View {
         VStack(alignment: .leading) {
             // MARK : Photos title
             HStack {
-                Text("Product Photos")
+                Text("Product photos")
                     .font(.title2)
                     .bold()
                 
                 Spacer()
                 
-                if viewModel.canAdd {
-                    Button {
-                        viewModel.pickPhotos()
-                    } label: {
-                        Text("Add")
-                    }
+                PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                    Text("Add")
                 }
+                .disabled(images.count >= 6)
             }
             
             // MARK : Selected Photos
@@ -92,17 +92,30 @@ struct ProductPhotos: View {
                         })
                     }
                     
-                    if viewModel.selectedPhotos.count < 6 {
-                        ImageView(removeClicked: {
-                        }, showDelete: false) {
-                            viewModel.pickPhotos()
+                    if images.count < 6 {
+                        PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                            ImageView(removeClicked: {
+                            }, showDelete: false) {
+                                
+                            }
                         }
+                        .disabled(images.count >= 6)
                     }
                 }
             }
             
             Text("At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.")
                 .font(.caption)
+        }
+        .onChange(of: images) { newValue in
+            Task {
+                viewModel.selectedPhotos.removeAll()
+                for picker in newValue {
+                    if let image = try? await picker.getImage() {
+                        viewModel.selectedPhotos.append(image)
+                    }
+                }
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class NewCourierViewModel : ObservableObject {
     var storeId:String
@@ -26,9 +27,7 @@ class NewCourierViewModel : ObservableObject {
     @Published var phone = ""
     @Published var items = GovsUtil().getDefaultCourierList()
 
-    
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
     
     
@@ -77,21 +76,18 @@ class NewCourierViewModel : ObservableObject {
                 self.shouldDismissView = true
                 self.isSaving = false
             }
-        } catch {
-            print("error happened \(error.localizedDescription)")
-            
+        } catch {            
             // Dispatch UI updates on the main thread
             DispatchQueue.main.async {
-                self.showTosat(msg: error.localizedDescription)
+                self.showTosat(msg: error.localizedDescription.localize())
                 self.isSaving = false
             }
         }
     }
     
-    func showTosat(msg: String) {
+    func showTosat(msg: LocalizedStringKey) {
         DispatchQueue.main.async {
             self.msg = msg
-            self.showToast.toggle()
         }
     }
 }

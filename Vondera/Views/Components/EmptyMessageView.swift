@@ -7,14 +7,21 @@
 
 import SwiftUI
 
+struct SearchEmptyView : View {
+    var searchText:String
+    
+    var body: some View {
+        EmptyMessageView(systemName: "magnifyingglass", msg: searchText.isBlank ? "Start typing to search" : "No result for your search \(searchText)")
+    }
+}
+
 struct EmptyMessageView: View {
     var systemName:String = "bag.badge.minus"
-    var msg = "No Orders are added by you"
+    var msg:LocalizedStringKey = "No Orders are added by you"
     var onClick :(() -> ())?
     
     var body: some View {
         if #available(iOS 17.0, *) {
-            
             ContentUnavailableView(msg, systemImage: systemName)
                 .onTapGesture {
                     if onClick != nil {

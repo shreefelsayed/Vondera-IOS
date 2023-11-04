@@ -13,7 +13,8 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var sold: Int? = 0
     var lastOrderDate: Timestamp?
     var createDate:Timestamp? = Timestamp(date: Date())
-    var hashVarients: [[String: [String]]]? = []
+    var hashVarients: [[String: [String]]]?
+    
     var visible: Bool? = true
     var alwaysStocked: Bool? = false
     var storeId: String = ""
@@ -28,7 +29,7 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     
     func hash(into hasher: inout Hasher) {
             hasher.combine(id)
-        }
+    }
     
     init() {}
     
@@ -48,66 +49,28 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
         }
         return sold
     }
-    
-    enum CodingKeys: String, CodingKey {
-        case name, id, desc, quantity, addedBy, collectionId, price, buyingPrice, sold, lastOrderDate, createDate, hashVarients, visible, alwaysStocked, storeId, listPhotos, listOrder, categoryId, categoryName, crossedPrice, featured, views
+ 
+    func getProfit() -> Int {
+        return Int(price - buyingPrice)
     }
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+    func getMargin() -> String {
+        if buyingPrice == 0 {
+            return "100.0"
+        }
         
-        name = try container.decode(String.self, forKey: .name)
-        id = try container.decode(String.self, forKey: .id)
-        desc = try container.decodeIfPresent(String.self, forKey: .desc)
-        quantity = try container.decode(Int.self, forKey: .quantity)
-        addedBy = try container.decodeIfPresent(String.self, forKey: .addedBy)
-        collectionId = try container.decodeIfPresent(String.self, forKey: .collectionId)
-        price = try container.decode(Double.self, forKey: .price)
-        buyingPrice = try container.decode(Double.self, forKey: .buyingPrice)
-        sold = try container.decodeIfPresent(Int.self, forKey: .sold)
-        lastOrderDate = try container.decodeIfPresent(Timestamp.self, forKey: .lastOrderDate)
-        createDate = try container.decodeIfPresent(Timestamp.self, forKey: .createDate)
-        hashVarients = try container.decodeIfPresent([[String: [String]]].self, forKey: .hashVarients)
-        visible = try container.decodeIfPresent(Bool.self, forKey: .visible)
-        alwaysStocked = try container.decodeIfPresent(Bool.self, forKey: .alwaysStocked)
-        storeId = try container.decode(String.self, forKey: .storeId)
-        listPhotos = try container.decode([String].self, forKey: .listPhotos)
-        listOrder = try container.decodeIfPresent([ProductOrderObject].self, forKey: .listOrder)
-        categoryId = try container.decodeIfPresent(String.self, forKey: .categoryId)
-        categoryName = try container.decodeIfPresent(String.self, forKey: .categoryName)
+        let margin =  ((price - buyingPrice) / price) * 100
+        return String(format: "%.1f", margin)
     }
     
-    func getProductLink(storeLink:String) -> URL {
-        return URL(string: "\(storeLink)/product/product:\(id)")!
+    func getProductLink(mId:String) -> URL {
+        return URL(string: "https://vondera.store/product?store=\(mId)&id=\(id)")!
     }
     
     func defualtPhoto() -> String {
         self.listPhotos[0]
     }
     
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(name, forKey: .name)
-        try container.encode(id, forKey: .id)
-        try container.encodeIfPresent(desc, forKey: .desc)
-        try container.encode(quantity, forKey: .quantity)
-        try container.encodeIfPresent(addedBy, forKey: .addedBy)
-        try container.encodeIfPresent(collectionId, forKey: .collectionId)
-        try container.encode(price, forKey: .price)
-        try container.encode(buyingPrice, forKey: .buyingPrice)
-        try container.encodeIfPresent(sold, forKey: .sold)
-        try container.encodeIfPresent(lastOrderDate, forKey: .lastOrderDate)
-        try container.encodeIfPresent(createDate, forKey: .createDate)
-        try container.encode(hashVarients, forKey: .hashVarients)
-        try container.encodeIfPresent(visible, forKey: .visible)
-        try container.encodeIfPresent(alwaysStocked, forKey: .alwaysStocked)
-        try container.encode(storeId, forKey: .storeId)
-        try container.encode(listPhotos, forKey: .listPhotos)
-        try container.encodeIfPresent(listOrder, forKey: .listOrder)
-        try container.encodeIfPresent(categoryId, forKey: .categoryId)
-        try container.encodeIfPresent(categoryName, forKey: .categoryName)
-    }
     
     static func ==(lhs: StoreProduct, rhs: StoreProduct) -> Bool {
             return lhs.id == rhs.id
@@ -124,6 +87,9 @@ extension StoreProduct {
         self.desc?.localizedCaseInsensitiveContains(searchText) ?? false
     }
     
+    func mapToOrderProduct(q:Int = 1, varient:[String: String]) -> OrderProductObject {
+        return mapToOrderProduct(q:q, varient: varient, savedId: CartManager.generatePIN())
+    }
     func mapToOrderProduct(q:Int = 1, varient:[String: String], savedId:String) -> OrderProductObject {
         return OrderProductObject(productId: self.id, name: self.name, storeId: self.storeId, quantity: q, price: self.price, image: self.listPhotos[0], buyingPrice: self.buyingPrice, hashVaraients: varient, savedItemId: savedId, product: self)
     }

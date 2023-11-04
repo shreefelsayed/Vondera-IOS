@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class CourierEditViewModel : ObservableObject {
     var id:String
@@ -29,7 +30,7 @@ class CourierEditViewModel : ObservableObject {
     @Published var isSaving = false
     @Published var isLoading = false
     
-    @Published var msg:String?
+    @Published var msg:LocalizedStringKey?
     
     init(id:String, storeId:String) {
         self.id = id
@@ -89,7 +90,7 @@ class CourierEditViewModel : ObservableObject {
                 self.shouldDismissView = true
             }
         } catch {
-            showToast(error.localizedDescription)
+            showToast(error.localizedDescription.localize())
         }
         
         
@@ -99,7 +100,7 @@ class CourierEditViewModel : ObservableObject {
         
     }
     
-    func showToast(_ msg: String) {
+    func showToast(_ msg: LocalizedStringKey) {
         self.msg = msg
     }
 }

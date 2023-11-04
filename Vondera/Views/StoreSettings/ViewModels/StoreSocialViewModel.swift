@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class StoreSocialViewModel : ObservableObject {
     var store:Store
@@ -18,8 +19,7 @@ class StoreSocialViewModel : ObservableObject {
         }
     }
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     @Published var fb = ""
     @Published var insta = ""
     @Published var web = ""
@@ -57,12 +57,12 @@ class StoreSocialViewModel : ObservableObject {
                 UserInformation.shared.updateUser(myUser)
             }
             
-            showTosat(msg: "Social Links Changed")
+            showTosat(msg: "Social Links Changed".localize())
             DispatchQueue.main.async {
                 self.shouldDismissView = true
             }
         } catch {
-            showTosat(msg: error.localizedDescription)
+            showTosat(msg: error.localizedDescription.localize())
         }
         
         
@@ -72,8 +72,7 @@ class StoreSocialViewModel : ObservableObject {
         
     }
     
-    func showTosat(msg: String) {
+    func showTosat(msg: LocalizedStringKey) {
         self.msg = msg
-        showToast.toggle()
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import FirebaseStorage
 import PhotosUI
+import SwiftUI
 
 class CreateCategoryViewModel : ObservableObject {
     var storeId:String
@@ -20,7 +21,7 @@ class CreateCategoryViewModel : ObservableObject {
 
     @Published var category:Category?
 
-    @Published var msg:String?
+    @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
     
     init(storeId: String) {
@@ -58,7 +59,7 @@ class CreateCategoryViewModel : ObservableObject {
             if let error = error {
                 DispatchQueue.main.async {
                     self.isSaving = false
-                    self.showMessage(error.localizedDescription)
+                    self.showMessage(error.localizedDescription.localize())
                 }
             } else if let url = url {
                 Task {
@@ -99,13 +100,13 @@ class CreateCategoryViewModel : ObservableObject {
         } catch {
             print("error happened \(error.localizedDescription)")
             DispatchQueue.main.async {
-                self.showMessage(error.localizedDescription)
+                self.showMessage(error.localizedDescription.localize())
                 self.isSaving = false
             }
         }
     }
     
-    private func showMessage(_ msg: String) {
+    private func showMessage(_ msg: LocalizedStringKey) {
         self.msg = msg
     }
 }

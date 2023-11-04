@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ButtonLarge: View {
     
-    var label: String
+    var label: LocalizedStringKey
     var background: Color = .accentColor
     var textColor: Color = .white.opacity(0.9)
     var action: (() -> ())
@@ -39,11 +39,11 @@ struct ButtonLarge: View {
 }
 
 struct CustomButton: View {
-    let label: String
+    let label: LocalizedStringKey
     let action: () -> Void
     let foregroundColor: Color?
 
-    init(label: String, action: @escaping () -> Void, foregroundColor: Color? = nil) {
+    init(label: LocalizedStringKey, action: @escaping () -> Void, foregroundColor: Color? = nil) {
         self.label = label
         self.action = action
         self.foregroundColor = foregroundColor

@@ -9,14 +9,19 @@ import SwiftUI
 import AlertToast
 
 struct CreateAccountView: View {
-    
+    var authInfo:AuthProviderInfo?
     
     @State var openCategory = false
     @State var openMarkets = false
 
-    @StateObject var viewModel = CreateAccountViewModel()
+    @ObservedObject var viewModel:CreateAccountViewModel
     @Environment(\.presentationMode) private var presentationMode
 
+    init(authInfo: AuthProviderInfo? = nil) {
+        self.authInfo = authInfo
+        self.viewModel = CreateAccountViewModel(authInfo: authInfo)
+    }
+    
     func nextScreen() {
         Task {
             await viewModel.showNextPage()
@@ -25,12 +30,17 @@ struct CreateAccountView: View {
     
     var body: some View {
         ZStack(alignment: viewModel.isCreated ? .center : .bottomTrailing) {
-            if viewModel.isCreated {
-                LottieView(name: "cart_loading", loopMode: .autoReverse)
-            } else {
                 currentPage
+            
+            if !viewModel.isCreated && !viewModel.isSaving {
                 FloatingActionButton(symbolName: "arrow.forward", action: nextScreen)
                     .padding()
+            }
+        }
+        .task {
+            if let info = authInfo {
+                viewModel.name = info.name
+                viewModel.email = info.email
             }
         }
         .toast(isPresenting: Binding(value: $viewModel.errorMsg)){
@@ -43,7 +53,6 @@ struct CreateAccountView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .willProgress(saving: viewModel.isSaving)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             if !viewModel.isSaving && !viewModel.isCreated {
@@ -58,22 +67,34 @@ struct CreateAccountView: View {
             
         }
         .sheet(isPresented: $openCategory) {
-            PickCategory(sheetVisible: $openCategory, selected: $viewModel.selectedCateogry)
+            NavigationStack {
+                PickCategory(sheetVisible: $openCategory, selected: $viewModel.selectedCateogry)
+            }
         }
         .sheet(isPresented: $openMarkets) {
-            StoreMarketPlaces(selectedItems: $viewModel.selectedMarkets)
+            NavigationStack {
+                StoreMarketPlacesSheet(selectedItems: $viewModel.selectedMarkets)
+            }
         }
         .navigationTitle("Create New Store")
+        .willProgress(saving: viewModel.isSaving, handleBackButton: false)
     }
     
     //MARK : This decide which page to return
     var currentPage: some View {
+        if viewModel.isCreated {
+           return AnyView(VStack {
+               LottieView(name: "cart_loading", loopMode: .autoReverse)
+               Text("We are getting your store ready ..")
+           })
+        }
+        
         if viewModel.currentPage == 1 {
             return AnyView(page1)
         } else if viewModel.currentPage == 2 {
             return AnyView(page2)
         }
-        // Add a default return value here
+
         return AnyView(EmptyView())
     }
     
@@ -82,6 +103,17 @@ struct CreateAccountView: View {
             
             Section("Name & Slogan") {
                 FloatingTextField(title: "Store Name", text: $viewModel.storeName, caption: "This is your store name, it will be printed on the receipts and in your website, it can be changed later", required: true, autoCapitalize: .words)
+                
+                HStack {
+                    FloatingTextField(title: "Username", text: $viewModel.userName, caption: "This will be your link, it should be english, no spaces, uniquie, no numbers", required: true, autoCapitalize: .never)
+                    
+                    if viewModel.validatingName {
+                        ProgressView()
+                    } else if viewModel.validName {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(Color.green)
+                    }
+                }
                 
                 FloatingTextField(title: "Slogan", text: $viewModel.slogan, caption: "Your store slogan, it will be shown on your receipts and in your website", required: false, autoCapitalize: .words)
                 
@@ -150,11 +182,11 @@ struct CreateAccountView: View {
                 FloatingTextField(title: "Name", text: $viewModel.name, caption: "Your personal legal name", required: true, autoCapitalize: .words)
                     
 
-                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "This will not be visible anywere", required: true, autoCapitalize: .words)
+                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "This will not be visible anywere", required: false, autoCapitalize: .words)
             }
             
             Section("Login Credintals") {
-                FloatingTextField(title: "Email Address", text: $viewModel.email, caption: "This is your main email address, note you can't change it later, you will use it to login to your store", required: true, keyboard: .emailAddress)
+                FloatingTextField(title: "Email Address", text: $viewModel.email, caption: "This is your main email address, note you can't change it later, you will use it to login to your store", required: true, keyboard: .emailAddress, isDiabled: authInfo != nil)
             
                 
                 FloatingTextField(title: "Password", text: $viewModel.password, caption: "Choose a strong password, it must be 6 chars at least", required: nil, secure: true)

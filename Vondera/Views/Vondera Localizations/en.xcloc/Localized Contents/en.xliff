@@ -1,0 +1,2167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Vondera/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0.1" build-num="15A507"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Vondera</source>
+        <target>Vondera</target>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Vondera</source>
+        <target>Vondera</target>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSCameraUsageDescription" xml:space="preserve">
+        <source>Vondera requires access to your phone’s camera to scan QR Codes of the orders.</source>
+        <target>Vondera requires access to your phone’s camera to scan QR Codes of the orders.</target>
+        <note>Privacy - Camera Usage Description</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Vondera/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="15.0.1" build-num="15A507"/>
+    </header>
+    <body>
+      <trans-unit id=" , %@" xml:space="preserve">
+        <source> , %@</source>
+        <target> , %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id=" and our " xml:space="preserve">
+        <source> and our </source>
+        <target> and our </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="#%@" xml:space="preserve">
+        <source>#%@</source>
+        <target>#%@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="$ %lld" xml:space="preserve">
+        <source>$ %lld</source>
+        <target>$ %lld</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%" xml:space="preserve">
+        <source>%</source>
+        <target>%</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@" xml:space="preserve">
+        <source>%@</source>
+        <target>%@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@ Report" xml:space="preserve">
+        <source>%@ Report</source>
+        <target>%@ Report</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@ at %@" xml:space="preserve">
+        <source>%@ at %@</source>
+        <target>%@ at %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@%%" xml:space="preserve">
+        <source>%@%%</source>
+        <target>%@%%</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@'s website" xml:space="preserve">
+        <source>%@'s website</source>
+        <target>%@'s website</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@, %@" xml:space="preserve">
+        <source>%@, %@</source>
+        <target>%@, %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld" xml:space="preserve">
+        <source>%lld</source>
+        <target>%lld</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld %%" xml:space="preserve">
+        <source>%lld %%</source>
+        <target>%lld %%</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld %@" xml:space="preserve">
+        <source>%lld %@</source>
+        <target>%lld %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Attachment" xml:space="preserve">
+        <source>%lld Attachment</source>
+        <target>%lld Attachment</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld EGP" xml:space="preserve">
+        <source>%lld EGP</source>
+        <target>%lld EGP</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld LE" xml:space="preserve">
+        <source>%lld LE</source>
+        <target>%lld LE</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld LE / Monthly" xml:space="preserve">
+        <source>%lld LE / Monthly</source>
+        <target>%lld LE / Monthly</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Markets" xml:space="preserve">
+        <source>%lld Markets</source>
+        <target>%lld Markets</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Of %lld Orders" xml:space="preserve">
+        <source>%lld Of %lld Orders</source>
+        <target>%lld Of %lld Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Of %lld Used" xml:space="preserve">
+        <source>%lld Of %lld Used</source>
+        <target>%lld Of %lld Used</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Orders" xml:space="preserve">
+        <source>%lld Orders</source>
+        <target>%lld Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Orders with Courier" xml:space="preserve">
+        <source>%lld Orders with Courier</source>
+        <target>%lld Orders with Courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Pieces" xml:space="preserve">
+        <source>%lld Pieces</source>
+        <target>%lld Pieces</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Selected Orders" xml:space="preserve">
+        <source>%lld Selected Orders</source>
+        <target>%lld Selected Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld Sold" xml:space="preserve">
+        <source>%lld Sold</source>
+        <target>%lld Sold</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld x %lld" xml:space="preserve">
+        <source>%lld x %lld</source>
+        <target>%lld x %lld</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld 📦" xml:space="preserve">
+        <source>%lld 📦</source>
+        <target>%lld 📦</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%lld%%" xml:space="preserve">
+        <source>%lld%%</source>
+        <target>%lld%%</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="+ %lld EGP" xml:space="preserve">
+        <source>+ %lld EGP</source>
+        <target>+ %lld EGP</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="+%lld LE" xml:space="preserve">
+        <source>+%lld LE</source>
+        <target>+%lld LE</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="-" xml:space="preserve">
+        <source>-</source>
+        <target>-</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="- %lld EGP" xml:space="preserve">
+        <source>- %lld EGP</source>
+        <target>- %lld EGP</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="-%lld LE" xml:space="preserve">
+        <source>-%lld LE</source>
+        <target>-%lld LE</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="100%" xml:space="preserve">
+        <source>100%</source>
+        <target>100%</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="@%@" xml:space="preserve">
+        <source>@%@</source>
+        <target>@%@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="About app" xml:space="preserve">
+        <source>About app</source>
+        <target>About app</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Accept Prepaid Orders" xml:space="preserve">
+        <source>Accept Prepaid Orders</source>
+        <target>Accept Prepaid Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Access" xml:space="preserve">
+        <source>Access</source>
+        <target>Access</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Account Active" xml:space="preserve">
+        <source>Account Active</source>
+        <target>Account Active</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Account Settings" xml:space="preserve">
+        <source>Account Settings</source>
+        <target>Account Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Account Type" xml:space="preserve">
+        <source>Account Type</source>
+        <target>Account Type</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Actions" xml:space="preserve">
+        <source>Actions</source>
+        <target>Actions</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Active" xml:space="preserve">
+        <source>Active</source>
+        <target>Active</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add" xml:space="preserve">
+        <source>Add</source>
+        <target>Add</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add Attachments" xml:space="preserve">
+        <source>Add Attachments</source>
+        <target>Add Attachments</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add Comment" xml:space="preserve">
+        <source>Add Comment</source>
+        <target>Add Comment</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add Products" xml:space="preserve">
+        <source>Add Products</source>
+        <target>Add Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add comment to order" xml:space="preserve">
+        <source>Add comment to order</source>
+        <target>Add comment to order</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add item" xml:space="preserve">
+        <source>Add item</source>
+        <target>Add item</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add new Comment" xml:space="preserve">
+        <source>Add new Comment</source>
+        <target>Add new Comment</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add to stock" xml:space="preserve">
+        <source>Add to stock</source>
+        <target>Add to stock</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Address" xml:space="preserve">
+        <source>Address</source>
+        <target>Address</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Address : %@ - %@" xml:space="preserve">
+        <source>Address : %@ - %@</source>
+        <target>Address : %@ - %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Admin" xml:space="preserve">
+        <source>Admin</source>
+        <target>Admin</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." xml:space="preserve">
+        <source>After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume.</source>
+        <target>After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Agel Wallet" xml:space="preserve">
+        <source>Agel Wallet</source>
+        <target>Agel Wallet</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="All Orders" xml:space="preserve">
+        <source>All Orders</source>
+        <target>All Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="All Products" xml:space="preserve">
+        <source>All Products</source>
+        <target>All Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="All Store Orders 📦" xml:space="preserve">
+        <source>All Store Orders 📦</source>
+        <target>All Store Orders 📦</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Always Stokced" xml:space="preserve">
+        <source>Always Stokced</source>
+        <target>Always Stokced</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Always in stock" xml:space="preserve">
+        <source>Always in stock</source>
+        <target>Always in stock</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="App Access" xml:space="preserve">
+        <source>App Access</source>
+        <target>App Access</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="App Settings" xml:space="preserve">
+        <source>App Settings</source>
+        <target>App Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="App Version" xml:space="preserve">
+        <source>App Version</source>
+        <target>App Version</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Apple" xml:space="preserve">
+        <source>Apple</source>
+        <target>Apple</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure you want to delete the order ?" xml:space="preserve">
+        <source>Are you sure you want to delete the order ?</source>
+        <target>Are you sure you want to delete the order ?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure you want to delete this category ? your products won't be deleted" xml:space="preserve">
+        <source>Are you sure you want to delete this category ? your products won't be deleted</source>
+        <target>Are you sure you want to delete this category ? your products won't be deleted</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure you want to delete this code ?" xml:space="preserve">
+        <source>Are you sure you want to delete this code ?</source>
+        <target>Are you sure you want to delete this code ?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure you want to delete this page ?" xml:space="preserve">
+        <source>Are you sure you want to delete this page ?</source>
+        <target>Are you sure you want to delete this page ?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure you want to delete this product ?" xml:space="preserve">
+        <source>Are you sure you want to delete this product ?</source>
+        <target>Are you sure you want to delete this product ?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure you want to delete your accont ? this will delete all of your data, we can't recover them later." xml:space="preserve">
+        <source>Are you sure you want to delete your accont ? this will delete all of your data, we can't recover them later.</source>
+        <target>Are you sure you want to delete your accont ? this will delete all of your data, we can't recover them later.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Areas and shipping fees" xml:space="preserve">
+        <source>Areas and shipping fees</source>
+        <target>Areas and shipping fees</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Armjld Co." xml:space="preserve">
+        <source>Armjld Co.</source>
+        <target>Armjld Co.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Assemble orders" xml:space="preserve">
+        <source>Assemble orders</source>
+        <target>Assemble orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Assign Orders" xml:space="preserve">
+        <source>Assign Orders</source>
+        <target>Assign Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Assign orders to courier" xml:space="preserve">
+        <source>Assign orders to courier</source>
+        <target>Assign orders to courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Assign to Courier" xml:space="preserve">
+        <source>Assign to Courier</source>
+        <target>Assign to Courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily." xml:space="preserve">
+        <source>At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.</source>
+        <target>At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Attachments" xml:space="preserve">
+        <source>Attachments</source>
+        <target>Attachments</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Auth Credntials" xml:space="preserve">
+        <source>Auth Credntials</source>
+        <target>Auth Credntials</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Available Balance" xml:space="preserve">
+        <source>Available Balance</source>
+        <target>Available Balance</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="By : %@" xml:space="preserve">
+        <source>By : %@</source>
+        <target>By : %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="By signing in, you agree to our " xml:space="preserve">
+        <source>By signing in, you agree to our </source>
+        <target>By signing in, you agree to our </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="By turning this off you will disable adding any order to this courier" xml:space="preserve">
+        <source>By turning this off you will disable adding any order to this courier</source>
+        <target>By turning this off you will disable adding any order to this courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="COD" xml:space="preserve">
+        <source>COD</source>
+        <target>COD</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Can your employees accounts reset orders to the intial state ?" xml:space="preserve">
+        <source>Can your employees accounts reset orders to the intial state ?</source>
+        <target>Can your employees accounts reset orders to the intial state ?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Can't open package label" xml:space="preserve">
+        <source>Can't open package label</source>
+        <target>Can't open package label</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Cancel" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Cart 🛒" xml:space="preserve">
+        <source>Cart 🛒</source>
+        <target>Cart 🛒</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Categories" xml:space="preserve">
+        <source>Categories</source>
+        <target>Categories</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Category" xml:space="preserve">
+        <source>Category</source>
+        <target>Category</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Category Info" xml:space="preserve">
+        <source>Category Info</source>
+        <target>Category Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Category info" xml:space="preserve">
+        <source>Category info</source>
+        <target>Category info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Change Password" xml:space="preserve">
+        <source>Change Password</source>
+        <target>Change Password</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Change Phone" xml:space="preserve">
+        <source>Change Phone</source>
+        <target>Change Phone</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Change Plan" xml:space="preserve">
+        <source>Change Plan</source>
+        <target>Change Plan</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Check out" xml:space="preserve">
+        <source>Check out</source>
+        <target>Check out</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Choose Date" xml:space="preserve">
+        <source>Choose Date</source>
+        <target>Choose Date</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Choose your category" xml:space="preserve">
+        <source>Choose your category</source>
+        <target>Choose your category</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Choose your contact method" xml:space="preserve">
+        <source>Choose your contact method</source>
+        <target>Choose your contact method</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Choose your package" xml:space="preserve">
+        <source>Choose your package</source>
+        <target>Choose your package</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Clear cart" xml:space="preserve">
+        <source>Clear cart</source>
+        <target>Clear cart</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Click on the below photo to pick your new logo" xml:space="preserve">
+        <source>Click on the below photo to pick your new logo</source>
+        <target>Click on the below photo to pick your new logo</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Client info" xml:space="preserve">
+        <source>Client info</source>
+        <target>Client info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Communication" xml:space="preserve">
+        <source>Communication</source>
+        <target>Communication</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Communications" xml:space="preserve">
+        <source>Communications</source>
+        <target>Communications</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Confirm orders" xml:space="preserve">
+        <source>Confirm orders</source>
+        <target>Confirm orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Connect" xml:space="preserve">
+        <source>Connect</source>
+        <target>Connect</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Connect to social media" xml:space="preserve">
+        <source>Connect to social media</source>
+        <target>Connect to social media</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Connected" xml:space="preserve">
+        <source>Connected</source>
+        <target>Connected</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Contact" xml:space="preserve">
+        <source>Contact</source>
+        <target>Contact</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Contact Client" xml:space="preserve">
+        <source>Contact Client</source>
+        <target>Contact Client</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Contact Customer" xml:space="preserve">
+        <source>Contact Customer</source>
+        <target>Contact Customer</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Contact customer service" xml:space="preserve">
+        <source>Contact customer service</source>
+        <target>Contact customer service</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Copy Order Details" xml:space="preserve">
+        <source>Copy Order Details</source>
+        <target>Copy Order Details</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Courier Active" xml:space="preserve">
+        <source>Courier Active</source>
+        <target>Courier Active</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Courier Contact Info" xml:space="preserve">
+        <source>Courier Contact Info</source>
+        <target>Courier Contact Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Courier Info" xml:space="preserve">
+        <source>Courier Info</source>
+        <target>Courier Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Courier Orders 🛵" xml:space="preserve">
+        <source>Courier Orders 🛵</source>
+        <target>Courier Orders 🛵</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Courier Settings" xml:space="preserve">
+        <source>Courier Settings</source>
+        <target>Courier Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Couriers" xml:space="preserve">
+        <source>Couriers</source>
+        <target>Couriers</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Couriers 🛵" xml:space="preserve">
+        <source>Couriers 🛵</source>
+        <target>Couriers 🛵</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Cover Photos" xml:space="preserve">
+        <source>Cover Photos</source>
+        <target>Cover Photos</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Cover photos" xml:space="preserve">
+        <source>Cover photos</source>
+        <target>Cover photos</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Create" xml:space="preserve">
+        <source>Create</source>
+        <target>Create</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Create Employee" xml:space="preserve">
+        <source>Create Employee</source>
+        <target>Create Employee</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Create New Store" xml:space="preserve">
+        <source>Create New Store</source>
+        <target>Create New Store</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Created By" xml:space="preserve">
+        <source>Created By</source>
+        <target>Created By</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Current Cashback" xml:space="preserve">
+        <source>Current Cashback</source>
+        <target>Current Cashback</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Current Plan" xml:space="preserve">
+        <source>Current Plan</source>
+        <target>Current Plan</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Current plan" xml:space="preserve">
+        <source>Current plan</source>
+        <target>Current plan</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Custom Pages" xml:space="preserve">
+        <source>Custom Pages</source>
+        <target>Custom Pages</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Custom Receipt Text" xml:space="preserve">
+        <source>Custom Receipt Text</source>
+        <target>Custom Receipt Text</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Customers can prepaid out of stock products" xml:space="preserve">
+        <source>Customers can prepaid out of stock products</source>
+        <target>Customers can prepaid out of stock products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Dashboard" xml:space="preserve">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Dashboard 💼" xml:space="preserve">
+        <source>Dashboard 💼</source>
+        <target>Dashboard 💼</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Date Range" xml:space="preserve">
+        <source>Date Range</source>
+        <target>Date Range</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete" xml:space="preserve">
+        <source>Delete</source>
+        <target>Delete</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete Category" xml:space="preserve">
+        <source>Delete Category</source>
+        <target>Delete Category</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete Order" xml:space="preserve">
+        <source>Delete Order</source>
+        <target>Delete Order</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete Product" xml:space="preserve">
+        <source>Delete Product</source>
+        <target>Delete Product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete my account" xml:space="preserve">
+        <source>Delete my account</source>
+        <target>Delete my account</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete your account" xml:space="preserve">
+        <source>Delete your account</source>
+        <target>Delete your account</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Deleted Orders" xml:space="preserve">
+        <source>Deleted Orders</source>
+        <target>Deleted Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Deleted Orders Notificaton" xml:space="preserve">
+        <source>Deleted Orders Notificaton</source>
+        <target>Deleted Orders Notificaton</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Deliver orders" xml:space="preserve">
+        <source>Deliver orders</source>
+        <target>Deliver orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Deposit" xml:space="preserve">
+        <source>Deposit</source>
+        <target>Deposit</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Discount" xml:space="preserve">
+        <source>Discount</source>
+        <target>Discount</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Discount Codes" xml:space="preserve">
+        <source>Discount Codes</source>
+        <target>Discount Codes</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Display a can't open this package label on the orders receipt" xml:space="preserve">
+        <source>Display a can't open this package label on the orders receipt</source>
+        <target>Display a can't open this package label on the orders receipt</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Don't have an account ? " xml:space="preserve">
+        <source>Don't have an account ? </source>
+        <target>Don't have an account ? </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Download %lld attachments" xml:space="preserve">
+        <source>Download %lld attachments</source>
+        <target>Download %lld attachments</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Download attachments" xml:space="preserve">
+        <source>Download attachments</source>
+        <target>Download attachments</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="EGP %lld" xml:space="preserve">
+        <source>EGP %lld</source>
+        <target>EGP %lld</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Category" xml:space="preserve">
+        <source>Edit Category</source>
+        <target>Edit Category</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Client Info" xml:space="preserve">
+        <source>Edit Client Info</source>
+        <target>Edit Client Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Code" xml:space="preserve">
+        <source>Edit Code</source>
+        <target>Edit Code</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Courier" xml:space="preserve">
+        <source>Edit Courier</source>
+        <target>Edit Courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Employee" xml:space="preserve">
+        <source>Edit Employee</source>
+        <target>Edit Employee</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Expanse" xml:space="preserve">
+        <source>Edit Expanse</source>
+        <target>Edit Expanse</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Info" xml:space="preserve">
+        <source>Edit Info</source>
+        <target>Edit Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Order Info" xml:space="preserve">
+        <source>Edit Order Info</source>
+        <target>Edit Order Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Page" xml:space="preserve">
+        <source>Edit Page</source>
+        <target>Edit Page</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit Products" xml:space="preserve">
+        <source>Edit Products</source>
+        <target>Edit Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Edit my info" xml:space="preserve">
+        <source>Edit my info</source>
+        <target>Edit my info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Email address : %@" xml:space="preserve">
+        <source>Email address : %@</source>
+        <target>Email address : %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Employee" xml:space="preserve">
+        <source>Employee</source>
+        <target>Employee</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Employees" xml:space="preserve">
+        <source>Employees</source>
+        <target>Employees</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Employees can reset orders" xml:space="preserve">
+        <source>Employees can reset orders</source>
+        <target>Employees can reset orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Employees 🧑‍💼" xml:space="preserve">
+        <source>Employees 🧑‍💼</source>
+        <target>Employees 🧑‍💼</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable Attachments" xml:space="preserve">
+        <source>Enable Attachments</source>
+        <target>Enable Attachments</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable Ordering" xml:space="preserve">
+        <source>Enable Ordering</source>
+        <target>Enable Ordering</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable sending a WhatsApp message to your client from your phone, once the order is submitted" xml:space="preserve">
+        <source>Enable sending a WhatsApp message to your client from your phone, once the order is submitted</source>
+        <target>Enable sending a WhatsApp message to your client from your phone, once the order is submitted</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable this to optionlly not require address when sumbiting an order" xml:space="preserve">
+        <source>Enable this to optionlly not require address when sumbiting an order</source>
+        <target>Enable this to optionlly not require address when sumbiting an order</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enabling this will not track your items in the warehouse" xml:space="preserve">
+        <source>Enabling this will not track your items in the warehouse</source>
+        <target>Enabling this will not track your items in the warehouse</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Expanses" xml:space="preserve">
+        <source>Expanses</source>
+        <target>Expanses</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Expanses Reports" xml:space="preserve">
+        <source>Expanses Reports</source>
+        <target>Expanses Reports</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Expanses reports from %@ to %@" xml:space="preserve">
+        <source>Expanses reports from %@ to %@</source>
+        <target>Expanses reports from %@ to %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Expanses 💳" xml:space="preserve">
+        <source>Expanses 💳</source>
+        <target>Expanses 💳</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Expire Date" xml:space="preserve">
+        <source>Expire Date</source>
+        <target>Expire Date</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Facebook" xml:space="preserve">
+        <source>Facebook</source>
+        <target>Facebook</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Facebook Link" xml:space="preserve">
+        <source>Facebook Link</source>
+        <target>Facebook Link</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Featured Products" xml:space="preserve">
+        <source>Featured Products</source>
+        <target>Featured Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Fill from recent products" xml:space="preserve">
+        <source>Fill from recent products</source>
+        <target>Fill from recent products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Finished Orders" xml:space="preserve">
+        <source>Finished Orders</source>
+        <target>Finished Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Finished Orders ✅" xml:space="preserve">
+        <source>Finished Orders ✅</source>
+        <target>Finished Orders ✅</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Forget Password" xml:space="preserve">
+        <source>Forget Password</source>
+        <target>Forget Password</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Forget Password ?" xml:space="preserve">
+        <source>Forget Password ?</source>
+        <target>Forget Password ?</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="From" xml:space="preserve">
+        <source>From</source>
+        <target>From</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Google" xml:space="preserve">
+        <source>Google</source>
+        <target>Google</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Government" xml:space="preserve">
+        <source>Government</source>
+        <target>Government</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Hello again! 👋" xml:space="preserve">
+        <source>Hello again! 👋</source>
+        <target>Hello again! 👋</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Help us expand and get a free subscribtion, by refferring other stores you will gain cashback from each payment they make which is used automaticlky to renew your monthly subscribtion." xml:space="preserve">
+        <source>Help us expand and get a free subscribtion, by refferring other stores you will gain cashback from each payment they make which is used automaticlky to renew your monthly subscribtion.</source>
+        <target>Help us expand and get a free subscribtion, by refferring other stores you will gain cashback from each payment they make which is used automaticlky to renew your monthly subscribtion.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Home" xml:space="preserve">
+        <source>Home</source>
+        <target>Home</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Image Load Error" xml:space="preserve">
+        <source>Image Load Error</source>
+        <target>Image Load Error</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="In Stock" xml:space="preserve">
+        <source>In Stock</source>
+        <target>In Stock</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Info" xml:space="preserve">
+        <source>Info</source>
+        <target>Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Instagram Link" xml:space="preserve">
+        <source>Instagram Link</source>
+        <target>Instagram Link</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Last Order" xml:space="preserve">
+        <source>Last Order</source>
+        <target>Last Order</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Last Order Date" xml:space="preserve">
+        <source>Last Order Date</source>
+        <target>Last Order Date</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Last Ordered" xml:space="preserve">
+        <source>Last Ordered</source>
+        <target>Last Ordered</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Last order %@" xml:space="preserve">
+        <source>Last order %@</source>
+        <target>Last order %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Later" xml:space="preserve">
+        <source>Later</source>
+        <target>Later</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Latest Orders" xml:space="preserve">
+        <source>Latest Orders</source>
+        <target>Latest Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Latest Updated" xml:space="preserve">
+        <source>Latest Updated</source>
+        <target>Latest Updated</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Live website" xml:space="preserve">
+        <source>Live website</source>
+        <target>Live website</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Local Whatsapp" xml:space="preserve">
+        <source>Local Whatsapp</source>
+        <target>Local Whatsapp</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Log Out" xml:space="preserve">
+        <source>Log Out</source>
+        <target>Log Out</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Logged in" xml:space="preserve">
+        <source>Logged in</source>
+        <target>Logged in</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Login Credintals" xml:space="preserve">
+        <source>Login Credintals</source>
+        <target>Login Credintals</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Login Settings" xml:space="preserve">
+        <source>Login Settings</source>
+        <target>Login Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Logo" xml:space="preserve">
+        <source>Logo</source>
+        <target>Logo</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Low Stocks Indecator" xml:space="preserve">
+        <source>Low Stocks Indecator</source>
+        <target>Low Stocks Indecator</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Main Info" xml:space="preserve">
+        <source>Main Info</source>
+        <target>Main Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Main info" xml:space="preserve">
+        <source>Main info</source>
+        <target>Main info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Margin" xml:space="preserve">
+        <source>Margin</source>
+        <target>Margin</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="MarketPlaces" xml:space="preserve">
+        <source>MarketPlaces</source>
+        <target>MarketPlaces</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Min Quantity" xml:space="preserve">
+        <source>Min Quantity</source>
+        <target>Min Quantity</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Monthly Limit" xml:space="preserve">
+        <source>Monthly Limit</source>
+        <target>Monthly Limit</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="More options" xml:space="preserve">
+        <source>More options</source>
+        <target>More options</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Most Selling" xml:space="preserve">
+        <source>Most Selling</source>
+        <target>Most Selling</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Most Selling Products" xml:space="preserve">
+        <source>Most Selling Products</source>
+        <target>Most Selling Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Most viewed items" xml:space="preserve">
+        <source>Most viewed items</source>
+        <target>Most viewed items</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="My Orders" xml:space="preserve">
+        <source>My Orders</source>
+        <target>My Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name" xml:space="preserve">
+        <source>Name</source>
+        <target>Name</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name &amp; Slogan" xml:space="preserve">
+        <source>Name &amp; Slogan</source>
+        <target>Name &amp; Slogan</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name : %@ - Phone Number : %@" xml:space="preserve">
+        <source>Name : %@ - Phone Number : %@</source>
+        <target>Name : %@ - Phone Number : %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name and Slogan" xml:space="preserve">
+        <source>Name and Slogan</source>
+        <target>Name and Slogan</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New" xml:space="preserve">
+        <source>New</source>
+        <target>New</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Category" xml:space="preserve">
+        <source>New Category</source>
+        <target>New Category</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Code" xml:space="preserve">
+        <source>New Code</source>
+        <target>New Code</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Courier" xml:space="preserve">
+        <source>New Courier</source>
+        <target>New Courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Expanse" xml:space="preserve">
+        <source>New Expanse</source>
+        <target>New Expanse</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Option" xml:space="preserve">
+        <source>New Option</source>
+        <target>New Option</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Order" xml:space="preserve">
+        <source>New Order</source>
+        <target>New Order</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Order Complaint Notificaton" xml:space="preserve">
+        <source>New Order Complaint Notificaton</source>
+        <target>New Order Complaint Notificaton</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Orders Notificaton" xml:space="preserve">
+        <source>New Orders Notificaton</source>
+        <target>New Orders Notificaton</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Page" xml:space="preserve">
+        <source>New Page</source>
+        <target>New Page</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="New Product" xml:space="preserve">
+        <source>New Product</source>
+        <target>New Product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No Thanks !" xml:space="preserve">
+        <source>No Thanks !</source>
+        <target>No Thanks !</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Not Paid" xml:space="preserve">
+        <source>Not Paid</source>
+        <target>Not Paid</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Note that the courier shipping fees will be detected from your net proft, this is the price that the couriers get for his service for you" xml:space="preserve">
+        <source>Note that the courier shipping fees will be detected from your net proft, this is the price that the couriers get for his service for you</source>
+        <target>Note that the courier shipping fees will be detected from your net proft, this is the price that the couriers get for his service for you</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Notification Settings" xml:space="preserve">
+        <source>Notification Settings</source>
+        <target>Notification Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Notifications" xml:space="preserve">
+        <source>Notifications</source>
+        <target>Notifications</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Offline Orders" xml:space="preserve">
+        <source>Offline Orders</source>
+        <target>Offline Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="On Going Orders" xml:space="preserve">
+        <source>On Going Orders</source>
+        <target>On Going Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Online Employees 🧑‍💼" xml:space="preserve">
+        <source>Online Employees 🧑‍💼</source>
+        <target>Online Employees 🧑‍💼</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Option %lld : %@" xml:space="preserve">
+        <source>Option %lld : %@</source>
+        <target>Option %lld : %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Option (Varient)" xml:space="preserve">
+        <source>Option (Varient)</source>
+        <target>Option (Varient)</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Optional" xml:space="preserve">
+        <source>Optional</source>
+        <target>Optional</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Options" xml:space="preserve">
+        <source>Options</source>
+        <target>Options</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Or Login to saved account" xml:space="preserve">
+        <source>Or Login to saved account</source>
+        <target>Or Login to saved account</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order Details" xml:space="preserve">
+        <source>Order Details</source>
+        <target>Order Details</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order Statue" xml:space="preserve">
+        <source>Order Statue</source>
+        <target>Order Statue</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order Summery" xml:space="preserve">
+        <source>Order Summery</source>
+        <target>Order Summery</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order items" xml:space="preserve">
+        <source>Order items</source>
+        <target>Order items</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order prepaid" xml:space="preserve">
+        <source>Order prepaid</source>
+        <target>Order prepaid</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order reports for orders assigned to courier from %@ to %@" xml:space="preserve">
+        <source>Order reports for orders assigned to courier from %@ to %@</source>
+        <target>Order reports for orders assigned to courier from %@ to %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Order reports for orders created from %@ to %@" xml:space="preserve">
+        <source>Order reports for orders created from %@ to %@</source>
+        <target>Order reports for orders created from %@ to %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Orders" xml:space="preserve">
+        <source>Orders</source>
+        <target>Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Orders %lld" xml:space="preserve">
+        <source>Orders %lld</source>
+        <target>Orders %lld</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Orders Count" xml:space="preserve">
+        <source>Orders Count</source>
+        <target>Orders Count</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Orders to Fullfil" xml:space="preserve">
+        <source>Orders to Fullfil</source>
+        <target>Orders to Fullfil</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Orders to fulfill" xml:space="preserve">
+        <source>Orders to fulfill</source>
+        <target>Orders to fulfill</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Orders to fullfil" xml:space="preserve">
+        <source>Orders to fullfil</source>
+        <target>Orders to fullfil</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Others" xml:space="preserve">
+        <source>Others</source>
+        <target>Others</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Out of stock" xml:space="preserve">
+        <source>Out of stock</source>
+        <target>Out of stock</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Overview" xml:space="preserve">
+        <source>Overview</source>
+        <target>Overview</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Paid" xml:space="preserve">
+        <source>Paid</source>
+        <target>Paid</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Password" xml:space="preserve">
+        <source>Password</source>
+        <target>Password</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Password : %@" xml:space="preserve">
+        <source>Password : %@</source>
+        <target>Password : %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Payment" xml:space="preserve">
+        <source>Payment</source>
+        <target>Payment</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Personal Info" xml:space="preserve">
+        <source>Personal Info</source>
+        <target>Personal Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Phone Call" xml:space="preserve">
+        <source>Phone Call</source>
+        <target>Phone Call</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Phone number" xml:space="preserve">
+        <source>Phone number</source>
+        <target>Phone number</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Plans" xml:space="preserve">
+        <source>Plans</source>
+        <target>Plans</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Please choose which action you want to make on the orders, note that this action is not reversible" xml:space="preserve">
+        <source>Please choose which action you want to make on the orders, note that this action is not reversible</source>
+        <target>Please choose which action you want to make on the orders, note that this action is not reversible</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Please enter your details to sign in" xml:space="preserve">
+        <source>Please enter your details to sign in</source>
+        <target>Please enter your details to sign in</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Price" xml:space="preserve">
+        <source>Price</source>
+        <target>Price</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Price and cost" xml:space="preserve">
+        <source>Price and cost</source>
+        <target>Price and cost</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Primary Color" xml:space="preserve">
+        <source>Primary Color</source>
+        <target>Primary Color</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Print Receipt" xml:space="preserve">
+        <source>Print Receipt</source>
+        <target>Print Receipt</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Print Receipts" xml:space="preserve">
+        <source>Print Receipts</source>
+        <target>Print Receipts</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Privacy Policy" xml:space="preserve">
+        <source>Privacy Policy</source>
+        <target>Privacy Policy</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product" xml:space="preserve">
+        <source>Product</source>
+        <target>Product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Description" xml:space="preserve">
+        <source>Product Description</source>
+        <target>Product Description</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Editable Prices" xml:space="preserve">
+        <source>Product Editable Prices</source>
+        <target>Product Editable Prices</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Name" xml:space="preserve">
+        <source>Product Name</source>
+        <target>Product Name</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Photos" xml:space="preserve">
+        <source>Product Photos</source>
+        <target>Product Photos</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Price" xml:space="preserve">
+        <source>Product Price</source>
+        <target>Product Price</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Prices" xml:space="preserve">
+        <source>Product Prices</source>
+        <target>Product Prices</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Stock Finished Notificaton" xml:space="preserve">
+        <source>Product Stock Finished Notificaton</source>
+        <target>Product Stock Finished Notificaton</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Stocks" xml:space="preserve">
+        <source>Product Stocks</source>
+        <target>Product Stocks</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Varients" xml:space="preserve">
+        <source>Product Varients</source>
+        <target>Product Varients</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product Visibility" xml:space="preserve">
+        <source>Product Visibility</source>
+        <target>Product Visibility</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product info" xml:space="preserve">
+        <source>Product info</source>
+        <target>Product info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Product photos" xml:space="preserve">
+        <source>Product photos</source>
+        <target>Product photos</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Products" xml:space="preserve">
+        <source>Products</source>
+        <target>Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Products Details" xml:space="preserve">
+        <source>Products Details</source>
+        <target>Products Details</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Products Price" xml:space="preserve">
+        <source>Products Price</source>
+        <target>Products Price</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Profit" xml:space="preserve">
+        <source>Profit</source>
+        <target>Profit</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Pull to refresh" xml:space="preserve">
+        <source>Pull to refresh</source>
+        <target>Pull to refresh</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Purchase Date : %@" xml:space="preserve">
+        <source>Purchase Date : %@</source>
+        <target>Purchase Date : %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Quantity" xml:space="preserve">
+        <source>Quantity</source>
+        <target>Quantity</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Receipt custom message" xml:space="preserve">
+        <source>Receipt custom message</source>
+        <target>Receipt custom message</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Receipts" xml:space="preserve">
+        <source>Receipts</source>
+        <target>Receipts</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Reffer Program" xml:space="preserve">
+        <source>Reffer Program</source>
+        <target>Reffer Program</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Release to refresh" xml:space="preserve">
+        <source>Release to refresh</source>
+        <target>Release to refresh</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Renew Now" xml:space="preserve">
+        <source>Renew Now</source>
+        <target>Renew Now</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Reports" xml:space="preserve">
+        <source>Reports</source>
+        <target>Reports</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Require user to input email address" xml:space="preserve">
+        <source>Require user to input email address</source>
+        <target>Require user to input email address</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Required" xml:space="preserve">
+        <source>Required</source>
+        <target>Required</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sales &amp; Profit" xml:space="preserve">
+        <source>Sales &amp; Profit</source>
+        <target>Sales &amp; Profit</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sales Account" xml:space="preserve">
+        <source>Sales Account</source>
+        <target>Sales Account</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sales Channels" xml:space="preserve">
+        <source>Sales Channels</source>
+        <target>Sales Channels</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sales Report" xml:space="preserve">
+        <source>Sales Report</source>
+        <target>Sales Report</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Save" xml:space="preserve">
+        <source>Save</source>
+        <target>Save</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search %lld Couriers" xml:space="preserve">
+        <source>Search %lld Couriers</source>
+        <target>Search %lld Couriers</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search %lld Employees" xml:space="preserve">
+        <source>Search %lld Employees</source>
+        <target>Search %lld Employees</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search %lld Orders" xml:space="preserve">
+        <source>Search %lld Orders</source>
+        <target>Search %lld Orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search %lld Products" xml:space="preserve">
+        <source>Search %lld Products</source>
+        <target>Search %lld Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search Products" xml:space="preserve">
+        <source>Search Products</source>
+        <target>Search Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search by name, phone or id" xml:space="preserve">
+        <source>Search by name, phone or id</source>
+        <target>Search by name, phone or id</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search for expanse" xml:space="preserve">
+        <source>Search for expanse</source>
+        <target>Search for expanse</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search for order" xml:space="preserve">
+        <source>Search for order</source>
+        <target>Search for order</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search your shoppers by name" xml:space="preserve">
+        <source>Search your shoppers by name</source>
+        <target>Search your shoppers by name</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Secondary Color" xml:space="preserve">
+        <source>Secondary Color</source>
+        <target>Secondary Color</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="See All" xml:space="preserve">
+        <source>See All</source>
+        <target>See All</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Select All" xml:space="preserve">
+        <source>Select All</source>
+        <target>Select All</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Select Courier" xml:space="preserve">
+        <source>Select Courier</source>
+        <target>Select Courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Select orders" xml:space="preserve">
+        <source>Select orders</source>
+        <target>Select orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Select the category that this product belongs too" xml:space="preserve">
+        <source>Select the category that this product belongs too</source>
+        <target>Select the category that this product belongs too</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Select your action" xml:space="preserve">
+        <source>Select your action</source>
+        <target>Select your action</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Send SMS" xml:space="preserve">
+        <source>Send SMS</source>
+        <target>Send SMS</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Send Telegram Message" xml:space="preserve">
+        <source>Send Telegram Message</source>
+        <target>Send Telegram Message</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Send Whatsapp Message" xml:space="preserve">
+        <source>Send Whatsapp Message</source>
+        <target>Send Whatsapp Message</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Send Whatsapp message" xml:space="preserve">
+        <source>Send Whatsapp message</source>
+        <target>Send Whatsapp message</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Send email to customer" xml:space="preserve">
+        <source>Send email to customer</source>
+        <target>Send email to customer</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Set up an indecator to track your low stocks" xml:space="preserve">
+        <source>Set up an indecator to track your low stocks</source>
+        <target>Set up an indecator to track your low stocks</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Settings" xml:space="preserve">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Share Product" xml:space="preserve">
+        <source>Share Product</source>
+        <target>Share Product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Shipping Fees" xml:space="preserve">
+        <source>Shipping Fees</source>
+        <target>Shipping Fees</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Shipping Info" xml:space="preserve">
+        <source>Shipping Info</source>
+        <target>Shipping Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Shipping Price" xml:space="preserve">
+        <source>Shipping Price</source>
+        <target>Shipping Price</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Shipping Prices" xml:space="preserve">
+        <source>Shipping Prices</source>
+        <target>Shipping Prices</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Shipping info" xml:space="preserve">
+        <source>Shipping info</source>
+        <target>Shipping info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Shoppers" xml:space="preserve">
+        <source>Shoppers</source>
+        <target>Shoppers</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Show order QRCode" xml:space="preserve">
+        <source>Show order QRCode</source>
+        <target>Show order QRCode</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Show whatsapp contact button" xml:space="preserve">
+        <source>Show whatsapp contact button</source>
+        <target>Show whatsapp contact button</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sign Up" xml:space="preserve">
+        <source>Sign Up</source>
+        <target>Sign Up</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sign in" xml:space="preserve">
+        <source>Sign in</source>
+        <target>Sign in</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Site Options" xml:space="preserve">
+        <source>Site Options</source>
+        <target>Site Options</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Social" xml:space="preserve">
+        <source>Social</source>
+        <target>Social</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Social Media Account" xml:space="preserve">
+        <source>Social Media Account</source>
+        <target>Social Media Account</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sold Products" xml:space="preserve">
+        <source>Sold Products</source>
+        <target>Sold Products</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Sort Option" xml:space="preserve">
+        <source>Sort Option</source>
+        <target>Sort Option</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Spent %lld EGP" xml:space="preserve">
+        <source>Spent %lld EGP</source>
+        <target>Spent %lld EGP</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Stock Handling" xml:space="preserve">
+        <source>Stock Handling</source>
+        <target>Stock Handling</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Category" xml:space="preserve">
+        <source>Store Category</source>
+        <target>Store Category</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Info" xml:space="preserve">
+        <source>Store Info</source>
+        <target>Store Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Logo" xml:space="preserve">
+        <source>Store Logo</source>
+        <target>Store Logo</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Options" xml:space="preserve">
+        <source>Store Options</source>
+        <target>Store Options</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Product" xml:space="preserve">
+        <source>Store Product</source>
+        <target>Store Product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Settings" xml:space="preserve">
+        <source>Store Settings</source>
+        <target>Store Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Store Users" xml:space="preserve">
+        <source>Store Users</source>
+        <target>Store Users</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Submit" xml:space="preserve">
+        <source>Submit</source>
+        <target>Submit</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Subscribtion" xml:space="preserve">
+        <source>Subscribtion</source>
+        <target>Subscribtion</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Subscriptions" xml:space="preserve">
+        <source>Subscriptions</source>
+        <target>Subscriptions</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Summery" xml:space="preserve">
+        <source>Summery</source>
+        <target>Summery</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Switch Account" xml:space="preserve">
+        <source>Switch Account</source>
+        <target>Switch Account</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Terms &amp; Conditions" xml:space="preserve">
+        <source>Terms &amp; Conditions</source>
+        <target>Terms &amp; Conditions</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Terms &amp; Condtions" xml:space="preserve">
+        <source>Terms &amp; Condtions</source>
+        <target>Terms &amp; Condtions</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Text" xml:space="preserve">
+        <source>Text</source>
+        <target>Text</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The store logo is used to identify your store in the app. It will be displayed on the store page and in the store list. The logo should be a square image with a minimum size of 512x512 pixels. The recommended size is 1024x1024 pixels. The logo will be displayed at a size of 120x120 pixels." xml:space="preserve">
+        <source>The store logo is used to identify your store in the app. It will be displayed on the store page and in the store list. The logo should be a square image with a minimum size of 512x512 pixels. The recommended size is 1024x1024 pixels. The logo will be displayed at a size of 120x120 pixels.</source>
+        <target>The store logo is used to identify your store in the app. It will be displayed on the store page and in the store list. The logo should be a square image with a minimum size of 512x512 pixels. The recommended size is 1024x1024 pixels. The logo will be displayed at a size of 120x120 pixels.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Theme" xml:space="preserve">
+        <source>Theme</source>
+        <target>Theme</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This Month" xml:space="preserve">
+        <source>This Month</source>
+        <target>This Month</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This Quarter" xml:space="preserve">
+        <source>This Quarter</source>
+        <target>This Quarter</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This Week" xml:space="preserve">
+        <source>This Week</source>
+        <target>This Week</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This is enabled by default, if you turn this off no one will be able to submit new orders" xml:space="preserve">
+        <source>This is enabled by default, if you turn this off no one will be able to submit new orders</source>
+        <target>This is enabled by default, if you turn this off no one will be able to submit new orders</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This is the prices you charge your customers for shipping, note that if you deal with courier please add his info and shipping fees for better net profit calculations" xml:space="preserve">
+        <source>This is the prices you charge your customers for shipping, note that if you deal with courier please add his info and shipping fees for better net profit calculations</source>
+        <target>This is the prices you charge your customers for shipping, note that if you deal with courier please add his info and shipping fees for better net profit calculations</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This order require shipping" xml:space="preserve">
+        <source>This order require shipping</source>
+        <target>This order require shipping</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="This year" xml:space="preserve">
+        <source>This year</source>
+        <target>This year</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Those are the market places (Sales Channels) you sell on, select only where your brand sell" xml:space="preserve">
+        <source>Those are the market places (Sales Channels) you sell on, select only where your brand sell</source>
+        <target>Those are the market places (Sales Channels) you sell on, select only where your brand sell</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Thumbnail" xml:space="preserve">
+        <source>Thumbnail</source>
+        <target>Thumbnail</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Tik Tok Link" xml:space="preserve">
+        <source>Tik Tok Link</source>
+        <target>Tik Tok Link</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Tip of the day 💭" xml:space="preserve">
+        <source>Tip of the day 💭</source>
+        <target>Tip of the day 💭</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="To" xml:space="preserve">
+        <source>To</source>
+        <target>To</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Today" xml:space="preserve">
+        <source>Today</source>
+        <target>Today</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Tools" xml:space="preserve">
+        <source>Tools</source>
+        <target>Tools</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Top Selling Areas 🏙️" xml:space="preserve">
+        <source>Top Selling Areas 🏙️</source>
+        <target>Top Selling Areas 🏙️</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Top Selling Products 📦" xml:space="preserve">
+        <source>Top Selling Products 📦</source>
+        <target>Top Selling Products 📦</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Total" xml:space="preserve">
+        <source>Total</source>
+        <target>Total</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Total Items" xml:space="preserve">
+        <source>Total Items</source>
+        <target>Total Items</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Total Pieces" xml:space="preserve">
+        <source>Total Pieces</source>
+        <target>Total Pieces</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Total Products price" xml:space="preserve">
+        <source>Total Products price</source>
+        <target>Total Products price</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Total Spent" xml:space="preserve">
+        <source>Total Spent</source>
+        <target>Total Spent</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Turning this off will hide this product and no one can make an order with it" xml:space="preserve">
+        <source>Turning this off will hide this product and no one can make an order with it</source>
+        <target>Turning this off will hide this product and no one can make an order with it</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Turning this on will disable stock handling for this product" xml:space="preserve">
+        <source>Turning this on will disable stock handling for this product</source>
+        <target>Turning this on will disable stock handling for this product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unselect All" xml:space="preserve">
+        <source>Unselect All</source>
+        <target>Unselect All</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Update" xml:space="preserve">
+        <source>Update</source>
+        <target>Update</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Update Social Links" xml:space="preserve">
+        <source>Update Social Links</source>
+        <target>Update Social Links</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Updates" xml:space="preserve">
+        <source>Updates</source>
+        <target>Updates</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Upgrade your plan" xml:space="preserve">
+        <source>Upgrade your plan</source>
+        <target>Upgrade your plan</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="User Info" xml:space="preserve">
+        <source>User Info</source>
+        <target>User Info</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Variants" xml:space="preserve">
+        <source>Variants</source>
+        <target>Variants</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Variants are used to create different versions of the same product. For example, if you have a t-shirt, you can create a variant for each size and color, just click next if you don't have any variants" xml:space="preserve">
+        <source>Variants are used to create different versions of the same product. For example, if you have a t-shirt, you can create a variant for each size and color, just click next if you don't have any variants</source>
+        <target>Variants are used to create different versions of the same product. For example, if you have a t-shirt, you can create a variant for each size and color, just click next if you don't have any variants</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Varient" xml:space="preserve">
+        <source>Varient</source>
+        <target>Varient</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Varients" xml:space="preserve">
+        <source>Varients</source>
+        <target>Varients</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Visit Product" xml:space="preserve">
+        <source>Visit Product</source>
+        <target>Visit Product</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Warehouse" xml:space="preserve">
+        <source>Warehouse</source>
+        <target>Warehouse</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Warehouse Quantity" xml:space="preserve">
+        <source>Warehouse Quantity</source>
+        <target>Warehouse Quantity</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="We are getting your store ready .." xml:space="preserve">
+        <source>We are getting your store ready ..</source>
+        <target>We are getting your store ready ..</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Website Settings" xml:space="preserve">
+        <source>Website Settings</source>
+        <target>Website Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Website theme" xml:space="preserve">
+        <source>Website theme</source>
+        <target>Website theme</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Welcome back" xml:space="preserve">
+        <source>Welcome back</source>
+        <target>Welcome back</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="With Courier" xml:space="preserve">
+        <source>With Courier</source>
+        <target>With Courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="You are only allowed to open the package in front of the courier" xml:space="preserve">
+        <source>You are only allowed to open the package in front of the courier</source>
+        <target>You are only allowed to open the package in front of the courier</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="You need at least 10,000 LE in your wallet to withdraw fund" xml:space="preserve">
+        <source>You need at least 10,000 LE in your wallet to withdraw fund</source>
+        <target>You need at least 10,000 LE in your wallet to withdraw fund</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your Orders 📦" xml:space="preserve">
+        <source>Your Orders 📦</source>
+        <target>Your Orders 📦</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your employees can edit the product prices on the checkout proccess" xml:space="preserve">
+        <source>Your employees can edit the product prices on the checkout proccess</source>
+        <target>Your employees can edit the product prices on the checkout proccess</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your first steps with Vondera" xml:space="preserve">
+        <source>Your first steps with Vondera</source>
+        <target>Your first steps with Vondera</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your notification settings" xml:space="preserve">
+        <source>Your notification settings</source>
+        <target>Your notification settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your personal name" xml:space="preserve">
+        <source>Your personal name</source>
+        <target>Your personal name</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your reffer code" xml:space="preserve">
+        <source>Your reffer code</source>
+        <target>Your reffer code</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Your website" xml:space="preserve">
+        <source>Your website</source>
+        <target>Your website</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="⬇️" xml:space="preserve">
+        <source>⬇️</source>
+        <target>⬇️</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CourierFinishedOrders: View {
-    
-    
     var courier:Courier
     
     @StateObject var viewModel:CourierFinishedViewModel
@@ -35,6 +33,7 @@ struct CourierFinishedOrders: View {
                     }
                 }
             }
+            
         }
         .refreshable {
             await refreshData()

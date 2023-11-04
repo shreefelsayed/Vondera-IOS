@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CustomTopTabBar: View {
     @Binding var tabIndex: Int
-    var titles:[String]
+    var titles:[LocalizedStringKey]
     var body: some View {
         ScrollView(.horizontal ,showsIndicators: false) {
             HStack(spacing: 20) {
@@ -30,7 +30,7 @@ struct CustomTopTabBar: View {
 }
 
 struct TabBarButton: View {
-    let text: String
+    let text: LocalizedStringKey
     @Binding var isSelected: Bool
     var body: some View {
         Text(text)

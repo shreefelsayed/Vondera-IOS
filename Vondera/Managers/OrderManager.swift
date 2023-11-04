@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 class OrderManager {
     let CONFIRM_CODE = 10
     let NEW_CODE = 12
@@ -36,10 +37,32 @@ class OrderManager {
         return list
     }
     
-    func outForDelivery(order: inout Order, courier:Courier) async -> Order {
-        if !(order.requireDelivery ?? true) { return order }
+    func canAddToCourier(order:Order, courierId:String) -> (confirmed: Bool, msg:LocalizedStringKey) {
+        if !(order.requireDelivery ?? true) {
+            return (confirmed : false, msg: "Order doesn't need delivery")
+        }
         
-        let ordersDao = OrdersDao(storeId: order.storeId!)
+        if order.courierId == courierId && order.statue == "Out For Delivery" {
+            return (confirmed : false, msg: "Order already with courier")
+        }
+        
+        if order.statue == "Deleted" {
+            return (confirmed : false, msg: "Order is deleted")
+        }
+        
+        return (confirmed : true, msg: "")
+    }
+    
+    func outForDelivery(order: inout Order, courier:Courier) async -> Order {
+        guard canAddToCourier(order: order, courierId: courier.id).confirmed else {
+            return order
+        }
+        
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return order
+        }
+        
+        let ordersDao = OrdersDao(storeId: storeId)
         let fees = getFees(order.gov, courier.listPrices)
         
         var hash:[String:Any] = [:]
@@ -76,7 +99,10 @@ class OrderManager {
     }
     
     func resetOrder(order: inout Order) async -> Order {
-        let ordersDao = OrdersDao(storeId: order.storeId!)
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return order
+        }
+        let ordersDao = OrdersDao(storeId: storeId)
         var hashMap = [String: Any]()
         hashMap["statue"] = "Pending"
         hashMap["courierId"] = ""
@@ -120,8 +146,12 @@ class OrderManager {
         if !order.canDeleteOrder(accountType: myUser.accountType) {
             return (order, false)
         }
+        
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return (order, false)
+        }
                 
-        let ordersDao = OrdersDao(storeId: order.storeId!)
+        let ordersDao = OrdersDao(storeId: storeId)
         var hash:[String:Any] = [:]
         hash["statue"] = "Deleted"
         hash["dateDelivered"] = nil
@@ -131,6 +161,7 @@ class OrderManager {
         order.statue = "Deleted"
         order.dateDelivered = nil
         
+        AnalyticsManager.shared.deleteOrder()
         return (order, true)
     }
     
@@ -150,7 +181,10 @@ class OrderManager {
     
     
     func orderDelivered(order: inout Order) async -> Order {
-        let ordersDao = OrdersDao(storeId: order.storeId!)
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return order
+        }
+        let ordersDao = OrdersDao(storeId: storeId)
         var hash:[String:Any] = [:]
         hash["statue"] = "Delivered"
         hash["dateDelivered"] = Timestamp(date: Date())
@@ -176,7 +210,11 @@ class OrderManager {
     }
     
     func assambleOrder(order: inout Order) async -> Order {
-        let ordersDao = OrdersDao(storeId: order.storeId!)
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return order
+        }
+        let ordersDao = OrdersDao(storeId: storeId)
+        
         var hash:[String:Any] = [:]
         hash["statue"] = "Assembled"
         hash["dateAssembled"] = Timestamp(date: Date())
@@ -206,7 +244,11 @@ class OrderManager {
     }
     
     func confirmOrder(order: inout Order) async -> Order {
-        let ordersDao = OrdersDao(storeId: order.storeId!)
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return order
+        }
+        let ordersDao = OrdersDao(storeId: storeId)
+        
         var hash:[String:Any] = [:]
         hash["statue"] = "Confirmed"
         hash["dateConfirmed"] = Timestamp(date: Date())
@@ -224,30 +266,39 @@ class OrderManager {
     }
     
     // This is used to add an order to the project
-    func addOrder(order: inout Order) async -> Order? {
-        let ordersDao = OrdersDao(storeId: order.storeId!)
-        
-        do {
-            // Add Commession if exists
-            await checkCommission(order:&order)
-            
-            // Add the order
-            try await ordersDao.add(order: order)
-            
-            // Clear the cart
-            await CartManager().clearCart()
-            
-            // update the local store values
-            await onNewOrderAdded(storeId: order.storeId!)
-            
-            // Copy data to clipboard
-            CopyingData().copyToClipboard(order.toString())
-            
-            return order
-        } catch {
-            print("\(error.localizedDescription)")
-            return nil
+    func addOrder(order: inout Order) async -> Order {
+        if let myUser = UserInformation.shared.user {
+            let ordersDao = OrdersDao(storeId: myUser.storeId)
+            do {
+                order.storeId = myUser.storeId
+                order.addBy = myUser.id
+                order.owner = myUser.name
+                order.listUpdates?.append(Updates(uId: myUser.id, code: 12))
+                
+                // Add Commession if exists
+                await checkCommission(order:&order)
+                
+                // Add the order
+                try await ordersDao.add(order: order)
+                
+                // Clear the cart
+                CartManager().clearCart()
+                
+                // update the local store values
+                await onNewOrderAdded(storeId: order.storeId!)
+                
+                // Copy data to clipboard
+                CopyingData().copyToClipboard(order.toString())
+                
+                AnalyticsManager.shared.flyOrderAdded()
+                return order
+            } catch {
+                print("\(error.localizedDescription)")
+                return order
+            }
         }
+        
+        return order
     }
     
     func checkCommission(order: inout Order) async {

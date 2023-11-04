@@ -8,29 +8,30 @@
 import Foundation
 import SwiftXLSX
 
-class SalesExcel {
-    var name = "Sales Report"
-    var listOrders:[Order]
+class ExpansesExcel {
+    var name = "Expanses Report"
+    var items:[Expense]
     let book = XWorkBook()
     var sheet:XSheet
     
-    init(name: String = "Sales Report", listOrders: [Order]) {
+    init(name: String = "Expanses Report", items: [Expense]) {
         self.name = name
-        self.listOrders = listOrders
+        self.items = items
         sheet = book.NewSheet(name)
     }
     
     func generateReport() -> URL? {
         // MARK : Create the header
-        createHeader(["Order ID", "Name", "Government", "Order Price", "Courier Commission", "COD", "Product Cost", "Sales Commission", "Net Profit", "Statue", "Sold By"])
+        createHeader(["#", "Amount", "Desceibtion", "Date"])
         
         //MARK : Add Items
-        for (index, order) in listOrders.enumerated() {
-            let data:[String] = ["#\(order.id)", order.name, order.gov, "\(order.totalPrice) LE", "\(order.courierShippingFees ?? 0) LE", "\(order.COD) LE", "\(order.buyingPrice) LE", "\(order.finalCommission) LE", "\(order.netProfitFinal) LE", order.statue, order.owner ?? ""]
+        for (index, expanse) in items.enumerated() {
+            let data:[String] = ["#\(index)", "\(expanse.amount) LE", expanse.description, "\(expanse.date.toDate().formatted())"]
             
             addRow(rowNumber: (index + 2), items: data)
         }
-              
+        
+        addFinalRow()
         // MARK : Create file and save
         let fileid = book.save("\(name).xlsx")
         
@@ -38,6 +39,22 @@ class SalesExcel {
         
         let url = URL(fileURLWithPath: fileid)
         return url
+    }
+    
+    func addFinalRow() {
+        var amount = 0
+        
+        items.forEach { item in
+            amount += item.amount
+        }
+        
+        let data:[String] = [
+            "\(items.count) Transaction",
+            "\(amount) LE",
+            "",
+            ""]
+        
+        addRow(rowNumber: items.count + 2, items: data)
     }
     
     func createHeader(_ items:[String]) {

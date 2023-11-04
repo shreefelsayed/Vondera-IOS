@@ -9,31 +9,17 @@ import Foundation
 
 class StoreEmployeesViewModel: ObservableObject {
     var storeId:String
-    var user:UserData?
-    
-    var usersDao:UsersDao = UsersDao()
-    
+        
     @Published var items = [UserData]()
     @Published var searchText = ""
 
     @Published var isLoading = false
     @Published var error = ""
-    @Published var isRefreshing = false
-        
-    
-    var filteredItems: [UserData] {
-        guard !searchText.isEmpty else { return items }
-        return items.filter { item in
-            item.filter(searchText)
-        }
-    }
-    
     
     init(storeId:String) {
         self.storeId = storeId
         
         Task {
-            user = UserInformation.shared.getUser()
             await getData()
         }
     }
@@ -43,15 +29,26 @@ class StoreEmployeesViewModel: ObservableObject {
             return
         }
         
-        self.isLoading = true
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
 
         do {
-            items = try await usersDao.storeEmployees(expect: user?.id ?? "", storeId: storeId, active: true)
+            if let uId = UserInformation.shared.user?.id {
+                var data = try await UsersDao().storeEmployees(expect: uId, storeId: storeId, active: true)
+                data = data.filter({ $0.accountType != "Owner" })
+                DispatchQueue.main.async { [data] in
+                    self.items = data
+                }
+            }
         } catch {
             print(error.localizedDescription)
         }
         
-        self.isLoading = false
+        DispatchQueue.main.async {
+            self.isLoading = false
+        }
     }
 }
 

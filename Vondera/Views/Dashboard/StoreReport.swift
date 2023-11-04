@@ -7,12 +7,55 @@
 
 import SwiftUI
 
+struct DateModel {
+    var title:String
+    var range:Int
+}
+
+struct DateChoose:View {
+    @Binding var selectedIndex:Int
+    @Binding var from:Date
+    @Binding var to:Date
+    
+    let dates = [
+        DateModel(title: "Today", range: 1),
+        DateModel(title: "Last week", range: 7),
+        DateModel(title: "Last Month", range: 30),
+        DateModel(title: "Last Quarter", range: 30),
+        DateModel(title: "Last Year", range: 365),
+    ]
+    
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(dates.indices, id: \.self) { index in
+                    Text(dates[index].title)
+                        .font(.callout)
+                        .bold()
+                        .foregroundStyle(selectedIndex == index ? .white : .black)
+                        .padding(6)
+                        .background(selectedIndex == index ? Color.accentColor : Color.background)
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            withAnimation {
+                                from = Date().daysAgo(dates[index].range).startOfDay()
+                                to = Date().endOfDay()
+                                selectedIndex = index
+                            }
+                        }
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+    }
+}
+
 struct StoreReport: View {
     var storeId:String
-        
-    @State var from: Date = Date()
-    @State var to:Date = Date()
-    @State var onlyDeliverd = true
+    
+    @State var selectedDateIndex = 1
+    @State var from: Date = Date().daysAgo(7).startOfDay()
+    @State var to:Date = Date().endOfDay()
     @State var items:[Order] = []
     @State var expanses:[Expense] = []
 
@@ -23,7 +66,10 @@ struct StoreReport: View {
             
             // MARK : DATA VARIABLES
             Section("Choose Date") {
+                
                 VStack(alignment: .leading) {
+                    DateChoose(selectedIndex: $selectedDateIndex, from: $from, to: $to)
+                    
                     DatePicker("From", selection: $from, displayedComponents: .date)
                         .datePickerStyle(.automatic)
                     
@@ -31,11 +77,11 @@ struct StoreReport: View {
                     
                     DatePicker("To", selection: $to, displayedComponents: .date)
                         .datePickerStyle(.automatic)
-                    
-                    Divider()
-                    
-                    Toggle("Only Delivered Orders", isOn: $onlyDeliverd)
                 }
+                
+                Text("Order reports for orders created from \(from.formatted()) to \(to.formatted())")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
             .onChange(of: from) { _ in
                 fetch()
@@ -43,52 +89,48 @@ struct StoreReport: View {
             .onChange(of: to) { _ in
                 fetch()
             }
-            .onChange(of: onlyDeliverd) { _ in
-                fetch()
+            
+            if !isLoading {
+                Section("Sales & Profit") {
+                    ReportCard(title: "Total Orders", amount: items.getValidOrders().count, prefix: "Orders", desc : "Number of orders created in the time range")
+                    
+                    ReportCard(title: "Products Sold", amount: items.getProductsCount(), prefix: "Products", desc : "Number of products sold")
+                    
+                    ReportCard(title: "Sales", amount: items.totalSales(), prefix: "EGP", desc: "The Quantity of each product x The price of the product")
+                    
+                    ReportCard(title: "Total Cost", amount: (-items.totalCost()), prefix: "EGP", desc: "The Quantity of each product x The cost of the product")
+                    
+                    ReportCard(title: "Orders Profit", amount: items.totalNetProfit(), prefix: "EGP", desc: "Profit calculated using this formula (Product Price + the shipping fees of the client) - (Discount on the order - Courier Fees - Seller Comission) \n * Make sure you add your courier with their fees")
+                    
+                    ReportCard(title: "Expanses", amount: (-expanses.total()), prefix: "EGP")
+                    
+                    ReportCard(title: "Net Profit", amount: (items.totalNetProfit() - expanses.total()), prefix: "EGP", desc: "Net profit is the orders profit - expanses")
+                    
+                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
+                }
+                
+                
+                Section("On Going Orders") {
+                    ReportCard(title: "Pending Orders", amount: (items.getByStatue(statue: "Pending").count + items.getByStatue(statue: "Confirmed").count + items.getByStatue(statue: "Assembled").count), prefix: "Orders", desc : "Those are the orders that still with you")
+                    
+                    ReportCard(title: "With Courier Orders", amount: items.getByStatue(statue: "Out For Delivery").count, prefix: "Orders", desc : "Those are the orders with your couriers")
+                    
+                    ReportCard(title: "Cash With Couriers", amount: items.getByStatue(statue: "Out For Delivery").totalCODAfterCourier(), prefix: "EGP", desc: "The amount of cash that expected to receive from the coureirs (Order price - Courier Fees)")
+                }
             }
-            
-                            
-            if isLoading {
-                ProgressView()
-            }
-            
-            Section("Sales & Profit") {
-                ReportCard(title: "Total Orders", amount: items.getValidOrders().count, prefix: "Orders")
-                ReportCard(title: "Sales", amount: items.totalSales(), prefix: "EGP")
-                ReportCard(title: "Total Cost", amount: (-items.totalCost()), prefix: "EGP")
-                ReportCard(title: "Orders Profit", amount: items.totalNetProfit(), prefix: "EGP")
-                ReportCard(title: "Expanses", amount: (-expanses.total()), prefix: "EGP")
-                ReportCard(title: "Net Profit", amount: (items.totalNetProfit() - expanses.total()), prefix: "EGP")
-
-            }
-            
-            Section("New Orders") {
-                ReportCard(title: "New Orders", amount: items.getByStatue(statue: "Pending").count, prefix: "Orders")
-                ReportCard(title: "Confirmed Orders", amount: items.getByStatue(statue: "Confirmed").count, prefix: "Orders")
-            }
-            
-            Section("On Going Orders") {
-                ReportCard(title: "With Courier Orders", amount: items.getByStatue(statue: "Out For Delivery").count, prefix: "Orders")
-                ReportCard(title: "Cash With Couriers", amount: items.getByStatue(statue: "Out For Delivery").totalCODAfterCourier(), prefix: "EGP")
-                ReportCard(title: "Shipping Fees", amount: (-items.shippingFees()), prefix: "EGP")
-            }
-            
-            Section("Finished Orders") {
-                ReportCard(title: "Delivered Orders", amount: items.getByStatue(statue: "Delivered").count, prefix: "Orders")
-                ReportCard(title: "Failed Orders", amount: items.getByStatue(statue: "Failed").count, prefix: "Orders")
-                ReportCard(title: "Success Rate", amount: items.getSuccessPercentage(), prefix: "%")
-            }
-            
-            
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Image(systemName: "square.and.arrow.up.fill")
                     .foregroundColor(Color.accentColor)
                     .onTapGesture {
-                        SalesExcel(listOrders: items)
-                            .generateReport()
-                    }.isHidden(items.isEmpty)
+                        if let url = SalesExcel(listOrders: items).generateReport() {
+                            DispatchQueue.main.async {
+                                FileUtils().shareFile(url: url)
+                            }
+                        }
+                    }
+                    .isHidden(items.isEmpty)
             }
         }
         .navigationTitle("Reports")
@@ -104,24 +146,20 @@ struct StoreReport: View {
     }
     
     func getData() async {
-        isLoading = true
-        
-        
-        if onlyDeliverd {
-            let items = try! await OrdersDao(storeId: storeId)
-                .getOrdersByDeliverDate(from: from, to: to)
-            self.items = items
-        } else {
-            let items = try! await OrdersDao(storeId: storeId)
-                .getOrdersByAddDate(from: from, to: to)
-            self.items = items
+        DispatchQueue.main.async {
+            self.isLoading = true
         }
         
-        self.expanses = try! await ExpansesDao(storeId: storeId)
-            .getBetweenDate(from: from, to: to)
-        
-        
-        isLoading = false
+        if let items = try? await OrdersDao(storeId: storeId)
+            .getOrdersByAddDate(from: from.startOfDay(), to: to.endOfDay()), let expanses = try? await ExpansesDao(storeId: storeId)
+            .getBetweenDate(from: from.startOfDay(), to: to.endOfDay()) {
+            
+            DispatchQueue.main.async {
+                self.items = items
+                self.expanses = expanses
+                self.isLoading = false
+            }
+        }
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NavigationText: View {
     var view:AnyView
-    var label:String
+    var label:LocalizedStringKey
     var divider = true
     
     var body: some View {

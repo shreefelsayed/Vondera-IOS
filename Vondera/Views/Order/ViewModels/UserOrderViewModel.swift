@@ -48,20 +48,15 @@ class UserOrdersViewModel: ObservableObject {
         
         do {
             isLoading = true
-            
             let result = try await ordersDao.getUserOrders(id: id, lastSnapShot: lastSnapshot)
-            
-            lastSnapshot = result.1
-            items.append(contentsOf: result.0)
-            
-            if result.0.count == 0 {
-                self.canLoadMore = false
-                print("Can't load more data")
+            DispatchQueue.main.async {
+                self.lastSnapshot = result.1
+                self.items.append(contentsOf: result.0)
+                self.canLoadMore = !result.0.isEmpty
+                self.isLoading = false
             }
-            
-            isLoading = false
         } catch {
-            isLoading = false
+            self.isLoading = false
         }
         
     }

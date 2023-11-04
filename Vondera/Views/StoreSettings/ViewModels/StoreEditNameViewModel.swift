@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class StoreEditNameViewModel : ObservableObject {
     var store:Store
@@ -19,8 +20,7 @@ class StoreEditNameViewModel : ObservableObject {
         }
     }
     
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
     @Published var name = ""
     @Published var slogan = ""
 
@@ -59,7 +59,7 @@ class StoreEditNameViewModel : ObservableObject {
                 self.shouldDismissView = true
             }
         } catch {
-            showTosat(msg: error.localizedDescription)
+            showTosat(msg: error.localizedDescription.localize())
         }
         
         
@@ -69,8 +69,7 @@ class StoreEditNameViewModel : ObservableObject {
         
     }
     
-    func showTosat(msg: String) {
+    func showTosat(msg: LocalizedStringKey) {
         self.msg = msg
-        showToast.toggle()
     }
 }

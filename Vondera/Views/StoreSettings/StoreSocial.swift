@@ -20,70 +20,52 @@ struct StoreSocial: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center, spacing: 12) {
+        List {
+            HStack {
+                Image("facebook")
+                    .resizable()
+                    .frame(width: 40, height: 40)
                 
-                HStack {
-                    Image("facebook")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                    
-                    TextField("Facebook Link", text: $viewModel.fb)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.URL)
-                }
-                
-                HStack {
-                    Image("instagram")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                    
-                    TextField("Instagram Link", text: $viewModel.insta)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.URL)
-                }
-                
-                HStack {
-                    Image("website")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                    
-                    TextField("Your website", text: $viewModel.web)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.URL)
-                }
-                
-                HStack {
-                    Image("tiktok")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                    
-                    TextField("Tik Tok Link", text: $viewModel.tiktok)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.URL)
-                }
-                
-                LoadingButton(action: {
-                    save()
-                }, isLoading: $viewModel.isSaving, style: LoadingButtonStyle(width: .infinity, cornerRadius: 16, backgroundColor: .accentColor, loadingColor: .white)) {
-                    Text("Update Social Links")
-                        .foregroundColor(.white)
-                }
+                FloatingTextField(title: "Facebook Link", text: $viewModel.fb, required: nil, keyboard: .URL)
             }
             
+            HStack {
+                Image("instagram")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                
+                FloatingTextField(title: "Instagram Link", text: $viewModel.insta, required: nil, keyboard: .URL)
+
+            }
+            
+            HStack {
+                Image("tiktok")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                
+                FloatingTextField(title: "Tik Tok Link", text: $viewModel.tiktok, required: nil, keyboard: .URL)
+            }
         }
-        .padding()
         .navigationTitle("Social")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Update") {
+                    save()
+                }
+                .disabled(viewModel.isSaving)
+            }
+        }
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: viewModel.msg?.toString())
         }
         
     }

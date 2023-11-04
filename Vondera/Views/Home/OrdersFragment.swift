@@ -40,10 +40,8 @@ class OrdersFragmentViewModel: ObservableObject {
 struct OrdersFragment: View {
     @ObservedObject var myUser = UserInformation.shared
     @StateObject var vm = OrdersFragmentViewModel()
-    
     @State var latestOrders = false
    
-
     var body: some View {
         VStack {
             if let user = myUser.user {
@@ -66,7 +64,7 @@ struct OrdersFragment: View {
                         
                     }
                     .buttonStyle(.plain)
-                    .font(.title2)
+                    .font(.title)
                     .bold()
                     
                 }
@@ -86,17 +84,19 @@ struct OrdersFragment: View {
                             }
                         }
                         
-                        
-                        NavigationLink(destination: StoreAllOrders(storeId: user.storeId)) {
-                            HStack {
-                                Label("All Orders", systemImage: "basket.fill")
-                                    .bold()
-                                
-                                Spacer()
-                                
-                                Text("\(user.store?.ordersCount ?? 0)")
+                        if user.accountType != "Marketing" {
+                            NavigationLink(destination: StoreAllOrders(storeId: user.storeId)) {
+                                HStack {
+                                    Label("All Orders", systemImage: "basket.fill")
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Text("\(user.store?.ordersCount ?? 0)")
+                                }
                             }
                         }
+                        
                                                 
                         NavigationLink(destination: UserOrders(id: user.id, storeId: user.storeId)) {
                             HStack {
@@ -128,13 +128,14 @@ struct OrdersFragment: View {
                                     .bold()
                                 
                                 Spacer()
-                                
-                                Text("See All")
-                                    .underline()
-                                    .foregroundStyle(.secondary)
-                                    .onTapGesture {
-                                        latestOrders.toggle()
-                                    }
+                                if user.accountType != "Marketing" {
+                                    Text("See All")
+                                        .underline()
+                                        .foregroundStyle(.secondary)
+                                        .onTapGesture {
+                                            latestOrders.toggle()
+                                        }
+                                }
                             }
                         }
                     }

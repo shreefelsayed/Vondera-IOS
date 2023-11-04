@@ -20,13 +20,43 @@ struct ProductPrice: View {
     
     var body: some View {
         List {
-            FloatingTextField(title: "Product Price", text: .constant(""), caption: "This is the selling price of the product which the user will be charged at", required: true, isNumric: true, number: $viewModel.price)
-        
-            FloatingTextField(title: "Crossed Price", text: .constant(""), caption: "This is showed in your website, to compare the price this doesn't have any effect on the real price", required: false, isNumric: true, number: $viewModel.crossed)
+            Section {
+                FloatingTextField(title: "Product Price", text: .constant(""), caption: "This is the selling price of the product which the user will be charged at", required: true, isNumric: true, number: $viewModel.price)
+                
+                FloatingTextField(title: "Crossed Price", text: .constant(""), caption: "This is showed in your website, to compare the price this doesn't have any effect on the real price", required: false, isNumric: true, number: $viewModel.crossed)
+                
+                FloatingTextField(title: "Product Cost", text: .constant(""), caption: "This how much the product costs you", required: true, isNumric: true, number: $viewModel.cost)
+            }
             
-            FloatingTextField(title: "Product Cost", text: .constant(""), caption: "This how much the product costs you", required: true, isNumric: true, number: $viewModel.cost)
+            Section {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Margin")
+                            .bold()
+                        
+                        Text(viewModel.cost == 0 ? "100%" : "\((viewModel.price / viewModel.cost) * 100)%")
+                    }
+                    .padding(24)
+                    .background(.secondary.opacity(0.2))
+                    .cornerRadius(12)
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        Text("Profit")
+                            .bold()
+                        
+                        Text("EGP \(viewModel.price - viewModel.cost)")
+                    }
+                    .padding(24)
+                    .background(.secondary.opacity(0.2))
+                    .cornerRadius(12)
+                }
+            }
         }
+        .listStyle(.plain)
         .isHidden(viewModel.isLoading)
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .navigationTitle("Product Price")
         .overlay(alignment: .center) {
             ProgressView()

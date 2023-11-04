@@ -47,11 +47,11 @@ struct OrderCard: View {
                     VStack(alignment: .leading, spacing: 2) {
                         // MARK : Statue
                         HStack {
-                            Text(order.statue)
+                            Text(order.getStatueLocalized())
                                 .bold()
                             
-                            Text(order.isPaid ?? false ? "Paid" : "Not Paid")
-                                .foregroundColor(order.isPaid ?? false ? Color.green : Color.red)
+                            Text($order.wrappedValue.getPaidStatue().0)
+                                .foregroundColor($order.wrappedValue.getPaidStatue().1)
                             
                             Spacer()
                             
@@ -63,6 +63,7 @@ struct OrderCard: View {
                                 .foregroundColor(.secondary)
                             
                             Text(" , \(order.requireDelivery ?? true ? order.gov : "Not Shipping")")
+                                .lineLimit(1)
                                 .foregroundColor((order.requireDelivery ?? true) ? .secondary : .red)
                                 .bold((order.requireDelivery ?? true) ? false : true)
                         }
@@ -86,6 +87,7 @@ struct OrderCard: View {
                             Color.gray
                         }
                         .background(Color.gray)
+                        .id(order.defaultPhoto)
                         
                         Rectangle()
                             .foregroundColor(.black.opacity(0.2))
@@ -129,13 +131,9 @@ struct OrderCard: View {
         }
         .sheet(isPresented: $contact) {
             ContactDialog(phone: order.phone, toggle:$contact)
-                .fixedInnerHeight($sheetHeight)
         }
         .sheet(isPresented: $options) {
-            
             OrderOptionsSheet(order: $order, isPreseneted: $options)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
         }
     }
     

@@ -40,6 +40,7 @@ class ClientsViewModel: ObservableObject {
     init(storeId:String) {
         self.storeId = storeId
         self.clientsDao = ClientsDao(storeId: storeId)
+        initSearch()
         
         Task {
             await getData()
@@ -71,10 +72,7 @@ class ClientsViewModel: ObservableObject {
             DispatchQueue.main.async { [self] in
                 lastSnapshot = result.1
                 items.append(contentsOf: result.0)
-                if result.0.count == 0 {
-                    self.canLoadMore = false
-                }
-                initSearch()
+                canLoadMore = !result.0.isEmpty
                 isLoading = false
             }
         } catch {

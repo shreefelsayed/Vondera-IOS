@@ -4,45 +4,42 @@ struct StoreInfoView: View {
     @State var store:Store
     @State private var deleteStoreAlert = false
     @State private var deleting = false
-
+    
     var body: some View {
-        List() {
-            Section("Main Info") {
+        List {
+            Section("Main info") {
                 NavigationLink("Name and Slogan", destination: StoreEditName(store: store))
+                
                 NavigationLink("Logo", destination: StoreLogo(store: store))
-                NavigationLink("Communications", destination: StoreCommunications(store: store))
                 
-                
-                
-                //TODO : RE-ENABLE THIS
-                /*
-                NavigationLink("Store Category", destination: StoreCategoryUpdate(store: $store))
+                NavigationLink("Website Settings", destination: WebsiteSettings())
 
-                 NavigationLink("Sales Channels", destination: StoreMarketPlaces(selectedItems: Binding(
-                     get: { store.listMarkets!.map(\.id) },
-                     set: { newValue in
-                         store.listMarkets = newValue.map { id in
-                             return StoreMarketPlace(id: id, active: true)
-                         }
-                     }
-                 )))
-                */
+                NavigationLink("Communication", destination: StoreCommunications(store: store))
+    
+                NavigationLink("Store Category", destination: StoreCategoryUpdate())
+                 
+                NavigationLink("Sales Channels", destination: StoreMarketPlacesUpdate())
                 
-                NavigationLink("Social Presence", destination: StoreSocial(store: store))
-
                 NavigationLink("Store Options", destination: StoreOptions(store: store))
+                
             }
             
-            Section("Shipping Info") {
+            Section("Shipping info") {
+                
                 NavigationLink("Areas and shipping fees", destination: StoreShipping(storeId: store.ownerId))
-                //NavigationLink("Receipt custom message", destination: StoreProducts(storeId: store.ownerId))
+                
+                NavigationLink("Receipt custom message") {
+                    (store.subscribedPlan?.accessCustomMessage ?? false) ?
+                    AnyView(StoreCustomMessage()): AnyView(AppPlans(selectedSlide: 9))
+                }
             }
             
             /*Section("Api Settings") {
              NavigationText(view: AnyView(EmptyView()), label: "Connect to shopify store")
              NavigationText(view: AnyView(EmptyView()), label: "Maytapi whatsapp info")
              NavigationText(view: AnyView(EmptyView()), label: "Events webhooks", divider: false)
-             }*/
+             }
+             */
             
             
             Button {
@@ -61,8 +58,8 @@ struct StoreInfoView: View {
                 
                 primaryButton: .destructive(
                     Text("Delete").foregroundColor(.red), action: {
-                    deleteStore()
-                }),
+                        deleteStore()
+                    }),
                 secondaryButton: .cancel()
             )
         }
@@ -72,8 +69,9 @@ struct StoreInfoView: View {
     func deleteStore() {
         Task {
             deleting = true
+            AnalyticsManager.shared.deleteStore()
             try! await StoresDao().deleteStore(id:store.ownerId)
-            
+            UserInformation.shared.clearUser()
             await AuthManger().logOut()
         }
     }

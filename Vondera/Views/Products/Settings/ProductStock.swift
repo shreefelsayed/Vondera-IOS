@@ -24,6 +24,7 @@ struct ProductStock: View {
         }
         .isHidden(viewModel.isLoading)
         .navigationTitle("Product Stocks")
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Add") {

@@ -58,12 +58,13 @@ struct NewCourier: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: viewModel.msg?.toString())
         }
         .willProgress(saving: viewModel.isSaving)
+        .navigationBarBackButtonHidden(viewModel.isSaving)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Create") {

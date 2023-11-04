@@ -1,0 +1,6 @@
+/* Bundle display name */
+"CFBundleDisplayName" = "Vondera";
+/* Bundle name */
+"CFBundleName" = "Vondera";
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Vondera requires access to your phone’s camera to scan QR Codes of the orders.";

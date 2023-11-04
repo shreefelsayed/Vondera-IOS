@@ -6,13 +6,13 @@
 //
 
 import Foundation
-
+import SwiftUI
 class StoreCategoriesViewModel : ObservableObject {
     private var store:Store
     private var categoryDao:CategoryDao
     
     @Published var loading = false
-    @Published var msg:String?
+    @Published var msg:LocalizedStringKey?
     @Published var items = [Category]()
     
     
@@ -62,7 +62,7 @@ class StoreCategoriesViewModel : ObservableObject {
     }
     
     private func showTosat(msg: String) {
-        self.msg = msg
+        self.msg = msg.localize()
     }
 }
 

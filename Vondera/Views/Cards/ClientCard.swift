@@ -56,7 +56,6 @@ struct ClientCard: View {
         }
         .sheet(isPresented: $showContact) {
             ContactDialog(phone: client.phone, toggle: $showContact)
-                .fixedInnerHeight($sheetHeight)
         }
         
     }

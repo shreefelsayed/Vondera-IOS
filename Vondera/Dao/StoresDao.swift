@@ -16,19 +16,32 @@ class StoresDao {
         return try! collection.document(store.ownerId).setData(from: store)
     }
     
+    func validId(id:String) async throws -> Bool {
+        if !id.containsOnlyEnglishLetters() {return false}
+        if id.count < 3 {
+            return false
+        }
+        
+        let docs = try await collection.whereField("merchantId", isEqualTo: id.lowercased().replacingOccurrences(of: " ", with: "")).getDocuments()
+        return docs.count == 0
+    }
+    
     func deleteStore(id:String) async throws {
         return try await collection.document(id).delete()
     }
     
-    func getStore(uId:String) async throws -> Store? {
-        let doc = try await collection.document(uId).getDocument()
-        if !doc.exists {return nil}
-        return try doc.data(as: Store.self)
+    func getStore(uId:String) async throws -> Store {
+        let store = try await collection.document(uId).getDocument(as: Store.self).item
+        
+        if store.siteData == nil {
+            store.siteData = SiteData()
+        }
+        
+        return store
     }
     
     func update(id:String, hashMap:[String:Any]) async throws {
         return try await collection.document(id).updateData(hashMap)
     }
-    
 }
 

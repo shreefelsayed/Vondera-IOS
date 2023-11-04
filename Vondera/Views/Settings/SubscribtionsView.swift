@@ -58,7 +58,7 @@ struct SubscribtionsView: View {
         .onAppear {
             self.myUser = UserInformation.shared.getUser()
         }
-        .navigationTitle("Subscribtion")
+        .navigationTitle("Subscribtions")
         
     }
 }

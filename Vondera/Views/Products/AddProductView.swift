@@ -28,7 +28,7 @@ struct AddProductView: View {
         }
         .sheet(isPresented: $viewModel.isSheetPresented) {
             NavigationStack {
-                CategoryPicker(items: $viewModel.categories, storeId: viewModel.myUser?.storeId ?? "", selectedItem: $viewModel.category)
+                CategoryPicker(items: $viewModel.categories, storeId: viewModel.myUser?.storeId ?? "", selectedItem: $viewModel.selectedCategory)
             }
         }
         .padding()
@@ -41,13 +41,13 @@ struct AddProductView: View {
         }){
             Image(systemName: "arrow.left")
         })
-        .willProgress(saving: viewModel.isSaving)
+        .willProgress(saving: viewModel.isSaving, handleBackButton: false)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
                        title: viewModel.msg)
@@ -131,6 +131,25 @@ struct AddProductView: View {
                 .font(.title)
                 .bold()
             
+            if !viewModel.recentProducts.isEmpty {
+                Text("Fill from recent products")
+                    .bold()
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(viewModel.recentProducts) { prod in
+                            ProductTemplete(isSelected: viewModel.selectedTemplate == prod, product: prod) { selected in
+                                withAnimation {
+                                    viewModel.chooseTemplete(product: selected)
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+                .padding(.bottom, 12)
+            }
+            
             VStack(alignment: .leading, spacing: 24) {
                 FloatingTextField(title: "Product Name", text:  $viewModel.name, caption: "This is the name of the product, which will appear on the website and the app", required: true, autoCapitalize: .words)
                 
@@ -144,7 +163,7 @@ struct AddProductView: View {
                 // MARK : Stock Options
                 VStack(alignment: .leading) {
                     Toggle(isOn: $viewModel.alwaysStocked) {
-                        Text("Always in stock")
+                        Text("Always Stokced")
                     }
                     
                     Text("Enabling this will not track your items in the warehouse")
@@ -189,7 +208,7 @@ struct AddProductView: View {
                 .font(.title2)
             
             HStack {
-                Text(viewModel.category == nil ? "None was selected" : viewModel.category!.name)
+                Text(viewModel.selectedCategory == nil ? "None was selected" : viewModel.selectedCategory!.name)
                 
                 Spacer()
                 
@@ -216,7 +235,7 @@ struct AddProductView: View {
         VStack(alignment: .leading) {
             // MARK : Photos title
             HStack {
-                Text("Product Photos")
+                Text("Product photos")
                     .font(.title2)
                     .bold()
                 
@@ -353,6 +372,28 @@ struct ImageViewNetwork: View {
                 .offset(x: 5, y: 5)
             }
             
+        }
+    }
+}
+
+struct ProductTemplete : View {
+    var isSelected:Bool
+    var product:StoreProduct
+    var onSelected:((StoreProduct) -> ())
+    
+    var body: some View {
+        HStack {
+            ImagePlaceHolder(url: product.defualtPhoto(), reduis: 40)
+            
+            Text(product.name)
+                .foregroundStyle(isSelected ? Color.white : .black)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .background(isSelected ? Color.accentColor : .white)
+        .cornerRadius(6)
+        .onTapGesture {
+            onSelected(product)
         }
     }
 }

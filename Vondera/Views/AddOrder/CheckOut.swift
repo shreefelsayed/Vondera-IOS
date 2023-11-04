@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import AlertToast
+import PhotosUI
 
 class CheckOutViewModel: ObservableObject {
     @Published var id = ""
@@ -15,15 +16,17 @@ class CheckOutViewModel: ObservableObject {
     @Published var otherPhone = ""
     @Published var address = ""
     @Published var notes = ""
-    @Published var shippingFees = "0"
-    @Published var discount = "0"
+    @Published var shippingFees = 0
+    @Published var discount = 0
     @Published var paid = false
-    @Published var whats = false
     @Published var marketPlaceId = ""
     
+    @AppStorage("whatsapp") var whats = false
+
     @Published var isSaving = false
-    @Published var showToast = false
-    @Published var msg = ""
+    @Published var msg:LocalizedStringKey?
+    @Published var openPlan = false
+    @Published var selectedPhotos = [UIImage]()
     
     @Published var phone = "" {
         didSet {
@@ -38,7 +41,7 @@ class CheckOutViewModel: ObservableObject {
             if let listAreas = myUser?.store?.listAreas {
                 let item = listAreas.first { $0.govName == gov }
                 DispatchQueue.main.async {
-                    self.shippingFees = "\(String(describing: item?.price ?? 0))"
+                    self.shippingFees = item?.price ?? 0
                 }
             }
         }
@@ -76,6 +79,8 @@ class CheckOutViewModel: ObservableObject {
             }
             
             self.gov = myUser?.store?.listAreas?.first?.govName ?? ""
+            self.shippingFees = myUser?.store?.listAreas?.first?.price ?? 0
+            
             await genrateId()
             
             if let market = myUser?.store?.listMarkets?.first {
@@ -101,7 +106,7 @@ class CheckOutViewModel: ObservableObject {
     }
     
     var cod: Int {
-        return totalPrice + (Int(shippingFees) ?? 0) - (Int(discount) ?? 0)
+        return totalPrice + shippingFees - discount
     }
     
     var totalPrice : Int {
@@ -126,8 +131,6 @@ class CheckOutViewModel: ObservableObject {
                     self.address = client.address ?? ""
                     self.gov = client.gov ?? ""
                 }
-                
-                //TODO : Make view visible
             }
         } catch {
             print(error.localizedDescription)
@@ -141,25 +144,42 @@ class CheckOutViewModel: ObservableObject {
             self.isSaving = true
         }
         
+        if selectedPhotos.isEmpty {
+            await addToFirestore()
+        } else {
+            FirebaseStorageUploader()
+                .uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "orders/\(id)") { urls, error in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            self.showToast(error.localizedDescription.localize())
+                            self.isSaving = true
+                        }
+                        return
+                    } else if let urls = urls {
+                        let links = urls.map({ $0.absoluteString })
+                        
+                        Task {
+                            await self.addToFirestore(attachment:links)
+                        }
+                    }
+                }
+        }
         
-        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: Int(discount) ?? 0, clientShippingFees:(shipping ?  Int(shippingFees) ?? 0 : 0))
+    }
+    
+    func addToFirestore(attachment:[String] = [String]()) async {
+        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: discount, clientShippingFees:(shipping ? shippingFees : 0))
         
+        order.listAttachments = attachment
         order.listProducts = listItems
-        order.addBy = myUser?.id ?? ""
-        order.isPaid = paid
+        order.paid = paid
         order.marketPlaceId = marketPlaceId
-        order.storeId = storeId
         order.otherPhone = otherPhone
         order.requireDelivery = shipping
-        order.owner = myUser?.name ?? ""
-        order.listUpdates?.append(Updates(uId: myUser?.id ?? "", code: 12))
         
-        if let newOrder = await OrderManager().addOrder(order: &order) {
-            order = newOrder
-        }
-
+        order = await OrderManager().addOrder(order: &order)
+        
         DispatchQueue.main.async { [order] in
-            
             if self.whats {
                 _ = Contact().openWhatsApp(phoneNumber: self.phone, message: order.toString())
             }
@@ -175,6 +195,10 @@ class CheckOutViewModel: ObservableObject {
     func check() -> Bool {
         if myUser!.store!.QuoteExceeded() {
             showToast("Your Quote has been exceeded")
+            if myUser?.accountType == "Owner" {
+                openPlan.toggle()
+            }
+            
             return false
         }
         
@@ -203,28 +227,20 @@ class CheckOutViewModel: ObservableObject {
             return false
         }
         
-        if !shippingFees.isNumeric {
-            showToast("Please enter a valid shipping fees")
-            return false
-        }
-        
-        if !discount.isNumeric {
-            showToast("Please enter a valid Discount")
-            return false
-        }
         
         return true
     }
     
-    func showToast(_ msg:String) {
+    func showToast(_ msg:LocalizedStringKey) {
         DispatchQueue.main.async {
             self.msg = msg
-            self.showToast.toggle()
         }
     }
 }
 
 struct CheckOut: View {
+    @State var images:[PhotosPickerItem] = [PhotosPickerItem]()
+
     var storeId: String
     var listItems: [OrderProductObject]
     var shipping:Bool
@@ -309,6 +325,7 @@ struct CheckOut: View {
                     }
                 }
                 
+                // Notes
                 VStack(alignment: .leading) {
                     FloatingTextField(title: "Notes", text: $viewModel.notes, required: false, multiLine: true, autoCapitalize: .sentences)
                     
@@ -316,29 +333,53 @@ struct CheckOut: View {
                     Divider()
                 }
                 
+                // Payments
                 VStack(alignment: .leading) {
                     Text("Payment")
                         .font(.title2)
                         .bold()
                     
                     if shipping {
-                        FloatingTextField(title: "Shipping Fees", text: $viewModel.shippingFees, required: true, keyboard: .numberPad)
+                        FloatingTextField(title: "Shipping Fees", text: .constant(""), required: true, isNumric: true, number: $viewModel.shippingFees)
                     }
                     
                     
-                    FloatingTextField(title: "Discount", text: $viewModel.discount, required: false, keyboard: .numberPad)
+                    FloatingTextField(title: "Discount", text: .constant(""), required: false, isNumric: true, number: $viewModel.discount)
                     
                     
                     Divider()
                 }
+                
                 
                 VStack(alignment: .leading) {
                     Text("Options")
                         .font(.title2)
                         .bold()
                     
+                    if (viewModel.myUser?.store?.orderAttachments ?? false) {
+                        HStack {
+                            PhotosPicker(selection: $images, maxSelectionCount: 30) {
+                                Text("Add Attachments")
+                            }
+                            
+                            Spacer()
+                            
+                            Text("\(images.count) Attachment")
+                        }
+                        .onChange(of: images) { newValue in
+                            Task {
+                                viewModel.selectedPhotos.removeAll()
+                                for picker in newValue {
+                                    if let image = try? await picker.getImage() {
+                                        viewModel.selectedPhotos.append(image)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    
                     if shipping && (viewModel.myUser?.store?.canPrePaid ?? false) {
-                        
                         Toggle("Order prepaid", isOn: $viewModel.paid)
                     }
                     
@@ -354,7 +395,7 @@ struct CheckOut: View {
                         .bold()
                     
                     HStack {
-                        Text("Product Prices")
+                        Text("Products price")
                         Spacer()
                         Text("+\(viewModel.totalPrice) LE")
                     }
@@ -409,10 +450,13 @@ struct CheckOut: View {
             }
         }
         .navigationBarBackButtonHidden(viewModel.isSaving)
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: viewModel.msg?.toString())
+        }
+        .navigationDestination(isPresented: $viewModel.openPlan) {
+            AppPlans(selectedSlide: 3)
         }
         
     }

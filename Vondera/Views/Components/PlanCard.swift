@@ -13,8 +13,6 @@ struct PlanCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                
-                
                 NavigationLink {
                     AppPlans()
                 } label: {
@@ -79,6 +77,5 @@ struct PlanCard_Previews: PreviewProvider {
             PlanCard(store: Store.example())
                 .padding()
         }
-        
     }
 }

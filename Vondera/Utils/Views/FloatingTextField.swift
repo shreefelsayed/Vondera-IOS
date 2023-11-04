@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct FloatingTextField: View {
-    let title: String
+    let title: LocalizedStringKey
     let text: Binding<String>
-    var caption:String?
+    var caption:LocalizedStringKey?
     var required:Bool? = false
     var secure:Bool = false
     var multiLine:Bool = false
@@ -24,12 +24,12 @@ struct FloatingTextField: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing: 2) {
-            if !text.wrappedValue.isEmpty || multiLine {
+            if !text.wrappedValue.isEmpty || multiLine || isNumric {
                 Text(title)
                     .font(.caption)
                     .foregroundColor(Color(.placeholderText))
-                    .opacity(text.wrappedValue.isEmpty && !multiLine ? 0 : 1)
-                    .offset(y: text.wrappedValue.isEmpty && !multiLine ? 20 : 0)
+                    .opacity(text.wrappedValue.isEmpty && !multiLine && !isNumric ? 0 : 1)
+                    .offset(y: text.wrappedValue.isEmpty && !multiLine && !isNumric ? 20 : 0)
             }
             
             
@@ -56,31 +56,27 @@ struct FloatingTextField: View {
                                 .textInputAutocapitalization(autoCapitalize)
                                 .disabled(isDiabled)
                         }
-                        
-                        
-                        
-                        
                     }
-                        
                 }
                 
-                if required != nil {
+                if required != nil && !secure {
                     Text(required! ? "Required" : "Optional")
                         .foregroundStyle(.gray)
                 }
-                
             }
             
             
             if caption != nil {
                 Text(caption!)
                     .font(.caption)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     
             }
             
-        }.animation(.default)
+        }
+        .animation(.default)
     }
 }
 

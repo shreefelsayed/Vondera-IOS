@@ -10,6 +10,7 @@ import Combine
 import FirebaseAuth
 import FirebaseCore
 import Firebase
+import SwiftUI
 
 enum AccountType: String {
     case owner = "Owner"
@@ -50,7 +51,7 @@ class NewEmployeeViewModel : ObservableObject {
     @Published var selectedAccountType = AccountType.sales
     @Published var perc:Int = 0
     
-    @Published var msg:String?
+    @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
     
     
@@ -136,7 +137,7 @@ class NewEmployeeViewModel : ObservableObject {
                 self.shouldDismissView = true
             }
         } catch {
-            showTosat(msg: error.localizedDescription)
+            showTosat(msg: error.localizedDescription.localize())
         }
         
         
@@ -156,7 +157,7 @@ class NewEmployeeViewModel : ObservableObject {
     }
     
     
-    func showTosat(msg: String) {
+    func showTosat(msg: LocalizedStringKey) {
         self.msg = msg
     }
 }

@@ -46,7 +46,7 @@ class AlmostOutViewModel: ObservableObject {
             isLoading = true
            
             let store = try await storesDao.getStore(uId: storeId)
-            let result = try await productsDao.getStockLessThen(almostOut: store!.almostOut ?? 20, lastSnapShot: lastSnapshot)
+            let result = try await productsDao.getStockLessThen(almostOut: store.almostOut ?? 20, lastSnapShot: lastSnapshot)
             
             DispatchQueue.main.sync {
                 lastSnapshot = result.1

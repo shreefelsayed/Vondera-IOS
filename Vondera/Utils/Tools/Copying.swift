@@ -10,6 +10,16 @@ import UIKit
 
 
 class CopyingData {
+    func copyToClipboard(_ list: [String]) {
+        var text = ""
+        for item in list {
+            text = text + item + "\n"
+        }
+        
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = text
+    }
+    
     func copyToClipboard(_ text: String) {
         let pasteboard = UIPasteboard.general
         pasteboard.string = text

@@ -14,50 +14,57 @@ struct ProductBuyingCard: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        VStack(alignment: .leading) {
-            NetworkImage(url: URL(string: product.defualtPhoto() )) { image in
-                image.centerCropped()
-            } placeholder: {
-                ZStack(alignment: .center) {
+        VStack(alignment: .leading, spacing: 0) {
+            if let url = product.listPhotos.first {
+                NetworkImage(url: URL(string: url )) { image in
+                    image.centerCropped()
+                } placeholder: {
+                    ZStack(alignment: .center) {
+                        Color.gray
+                        ProgressView()
+                    }
+                } fallback: {
                     Color.gray
-                    
-                    ProgressView()
                 }
+                .id(product.id)
+                .background(Color.white)
+                .frame(height: 200)
+            }
+            
+            
+            VStack(alignment: .leading) {
+                Text(product.name.uppercased())
+                    .font(.body)
+                    .lineLimit(1)
+                    .bold()
                 
-            } fallback: {
-                Color.gray
+                Text(product.categoryName)
+                    .font(.caption)
+                    .lineLimit(1)
+                    .foregroundColor(.secondary)
+                
+                HStack {
+                    if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
+                        Text("\(Int(crossedPrice)) LE")
+                            .font(.body)
+                            .strikethrough()
+                    }
+                    
+                    Text("\(Int(product.price)) LE")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                        .bold()
+                }
+               
+                ButtonLarge(label: "Add to Cart") {
+                    action()
+                }
             }
-            .background(Color.white)
-            .shadow(radius: 15)
-            .cornerRadius(15)
-            .frame(height: 240)
-            
-            Spacer().frame(height: 16)
-            
-            Text(product.name.uppercased())
-                .font(.title3)
-                .lineLimit(1)
-                .bold()
-            
-            Text(product.categoryName)
-                .font(.subheadline)
-                .lineLimit(1)
-                .foregroundColor(.secondary)
-            
-            Text("\(Int(product.price)) LE")
-                .font(.title2)
-                .multilineTextAlignment(.center)
-                .bold()
-           
-            ButtonLarge(label: "Add to Cart") {
-                action()
-            }
-            
+            .padding(12)
         }
-        .padding()
         .background(colorScheme == .dark ? .white.opacity(0.1) : .black.opacity(0.03))
         .cornerRadius(15)
-        
+        .padding(6)
     }
 }
 

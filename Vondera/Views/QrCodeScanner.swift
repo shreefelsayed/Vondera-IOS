@@ -7,37 +7,48 @@
 
 import SwiftUI
 import CodeScanner
+import AlertToast
 
 struct QrCodeScanner: View {
-    var storeId: String
-    @State private var scannedCode: String?
-    @State private var navigateToOrderDetails = false
-    @State var order:Order?
-
+    var myUser = UserInformation.shared.user
+    @State var scannedOrder:Order?
+    @State var msg:LocalizedStringKey?
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                
-                NavigationLink(destination: NavigationLazyView(OrderDetails(order: .constant(order!))), isActive: $navigateToOrderDetails) {
-                        EmptyView()
-                    }
-                
-                
-
-                CodeScannerView(codeTypes: [.qr], scanMode: .continuous, showViewfinder: true) { response in
-                    if case let .success(result) = response {
-                        scannedCode = result.string
-                        getOrder(id:scannedCode ?? "")
-                    }
-                }
+        CodeScannerView(codeTypes: [.qr], scanMode: .continuous, showViewfinder: true) { response in
+            if case let .success(result) = response {
+                getOrder(id:result.string)
             }
-            .navigationBarHidden(true)
+        }
+        .sheet(item: $scannedOrder, content: { order in
+            NavigationStack {
+                OrderDetails(order: .constant(order))
+            }
+        })
+        .toast(isPresenting: Binding(value: $msg)) {
+            AlertToast(displayMode: .alert, type: .error(.red), title: msg?.toString())
         }
     }
     
     func getOrder(id:String) {
         Task {
-            
+            if let user = myUser, id.isNumeric {
+                do {
+                    
+                    let order = try await OrdersDao(storeId: user.storeId).getOrder(id: id)
+                    
+                    
+                    if order.exists {
+                        self.scannedOrder = order.item
+                    } else {
+                        msg = "Order not found !".localize()
+                    }
+                    
+                    
+                } catch {
+                    msg = error.localizedDescription.localize()
+                }
+            }
         }
     }
 }
@@ -55,6 +66,6 @@ struct NavigationLazyView<Content: View>: View {
 
 struct QrCodeScanner_Previews: PreviewProvider {
     static var previews: some View {
-        QrCodeScanner(storeId: "")
+        QrCodeScanner()
     }
 }

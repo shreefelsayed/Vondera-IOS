@@ -32,8 +32,10 @@ struct ReadyOrdersFragment: View {
                 EmptyMessageView(msg: "No ready orders found")
             }
         }
-        .navigationDestination(isPresented: $selectOrders) {
-            OrderSelectView(list: $viewModel.items)
+        .sheet(isPresented: $selectOrders) {
+            NavigationStack {
+                OrderSelectView(list: $viewModel.items)
+            }
         }
     }
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 class AddToCartViewModel : ObservableObject {
-    @Published var myUser:UserData?
     @Published var sortIndex = "sold" {
         didSet {
             updateListIndexs()
@@ -23,21 +22,11 @@ class AddToCartViewModel : ObservableObject {
     @Published var isLoading = false
     @Published var searchText = ""
     
-    var filteredItems: [StoreProduct] {
-        guard !searchText.isEmpty else { return products }
-        return products.filter { product in
-            product.filter(searchText)
-        }
-    }
-    
     init() {
+        getCart()
+        
         Task {
-            if let user = UserInformation.shared.getUser() {
-                self.myUser = user
-            }
-            
             await getCategories()
-            await getCart()
         }
     }
      
@@ -58,24 +47,26 @@ class AddToCartViewModel : ObservableObject {
         }
     }
     
-    func addProduct(_ prod:SavedItems) async {
-        await CartManager().addItem(savedItems: prod)
-        await getCart()
-    }
-    
-    func getCart() async {
-        cartItems = await CartManager().getCart()
+    func getCart() {
+        cartItems = CartManager().getCart()
     }
     
     func selectCategory(id:String) async {
         self.isLoading = true
         self.selectedCategory = id
         do {
-            self.products = try await ProductsDao(storeId: myUser?.storeId ?? "").getByCategory(id: self.selectedCategory)
-            DispatchQueue.main.async {
-                self.updateListIndexs()
+            if let storeId = UserInformation.shared.user?.storeId {
+                let newProducts = try await ProductsDao(storeId: storeId).getByCategory(id: self.selectedCategory)
+                
+                DispatchQueue.main.async {
+                    self.products.removeAll()
+                    self.products = newProducts
+                    self.updateListIndexs()
+                    self.isLoading = false
+                }
             }
-            self.isLoading = false
+            
+            
         } catch {
             showError(msg: error.localizedDescription)
         }
@@ -83,9 +74,16 @@ class AddToCartViewModel : ObservableObject {
     
     func getCategories() async {
         do {
-            self.categories = try await CategoryDao(storeId: myUser?.storeId ?? "").getAll()
-            if !categories.isEmpty {
-                await selectCategory(id: categories[0].id)
+            if let storeId = UserInformation.shared.user?.storeId {
+                let category = try await CategoryDao(storeId: storeId).getAll()
+                DispatchQueue.main.async {
+                    self.categories = category
+                    if !self.categories.isEmpty {
+                        Task {
+                            await self.selectCategory(id: self.categories[0].id)
+                        }
+                    }
+                }
             }
         } catch {
             showError(msg: error.localizedDescription)
@@ -94,6 +92,8 @@ class AddToCartViewModel : ObservableObject {
     }
     
     private func showError(msg:String) {
-        self.errorMsg = msg
+        DispatchQueue.main.async {
+            self.errorMsg = msg
+        }
     }
 }

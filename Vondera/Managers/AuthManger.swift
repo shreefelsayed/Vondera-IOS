@@ -9,6 +9,8 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseMessaging
+import FirebaseCrashlytics
+
 class AuthManger {
     let usersDao: UsersDao
     let storesDao:StoresDao
@@ -19,34 +21,67 @@ class AuthManger {
         self.storesDao = StoresDao()
     }
     
-    func logOut() async {
-        do {
-            guard let currentUser = UserInformation.shared.getUser() else {
-                return
-            }
-            
-            try! await usersDao.update(id: currentUser.id, hash: ["online": false])
-            await removeFCM()
-            
-            UserInformation.shared.clearUser()
-            try! mAuth.signOut()
-        }
-    }
     
-    func changePassword(newPass:String, user:UserData) async throws -> Bool {
-        guard mAuth.currentUser != nil else {
+    func signUserWithApple(authCred:AuthCredential, appleId:String) async -> Bool {
+        do {
+            let userExists = try await UsersDao().appleIdExists(appleId: appleId)
+            if userExists {
+                try await Auth.auth().signIn(with: authCred)
+                if Auth.auth().currentUser != nil {
+                    if let _ = try await getData() {
+                        AnalyticsManager.shared.loggedIn(method: "apple")
+                        return true
+                    }
+                    return false
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
             return false
         }
         
-        // --> Reauth
-        let cred = EmailAuthProvider.credential(withEmail: user.email, password: user.pass)
+        return false
+    }
+    
+    func signInWithFacebook(authCred:AuthCredential, fbId:String) async -> Bool {
+        do {
+            let userExists = try await UsersDao().facebookIdExists(facebookId: fbId)
+            if userExists {
+                try await Auth.auth().signIn(with: authCred)
+                if Auth.auth().currentUser != nil {
+                    if let _ = try await getData() {
+                        AnalyticsManager.shared.loggedIn(method: "facebook")
+                        return true
+                    }
+                    return false
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
         
-        try await mAuth.currentUser?.reauthenticate(with: cred)
+        return false
+    }
+    
+    func signUserWithGoogle(authCred:AuthCredential, id:String) async -> Bool {
+        do {
+            if try await UsersDao().googleIdExists(googleId: id) {
+                try await Auth.auth().signIn(with: authCred)
+                if Auth.auth().currentUser != nil {
+                    if let _ = try await getData() {
+                        AnalyticsManager.shared.loggedIn(method: "google")
+                        return true
+                    }
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+            return false
+        }
         
-        // --> Change password
-        try await mAuth.currentUser?.updatePassword(to: newPass)
         
-        return true
+        return false
     }
     
     func createStoreOwnerUser(userData: inout UserData, store:Store) async -> Bool {
@@ -65,8 +100,13 @@ class AuthManger {
             // --> Add the store data
             store.ownerId = fbUserCreated!.uid
             try await storesDao.addStore(store: store)
-                        
+            
             let data = try await getData()
+            
+            if let user = data {
+                SavedAccountManager().addUser(userData: user)
+                AnalyticsManager.shared.signUp()
+            }
             
             return data != nil
         } catch {
@@ -74,7 +114,7 @@ class AuthManger {
         }
     }
     
-    func createFirebaseUserAccount(email:String, pass:String) async -> User? {
+    private func createFirebaseUserAccount(email:String, pass:String) async -> User? {
         do {
             let fbUser = try await Auth.auth().createUser(withEmail: email, password: pass)
             return fbUser.user
@@ -83,86 +123,56 @@ class AuthManger {
         }
     }
     
-    func signUserWithGoogle() async -> Bool {
-        let cred = await GSignInHelper().signIn()
-        if cred == nil {
-            return false
-        }
-        
-        print("Got google sign in creds")
-        
-        do {
-            let fUser = try await Auth.auth().signIn(with: cred!)
-            print("Signed in to firebase \(fUser.user.uid)")
-            
-            
-            var loggedIn:Bool = false
-            
-            do {
-                let data = try await getData()
-                loggedIn = data != nil
-            } catch {
-                print(error.localizedDescription)
-                return false
-            }
-            
-            
-            guard loggedIn else {
-                return false
-            }
-            
-            // --> We set some values
-            
-            // --> Return the user
-            return true
-        } catch {
-            return false
-        }
-    }
-    
     func getData() async throws -> UserData? {
-        let uId = Auth.auth().currentUser?.uid
-        print("Current user is \(String(describing: uId))")
-        
-        
-        guard uId != nil else {
-            print("No user id not found")
+    let uId = Auth.auth().currentUser?.uid
+    print("Current user is \(String(describing: uId))")
+    
+    
+    guard uId != nil else {
+        print("No user id not found")
+        await logOut()
+        return nil
+    }
+    
+    if var user = try await usersDao.getUser(uId: uId!).item {
+        guard user.isStoreUser else {
+            print("Unsporrted user type")
             await logOut()
             return nil
         }
         
-        if var user = try await usersDao.getUser(uId: uId!).item {
-            guard user.isStoreUser else {
-                print("Unsporrted user type")
-                await logOut()
-                return nil
-            }
+        print("User \(user.name)")
+        
+        let store = try await storesDao.getStore(uId: user.storeId)
+        print("Loggin to store \(store.name)")
+        user.store = store
+        UserInformation.shared.updateUser(user)
+        try? await usersDao.update(id: user.id, hash: ["online": true, "ios": true])
+        
+        
+        
+        return user
+    } else {
+        print("Failed to get user")
+        await logOut()
+        return nil
+    }
+}
+    
+    private func setUsersPram() async {
+        if let user = UserInformation.shared.user {
+            // MARK : Set Analytics UID
+            AnalyticsManager.shared.setUsersParams()
             
-            print("User \(user.name)")
-                        
-            if let store = try await storesDao.getStore(uId: user.storeId) {
-                print("Loggin to store \(store.name)")
-                user.store = store
-                UserInformation.shared.updateUser(user)
-                try! await usersDao.update(id: user.id, hash: ["online": true, "ios": true])
-                
-                // Save FCM
-                await saveFCM()
-                
-                return user
-            } else {
-                print("Failed to get store")
-                await logOut()
-                return nil
-            }
-        } else {
-            print("Failed to get user")
-            await logOut()
-            return nil
-        }        
+            // MARK : Set Crashlytics UID
+            Crashlytics.crashlytics().setUserID(user.id)
+            
+            // MARK : Save the messaging token
+            await saveFCM()
+        }
     }
     
-    func removeFCM() async {
+    private func removeFCM() async {
         if let userUID = Auth.auth().currentUser?.uid {
             do {
                 try await UsersDao().update(id: userUID, hash: ["device_token" : ""])
@@ -174,7 +184,7 @@ class AuthManger {
         }
     }
     
-    func saveFCM() async {
+    private func saveFCM() async {
         if let userUID = Auth.auth().currentUser?.uid {
             do {
                 let token = try await Messaging.messaging().token()
@@ -187,6 +197,7 @@ class AuthManger {
         }
     }
     
+    // MARK : Sign in with Email && Password
     func signUserInViaMail(email:String, password:String) async -> Bool {
         do {
             try await Auth.auth().signIn(withEmail: email, password: password)
@@ -195,8 +206,7 @@ class AuthManger {
                 return false
             }
             
-            // SAVE the user for later access
-            await SavedAccountManager().addUser(savedItems: LoginInfo(id: userData.id, name: userData.name, email: userData.email, password: userData.pass, url: userData.userURL, accountType: userData.accountType, storeName: userData.store?.name ?? ""))
+            SavedAccountManager().addUser(userData: userData)
             
             return true
         } catch {
@@ -204,4 +214,46 @@ class AuthManger {
             return false
         }
     }
+    
+    func logOut() async {
+        do {
+            if let currentUser = UserInformation.shared.getUser() {
+                try? await usersDao.update(id: currentUser.id, hash: ["online": false])
+                await removeFCM()
+                UserInformation.shared.clearUser()
+            }
+            
+            AnalyticsManager.shared.loggedOut()
+            try? mAuth.signOut()
+        }
+    }
+    
+    func connectToCred(cred:AuthCredential) async -> Bool {
+        if let user = Auth.auth().currentUser {
+            do {
+                try await user.link(with: cred)
+                return true
+            } catch {
+                return false
+            }
+        }
+        return false
+    }
+    
+    func changePassword(newPass:String, user:UserData) async throws -> Bool {
+        guard mAuth.currentUser != nil else {
+            return false
+        }
+        
+        // --> Reauth
+        let cred = EmailAuthProvider.credential(withEmail: user.email, password: user.pass)
+        
+        try await mAuth.currentUser?.reauthenticate(with: cred)
+        
+        // --> Change password
+        try await mAuth.currentUser?.updatePassword(to: newPass)
+        
+        return true
+    }
+    
 }

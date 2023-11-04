@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import FirebaseStorage
 import PhotosUI
+import SwiftUI
 
 class StoreLogoViewModel : ObservableObject {
     var store:Store
@@ -25,7 +26,7 @@ class StoreLogoViewModel : ObservableObject {
     @Published var link = ""
     @Published var selectedImage: UIImage? = nil
 
-    @Published var msg:String?
+    @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
 
     
@@ -57,7 +58,7 @@ class StoreLogoViewModel : ObservableObject {
             FirebaseStorageUploader().oneImageUpload(image: image ,name: "\(String(describing: store.ownerId)) - Logo" ,ref: ref) { [self] url, error in
                 if let error = error {
                     isSaving = false
-                    showMessage(error.localizedDescription)
+                    showMessage(error.localizedDescription.localize())
                 } else if let url = url {
                     updateRef(url: url)
                 }
@@ -72,7 +73,7 @@ class StoreLogoViewModel : ObservableObject {
                 store.logo = url.absoluteString
                 
                 // Saving local
-                if var myUser = UserInformation.shared.getUser() {
+                if let myUser = UserInformation.shared.getUser() {
                     myUser.store?.logo = url.absoluteString
                     UserInformation.shared.updateUser(myUser)
 
@@ -91,13 +92,13 @@ class StoreLogoViewModel : ObservableObject {
             } catch {
                 DispatchQueue.main.async {
                     self.isSaving = false
-                    self.showMessage(error.localizedDescription)
+                    self.showMessage(error.localizedDescription.localize())
                 }
             }
         }
     }
     
-    private func showMessage(_ msg: String) {
+    private func showMessage(_ msg: LocalizedStringKey) {
         self.msg = msg
     }
 }

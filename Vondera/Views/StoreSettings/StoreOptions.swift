@@ -29,7 +29,6 @@ struct StoreOptions: View {
                     
                     Text("This is enabled by default, if you turn this off no one will be able to submit new orders")
                         .font(.caption)
-                    
                 }
                 
                 VStack(alignment: .leading) {
@@ -37,7 +36,6 @@ struct StoreOptions: View {
                     
                     Text("Enable this to optionlly not require address when sumbiting an order")
                         .font(.caption)
-                    
                 }
                 
                 VStack(alignment: .leading) {
@@ -51,7 +49,6 @@ struct StoreOptions: View {
                 Toggle("Accept Prepaid Orders", isOn: $viewModel.prepaid)
 
                 Toggle("Enable Attachments", isOn: $viewModel.attachments)
-                
             }
             
             Section("Receipts") {
@@ -59,6 +56,13 @@ struct StoreOptions: View {
                     Toggle("Can't open package label", isOn: $viewModel.label)
                     
                     Text("Display a can't open this package label on the orders receipt")
+                        .font(.caption)
+                }
+                
+                VStack (alignment: .leading) {
+                    Toggle("Print Seller name", isOn: $viewModel.sellerName)
+                    
+                    Text("Print the seller name on the receipt of the order")
                         .font(.caption)
                 }
             }
@@ -98,21 +102,6 @@ struct StoreOptions: View {
                     Text("Enable sending a WhatsApp message to your client from your phone, once the order is submitted")
                         .font(.caption)
                 }
-                
-                VStack(alignment: .leading) {
-                    Toggle("Live E-commerce website", isOn: $viewModel.website)
-                        .disabled(!(viewModel.store.subscribedPlan?.website ?? false))
-
-                    Text("If this feature is supported in your package, you can enable your website or disable it from here")
-                        .font(.caption)
-                }
-                
-                VStack (alignment: .leading) {
-                    Toggle("Store Chatting", isOn: $viewModel.chat)
-                    
-                    Text("Enable a store chat, so you can chat with all the employees")
-                        .font(.caption)
-                }
             }
         }
         .navigationTitle("Store Options")
@@ -132,10 +121,10 @@ struct StoreOptions: View {
                     }
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: viewModel.msg?.toString())
         }
     }
     

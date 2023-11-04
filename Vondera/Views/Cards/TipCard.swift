@@ -17,7 +17,7 @@ struct TipCard: View {
                     .font(.title2)
                     .bold()
                 
-                Text(LocalizedStringKey(tip.en))
+                Text(LocalizationService.shared.currentLanguage == .english_us ? tip.en.localize() : tip.ar.localize())
                     .multilineTextAlignment(.leading)
                     .font(.body)
             }

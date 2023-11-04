@@ -58,8 +58,10 @@ class OrdersDao {
         return index
     }
     
-    func getOrdersSortedBy(index:String = "date", desc:Bool = true, limit:Int = 10) async throws -> [Order] {
+    func getOrdersSortedBy(index:String = "date", desc:Bool = true, limit:Int = 5) async throws -> [Order] {
         return try await collection
+            .order(by: "statue", descending: true)
+            .whereField("statue", isNotEqualTo: "Deleted")
             .order(by: index, descending: desc)
             .limit(to: limit)
             .getDocuments(as: Order.self)
@@ -81,6 +83,33 @@ class OrdersDao {
         let docs = try await query.getDocuments()
         return (convertToList(snapShot: docs), docs.documents.last)
         
+    }
+    
+    func getCourierOrdersByDate(_ id:String, from:Date, to:Date) async throws -> [Order] {
+        return try await collection
+            .whereField("courierId", isEqualTo: id)
+            .order(by: "dateShipping", descending: true)
+            .whereField("dateShipping", isGreaterThanOrEqualTo: from)
+            .whereField("dateShipping", isLessThanOrEqualTo: to)
+            .getDocuments(as: Order.self)
+    }
+    
+    func getMarketPlaceOrdersByDate(_ id:String, from:Date, to:Date) async throws -> [Order] {
+        return try await collection
+            .whereField("marketPlaceId", isEqualTo: id)
+            .order(by: "date", descending: true)
+            .whereField("date", isGreaterThanOrEqualTo: from)
+            .whereField("date", isLessThanOrEqualTo: to)
+            .getDocuments(as: Order.self)
+    }
+    
+    func getEmployeeOrdersByDate(_ id:String, from:Date, to:Date) async throws -> [Order] {
+        return try await collection
+            .whereField("addBy", isEqualTo: id)
+            .order(by: "date", descending: true)
+            .whereField("date", isGreaterThanOrEqualTo: from)
+            .whereField("date", isLessThanOrEqualTo: to)
+            .getDocuments(as: Order.self)
     }
     
     func getOrdersByAddDate(from:Date, to:Date) async throws -> [Order] {
@@ -133,32 +162,36 @@ class OrdersDao {
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
+    
+    func getMarketPlaceOrders(marketId:String,lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
+        return try await collection
+            .order(by: "date", descending: true)
+            .whereField("marketPlaceId", isEqualTo: marketId)
+            .limit(to: pageSize)
+            .startAfter(lastDocument: lastSnapShot)
+            .getDocumentWithLastSnapshot(as: Order.self)
+    }
+    
     func getCouriersFinished(id:String, lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
-        var query:Query = collection
+        return try await collection
             .order(by: "dateDelivered", descending: true)
             .whereField("courierId", isEqualTo: id)
+            .whereField("statue", in: ["Delivered", "Failed"])
             .limit(to: pageSize)
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        return try await query.getDocumentWithLastSnapshot(as: Order.self)
+            .startAfter(lastDocument: lastSnapShot)
+            .getDocumentWithLastSnapshot(as: Order.self)
     }
     
     
     
     func getUserOrders(id:String, lastSnapShot:DocumentSnapshot?) async throws -> ([Order], QueryDocumentSnapshot?) {
-        var query:Query = collection
+        let docs = try await collection
             .whereField("addBy", isEqualTo: id)
             .order(by: "date", descending: true)
             .limit(to: pageSize)
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        let docs = try await query.getDocuments()
+            .startAfter(lastDocument: lastSnapShot)
+            .getDocuments()
+
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
@@ -173,7 +206,7 @@ class OrdersDao {
     }
     
     func getPendingCouriersOrderCount(id:String) async throws -> Int {
-        var count = try await collection
+        let count = try await collection
             .whereField("courierId", isEqualTo: id)
             .whereField("statue", isEqualTo: "Out For Delivery")
             .count.getAggregation(source: .server).count

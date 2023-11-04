@@ -7,6 +7,7 @@
 
 import SwiftUI
 import NetworkImage
+import AlertToast
 
 struct SettingsFragment: View {
     @ObservedObject var myUser = UserInformation.shared
@@ -16,66 +17,48 @@ struct SettingsFragment: View {
     
     @State var showSavedItems = false
     @State var count = 0
+    @State var msg:String?
     
     var body: some View {
         VStack(alignment: .leading) {
             if let myUser = myUser.user {
                 VStack {
-                    StoreToolbar(myUser: myUser)
+                    StoreToolbar()
                         .padding()
                     
                     List {
                         // MARK : Header
                         VStack(alignment: .leading) {
                             HStack(alignment: .top) {
-                                ZStack {
-                                    NetworkImage(url: URL(string: myUser.userURL)) { image in
-                                      image.centerCropped()
-                                    } placeholder: {
-                                      ProgressView()
-                                    } fallback: {
-                                        Image("defaultPhoto")
-                                            .resizable()
-                                            .centerCropped()
-                                    }
-                                    .background(Color.gray)
-                                    .frame(width: 60, height: 60)
-                                    .clipShape(Circle())
-                                }
+                                ImagePlaceHolder(url: myUser.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60)
                                 .overlay(alignment: .bottomTrailing, content: {
-                                    NetworkImage(url: URL(string: myUser.store?.logo ?? "" )) { image in
-                                        image.centerCropped()
-                                    } placeholder: {
-                                        ProgressView()
-                                    } fallback: {
-                                        Image("app_icon")
-                                            .resizable()
-                                            .centerCropped()
-                                    }
-                                    .background(Color.yellow)
-                                    .frame(width: 30, height: 30, alignment: .bottomTrailing)
-                                    .clipShape(Circle())
+                                    ImagePlaceHolder(url: myUser.store?.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis: 30)
                                 })
-                                
                                 
                                 VStack(alignment: .leading) {
                                     Text(myUser.name)
-                                        .font(.title.bold())
-                                        .foregroundColor(.accentColor)
+                                        .font(.title3)
+                                        .bold()
                                     
-                                    Text("\(myUser.getAccountTypeString()) at \(myUser.store?.name ?? "")")
+                                    Text("\(myUser.getAccountTypeString().toString()) at \(myUser.store?.name ?? "")")
                                         .font(.headline)
                                         .foregroundColor(.secondary)
+                                    
+                                    Text("@\(myUser.store?.merchantId ?? "")")
+                                        .font(.headline)
+                                        .foregroundColor(.secondary)
+                                        .onTapGesture {
+                                            msg = "Copied to clipboard"
+                                            CopyingData().copyToClipboard(myUser.store?.merchantId ?? "")
+                                        }
                                 }
                                 .padding(.horizontal, 12)
                                 
                                 Spacer()
                             }
                             
-                            if myUser.accountType == "Owner" {
-                                if let store = myUser.store {
-                                    PlanCard(store: store)
-                                }
+                            if myUser.accountType == "Owner", let store = myUser.store {
+                                PlanCard(store: store)
                             }
                         }
                         
@@ -87,17 +70,20 @@ struct SettingsFragment: View {
                                 NavigationLink("Store Info", destination: StoreInfoView(store: myUser.store!))
                                     .bold()
                                 
-                                /*
-                                NavigationLink {
-                                    AgelWallet(myUser: viewModel.user)
-                                } label: {
-                                    HStack {
-                                        Text("Agel Wallet")
-                                        Spacer()
-                                        Text("EGP \(viewModel.user?.store?.agelWallet ?? 0)")
+                                
+                                if let amount = myUser.store?.agelWallet, amount > 500 {
+                                    NavigationLink {
+                                        AgelWallet()
+                                    } label: {
+                                        HStack {
+                                            Text("Agel Wallet")
+                                            Spacer()
+                                            Text("EGP \(myUser.store?.agelWallet ?? 0)")
+                                        }
+                                        .bold()
                                     }
-                                    .bold()
-                                }*/
+                                }
+                                
 
                                 
                                 /*NavigationLink("Reffer Program", destination: RefferView(user:viewModel.user!))
@@ -106,12 +92,8 @@ struct SettingsFragment: View {
                         }
                         
                         Section("Account Settings") {
-                            NavigationLink("My Orders", destination: UserOrders(id: myUser.id, storeId: myUser.storeId))
-                                .bold()
-                            
                             NavigationLink("Edit my info", destination: EditInfoView(user: myUser))
                                 .bold()
-                            
                             
                             NavigationLink("Change Password", destination: ChangePasswordView(user: myUser))
                                 .bold()
@@ -119,36 +101,16 @@ struct SettingsFragment: View {
                             NavigationLink("Change Phone", destination: ChangePhoneView())
                                 .bold()
                             
-                            /*NavigationLink("Connect to social media", destination: ConnectSocialView())
-                                .bold()*/
+                            NavigationLink("Connect to social media", destination: ConnectSocialView())
+                                .bold()
                         }
                         
                         Section("App Settings") {
                             NavigationLink("Notification Settings", destination: NotificationsSettingsView())
                                 .bold()
                             
-                            /*NavigationLink("App Language", destination: Text("App Language"))
+                            NavigationLink("App Language", destination: AppLanguage())
                                 .bold()
-                                .isHidden(true)*/
-                            
-                            Button("Privacy Policy") {
-                                let url = "https://vondera.app/policy.html"
-                                if let Url = URL(string: url) {
-                                    UIApplication.shared.open(Url)
-                                }
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .bold()
-                            
-                            Button("Terms & Condtions") {
-                                let url = "https://vondera.app/terms.html"
-                                if let Url = URL(string: url) {
-                                    UIApplication.shared.open(Url)
-                                }
-                            }
-                            .buttonStyle(PlainButtonStyle())
-
-                            .bold()
                             
                             NavigationLink("About app", destination: AboutAppView())
                                 .bold()
@@ -159,17 +121,27 @@ struct SettingsFragment: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                             .bold()
+                            
+                            Button("Privacy Policy") {
+                                let url = "https://www.vondera.app/privacy-policy"
+                                if let Url = URL(string: url) {
+                                    UIApplication.shared.open(Url)
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .bold()
+                            
+                            Button("Terms & Conditions") {
+                                let url = "https://www.vondera.app/terms-conditions"
+                                if let Url = URL(string: url) {
+                                    UIApplication.shared.open(Url)
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .bold()
                         }
                         
-                        Section () {
-                            Button(role: .destructive) {
-                                Task {
-                                    await AuthManger().logOut()
-                                }
-                            } label: {
-                                Text("Log Out")
-                            }
-                            
+                        Section ("Login Settings") {
                             // SWITCH accounts button
                             if count > 0 {
                                 Button("Switch Account") {
@@ -177,10 +149,20 @@ struct SettingsFragment: View {
                                         showSavedItems.toggle()
                                     }
                                 }
+                                .foregroundStyle(Color.accentColor)
                             }
+                            
+                            Button(role: .destructive) {
+                                Task {
+                                    await AuthManger().logOut()
+                                }
+                            } label: {
+                                Text("Log Out")
+                            }                            
                         }
-                        
                     }
+                    .backgroundStyle(.secondary)
+                    .listStyle(.plain)
                 }
             } else {
                 ProgressView()
@@ -198,10 +180,10 @@ struct SettingsFragment: View {
             ContactDialog(phone:customerServiceNumber, toggle: $showContactDialog)
         }
         .sheet(isPresented: $showSavedItems, content: {
-            NavigationStack {
-                SwitchAccountView(show: $showSavedItems)
-                    .presentationDetents([.fraction(0.3)])
-            }
+            SwitchAccountView(show: $showSavedItems)
+        })
+        .toast(isPresenting: Binding(value: $msg), alert: {
+            AlertToast(displayMode: .banner(.pop), type: .regular, title: msg)
         })
         .navigationTitle("Settings")
         

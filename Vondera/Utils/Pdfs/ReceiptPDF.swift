@@ -15,31 +15,25 @@ import NetworkImage
 @MainActor
 class ReciptPDF {
     var orderList:[Order]
-    var myUser:UserData?
+    var myUser = UserInformation.shared.user
     let a5PageSize = CGSize(width: 420.9, height: 595.2)
 
-    init(orderList: [Order]) async {
+    init(orderList: [Order]) {
         self.orderList = orderList
-        self.myUser = UserInformation.shared.getUser()
     }
     
+
     
-    func generateAndOpenPDF() {
-        let url = render()
-        
-        FileUtils().shareFile(url: url)
-    }
-    
-    func render() -> URL {
+    func render() async -> URL? {
         let url = URL.documentsDirectory.appending(path: "receipt.pdf")
         var box = CGRect(origin: .zero, size: a5PageSize)
         
         guard let pdf = CGContext(url as CFURL, mediaBox: &box, nil) else {
-            return url
+            return nil
         }
         
         for order in orderList {
-            let updatedRenderer = ImageRenderer(content: PDFReceipt(order: order, myUser: myUser))
+            let updatedRenderer = ImageRenderer(content: PDFReceipt(order: order))
             updatedRenderer.render { size, context in
                 pdf.beginPDFPage(nil)
                 context(pdf)
@@ -105,7 +99,7 @@ struct Rceipts:View {
     var body: some View {
         VStack(alignment: .center) {
             ForEach(orders) { order in
-                PDFReceipt(order: order, myUser: myUser)
+                PDFReceipt(order: order)
             }
         }
         .frame(maxWidth: .infinity) // Set the VStack width to the maximum available width
@@ -162,95 +156,101 @@ struct PDFFinalPage : View {
 
 struct PDFReceipt: View {
     var order:Order
-    var myUser:UserData?
     let a5PageSize = CGSize(width: 595.2, height: 420.9)
 
     
     var body: some View {
         VStack(alignment: .center) {
-            // HEADER
-            HStack (alignment: .center){
-                // ORDER ID
-                Text("#\(order.id)")
-                    .font(.caption)
-                    .bold()
-                
-                Spacer()
-                
-                HStack(alignment: .center) {
-                    // MARK : Store Logo
-                    NetworkImage(url: URL(string: myUser?.store!.logo ?? "" )) { image in
-                        image.centerCropped()
-                    } placeholder: {
-                        ProgressView()
-                    } fallback: {
-                        Image("defaultPhoto")
-                            .resizable()
-                            .centerCropped()
-                    }
-                    .background(Color.white)
-                    .frame(width: 40, height: 40, alignment: .bottomTrailing)
-                    .clipShape(Circle())
-                    
-                    VStack(alignment: .center) {
-                        Text(myUser?.store?.name ?? "")
+            if let myUser = UserInformation.shared.user, let store = myUser.store {
+                VStack(alignment: .center) {
+                    // HEADER
+                    HStack (alignment: .center){
+                        // ORDER ID
+                        Text("#\(order.id)")
                             .font(.caption)
                             .bold()
                         
-                        Text(myUser?.store?.slogan ?? "")
+                        Spacer()
+                        
+                        HStack(alignment: .center) {
+                            ImagePlaceHolder(url: store.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis: 40, iconOverly: nil)
+                            
+                            VStack(alignment: .center) {
+                                Text(store.name)
+                                    .font(.caption)
+                                    .bold()
+
+                                
+                                if !(store.slogan?.isBlank ?? true) {
+                                    Text(store.slogan ?? "")
+                                        .font(.caption)
+                                }
+                                
+                            }
+                            .padding(.horizontal, 20)
+                        }
+                        
+                        
+                        Spacer()
+                        
+                        // QR CODE
+                        Image(uiImage: order.id.qrCodeUIImage)
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                    }
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+                    
+                    // Client INFO
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Name : \(order.name) - Phone Number : \(order.phone)")
+                            
+                            Text("Address : \(order.gov) - \(order.address)")
+                            
+                            Text("Purchase Date : \(order.date.toDate().formatted())")
+                            
+                            if (store.sellerName ?? false) && !order.addBy.isBlank && !(order.owner?.isBlank ?? true) {
+                                Text("Order By : \(order.owner ?? "")")
+                            }
+                        }
+                        
+                        Spacer()
+                    }
+                    .font(.caption2)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.leading)
+                    
+                    
+                    // ITEMS
+                    TableView(order: order)
+                        .padding(.vertical, 6)
+                    
+                    if store.cantOpenPackage ?? false {
+                        Text("You are only allowed to open the package in front of the courier")
+                            .multilineTextAlignment(.center)
                             .font(.caption)
                     }
-                    .padding(.horizontal, 20)
-                }
-                
-                
-                
-                Spacer()
-                
-                // QR CODE
-                Image(uiImage: order.id.qrCodeUIImage)
-                    .resizable()
-                    .frame(width: 40, height: 40)
-            }
-            .lineLimit(nil)
-            .fixedSize(horizontal: false, vertical: true)
-            .multilineTextAlignment(.center)
-            
-            // Client INFO
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Name : \(order.name) - Phone Number : \(order.phone)")
                     
-                    Text("Address : \(order.gov) - \(order.address)")
-                     
-                    Text("Purchase Date : \(order.date.toDate().formatted())")
+                    // Message
+                    if let msg = store.customMessage, !msg.isBlank, (store.subscribedPlan?.accessCustomMessage ?? false) {
+                        VStack(alignment: .center) {
+                            Text(msg)
+                                .font(.caption)
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding(.top, 12)
+                    }
+                    
+                    Spacer()
                 }
-                
-                Spacer()
+                .frame(width: 400, height: 560)
+                .padding()
             }
-            .font(.caption2)
-            .lineLimit(nil)
-            .fixedSize(horizontal: false, vertical: true)
-            .multilineTextAlignment(.leading)
             
-            
-            // ITEMS
-            TableView(order: order)
-                .padding(.vertical, 6)
-            
-            // Message
-            VStack(alignment: .center) {
-                Text(myUser?.store?.customMessage)
-                    .font(.caption)
-                    .multilineTextAlignment(.center)
-            }
-            .padding(.top, 12)
-            
-            Spacer()
         }
-        .frame(width: 400, height: 560)
-        .padding()
-        
     }
     
     struct TableView: View {

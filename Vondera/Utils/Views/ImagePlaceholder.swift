@@ -14,7 +14,7 @@ struct ImagePickupHolder: View {
     var currentImagePlaceHolder:UIImage?
     
     var reduis:CGFloat = 60
-    var iconOverly:String = "photo.fill.on.rectangle.fill"
+    var iconOverly:String? = "photo.fill.on.rectangle.fill"
     
     var body: some View {
         if selectedImage != nil {
@@ -55,7 +55,7 @@ struct ImagePickupHolder: View {
     }
 }
 struct ImagePlaceHolder: View {
-    @State var url:String
+    var url:String
     var placeHolder:UIImage?
     
     var reduis:CGFloat = 60
@@ -66,7 +66,7 @@ struct ImagePlaceHolder: View {
         NetworkImage(url: URL(string: url )) { image in
             image.centerCropped()
         } placeholder: {
-            ProgressView()
+            Color.gray
         } fallback: {
             if placeHolder != nil {
                 Image(uiImage: placeHolder)
@@ -84,6 +84,7 @@ struct ImagePlaceHolder: View {
         .background(Color.gray)
         .frame(width: reduis, height: reduis)
         .clipShape(Circle())
+        .id(url)
     }
 }
 

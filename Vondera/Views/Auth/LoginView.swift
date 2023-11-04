@@ -16,10 +16,15 @@ import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
+    @ObservedObject var appleAuth = AppleSignInHelper()
+    
     @State var creatingAccount = false
-    @Environment(\.colorScheme) var colorScheme
+    @State var forgetPassword = false
     @State var showSavedItems = false
+
+    @Environment(\.colorScheme) var colorScheme
     @State var count = 0
+    @State var authInfo:AuthProviderInfo?
     
     var body: some View {
         VStack(alignment: .center) {
@@ -43,49 +48,64 @@ struct LoginView: View {
                 Text("Please enter your details to sign in")
             }
             
-            
-            
             Spacer().frame(height: 24)
             
             //MARK : Login/Create account Methods
-            /*
-            HStack {
-                RoundedImageButton(assetName: "apple-logo", assetSize: 25)
+            /*VStack {
+                HStack {
+                    RoundedImageButton(assetName: "apple-logo", assetSize: 25)
+                        .onTapGesture {
+                            appleAuth.startSignInWithAppleFlow()
+                        }
+                    
+                    Spacer()
+                    
+                    RoundedImageButton(assetName: "google", assetSize: 25)
                     .onTapGesture {
-                        #warning("Apple log in")
+                        Task {
+                            if let provider = await GSignInHelper().signIn() {
+                                let loggedIn = await viewModel.googleSignIn(cred: provider.cred, id: provider.id)
+                                if !loggedIn {
+                                    print("Will Create Account")
+                                    authInfo = provider
+                                    creatingAccount = true
+                                }
+                            }
+                        }
                     }
-                
-                Spacer()
-                
-                RoundedImageButton(assetName: "google", assetSize: 25)
-                .onTapGesture {
-                    googleSignIn()
+                    
+                    Spacer()
+                    
+                    RoundedImageButton(assetName: "facebook", assetSize: 25)
+                        .onTapGesture {
+                            FBAuthHelper().getCreds(onCompleted: { authProvider in
+                                Task {
+                                    let loggedIn = await viewModel.fbSignIn(cred:authProvider.cred, id: authProvider.id)
+                                    if !loggedIn {
+                                        print("Will Create Account")
+                                        authInfo = authProvider
+                                        creatingAccount = true
+                                    }
+                                }
+                            })
+                        }
                 }
+                .frame(height: 40)
                 
-                Spacer()
                 
-                RoundedImageButton(assetName: "facebook", assetSize: 25)
-                    .onTapGesture {
-                        #warning("Facebook log in")
-                    }
-            }
-            .frame(height: 40)
-            
-            
-            // Login Form
-            
-            HStack {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.5))
-                    .frame(height: 2)
-                
-                Text("Or")
-                
-                Rectangle()
-                    .fill(Color.gray.opacity(0.5))
-                    .frame(height: 2)
-            }
-            */
+                // Login Form
+                HStack {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.5))
+                        .frame(height: 2)
+                    
+                    Text("Or")
+                    
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.5))
+                        .frame(height: 2)
+                }
+            }*/
             
             VStack(spacing: 22) {
                 FloatingTextField(title: "Email address", text: $viewModel.email, required: nil ,autoCapitalize: .never, keyboard: .emailAddress)
@@ -98,8 +118,10 @@ struct LoginView: View {
                     
                     Text("Forget Password ?")
                         .underline()
+                        .onTapGesture {
+                            forgetPassword = true
+                        }
                 }
-                .hidden()
                 
                 ButtonLarge(label: "Sign in", action: callLogin)
                 
@@ -121,9 +143,7 @@ struct LoginView: View {
                         creatingAccount = true
                     }
             }
-            
-            
-            
+                        
             Spacer()
             
             VStack {
@@ -154,8 +174,21 @@ struct LoginView: View {
             
         }
         .padding()
+        .onReceive(appleAuth.authPublisher, perform: { authProvider in
+            Task {
+                let loggedIn = await viewModel.appleSignIn(cred: authProvider.cred, id: authProvider.id)
+                if !loggedIn {
+                    print("Will Create Account")
+                    authInfo = authProvider
+                    creatingAccount = true
+                }
+            }
+        })
         .navigationDestination(isPresented: $creatingAccount) {
-            CreateAccountView()
+            CreateAccountView(authInfo: authInfo)
+        }
+        .navigationDestination(isPresented: $forgetPassword) {
+            ForgetPasswordView()
         }
         .toast(isPresenting: Binding(value: $viewModel.errorMsg)){
             AlertToast(displayMode: .alert,
@@ -163,28 +196,27 @@ struct LoginView: View {
                        title: viewModel.errorMsg)
         }
         .sheet(isPresented: $showSavedItems) {
-            NavigationStack {
+            
                 SwitchAccountView(show: $showSavedItems)
-                    .presentationDetents([.fraction(0.3)])
-            }
+            
         }
         .onAppear {
             Task {
-                let savedUsers = await SavedAccountManager().getAllUsers()
+                let savedUsers = SavedAccountManager().getAllUsers()
                 count = savedUsers.count
             }
         }
     }
     
     func openTermsAndConditionsLink() {
-        let url = "https://vondera.app/terms.html"
+        let url = "https://www.vondera.app/terms-conditions"
         if let Url = URL(string: url) {
             UIApplication.shared.open(Url)
         }
     }
     
     func openPrivacyPolicyLink() {
-        let url = "https://vondera.app/policy.html"
+        let url = "https://www.vondera.app/privacy-policy"
         if let Url = URL(string: url) {
             UIApplication.shared.open(Url)
         }
@@ -196,13 +228,6 @@ struct LoginView: View {
             await viewModel.login()
         }
     }
-    
-    func googleSignIn() {
-        Task {
-            await viewModel.googleSignIn()
-        }
-    }
-    
 }
 
 

@@ -13,44 +13,44 @@ class CartManager {
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
-    func getCart() async -> [SavedItems] {
+    func getCart()  -> [SavedItems] {
         let myUser = UserInformation.shared.getUser()
-
+        
         if let encodedData = UserDefaults.standard.data(forKey: "\(myUser?.id ?? "") - \(CART_KEY)") {
             if let savedItemsList = try? decoder.decode([SavedItems].self, from: encodedData) {
-               return savedItemsList
+                return savedItemsList
             }
         }
         
         return []
     }
     
-    func saveCart(listCart: [SavedItems]) async {
+    func saveCart(listCart: [SavedItems]) {
         let myUser = UserInformation.shared.getUser()
         if let encodedData = try? encoder.encode(listCart) {
             UserDefaults.standard.set(encodedData, forKey: "\(myUser?.id ?? "") - \(CART_KEY)")
         }
     }
     
-    func clearCart() async {
-        await saveCart(listCart: [])
+    func clearCart() {
+        saveCart(listCart: [])
     }
     
-    func removeItemFromCart(randomId: String, hashMap: [String: String]) async {
-        var listItems = await getCart()
+    func removeItemFromCart(randomId: String, hashMap: [String: String]) {
+        var listItems = getCart()
         for (index, savedItems) in listItems.enumerated() {
             if savedItems.randomId == randomId {
                 if areHashmapsEqual(savedItems.hashMap, hashMap) {
                     listItems.remove(at: index)
-                    await saveCart(listCart: listItems)
+                    saveCart(listCart: listItems)
                     break
                 }
             }
         }
     }
     
-    func isSavedItemInCart(randomId: String, hashMap: [String: String]) async -> Bool {
-        let listItems = await getCart()
+    func isSavedItemInCart(randomId: String, hashMap: [String: String])  -> Bool {
+        let listItems = getCart()
         for savedItems in listItems {
             if savedItems.productId == randomId && areHashmapsEqual(savedItems.hashMap, hashMap) {
                 return true
@@ -59,8 +59,8 @@ class CartManager {
         return false
     }
     
-     func getSavedItem(productId: String, hashMap: [String: String]) async -> SavedItems? {
-        let listItems = await getCart()
+    func getSavedItem(productId: String, hashMap: [String: String])  -> SavedItems? {
+        let listItems = getCart()
         for savedItems in listItems {
             if savedItems.productId == productId && areHashmapsEqual(savedItems.hashMap, hashMap) {
                 return savedItems
@@ -69,20 +69,32 @@ class CartManager {
         return nil
     }
     
-     func addItem(savedItems: SavedItems) async {
-         if var currentSavedItem = await getSavedItem(productId: savedItems.productId, hashMap: savedItems.hashMap) {
+    func addItem(product:StoreProduct, options: [String:String]) {
+        let savedItem = SavedItems(randomId: CartManager.generatePIN(), productId: product.id, hashMap: options)
+        
+        addItem(savedItems: savedItem)
+    }
+    
+    private func addItem(savedItems: SavedItems)  {
+        if var currentSavedItem = getSavedItem(productId: savedItems.productId, hashMap: savedItems.hashMap) {
             currentSavedItem.quantity = currentSavedItem.quantity + savedItems.quantity
-            await removeItemFromCart(randomId: currentSavedItem.randomId, hashMap: savedItems.hashMap)
-            await addItem(savedItems: currentSavedItem)
+            removeItemFromCart(randomId: currentSavedItem.randomId, hashMap: savedItems.hashMap)
+            addItem(savedItems: currentSavedItem)
             return
         }
         
-        var listItems = await getCart()
+        var listItems =  getCart()
         listItems.append(savedItems)
-        await saveCart(listCart: listItems)
+        saveCart(listCart: listItems)
     }
     
     private func areHashmapsEqual(_ first: [String: String], _ second: [String: String]) -> Bool {
         return first == second
+    }
+
+    
+    static func generatePIN() -> String {
+        let number = Int.random(in: 0...99999999)
+        return String(format: "%08d", number)
     }
 }

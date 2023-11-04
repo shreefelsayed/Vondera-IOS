@@ -70,14 +70,29 @@ struct StoreExpanses: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Add") {
-                    addExpanses.toggle()
+            if let myUser = UserInformation.shared.user, myUser.canAccessAdmin {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button {
+                            addExpanses.toggle()
+                        } label: {
+                            Label("Add", systemImage: "plus")
+                        }
+                        
+                        NavigationLink {
+                            ExpansesReport(storeId: storeId)
+                        } label: {
+                            Label("Reports", systemImage: "filemenu.and.selection")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle.fill")
+                    }
                 }
             }
+            
         }
         .toast(isPresenting: Binding(value: $viewModel.msg), alert : {
-            AlertToast(displayMode: .banner(.slide), type: .regular, title: viewModel.msg)
+            AlertToast(displayMode: .banner(.slide), type: .regular, title: viewModel.msg?.toString())
         })
         
         .sheet(isPresented: $addExpanses, content: {

@@ -1,5 +1,6 @@
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 
 struct Updates: Codable, Hashable {
     var text: String = ""
@@ -21,7 +22,7 @@ extension Updates {
         return Updates(uId: "WFCL1aY0fTZ9mZwIpFLmheqkwel1", code: 10)
     }
     
-    func desc() -> String {
+    func desc() -> LocalizedStringKey {
         switch self.code {
         case 10:
             return "Order confirmed"
@@ -46,7 +47,7 @@ extension Updates {
         case 25:
             return "Order was reseted to intial value"
         default:
-            return self.text
+            return LocalizedStringKey(self.text)
         }
     }
 }

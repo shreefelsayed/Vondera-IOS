@@ -8,8 +8,47 @@
 import SwiftUI
 
 struct PaymentSettings: View {
+    @ObservedObject var user = UserInformation.shared
+    @State var cod = true
+    //@State var disableCOD = true
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            Toggle("Cash on Delivery", isOn: $cod)
+                .onChange(of: cod) { newValue in
+                    updateCod(newValue)
+                }
+            
+            NavigationLink("Paytabs Gateway") {
+                Paytab()
+            }
+        }
+        .navigationTitle("Payment Settings")
+        .task {
+            if let cashSelected = user.user?.store?.paymentOptions?.cash?.selected {
+                cod = cashSelected
+            }
+            
+            /*if let paymentOptions = user.user?.store?.paymentOptions {
+                disableCOD = !paymentOptions.mustEnableCOD()
+            }*/
+        }
+    }
+    
+    func updateCod(_ value:Bool) {
+        let data = [
+            "paymentOptions.cash.selected" : value,
+            "paymentOptions.cash.gateway" : false
+        ]
+        
+        if let storeId = user.user?.storeId {
+            Task {
+                try? await StoresDao().update(id:storeId, hashMap:data)
+                DispatchQueue.main.async {
+                    UserInformation.shared.user?.store?.paymentOptions?.cash?.selected = value
+                    UserInformation.shared.updateUser()
+                }
+            }
+        }
     }
 }
 

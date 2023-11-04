@@ -29,7 +29,11 @@ class SavedAccountManager {
         }
     }
 
-    func addUser(savedItems: LoginInfo) {
+    func addUser(userData:UserData) {
+        addUser(savedItems: LoginInfo(id: userData.id, name: userData.name, email: userData.email, password: userData.pass, url: userData.userURL, accountType: userData.accountType, storeName: userData.store?.name ?? ""))
+    }
+    
+    private func addUser(savedItems: LoginInfo) {
         var listItems = getAllUsers()
         
         // Check if it's already exists

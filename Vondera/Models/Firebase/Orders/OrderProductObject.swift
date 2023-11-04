@@ -3,18 +3,18 @@ import Foundation
 struct OrderProductObject: Codable, Hashable {
     var productId: String  = ""
     var name: String = ""
-    var storeId: String? = ""
+    var storeId: String = ""
     var quantity: Int = 0
     var price: Double = 0
-    var image: String? = ""
+    var image: String = ""
     var buyingPrice: Double = 0
-    var hashVaraients: [String: String]? = [:]
-    var savedItemId: String? = ""
+    var hashVaraients: [String: String] = [:]
+    var savedItemId: String = ""
     var product: StoreProduct?
     
     init() {}
     
-    init(productId: String, name: String, storeId: String?, quantity: Int, price: Double, image: String?, buyingPrice: Double, hashVaraients: [String: String]?, savedItemId: String?, product: StoreProduct?) {
+    init(productId: String, name: String, storeId: String, quantity: Int, price: Double, image: String, buyingPrice: Double, hashVaraients: [String: String], savedItemId: String, product: StoreProduct) {
             self.productId = productId
             self.name = name
             self.storeId = storeId
@@ -28,11 +28,14 @@ struct OrderProductObject: Codable, Hashable {
     }
     
     func getVarientsString() -> String {
-        if hashVaraients == nil { return "" }
+        if hashVaraients.isEmpty {
+            return ""
+        }
+        
         let listKeys = getVaraintsTitle()
         var str = ""
         for s in listKeys {
-            str += "\(s) : \(String(describing: hashVaraients![s] ?? ""))"
+            str += "\(s) : \(String(describing: hashVaraients[s] ?? ""))"
             if listKeys.last != s {
                 str += " , "
             }
@@ -41,10 +44,24 @@ struct OrderProductObject: Codable, Hashable {
     }
     
     func getVaraintsTitle() -> [String] {
-        if hashVaraients == nil { return [String]() }
-        let keys = Array(hashVaraients!.keys)
+        if hashVaraients.isEmpty { return [String]() }
+        let keys = Array(hashVaraients.keys)
         return keys
     }
+    
+    func getProfit() -> Int {
+        return Int(price - buyingPrice)
+    }
+    
+    func getMargin() -> Double {
+        if buyingPrice == 0 {
+            return 100.0
+        }
+        
+        let margin =  ((price / buyingPrice) * 100)
+        return Double(String(format: "%.1f", margin)) ?? 0.0
+    }
+    
     
     enum CodingKeys: String, CodingKey {
         case productId, name, storeId, quantity, price, image, buyingPrice, hashVaraients, savedItemId, product
@@ -54,13 +71,13 @@ struct OrderProductObject: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         productId = try container.decode(String.self, forKey: .productId)
         name = try container.decode(String.self, forKey: .name)
-        storeId = try container.decodeIfPresent(String.self, forKey: .storeId)
+        storeId = try container.decodeIfPresent(String.self, forKey: .storeId) ?? ""
         quantity = try container.decode(Int.self, forKey: .quantity)
         price = try container.decode(Double.self, forKey: .price)
-        image = try container.decodeIfPresent(String.self, forKey: .image)
+        image = try container.decodeIfPresent(String.self, forKey: .image) ?? ""
         buyingPrice = try container.decode(Double.self, forKey: .buyingPrice)
-        hashVaraients = try container.decodeIfPresent([String:String].self, forKey: .hashVaraients)
-        savedItemId = try container.decodeIfPresent(String.self, forKey: .savedItemId)
+        hashVaraients = try container.decodeIfPresent([String:String].self, forKey: .hashVaraients) ?? [String:String]()
+        savedItemId = try container.decodeIfPresent(String.self, forKey: .savedItemId) ?? ""
         product = try container.decodeIfPresent(StoreProduct.self, forKey: .product)
     }
     
@@ -74,7 +91,6 @@ struct OrderProductObject: Codable, Hashable {
         try container.encodeIfPresent(image, forKey: .image)
         try container.encode(buyingPrice, forKey: .buyingPrice)
         try container.encodeIfPresent(hashVaraients, forKey: .hashVaraients)
-        
         try container.encodeIfPresent(savedItemId, forKey: .savedItemId)
         try container.encodeIfPresent(product, forKey: .product)
     }

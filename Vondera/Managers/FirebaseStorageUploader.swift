@@ -12,7 +12,24 @@ import UIKit
 
 class FirebaseStorageUploader {
     
-    func oneImageUpload(image:UIImage,name:String = "image" , ref:StorageReference, completion : @escaping (URL?, Error?) -> Void) {
+    func updateUserImage(image:UIImage, uId:String, completion : @escaping (Bool) -> Void) {
+        oneImageUpload(image: image,name: uId , ref: Storage.storage().reference().child("users")) { url, error in
+            if let url = url {
+                Task {
+                    try? await UsersDao().update(id: uId, hash: ["userURL": url.absoluteString])
+                    DispatchQueue.main.async {
+                        UserInformation.shared.user?.userURL = url.absoluteString
+                        UserInformation.shared.updateUser()
+                        completion(true)
+                    }
+                }
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    func oneImageUpload(image:UIImage,name:String = "image" ,ref:StorageReference, completion : @escaping (URL?, Error?) -> Void) {
         guard let imageData = image.compress() else {
             print("Couldn't compress image")
             completion(nil, nil) // Handle error if image data couldn't be generated
@@ -45,9 +62,11 @@ class FirebaseStorageUploader {
         }
     }
     
-    func uploadImagesToFirebaseStorage(images: [UIImage], storageRef: StorageReference, completion: @escaping ([URL]?, Error?) -> Void){
+    func uploadImagesToFirebaseStorage(images: [UIImage], storageRef: String, completion: @escaping ([URL]?, Error?) -> Void){
         var imageURLs: [URL] = []
 
+        let ref = Storage.storage().reference().child(storageRef)
+        
         for (index, image) in images.enumerated() {
             guard let imageData = image.compress() else {
                 completion(nil, nil) // Handle error if image data couldn't be generated
@@ -55,7 +74,7 @@ class FirebaseStorageUploader {
             }
 
             let filename = "\(index) - \(generateRandomNumber()).jpeg" // Unique filename for each image
-            let imageRef = storageRef.child(filename)
+            let imageRef = ref.child(filename)
 
             imageRef.putData(imageData, metadata: nil) { metadata, error in
                 if let error = error {

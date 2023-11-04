@@ -19,9 +19,16 @@ class LoginViewModel: ObservableObject {
         authManger = AuthManger()
     }
     
+    func appleSignIn(cred:AuthCredential, id: String) async -> Bool {
+        return await authManger.signUserWithApple(authCred: cred, appleId: id)
+    }
     
-    func googleSignIn() async -> Bool {
-        return await authManger.signUserWithGoogle()
+    func fbSignIn(cred:AuthCredential, id: String) async -> Bool {
+        return await authManger.signInWithFacebook(authCred: cred, fbId: id)
+    }
+    
+    func googleSignIn(cred:AuthCredential, id: String) async -> Bool {
+        return await authManger.signUserWithGoogle(authCred: cred, id: id)
     }
     
     func login() async -> Bool {

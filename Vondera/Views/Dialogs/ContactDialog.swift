@@ -11,6 +11,8 @@ struct ContactDialog: View {
     var phone:String
     var message = ""
     @Binding var toggle:Bool
+    @State private var sheetHeight: CGFloat = .zero
+
     
     
     var body: some View {
@@ -86,8 +88,8 @@ struct ContactDialog: View {
                 }
             }
         }
-        .padding(.vertical, 26)
-        .padding(.horizontal, 16)
+        .fixedInnerHeight($sheetHeight)
+        
     }
 }
 

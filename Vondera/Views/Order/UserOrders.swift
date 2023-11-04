@@ -21,7 +21,6 @@ struct UserOrders: View {
     
     var body: some View {
         List {
-            
             ForEach($viewModel.items) { order in
                 OrderCard(order: order)
                 
@@ -34,6 +33,15 @@ struct UserOrders: View {
                     .onAppear {
                         loadItem()
                     }
+                }
+            }
+        }
+        .toolbar {
+            if let user = UserInformation.shared.user {
+                NavigationLink {
+                    EmployeeReports(employee: user)
+                } label: {
+                   Image(systemName: "filemenu.and.selection")
                 }
             }
         }

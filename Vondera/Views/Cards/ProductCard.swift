@@ -13,45 +13,64 @@ struct ProductCard: View {
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        VStack(alignment: .leading) {
-            NetworkImage(url: URL(string: product.defualtPhoto() )) { image in
-                image.centerCropped()
-            } placeholder: {
-                ZStack(alignment: .center) {
+        VStack(alignment: .leading, spacing: 0) {
+            ZStack(alignment: .topLeading) {
+                NetworkImage(url: URL(string: product.defualtPhoto() )) { image in
+                    image.centerCropped()
+                } placeholder: {
+                    ZStack(alignment: .center) {
+                        Color.gray
+                        ProgressView()
+                    }
+                    
+                } fallback: {
                     Color.gray
-                    ProgressView()
                 }
+                .id(product.id)
+                .background(Color.white)
+                .shadow(radius: 15)
+                .cornerRadius(15)
+                .frame(height: 200)
                 
-            } fallback: {
-                Color.gray
+                if !(product.alwaysStocked ?? false) {
+                    Text(product.quantity > 0 ? "\(product.quantity)" : "Out of stock")
+                        .foregroundStyle(.white)
+                        .padding(6)
+                        .background(product.quantity > 0 ? Color.accentColor : .red)
+                        .cornerRadius(6)
+                }
             }
-            .background(Color.white)
-            .shadow(radius: 15)
-            .cornerRadius(15)
-            .frame(height: 240)
             
-            Spacer().frame(height: 16)
             
-            Text(product.name.uppercased())
-                .font(.title3)
-                .lineLimit(1)
-                .bold()
-            
-            Text(product.categoryName)
-                .font(.subheadline)
-                .lineLimit(1)
-                .foregroundColor(.secondary)
-            
-            Text("\(Int(product.price)) LE")
-                .font(.title2)
-                .multilineTextAlignment(.center)
-                .bold()
-           
-            
+            VStack(alignment: .leading) {
+                Text(product.name.uppercased())
+                    .font(.body)
+                    .lineLimit(1)
+                    .bold()
+                
+                Text(product.categoryName)
+                    .font(.caption)
+                    .lineLimit(1)
+                    .foregroundColor(.secondary)
+                
+                HStack {
+                    if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
+                        Text("\(Int(crossedPrice)) LE")
+                            .font(.body)
+                            .strikethrough()
+                    }
+                    
+                    Text("\(Int(product.price)) LE")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                        .bold()
+                }
+            }
+            .padding(12)
         }
-        .padding()
         .background(colorScheme == .dark ? .white.opacity(0.1) : .black.opacity(0.03))
         .cornerRadius(15)
+        .padding(6)
         
     }
 }

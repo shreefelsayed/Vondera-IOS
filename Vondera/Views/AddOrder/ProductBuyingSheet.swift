@@ -7,12 +7,15 @@
 
 import SwiftUI
 import NetworkImage
+import AlertToast
 
 struct ProductBuyingSheet: View {
     @Binding var product:StoreProduct
+    var onAddedToCard:((StoreProduct, [String:String]) -> ())
     
     @State private var selectedDetent = PresentationDetent.large
-    @State var listOption:[String] = []
+    @State private var msg:LocalizedStringKey?
+    @State private var listOption:[String] = []
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -128,11 +131,9 @@ struct ProductBuyingSheet: View {
                     
                     
                     ButtonLarge(label: "Add to cart") {
-                        Task {
-                            let savedItem = SavedItems(randomId: generatePIN(), productId: product.id, hashMap: getVariantsMap())
-                            await CartManager().addItem(savedItems: savedItem)
-                            dismiss()
-                        }
+                        msg = "Item Added"
+                        onAddedToCard(product, getVariantsMap())
+                        dismiss()
                     }
                     
                 }
@@ -141,25 +142,14 @@ struct ProductBuyingSheet: View {
             }
             .frame(maxWidth: .infinity)
         }
-        
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: ProductSettings(product: product, onDeleted : { item in
-                    
-                })) {
-                    Text("Settings")
-                }
-            }
-        }
         .onAppear {
             setDefaultOptions()
         }
+        .toast(isPresenting: Binding(value: $msg), alert: {
+            
+            AlertToast(displayMode: .banner(.pop), type: .complete(.green), title: msg?.toString())
+        })
         .navigationTitle("Product info")
-    }
-    
-    func generatePIN() -> String {
-        let number = Int.random(in: 0...99999999)
-        return String(format: "%08d", number)
     }
     
     func getVariantsMap() -> [String: String] {
@@ -176,7 +166,6 @@ struct ProductBuyingSheet: View {
         
         return hash
     }
-    
     
     func setDefaultOptions() {
         if let hashVarients = product.hashVarients, !hashVarients.isEmpty {

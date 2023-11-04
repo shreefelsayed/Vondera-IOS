@@ -19,7 +19,6 @@ struct OrderDetails: View {
     @State var myUser = UserInformation.shared.user
     
     @State private var snapshotImage: UIImage?
-    @State private var delete = false
     
     // COURIER SHEET
     @State var courier:Courier?
@@ -27,6 +26,7 @@ struct OrderDetails: View {
 
     // CONTACT CLIENT
     @State var contactSheet = false
+    @State var showOptions = false
     
     // CONTACT INFO
     @State var contactUser:UserData?
@@ -40,6 +40,8 @@ struct OrderDetails: View {
                     
                     // MARK : ORDER HEADER
                     VStack(alignment: .leading) {
+                        
+                        // MARKET PLACE
                         HStack(alignment: .center) {
                             if order.marketPlaceId != nil && !order.marketPlaceId!.isBlank {
                                 MarketHeaderCard(marketId: order.marketPlaceId!, withText: false)
@@ -58,6 +60,7 @@ struct OrderDetails: View {
                         
                         Divider()
                         
+                        // STATUE
                         HStack(alignment: .center) {
                             Text("Order Statue")
                                 .font(.title3)
@@ -65,23 +68,74 @@ struct OrderDetails: View {
                             
                             Spacer()
                             
-                            Text("\(order.statue)")
+                            Text(order.getStatueLocalized())
                                 .bold()
+                        }
+                        
+                        if let images = order.listAttachments, images.count > 0 {
+                            Divider()
+                            
+                            HStack {
+                                Label("Attachments", systemImage: "paperclip")
+                                
+                                Spacer()
+                                
+                                HStack(alignment: .center, spacing : 18) {
+                                    NavigationLink {
+                                        FullScreenImageView(imageURLs: images, currentIndex: 0)
+                                    } label: {
+                                        Image(systemName: "eye.circle.fill")
+                                    }
+
+                                    Button {
+                                        DownloadManager().saveImagesToDevice(imageURLs: images.map({ URL(string: $0)! }))
+                                        msg = "Downloading started"
+                                    } label: {
+                                        Image(systemName: "square.and.arrow.down.fill")
+                                    }
+                                    
+                                    Button {
+                                        CopyingData().copyToClipboard(images)
+                                        msg = "Copied to clipboard"
+                                    } label: {
+                                        Image(systemName: "doc.on.clipboard")
+                                    }
+                                }
+                                .font(.headline)
+                                .bold()
+                            }
                         }
                     }
                     
+                    // NET PROFIT
+                    if (myUser?.canAccessAdmin ?? false) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Margin")
+                                    .bold()
+                                
+                                Text("\(order.getMargin())%")
+                            }
+                            .padding(24)
+                            .background(.secondary.opacity(0.2))
+                            .cornerRadius(12)
+                            
+                            VStack(alignment: .leading) {
+                                Text("Profit")
+                                    .bold()
+                                
+                                Text("EGP \(order.netProfitFinal)")
+                            }
+                            .padding(24)
+                            .background(.secondary.opacity(0.2))
+                            .cornerRadius(12)
+                        }
+                    }
                     
-                    StepsView(currentStep: .constant(order.getCurrentStep()), steps:  ["Added", "Confirmed", "Ready", "Shipped", "Finished"])
-                        .stepShape(.circle)
-                        .lastStepShape(.downTriangle)
-                        .futureStepFillColor(.yellow)
-                        .currentStepFillColor(UIColor(Color.accentColor))
-                        .pastStepFillColor(UIColor(Color.accentColor))
-                        
                     // MARK : SHIPPING OPTIONS
                     if (order.requireDelivery ?? true) {
                         VStack(alignment: .leading) {
-                            Text("Shipping Info")
+                            Text("Shipping info")
                                 .font(.title2)
                                 .bold()
                             
@@ -129,7 +183,7 @@ struct OrderDetails: View {
                             .frame(width: 24, height: 24)
                             .foregroundStyle(Color.accentColor)
                         
-                        Text("Contact Customer")
+                        Text("Contact Client")
                     }
                     .onTapGesture {
                         contactSheet.toggle()
@@ -145,7 +199,7 @@ struct OrderDetails: View {
                         Spacer().frame(height: 8)
                         
                         HStack {
-                            Text("Products Price")
+                            Text("Products prices")
                             Spacer()
                             Text("+\(order.totalPrice) LE")
                         }
@@ -257,7 +311,7 @@ struct OrderDetails: View {
             }
             
             // MARK : BUTTONS
-            if let myUser = myUser {
+            if let _ = myUser {
                 buttons.background(Color.background)
             }
         }
@@ -273,24 +327,42 @@ struct OrderDetails: View {
                 ProgressView()
             }
         }
-        .confirmationDialog("Are you sure you want to delete the order ?", isPresented: $delete, titleVisibility: .visible, actions: {
-            Button("Delete", role: .destructive) {
-                deleteOrder()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    if let mId = myUser?.store?.merchantId, !mId.isBlank {
+                        if let siteEnabled = myUser?.store?.websiteEnabled, siteEnabled == true {
+                            ShareLink(item: order.getLink(mId: mId)) {
+                                Label("Copy Order Link", systemImage: "square.and.arrow.up")
+                            }
+                            
+                            Link(destination: order.getLink(mId: mId)) {
+                                Label("Visit", systemImage: "link")
+                            }
+                        }
+                        
+                        Button {
+                            showOptions.toggle()
+                        } label: {
+                            Label("Options", systemImage: "gearshape")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
+                }
             }
-            
-            Button("Later", role: .cancel) {
-            }
+        }
+        .sheet(isPresented: $showOptions, content: {
+            OrderOptionsSheet(order: $order, isPreseneted: $showOptions)
         })
         .sheet(isPresented: $contactSheet, content: {
             ContactDialog(phone: order.phone , toggle: $contactSheet)
-                .fixedInnerHeight($sheetHeight)
         })
         .sheet(isPresented: $assignDialog) {
-            CourierPicker(storeId: order.storeId ?? "", selectedOption: $courier)
+            CourierPicker(selectedOption: $courier)
         }
         .sheet(item: $contactUser, content: { user in
             ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
-                .fixedInnerHeight($sheetHeight)
         })
         .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
@@ -307,13 +379,15 @@ struct OrderDetails: View {
     
     func getOrderData() async {
         do {
-            let orderData = try await OrdersDao(storeId: order.storeId ?? "").getOrder(id: order.id)
-            DispatchQueue.main.async {
-                if !orderData.exists {
-                    self.showTosat("Order doesn't exist")
-                    return
+            if let storeId = order.storeId, !storeId.isBlank {
+                let orderData = try await OrdersDao(storeId: storeId).getOrder(id: order.id)
+                DispatchQueue.main.async {
+                    if !orderData.exists {
+                        self.showTosat("Order doesn't exist")
+                        return
+                    }
+                    self.order = orderData.item
                 }
-                self.order = orderData.item
             }
         } catch {
             showTosat(error.localizedDescription)
@@ -364,16 +438,6 @@ struct OrderDetails: View {
         Task {
             self.order = await OrderManager().resetOrder(order:&order)
             self.showTosat("Order has been reset")
-        }
-    }
-    
-    func deleteOrder() {
-        Task {
-            let order = await OrderManager().orderDelete(order:&order).result
-            DispatchQueue.main.async { [order] in
-                self.order = order
-                self.showTosat("Order deleted")
-            }
         }
     }
     
@@ -450,13 +514,6 @@ struct OrderDetails: View {
                         reset()
                     }
                 }
-                
-                if showDelete {
-                    ButtonLarge(label: "Delete Order", background: .red) {
-                        self.delete.toggle()
-                    }
-                }
-                
             }
         }
     }
@@ -483,10 +540,6 @@ struct OrderDetails: View {
         }
         
         return false
-    }
-    
-    var showDelete:Bool {
-        return order.canDeleteOrder(accountType: myUser!.accountType)
     }
     
     func openLocation() {

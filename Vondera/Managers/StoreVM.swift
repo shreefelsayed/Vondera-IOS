@@ -12,6 +12,9 @@ class StoreVM: ObservableObject {
     @Published private(set) var purchasedSubscriptions: [Product] = []
     @Published private(set) var subscriptionGroupStatus: RenewalState?
     
+    @Published var msg:String?
+    @Published var isBuying = false
+    
     private var productIds: [String] = []
     
     var updateListenerTask : Task<Void, Error>? = nil
@@ -34,7 +37,7 @@ class StoreVM: ObservableObject {
         let items = try! await PlanDao().getPaid();
         
         productIds = items.map { plan in
-            plan.id ?? ""
+            plan.id
         }
     }
     
@@ -76,11 +79,13 @@ class StoreVM: ObservableObject {
         let item = subscriptions.first(where: {$0.id == planId})
         
         guard let product = item else {
+            msg = "Can't find the plan"
             return false
         }
         
-        let result = try await product.purchase()
+        isBuying = true
         
+        let result = try await product.purchase()
         switch result {
         case .success(let verification):
             //Check whether the transaction is verified. If it isn't,
@@ -92,13 +97,18 @@ class StoreVM: ObservableObject {
             
             //Always finish a transaction.
             await transaction.finish()
-            
+            msg = "Payment made"
+            isBuying = false
             return await subscribeToPlan(planId)
         case .userCancelled, .pending:
+            msg = "Purchase was cancelled"
+            isBuying = false
             return false
         default:
+            isBuying = false
             return false
         }
+        
     }
     
     func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
@@ -141,8 +151,11 @@ class StoreVM: ObservableObject {
     func subscribeToPlan(_ id:String) async -> Bool  {
         guard let uId = Auth.auth().currentUser?.uid else {
             print("User isn't logged in")
+            msg = "Can't access user data, reopen the app"
             return false
         }
+        
+        isBuying = true
         
         let data = [
             "storeId" : uId,
@@ -154,13 +167,18 @@ class StoreVM: ObservableObject {
             let result = try await FirebaseFunctionCaller().callFunction(functionName: "paymob-paymentMade", data: data)
             if let error = result.data as? [String: Any], let errorMessage = error["error"] as? String {
                 print("Function call error: \(errorMessage)")
+                msg = "Error happened \(errorMessage)"
+                isBuying = false
                 return false
             } else {
-                print("User subscribed")
+                msg = "Subscribtion renewed"
+                isBuying = false
                 return true
             }
         } catch {
             print("Error happened \(error.localizedDescription)")
+            msg = "Error \(error.localizedDescription)"
+            isBuying = false
             return false
         }
     }

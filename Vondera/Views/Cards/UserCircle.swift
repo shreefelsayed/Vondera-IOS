@@ -25,6 +25,7 @@ struct UserCircle: View {
             .background {
                 Color.white
             }
+            .id(user.userURL)
             .frame(width: 60, height: 60)
             .clipShape(Circle())
             .overlay(

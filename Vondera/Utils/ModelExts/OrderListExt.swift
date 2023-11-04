@@ -9,6 +9,14 @@ import SwiftUI
 import Foundation
 
 extension Array where Element == OrderProductObject {
+    func getTotalCost() -> Int {
+        var total = 0
+        for prod in self {
+            total += Int(prod.quantity * Int(prod.price))
+        }
+        
+        return total
+    }
     
     func getTotalQuantity() -> Int {
         var total = 0
@@ -21,9 +29,54 @@ extension Array where Element == OrderProductObject {
     }
 }
 
+extension Array where Element == [String:[String]] {
+    func getTitles() -> [String] {
+        var titles = [String]()
+        for item in self {
+            if let firstKey = item.keys.first {
+                titles.append(firstKey)
+            }
+        }
+        
+        return titles
+    }
+    
+    func getOptions() -> [[String]] {
+        var options = [[String]]()
+        for item in self {
+            if let firstKey = item.keys.first, let arrayValue = item[firstKey] {
+                options.append(arrayValue)
+            }
+        }
+
+        
+        return options
+    }
+    
+    func getOptions(_ index:Int) -> [String] {
+        var options = [String]()
+        let item = self[index]
+        if let firstKey = item.keys.first, let arrayValue = item[firstKey] {
+            options = arrayValue
+        }
+        
+        return options
+    }
+}
 
 // MARK : Extenstions on lists
 extension Array where Element == Order {
+    func getProductsCount() -> Int {
+        let items = getValidOrders()
+        var total = 0
+        for item in items {
+            if item.statue != "Failed" && !(item.part ?? false) {
+                total += (item.quantity)
+            }
+        }
+        return total
+    }
+    
     func getValidOrders() -> [Order] {
         return self.filter { $0.statue != "Deleted"}
     }
@@ -82,6 +135,7 @@ extension Array where Element == Order {
     }
     
     func totalCost() -> Int {
+        
         let valid = self.getValidOrders()
         var amout = 0
         
@@ -136,6 +190,17 @@ extension Array where Element == Order {
         return amout
     }
     
+    func getSellingCommission() -> Int {
+        let items = getValidOrders()
+        var total = 0
+        
+        for item in items {
+            total += item.commission ?? 0
+        }
+        
+        return total
+    }
+    
     func getSuccessPercentage() -> Int {
         let delv = self.getByStatue(statue: "Delivered").count
         let returns = self.getByStatue(statue: "Failed").count
@@ -149,5 +214,9 @@ extension Array where Element == Order {
     
     func getByStatue(statue:String) -> [Order] {
         return self.filter { $0.statue == statue}
+    }
+    
+    func getFinishedOrders() -> [Order] {
+        return self.filter { $0.statue == "Delivered" || $0.statue == "Failed" }
     }
 }

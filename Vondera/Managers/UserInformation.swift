@@ -13,6 +13,10 @@ class UserInformation : ObservableObject {
     
     init(){}
     
+    func updateUser() {
+        LocalInfo().saveUser(user: user)
+    }
+    
     func updateUser(_ user:UserData?) {
         if let user = user {
             self.user = user

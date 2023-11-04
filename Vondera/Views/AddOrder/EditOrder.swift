@@ -13,7 +13,7 @@ struct EditOrder: View {
     @Binding var isPreseneted:Bool
     
     // --> UI
-    @State private var msg:String?
+    @State private var msg:LocalizedStringKey?
     @State private var isSaving = false
     
     // --> VARS
@@ -32,7 +32,7 @@ struct EditOrder: View {
     @State private var notes = ""
     @State private var clientShippingFees = 0
     @State private var discount = 0
-    @State private var isPaid = false
+    @State private var paid = false
 
     init(order: Binding<Order>, isPreseneted:Binding<Bool>) {
         _order = order
@@ -78,15 +78,17 @@ struct EditOrder: View {
                                 .font(.title2)
                                 .bold()
                             
-                            HStack {
-                                Text("Government")
-                                
-                                Spacer()
-                                
-                                Picker("Government", selection: $gov) {
-                                    ForEach(store.listAreas!, id: \.self) { area in
-                                        Text(area.govName)
-                                            .tag(area.govName)
+                            if let areas = store.listAreas?.uniqueElements() {
+                                HStack {
+                                    Text("Government")
+                                    
+                                    Spacer()
+                                    
+                                    Picker("Government", selection: $gov) {
+                                        ForEach(areas, id: \.self) { area in
+                                            Text(area.govName)
+                                                .tag(area.govName)
+                                        }
                                     }
                                 }
                             }
@@ -130,7 +132,7 @@ struct EditOrder: View {
                                 .bold()
                             
                             
-                            Toggle("Order prepaid", isOn: $isPaid)
+                            Toggle("Order prepaid", isOn: $paid)
                             
                             Divider()
                         }
@@ -143,7 +145,7 @@ struct EditOrder: View {
                             .bold()
                         
                         HStack {
-                            Text("Product Prices")
+                            Text("Products prices")
                             Spacer()
                             Text("+\(order.totalPrice) LE")
                         }
@@ -190,7 +192,7 @@ struct EditOrder: View {
         .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: msg)
+                       title: msg?.toString())
         }
         .navigationBarBackButtonHidden(isSaving)
         .navigationTitle("Edit Order Info")
@@ -198,13 +200,16 @@ struct EditOrder: View {
             if let user = UserInformation.shared.getUser() {
                 myUser = user
             }
-            
-            if let store = try! await StoresDao().getStore(uId: order.storeId ?? "") {
-                self.store = store
+            if let storeId = order.storeId {
+                let store = try! await StoresDao().getStore(uId: storeId)
+                DispatchQueue.main.async {
+                    self.store = store
+                }
             }
             
-            
-            updateUI()
+            DispatchQueue.main.async {
+                updateUI()
+            }
         }
     }
     
@@ -219,7 +224,7 @@ struct EditOrder: View {
         notes = order.notes ?? ""
         clientShippingFees = order.clientShippingFees
         discount = order.discount ?? 0
-        isPaid = order.isPaid ?? false
+        paid = order.paid ?? false
     }
     
     func saveOrder() async {
@@ -238,7 +243,7 @@ struct EditOrder: View {
                 "otherPhone": otherPhone,
                 "address": address,
                 "gov": gov,
-                "isPaid":isPaid ,
+                "paid":paid ,
                 "marketPlaceId":marketPlaceId,
                 "discount":discount,
                 "notes":notes,
@@ -254,7 +259,7 @@ struct EditOrder: View {
                 self.isPreseneted = false
             }
         } catch {
-            msg = error.localizedDescription
+            msg = error.localizedDescription.localize()
         }
     }
     
@@ -268,7 +273,7 @@ struct EditOrder: View {
         order.notes = notes
         order.clientShippingFees = clientShippingFees
         order.discount = discount
-        order.isPaid = isPaid
+        order.paid = paid
     }
     
     func check() -> Bool {

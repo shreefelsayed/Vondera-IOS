@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct EmployeeProfile: View {
-    var user:UserData
+    
+    var employee:UserData
     @StateObject var viewModel:EmployeeProfileViewModel
 
     init(user: UserData) {
-        self.user = user
+        self.employee = user
         _viewModel = StateObject(wrappedValue: EmployeeProfileViewModel(userData: user))
     }
     
     var body: some View {
         List {
-            
             ForEach($viewModel.items) { order in
                 OrderCard(order: order)
                     .listRowSeparator(.hidden)
@@ -44,17 +44,28 @@ struct EmployeeProfile: View {
                 EmptyMessageView(msg: "This user doesn't have any orders")
             }
         }
-        .toolbar(content: {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if viewModel.myUser != nil && viewModel.myUser!.canAccessAdmin {
-                    NavigationLink(destination: EmployeeSettings(id: user.id), label: {
-                        Text("Settings")
-                    })
+        .toolbar {
+            if let myUser = UserInformation.shared.user, myUser.canAccessAdmin {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        NavigationLink {
+                            EmployeeReports(employee: employee)
+                        } label: {
+                            Label("Reports", systemImage: "filemenu.and.selection")
+                        }
+                        
+                        NavigationLink {
+                            EmployeeSettings(id: employee.id)
+                        } label: {
+                            Label("Settings", systemImage: "gearshape.fill")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle.fill")
+                    }
                 }
-                
             }
-        })
-        .navigationTitle(user.name)
+        }
+        .navigationTitle(employee.name)
     }
              
     func refreshData() async {

@@ -45,10 +45,14 @@ class ProductPriceViewModel : ObservableObject {
         }
         
         do {
-            self.product = try await productsDao.getProduct(id: product.id)!
-            self.cost = Int(product.buyingPrice)
-            self.price = Int(product.price)
-            self.crossed = Int(product.crossedPrice ?? 0)
+            if let product = try await productsDao.getProduct(id: product.id) {
+                DispatchQueue.main.async {
+                    self.product = product
+                    self.cost = Int(product.buyingPrice)
+                    self.price = Int(product.price)
+                    self.crossed = Int(product.crossedPrice ?? 0)
+                }
+            }
         } catch {
             print(error.localizedDescription)
         }

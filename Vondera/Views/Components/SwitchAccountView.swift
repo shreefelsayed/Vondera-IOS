@@ -14,49 +14,49 @@ struct SwitchAccountView: View {
     @State var currentAccount = ""
     
     var body: some View {
-        List {
-            ForEach(users) { user in
-                SwitchCard(user: user, currentAccount: currentAccount == user.id, onSignin: {
-                    Task {
-                        if !currentAccount.isBlank {
-                            await AuthManger().logOut()
-                        }
-                        _ = await AuthManger().signUserInViaMail(email: user.email, password: user.password)
-                        
-                        show = false
-                    }
-                })
-                .listRowInsets(EdgeInsets())
-                .swipeActions(edge: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/, allowsFullSwipe: false) {
-                    Button(role: .destructive) {
-                        withAnimation {
-                            users.removeAll { $0.id == user.id}
-                            Task {
-                                await SavedAccountManager().removeUser(uId: user.id)
+        NavigationStack {
+            List {
+                ForEach(users) { user in
+                    SwitchCard(user: user, currentAccount: currentAccount == user.id, onSignin: {
+                        Task {
+                            if !currentAccount.isBlank {
+                                await AuthManger().logOut()
                             }
+                            _ = await AuthManger().signUserInViaMail(email: user.email, password: user.password)
                             
-                            // MARK : Close the dialog if there is no more accounts
-                            if users.isEmpty {
-                                show = false
-                            }
+                            show = false
                         }
-                    } label: {
-                        Image(systemName: "trash.fill")
+                    })
+                    .listRowInsets(EdgeInsets())
+                    .swipeActions(edge: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/, allowsFullSwipe: false) {
+                        Button(role: .destructive) {
+                            withAnimation {
+                                users.removeAll { $0.id == user.id}
+                                SavedAccountManager().removeUser(uId: user.id)
+                                // MARK : Close the dialog if there is no more accounts
+                                if users.isEmpty {
+                                    show = false
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "trash.fill")
+                        }
+                        
                     }
-                    
                 }
             }
-        }
-        .navigationTitle("Switch Account")
-        .task {
-            users = await SavedAccountManager().getAllUsers()
-            let currentUser = UserInformation.shared.getUser()
-            guard let myUser = currentUser else {
-                return
+            .listStyle(.plain)
+            .navigationBarTitleDisplayMode(.large)
+            .navigationTitle("Switch Account")
+            .task {
+                users = SavedAccountManager().getAllUsers()
+                if let myUser = UserInformation.shared.user {
+                    currentAccount = myUser.id
+                }
             }
             
-            currentAccount = myUser.id
         }
+        .presentationDetents([.medium])
     }
 }
 
@@ -75,11 +75,12 @@ struct SwitchCard : View {
             }
             
             Spacer()
-            Button(currentAccount ? "Current account" : "Sign in") {
+            Button(currentAccount ? "Logged in" : "Sign in") {
                 if !currentAccount {
                     onSignin()
                 }
             }
+            .disabled(currentAccount)
         }
         .padding()
     }

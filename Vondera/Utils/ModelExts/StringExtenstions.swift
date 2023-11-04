@@ -18,7 +18,35 @@ extension Timestamp {
     }
 }
 
+extension LocalizedStringKey {
+    public func toString() -> String {
+        //use reflection
+        let mirror = Mirror(reflecting: self)
+        
+        //try to find 'key' attribute value
+        let attributeLabelAndValue = mirror.children.first { (arg0) -> Bool in
+            let (label, _) = arg0
+            if(label == "key"){
+                return true;
+            }
+            return false;
+        }
+        
+        if(attributeLabelAndValue != nil) {
+            //ask for localization of found key via NSLocalizedString
+            return String.localizedStringWithFormat(NSLocalizedString(attributeLabelAndValue!.value as! String, comment: ""));
+        }
+        else {
+            return "Swift LocalizedStringKey signature must have changed. @see Apple documentation."
+        }
+    }
+}
+
 extension String {
+    func localize() -> LocalizedStringKey {
+        return LocalizedStringKey(self)
+    }
+    
     var isValidEmail: Bool {
         // Regular expression pattern to match the email format
         let emailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
@@ -60,8 +88,37 @@ extension String {
         return hasPrefix(prefix)
     }
     
+    func containsOnlyEnglishLetters() -> Bool {
+        let regex = try? NSRegularExpression(pattern: "^[a-zA-Z]*$", options: .caseInsensitive)
+        let range = NSRange(location: 0, length: self.utf16.count)
+        return regex?.firstMatch(in: self, options: [], range: range) != nil
+    }
+    
+    func containsOnlyEnglishLettersOrNumbers() -> Bool {
+            let regex = try? NSRegularExpression(pattern: "^[a-zA-Z0-9]*$", options: .caseInsensitive)
+            let range = NSRange(location: 0, length: self.utf16.count)
+            return regex?.firstMatch(in: self, options: [], range: range) != nil
+        }
+    
     var isBlank: Bool {
         return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    func toHtml() -> NSAttributedString {
+        let encodedData = self.data(using: String.Encoding.utf8)!
+        var attributedString: NSAttributedString
+
+        do {
+            attributedString = try NSAttributedString(data: encodedData, options: [NSAttributedString.DocumentReadingOptionKey.documentType:NSAttributedString.DocumentType.html,NSAttributedString.DocumentReadingOptionKey.characterEncoding:NSNumber(value: String.Encoding.utf8.rawValue)], documentAttributes: nil)
+            
+            return attributedString
+        } catch let error as NSError {
+            print(error.localizedDescription)
+            return NSAttributedString.empty
+        } catch {
+            print("error")
+            return NSAttributedString.empty
+        }
     }
     
     func capitalizeFirstLetter() -> String {
@@ -93,45 +150,45 @@ extension String {
         guard let logoImage = UIImage(named: assetName) else {
             return nil
         }
-
+        
         // Generate the QR code
         let filter = CIFilter.qrCodeGenerator()
         guard let data = self.data(using: .ascii, allowLossyConversion: false) else {
             return nil
         }
         filter.message = data
-        guard var qrCIImage = filter.outputImage else {
+        guard let qrCIImage = filter.outputImage else {
             return nil
         }
-
+        
         let scaleFactor: CGFloat = 20 // Adjust this value as needed
         let transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
         qrCIImage.transformed(by: transform)
         let qrCodeSize = qrCIImage.extent.size
         let logoSize = CGSize(width: qrCodeSize.width / 3, height: qrCodeSize.height / 3) // Adjust the size as needed
-
+        
         // Scale the logo image to the desired size
         let scaledLogoImage = logoImage.resize(targetSize: logoSize)
-
+        
         // Create a CGContext to composite the QR code and logo
         let context = CIContext()
         guard let qrCGImage = context.createCGImage(qrCIImage, from: qrCIImage.extent) else {
             return nil
         }
-
+        
         UIGraphicsBeginImageContext(qrCodeSize)
-
+        
         // Draw the QR code
         UIImage(cgImage: qrCGImage).draw(in: CGRect(origin: .zero, size: qrCodeSize))
-
+        
         // Draw the logo in the center
         let originX = (qrCodeSize.width - logoSize.width) / 2
         let originY = (qrCodeSize.height - logoSize.height) / 2
         scaledLogoImage.draw(in: CGRect(origin: CGPoint(x: originX, y: originY), size: logoSize))
-
+        
         let compositeImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return compositeImage?.pngData()
     }
     
@@ -187,19 +244,19 @@ extension Binding where Value == Bool {
     
     
     init<T>(items: Binding<[T]>, currentItem: T) where T: Equatable {
-            self.init(
-                get: { items.wrappedValue.contains(currentItem) },
-                set: { newValue in
-                    if newValue {
-                        if !items.wrappedValue.contains(currentItem) {
-                            items.wrappedValue.append(currentItem)
-                        }
-                    } else {
-                        items.wrappedValue.removeAll { $0 == currentItem }
+        self.init(
+            get: { items.wrappedValue.contains(currentItem) },
+            set: { newValue in
+                if newValue {
+                    if !items.wrappedValue.contains(currentItem) {
+                        items.wrappedValue.append(currentItem)
                     }
+                } else {
+                    items.wrappedValue.removeAll { $0 == currentItem }
                 }
-            )
-        }
+            }
+        )
+    }
 }
 
 extension Array where Element: Equatable {
@@ -221,25 +278,37 @@ extension Array where Element: Equatable {
 extension UIImage {
     func resize(targetSize: CGSize) -> UIImage {
         let size = self.size
-
+        
         let widthRatio = targetSize.width / size.width
         let heightRatio = targetSize.height / size.height
-
+        
         var newSize: CGSize
         if widthRatio > heightRatio {
             newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
         } else {
             newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
         }
-
+        
         let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
+        
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
         self.draw(in: rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return newImage ?? self
+    }
+}
+
+extension NSAttributedString {
+    var attributedString2Html: String? {
+        do {
+            let htmlData = try self.data(from: NSRange(location: 0, length: self.length), documentAttributes:[.documentType: NSAttributedString.DocumentType.html]);
+            return String.init(data: htmlData, encoding: String.Encoding.utf8)
+        } catch {
+            print("error:", error)
+            return nil
+        }
     }
 }
 
@@ -252,3 +321,4 @@ extension PhotosPickerItem{
         return image
     }
 }
+

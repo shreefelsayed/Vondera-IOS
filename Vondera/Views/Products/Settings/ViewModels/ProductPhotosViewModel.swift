@@ -7,10 +7,10 @@
 
 import Foundation
 import Combine
-import PhotosUI
 import FirebaseStorage
+import PhotosUI
 
-class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControllerDelegate {
+class ProductPhotosViewModel : ObservableObject {
     @Published var product:StoreProduct
     var productsDao:ProductsDao
     
@@ -39,7 +39,6 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
         self.product = product
         self.productsDao = ProductsDao(storeId: product.storeId)
         self.myUser = UserInformation.shared.getUser()
-        super.init()
         
         Task {
             await getData()
@@ -59,53 +58,27 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
         }
     }
     
-    // Add a function to clear the selected photos
     func clearSelectedPhotos() {
         selectedPhotos.removeAll()
     }
-    
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
         
-        for result in results {
-            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
-                    if let image = image as? UIImage {
-                        DispatchQueue.main.async {
-                            self?.selectedPhotos.append(image)
-                        }
-                    }
-                }
-            }
-        }
-    }
-        
-    func pickPhotos() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 6 - (selectedPhotos.count + listPhotos.count)
-        configuration.filter = .images
-        configuration.selection = .ordered
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        // Present the photo picker
-        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
-    }
     
     func getData() async {
         DispatchQueue.main.async {
             self.isLoading = true
         }
-        do {
-            self.product = try await productsDao.getProduct(id: product.id)!
-            self.listPhotos = product.listPhotos
-        } catch {
-            print(error.localizedDescription)
-        }
         
-        DispatchQueue.main.async {
-            self.isLoading = false
+        if let product = try? await productsDao.getProduct(id: product.id) {
+            DispatchQueue.main.async {
+                self.product = product
+                self.listPhotos = product.listPhotos
+                self.isLoading = false
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.showTosat(msg: "Product doesn't Exist")
+                self.shouldDismissView = true
+            }
         }
     }
     
@@ -119,18 +92,22 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
             return
         }
         
-        let storageRef = Storage.storage().reference().child("stores").child(myUser!.storeId).child("products").child(product.id)
-        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: storageRef) { imageURLs, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.isSaving = false
-                    self.showTosat(msg: error.localizedDescription)
+        
+        
+        if let storeId = myUser?.storeId {
+            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "stores/\(storeId)/products\(product.id)") { imageURLs, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self.isSaving = false
+                        self.showTosat(msg: error.localizedDescription)
+                    }
+                } else if let imageURLs = imageURLs {
+                
+                    self.saveProduct(uris: imageURLs)
                 }
-            } else if let imageURLs = imageURLs {
-            
-                self.saveProduct(uris: imageURLs)
             }
         }
+        
     }
     
     func saveProduct(uris:[URL]?)  {
@@ -144,11 +121,11 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
                     finalList.append(contentsOf: uris!.map { $0.absoluteString })
                 }
                 
-                var map:[String:Any] = ["listPhotos": finalList]
+                let map:[String:Any] = ["listPhotos": finalList]
                 try await productsDao.update(id: product.id, hashMap: map)
                 
-                showTosat(msg: "Product Images Changed")
                 DispatchQueue.main.async {
+                    self.showTosat(msg: "Product Images Changed")
                     self.shouldDismissView = true
                 }
             } catch {
@@ -163,7 +140,7 @@ class ProductPhotosViewModel : NSObject, ObservableObject, PHPickerViewControlle
     
     
     func update() async {
-        var totalSize = (listPhotos.count + selectedPhotos.count)
+        let totalSize = (listPhotos.count + selectedPhotos.count)
         guard totalSize > 0 else {
             showTosat(msg: "The product must have at least one photo")
             return

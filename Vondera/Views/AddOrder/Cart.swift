@@ -41,7 +41,7 @@ class CartViewModel : ObservableObject {
     
     func clearList() async {
         // --> Clear local list
-        await CartManager().clearCart()
+        CartManager().clearCart()
         
         // --> Remove list
         self.list.removeAll()
@@ -51,7 +51,7 @@ class CartViewModel : ObservableObject {
         let index = list.firstIndex {$0.productId == item.productId}
         
         // --> Remove from saved Item
-        await CartManager().removeItemFromCart(randomId: item.savedItemId!, hashMap: item.hashVaraients!)
+        CartManager().removeItemFromCart(randomId: item.savedItemId, hashMap: item.hashVaraients)
         
         // --> Remove from list
         if let index = index {
@@ -61,7 +61,7 @@ class CartViewModel : ObservableObject {
     
     func getCartItems() async {
         if let storeId = myUser?.storeId {
-            let savedList = await CartManager().getCart()
+            let savedList =  CartManager().getCart()
             list.removeAll()
             self.isLoading = true
             

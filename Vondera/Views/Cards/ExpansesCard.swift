@@ -18,7 +18,7 @@ struct ExpansesCard: View {
                     Text(expanse.description)
                         .font(.body)
                     
-                    Text(expanse.date?.toString() ?? "")
+                    Text(expanse.date.toString())
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

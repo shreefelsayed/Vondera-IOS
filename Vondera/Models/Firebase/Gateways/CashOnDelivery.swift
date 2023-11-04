@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+class CashOnDelivery : Codable {
+    var selected:Bool? = true
+    var gateway:Bool? = false
+}

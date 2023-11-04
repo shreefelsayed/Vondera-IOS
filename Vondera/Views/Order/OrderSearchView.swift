@@ -19,15 +19,25 @@ struct OrderSearchView: View {
     
     var body: some View {
         List {
-            ForEach($viewModel.result) { order in
-                OrderCard(order: order)
+            ForEach($viewModel.result.indices, id: \.self) { index in
+                OrderCard(order: $viewModel.result[index])
             }
         }
         .listStyle(.plain)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    QrCodeScanner()
+                } label: {
+                    Image(systemName: "qrcode.viewfinder")
+                }
+
+            }
+        }
         .searchable(text: $viewModel.searchText, prompt: "Search by name, phone or id")
         .overlay(alignment: .center, content: {
             if viewModel.result.isEmpty {
-                EmptyMessageView(msg: "No result is avilable for \(viewModel.searchText)")
+                SearchEmptyView(searchText: viewModel.searchText)
             }
         })
         .navigationTitle("Search for order")

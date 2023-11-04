@@ -39,10 +39,10 @@ struct AddExpanse: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .toast(isPresenting: $viewModel.showToast){
+        .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: viewModel.msg)
+                       title: viewModel.msg?.toString())
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

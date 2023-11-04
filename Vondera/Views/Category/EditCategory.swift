@@ -28,7 +28,7 @@ struct EditCategory: View {
     @State private var picker:PhotosPickerItem?
     
     @State private var deleteDialog = false
-    @State private var msg:String?
+    @State private var msg:LocalizedStringKey?
     @State private var isSaving = false
     
     var body: some View {
@@ -96,9 +96,10 @@ struct EditCategory: View {
         .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,
-                       title: msg)
+                       title: msg?.toString())
         }
         .willProgress(saving: isSaving)
+        .navigationBarBackButtonHidden(isSaving)
         .task {
             name = category.name
             link = category.url

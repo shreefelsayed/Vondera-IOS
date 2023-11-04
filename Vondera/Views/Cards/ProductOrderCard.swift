@@ -15,7 +15,7 @@ struct ProductOrderCard: View {
         VStack {
             HStack(alignment: .top) {
                 ZStack {
-                    NetworkImage(url: URL(string: orderProduct.image ?? "" )) { image in
+                    NetworkImage(url: URL(string: orderProduct.image)) { image in
                         image.resizable().scaledToFill()
                     } placeholder: {
                         ProgressView()
@@ -24,7 +24,7 @@ struct ProductOrderCard: View {
                     }
                     .background(Color.white)
                     .frame(width: 120, height: 100)
-                    
+                    .id(orderProduct.image)
                     
                     
                 }.overlay(alignment: .bottom) {

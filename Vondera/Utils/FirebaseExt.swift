@@ -20,6 +20,13 @@ extension DocumentReference {
 
 extension Query {
     
+    func startAfter(lastDocument:DocumentSnapshot?) -> Query {
+        if let snapshot = lastDocument {
+            return self.start(afterDocument: snapshot)
+        }
+        
+        return self
+    }
     
     func getDocuments<T>(as type: T.Type) async throws -> [T] where T : Decodable {
         try await getDocumentWithLastSnapshot(as: type).items

@@ -9,14 +9,29 @@ import Foundation
 import SwiftUI
 
 public extension Color {
-
-    #if os(macOS)
-    static let background = Color(NSColor.windowBackgroundColor)
-    static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
-    static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
-    #else
     static let background = Color(UIColor.systemBackground)
     static let secondaryBackground = Color(UIColor.secondarySystemBackground)
     static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
-    #endif
+    
+    func toHex() -> String {
+        let uic = UIColor(self)
+        guard let components = uic.cgColor.components, components.count >= 3 else {
+            return "#FFFFFF"
+        }
+        
+        let r = Float(components[0])
+        let g = Float(components[1])
+        let b = Float(components[2])
+        var a = Float(1.0)
+        
+        if components.count >= 4 {
+            a = Float(components[3])
+        }
+        
+        if a != Float(1.0) {
+            return "#" + String(format: "%02lX%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255), lroundf(a * 255))
+        } else {
+            return "#" + String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
+        }
+    }
 }

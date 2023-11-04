@@ -40,11 +40,11 @@ struct OrderSelect: View {
                         VStack(alignment: .leading, spacing: 2) {
                             // MARK : Statue
                             HStack {
-                                Text(order.statue)
+                                Text(order.getStatueLocalized())
                                     .bold()
                                 
-                                Text(order.isPaid ?? false ? "Paid" : "Not Paid")
-                                    .foregroundColor(order.isPaid ?? false ? Color.green : Color.red)
+                                Text(order.paid ?? false ? "Paid" : "Not Paid")
+                                    .foregroundColor(order.paid ?? false ? Color.green : Color.red)
                                 
                                 Spacer()
                                 

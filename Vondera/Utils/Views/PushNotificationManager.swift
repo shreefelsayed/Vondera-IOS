@@ -4,14 +4,34 @@ import UserNotifications
 import FirebaseCore
 import FirebaseMessaging
 import FirebaseAuth
+import FirebaseFirestore
+import Siren
+import FacebookCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
+    var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        window?.makeKeyAndVisible()
+        
+        // UPdate checker
+        let siren = Siren.shared
+        siren.rulesManager = RulesManager(majorUpdateRules: .critical,
+                                          minorUpdateRules: .annoying,
+                                          patchUpdateRules: .default,
+                                          revisionUpdateRules: .relaxed)
+        siren.wail()
+        
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
+        
+        // Initialize Facebook SDK
+        FBSDKCoreKit.ApplicationDelegate.shared.application(
+            application,
+            didFinishLaunchingWithOptions: launchOptions
+        )
         
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
@@ -33,7 +53,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        if let user = Auth.auth().currentUser {
+        if let _ = Auth.auth().currentUser {
             if let messageID = userInfo[gcmMessageIDKey] {
                 print("Message ID: \(messageID)")
             }

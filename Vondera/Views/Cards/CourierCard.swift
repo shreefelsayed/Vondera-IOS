@@ -43,8 +43,10 @@ struct CourierCard: View {
         .buttonStyle(.plain)
         .task {
             if let storeId = courier.storeId {
-                ordersCount = try! await OrdersDao(storeId: storeId)
-                    .getPendingCouriersOrderCount(id: courier.id)
+                if let count = try? await OrdersDao(storeId: storeId)
+                    .getPendingCouriersOrderCount(id: courier.id) {
+                    ordersCount = count
+                }
             }
         }
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
@@ -57,7 +59,6 @@ struct CourierCard: View {
         }
         .sheet(isPresented: $showContact) {
             ContactDialog(phone: courier.phone, toggle: $showContact)
-                .fixedInnerHeight($sheetHeight)
         }
     }
 }

@@ -42,12 +42,17 @@ struct AddToCart: View {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                         ForEach($viewModel.products.indices, id: \.self) { index in
                             if $viewModel.products[index].wrappedValue.filter(viewModel.searchText) {
-                                NavigationLink(destination: ProductDetails(product: $viewModel.products[index])) {
+                                NavigationLink(destination: ProductDetails(product: $viewModel.products[index], onDelete: { item in
+                                    
+                                    if let index = viewModel.products.firstIndex(where: {$0.id == item.id}) {
+                                        viewModel.products.remove(at: index)
+                                    }
+                                    
+                                })) {
                                     ProductBuyingCard(product: $viewModel.products[index]) {
                                         self.selectedProduct = viewModel.products[index]
                                     }
                                 }
-                                
                                 .buttonStyle(PlainButtonStyle())
                             }
                         }
@@ -59,18 +64,14 @@ struct AddToCart: View {
             await viewModel.selectCategory(id: viewModel.selectedCategory)
         }
         .sheet(item: self.$selectedProduct) { prod in
-            ProductBuyingSheet(product: .constant(prod))
-                .onDisappear {
-                    Task {
-                        await viewModel.getCart()
-                    }
-                }
+            ProductBuyingSheet(product: .constant(prod), onAddedToCard: { product, options in
+                CartManager().addItem(product: product, options: options)
+                viewModel.getCart()
+            })
         }
         .searchable(text: $viewModel.searchText, prompt: Text("Search \(viewModel.products.count) Products"))
         .onAppear {
-            Task {
-                await viewModel.getCart()
-            }
+            viewModel.getCart()
         }
         .navigationTitle("New Order")
         .toolbar {
@@ -99,10 +100,7 @@ struct AddToCart: View {
                     CartBadgeView(cartItems: $viewModel.cartItems)
                 }
             }
-            
-            
         }
-        
     }
     
     func selectCategory(id:String) {

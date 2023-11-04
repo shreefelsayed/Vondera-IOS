@@ -12,43 +12,45 @@ struct MarketHeaderCard: View {
     var withText:Bool = true
     var turnedOff:Bool = false
     
+    @State var market:Markets?
+    
     var body: some View {
         HStack {
             HStack(spacing: 6) {
-                if MarketsManager().getById(id: marketId) != nil {
-                    Image(MarketsManager().getById(id: marketId)!.icon)
+                if let market = market  {
+                    Image(market.icon)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 16)
                         .colorMultiply(Color.white)
                     
                     if withText && !turnedOff {
-                        Text(MarketsManager().getById(id: marketId)!.name)
+                        Text(market.name)
                             .font(.callout)
                             .bold()
                             .foregroundStyle(.white)
                     }
                 }
-                
-                
             }
             .padding(4)
-            
         }
         .background(
             LinearGradient(
                 gradient:
-                    MarketsManager().getById(id: marketId) != nil && !turnedOff ?
-                    Gradient(colors: [
-                        Color(hex: MarketsManager().getById(id: marketId)!.startColor),
-                        Color(hex: MarketsManager().getById(id: marketId)!.endColor)
-                    ])
-                    : Gradient(stops: [Gradient.Stop(color: Color(hex: "#D3D3D3"), location: 0), Gradient.Stop(color: Color(hex: "#D3D3D3"), location: 1)]),
+                Gradient(colors: [
+                    Color(hex: market?.startColor ?? "#D3D3D3"),
+                    Color(hex: market?.endColor ?? "#D3D3D3"),
+                ]),
                 startPoint: .leading,
                 endPoint: .trailing
             )
         )
         .clipShape(RoundedRectangle(cornerRadius: 6))
+        .task {
+            if let market = MarketsManager().getById(id: marketId)  {
+                self.market = market
+            }
+        }
     }
 }
 

@@ -21,7 +21,6 @@ class CourierFinishedViewModel : ObservableObject {
     
     private var lastSnapshot:DocumentSnapshot?
     
-    
     init(courier:Courier) {
         self.courier = courier
         self.ordersDao = OrdersDao(storeId: courier.storeId!)

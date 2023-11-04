@@ -17,12 +17,14 @@ struct ProductSettings: View {
     var body: some View {
         List {
             NavigationLink("Product info") {
-                ProductInfoView(product:product)
+                ProductInfoView(product:$product)
             }
             
             NavigationLink("Variants") {
                 ProductVarients(product:product)
             }
+            
+            
             
             NavigationLink("Price and cost") {
                 ProductPrice(product:product)
@@ -46,9 +48,6 @@ struct ProductSettings: View {
                 delete.toggle()
             }
         }
-        .refreshable {
-            await refresh()
-        }
         .confirmationDialog("Are you sure you want to delete this product ?", isPresented: $delete, titleVisibility: .visible, actions: {
             Button("Delete", role: .destructive) {
                 deleteProduct()
@@ -63,24 +62,14 @@ struct ProductSettings: View {
     func deleteProduct() {
         Task {
             do {
-                try await ProductsDao(storeId:product.storeId).delete(id: product.id)
+                try await ProductsDao(storeId: product.storeId).delete(id: product.id)
+                onDeleted(product)
                 DispatchQueue.main.async {
-                    onDeleted(product)
                     self.presentationMode.wrappedValue.dismiss()
                 }
+            } catch {
+                print("Error deleting product: \(error)")
             }
-        }
-    }
-    
-    func refresh() async {
-        do {
-            if let product = try await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
-                DispatchQueue.main.async {
-                    self.product = product
-                }
-            }
-        } catch {
-            print(error.localizedDescription)
         }
     }
 }
