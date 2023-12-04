@@ -87,22 +87,15 @@ class ProductPhotosViewModel : ObservableObject {
             self.isSaving = true
         }
         
-        if selectedPhotos.isEmpty {
-            saveProduct(uris: nil)
-            return
-        }
-        
-        
         
         if let storeId = myUser?.storeId {
-            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "stores/\(storeId)/products\(product.id)") { imageURLs, error in
+            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "stores/\(storeId)/products/\(product.id)") { imageURLs, error in
                 if let error = error {
                     DispatchQueue.main.async {
                         self.isSaving = false
                         self.showTosat(msg: error.localizedDescription)
                     }
                 } else if let imageURLs = imageURLs {
-                
                     self.saveProduct(uris: imageURLs)
                 }
             }

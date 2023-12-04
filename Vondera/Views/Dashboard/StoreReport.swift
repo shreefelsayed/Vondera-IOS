@@ -17,6 +17,7 @@ struct DateChoose:View {
     @Binding var from:Date
     @Binding var to:Date
     
+    
     let dates = [
         DateModel(title: "Today", range: 1),
         DateModel(title: "Last week", range: 7),
@@ -60,6 +61,7 @@ struct StoreReport: View {
     @State var expanses:[Expense] = []
 
     @State var isLoading = false
+    @State var showReport = false
 
     var body: some View {
         List() {
@@ -124,15 +126,14 @@ struct StoreReport: View {
                 Image(systemName: "square.and.arrow.up.fill")
                     .foregroundColor(Color.accentColor)
                     .onTapGesture {
-                        if let url = SalesExcel(listOrders: items).generateReport() {
-                            DispatchQueue.main.async {
-                                FileUtils().shareFile(url: url)
-                            }
-                        }
+                        showReport.toggle()
                     }
                     .isHidden(items.isEmpty)
             }
         }
+        .sheet(isPresented: $showReport, content: {
+            ReportsDialog(listOrder: items)
+        })
         .navigationTitle("Reports")
         .onAppear {
             fetch()

@@ -148,7 +148,7 @@ class CheckOutViewModel: ObservableObject {
             await addToFirestore()
         } else {
             FirebaseStorageUploader()
-                .uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "orders/\(id)") { urls, error in
+                .uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "orders/\(id)/") { urls, error in
                     if let error = error {
                         DispatchQueue.main.async {
                             self.showToast(error.localizedDescription.localize())

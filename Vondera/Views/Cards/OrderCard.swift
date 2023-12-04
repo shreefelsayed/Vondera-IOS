@@ -47,7 +47,7 @@ struct OrderCard: View {
                     VStack(alignment: .leading, spacing: 2) {
                         // MARK : Statue
                         HStack {
-                            Text(order.getStatueLocalized())
+                            Text(order.statue != "Out For Delivery" ? order.getStatueLocalized() : "With \(order.courierName ?? "")")
                                 .bold()
                             
                             Text($order.wrappedValue.getPaidStatue().0)

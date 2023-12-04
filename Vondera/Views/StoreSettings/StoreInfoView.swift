@@ -34,12 +34,15 @@ struct StoreInfoView: View {
                 }
             }
             
-            /*Section("Api Settings") {
-             NavigationText(view: AnyView(EmptyView()), label: "Connect to shopify store")
+            Section("Api Settings") {
+                NavigationLink("Import from shopify") {
+                    ImportShopify()
+                }
+             /*NavigationText(view: AnyView(EmptyView()), label: "Connect to shopify store")
              NavigationText(view: AnyView(EmptyView()), label: "Maytapi whatsapp info")
-             NavigationText(view: AnyView(EmptyView()), label: "Events webhooks", divider: false)
+             NavigationText(view: AnyView(EmptyView()), label: "Events webhooks", divider: false)*/
              }
-             */
+             
             
             
             Button {

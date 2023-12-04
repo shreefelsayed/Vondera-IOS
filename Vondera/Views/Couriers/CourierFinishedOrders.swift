@@ -44,7 +44,7 @@ struct CourierFinishedOrders: View {
                 EmptyMessageView(msg: "No orders were delivered by this courier")
             }
         }
-        .navigationTitle("Finished Orders ✅")
+        .navigationTitle("Delivered Orders")
     }
     
     func refreshData() async {
@@ -57,6 +57,55 @@ struct CourierFinishedOrders: View {
     }
 }
 
+struct CourierFailedOrders: View {
+    var courier:Courier
+    
+    @StateObject var viewModel:CourierFailedVM
+    
+    init(courier: Courier) {
+        self.courier = courier
+        _viewModel = StateObject(wrappedValue: CourierFailedVM(courier: courier))
+    }
+    
+    var body: some View {
+        List {
+            ForEach($viewModel.items) { order in
+                OrderCard(order: order)
+                
+                if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        loadItem()
+                    }
+                }
+            }
+            
+        }
+        .refreshable {
+            await refreshData()
+        }
+        .listStyle(.plain)
+        .overlay {
+            if !viewModel.isLoading && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "No orders were failed to deliver this courier")
+            }
+        }
+        .navigationTitle("Failed Orders")
+    }
+    
+    func refreshData() async {
+        await viewModel.refreshData()
+    }
+    func loadItem() {
+        Task {
+            await viewModel.getData()
+        }
+    }
+}
 struct CourierFinishedOrders_Previews: PreviewProvider {
     static var previews: some View {
         CourierFinishedOrders(courier: Courier.example())

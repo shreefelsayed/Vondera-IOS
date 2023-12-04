@@ -35,6 +35,14 @@ class UserInformation : ObservableObject {
         return nil
     }
     
+    func refetchUser() async {
+        if let id = user?.id {
+            if let userDoc = try? await UsersDao().getUserWithStore(userId: id) {
+                updateUser(userDoc)
+            }
+        }
+    }
+    
     func clearUser() {
         user = nil
         LocalInfo().saveUser(user: nil)

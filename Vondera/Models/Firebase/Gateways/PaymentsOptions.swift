@@ -9,15 +9,24 @@ import Foundation
 
 struct PaymentsOptions : Codable {
     var paytabs:Paytabs? = Paytabs()
+    var paymob:Paymob? = Paymob()
     var cash:CashOnDelivery? = CashOnDelivery()
     
     func mustEnableCOD() -> Bool {
+        var shouldEnable = true
+        
         if let paytabs = paytabs {
             if (paytabs.connected ?? false) && (paytabs.selected ?? false) {
-                return false
+                shouldEnable = false
             }
         }
         
-        return true
+        if let paymob = paymob {
+            if (paymob.connected ?? false) && (paymob.selected ?? false) {
+                shouldEnable = false
+            }
+        }
+        
+        return shouldEnable
     }
 }

@@ -116,6 +116,8 @@ struct ActionsDialog: View {
     @State var list:[Order]
     @State var statue = 0
     @Binding var isShowen:Bool
+    
+    @State var reportSheet = false
     @State var courierSheet = false
     @State var selectedOption:Courier?
     @State var toast:String? = nil
@@ -143,6 +145,12 @@ struct ActionsDialog: View {
                                 }
                             }
                         }
+                    }
+                    
+                    Divider()
+                    
+                    Button("Export Reports") {
+                        reportSheet.toggle()
                     }
                     
                     Divider()
@@ -235,6 +243,9 @@ struct ActionsDialog: View {
         }
         .sheet(isPresented: $courierSheet) {
             CourierPicker(selectedOption: $selectedOption)
+        }
+        .sheet(isPresented: $reportSheet) {
+            ReportsDialog(listOrder: list)
         }
         .toast(isPresenting: Binding(value: $toast)) {
             AlertToast(displayMode: .alert, type: .complete(.accentColor), title: toast)

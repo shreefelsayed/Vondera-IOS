@@ -35,7 +35,7 @@ struct ProductPhotos: View {
                 Button("Update") {
                     update()
                 }
-                .isHidden(viewModel.isLoading)
+                .disabled(viewModel.isLoading || viewModel.isSaving || (product.listPhotos == viewModel.listPhotos && viewModel.selectedPhotos.isEmpty) || (viewModel.listPhotos.count + images.count) == 0)
             }
         }
         .overlay(alignment: .center, content: {
@@ -71,10 +71,10 @@ struct ProductPhotos: View {
                 
                 Spacer()
                 
-                PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                PhotosPicker(selection: $images, maxSelectionCount: (6 - viewModel.listPhotos.count)) {
                     Text("Add")
                 }
-                .disabled(images.count >= 6)
+                .disabled((images.count + viewModel.listPhotos.count) >= 6)
             }
             
             // MARK : Selected Photos
@@ -86,20 +86,20 @@ struct ProductPhotos: View {
                         }
                     }
                     
-                    ForEach(viewModel.selectedPhotos, id: \.self) { image in
-                        ImageView(image: image, removeClicked: {
-                            viewModel.removePhoto(image: image)
+                    ForEach(viewModel.selectedPhotos.indices, id: \.self) { index in
+                        ImageView(image: viewModel.selectedPhotos[index], removeClicked: {
+                            images.remove(at: index)
                         })
                     }
                     
-                    if images.count < 6 {
-                        PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                    if (images.count - viewModel.listPhotos.count) < 6 {
+                        PhotosPicker(selection: $images, maxSelectionCount: (6 - viewModel.listPhotos.count), matching: .images) {
                             ImageView(removeClicked: {
                             }, showDelete: false) {
                                 
                             }
                         }
-                        .disabled(images.count >= 6)
+                        .disabled((images.count + viewModel.listPhotos.count) >= 6)
                     }
                 }
             }
@@ -109,12 +109,7 @@ struct ProductPhotos: View {
         }
         .onChange(of: images) { newValue in
             Task {
-                viewModel.selectedPhotos.removeAll()
-                for picker in newValue {
-                    if let image = try? await picker.getImage() {
-                        viewModel.selectedPhotos.append(image)
-                    }
-                }
+                viewModel.selectedPhotos = await newValue.getUIImages()
             }
         }
     }

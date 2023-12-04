@@ -16,7 +16,7 @@ class EditOrderProductsVM: ObservableObject {
     @Published var items = [OrderProductObject]() {
         didSet {
             count = items.getTotalQuantity()
-            cost = items.getTotalCost()
+            cost = items.getTotalPrice()
         }
     }
     

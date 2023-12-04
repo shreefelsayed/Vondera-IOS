@@ -14,6 +14,7 @@ struct AddProductView: View {
     var storeId:String = ""
     
     @State var images:[PhotosPickerItem] = [PhotosPickerItem]()
+    
     @StateObject private var viewModel:AddProductViewModel
     @Environment(\.presentationMode) private var presentationMode
 
@@ -241,7 +242,7 @@ struct AddProductView: View {
                 
                 Spacer()
                 
-                PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                PhotosPicker(selection: $images, maxSelectionCount: 6, matching: .images) {
                     Text("Add")
                 }
                 .disabled(images.count >= 6)
@@ -257,7 +258,7 @@ struct AddProductView: View {
                     }
                     
                     if images.count < 6 {
-                        PhotosPicker(selection: $images, maxSelectionCount: (6 - images.count), matching: .images) {
+                        PhotosPicker(selection: $images, maxSelectionCount: 6, matching: .images) {
                             ImageView(removeClicked: {
                             }, showDelete: false) {
                                 
@@ -273,12 +274,7 @@ struct AddProductView: View {
         }
         .onChange(of: images) { newValue in
             Task {
-                viewModel.selectedPhotos.removeAll()
-                for picker in newValue {
-                    if let image = try? await picker.getImage() {
-                        viewModel.selectedPhotos.append(image)
-                    }
-                }
+                viewModel.selectedPhotos = await newValue.getUIImages()
             }
         }
     }

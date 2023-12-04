@@ -11,7 +11,7 @@ struct CourierCardWithNavigation: View {
     var courier:Courier
         
     var body: some View {
-        NavigationLink(destination: CourierCurrentOrders(storeId: courier.storeId ?? "", courier: courier)) {
+        NavigationLink(destination: CourierProfile(storeId: courier.storeId ?? "", courier: courier)) {
             CourierCard(courier: courier)
         }
     }

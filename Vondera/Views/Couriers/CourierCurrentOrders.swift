@@ -116,6 +116,7 @@ struct CourierCurrentOrders: View {
     
     var body: some View {
         List {
+            SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Orders")
             ForEach($viewModel.items.indices, id: \.self) { index in
                 if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
                     OrderCard(order: $viewModel.items[index], allowSelect: {
@@ -126,7 +127,7 @@ struct CourierCurrentOrders: View {
            
         }
         .listStyle(.plain)
-        .searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.items.count) Orders")
+        //.searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.items.count) Orders")
         .overlay(alignment: .center) {
             if !viewModel.isLoading && viewModel.items.isEmpty {
                 EmptyMessageView(msg: "The courier has no ongoing orders")
@@ -135,7 +136,7 @@ struct CourierCurrentOrders: View {
         .refreshable {
             await viewModel.getCourierOrders()
         }
-        .navigationTitle("Courier Orders 🛵")
+        .navigationTitle("Current Orders")
         .toolbar {
             if let myUser = UserInformation.shared.user {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -186,6 +187,41 @@ struct CourierCurrentOrders: View {
     }
 }
 
+struct CourierProfile: View {
+    @State var selectedTab = 0
+    @State private var currentOrders: CourierCurrentOrders
+    @State private var deliveredOrders: CourierFinishedOrders
+    @State private var failedOrders: CourierFailedOrders
+
+    var courier:Courier
+    var storeId:String
+    
+    init(storeId: String, courier: Courier) {
+        self.storeId = storeId
+        self.courier = courier
+        
+        // -- Init pages
+        _currentOrders = State(wrappedValue: CourierCurrentOrders(storeId: storeId, courier: courier))
+        _deliveredOrders = State(wrappedValue: CourierFinishedOrders(courier: courier))
+        _failedOrders = State(wrappedValue: CourierFailedOrders(courier: courier))
+    }
+    
+    var body: some View {
+        VStack {
+            CustomTopTabBar(tabIndex: $selectedTab, titles: ["Current Orders", "Delivered Orders", "Failed Orders"])
+                .padding(.leading, 12)
+                .padding(.top, 12)
+            
+            if selectedTab == 0 {
+                currentOrders
+            } else if selectedTab == 1 {
+                deliveredOrders
+            } else {
+                failedOrders
+            }
+        }
+    }
+}
 struct CourierCurrentOrders_Previews: PreviewProvider {
     static var previews: some View {
         CourierCurrentOrders(storeId: "", courier: Courier.example())

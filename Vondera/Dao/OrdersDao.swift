@@ -172,11 +172,21 @@ class OrdersDao {
             .getDocumentWithLastSnapshot(as: Order.self)
     }
     
-    func getCouriersFinished(id:String, lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
+    func getCourierDelivered(id:String, lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
         return try await collection
             .order(by: "dateDelivered", descending: true)
             .whereField("courierId", isEqualTo: id)
-            .whereField("statue", in: ["Delivered", "Failed"])
+            .whereField("statue", isEqualTo: "Delivered")
+            .limit(to: pageSize)
+            .startAfter(lastDocument: lastSnapShot)
+            .getDocumentWithLastSnapshot(as: Order.self)
+    }
+    
+    func getCourierFailed(id:String, lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
+        return try await collection
+            .order(by: "dateDelivered", descending: true)
+            .whereField("courierId", isEqualTo: id)
+            .whereField("statue", isEqualTo: "Failed")
             .limit(to: pageSize)
             .startAfter(lastDocument: lastSnapShot)
             .getDocumentWithLastSnapshot(as: Order.self)

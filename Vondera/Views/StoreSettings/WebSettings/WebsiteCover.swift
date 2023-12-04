@@ -92,7 +92,7 @@ struct WebsiteCover: View {
         if let storeId = user.user?.storeId {
             saving = true
             if !uiImages.isEmpty {
-                FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: uiImages, storageRef: "stores/\(storeId)/cover") { imageURLs, error in
+                FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: uiImages, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
                     if let error = error {
                         self.saving = false
                         self.msg = error.localizedDescription

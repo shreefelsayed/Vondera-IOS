@@ -30,8 +30,8 @@ struct FloatingTextField: View {
                     .foregroundColor(Color(.placeholderText))
                     .opacity(text.wrappedValue.isEmpty && !multiLine && !isNumric ? 0 : 1)
                     .offset(y: text.wrappedValue.isEmpty && !multiLine && !isNumric ? 20 : 0)
+                    .padding(.leading, 6)
             }
-            
             
             HStack {
                 if secure {
@@ -64,7 +64,11 @@ struct FloatingTextField: View {
                         .foregroundStyle(.gray)
                 }
             }
-            
+            .padding()
+            .overlay(
+                RoundedRectangle(cornerRadius: 10) // Adjust the corner radius as needed
+                    .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+            )
             
             if caption != nil {
                 Text(caption!)
@@ -76,6 +80,7 @@ struct FloatingTextField: View {
             }
             
         }
+        
         .animation(.default)
     }
 }

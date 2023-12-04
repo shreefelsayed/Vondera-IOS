@@ -7,8 +7,9 @@
 
 import Foundation
 
-class Paytabs : Codable {
-    var profile_id:String? = ""
+class Paymob : Codable {
+    var iframe:String? = ""
+    var integrationId:String? = ""
     var apiKey:String? = ""
     var selected:Bool? = false
     var connected:Bool? = false

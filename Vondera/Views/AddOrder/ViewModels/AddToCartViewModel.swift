@@ -78,6 +78,7 @@ class AddToCartViewModel : ObservableObject {
                 let category = try await CategoryDao(storeId: storeId).getAll()
                 DispatchQueue.main.async {
                     self.categories = category
+                    self.categories.append(Category(id: "", name: "Without", url: ""))
                     if !self.categories.isEmpty {
                         Task {
                             await self.selectCategory(id: self.categories[0].id)

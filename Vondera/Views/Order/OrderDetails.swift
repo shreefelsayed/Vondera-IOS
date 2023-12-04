@@ -20,18 +20,22 @@ struct OrderDetails: View {
     
     @State private var snapshotImage: UIImage?
     
-    // COURIER SHEET
+    // SHEETs
     @State var courier:Courier?
     @State var assignDialog = false
-
+    @State var failedScreen = false
+    
     // CONTACT CLIENT
     @State var contactSheet = false
     @State var showOptions = false
     
     // CONTACT INFO
     @State var contactUser:UserData?
+    @State var orderCourier:Courier?
     @State private var sheetHeight: CGFloat = .zero
     @State var msg:String?
+    
+    
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -68,7 +72,7 @@ struct OrderDetails: View {
                             
                             Spacer()
                             
-                            Text(order.getStatueLocalized())
+                            Text(order.statue != "Out For Delivery" ? order.getStatueLocalized() : "With \(order.courierName ?? "")")
                                 .bold()
                         }
                         
@@ -167,6 +171,8 @@ struct OrderDetails: View {
                             
                             Spacer().frame(height: 4)
                             
+                            
+                            
                             if !(order.notes?.isBlank ?? true) {
                                 Text(order.notes ?? "")
                                     .foregroundStyle(.red)
@@ -175,6 +181,33 @@ struct OrderDetails: View {
                         }
                     }
                     
+                    if (order.statue == "Out For Delivery" && !(order.courierId?.isBlank ?? true)) {
+                        HStack {
+                            Label(order.courierName ?? "", systemImage: "shippingbox.circle")
+                                .bold()
+                            
+                            Spacer()
+                            
+                            if let storeId = order.storeId, let courierId = order.courierId {
+                                Button {
+                                    Task {
+                                        if let courier = try? await CouriersDao(storeId: storeId)
+                                            .getCourier(id: courierId) {
+                                            orderCourier = courier
+                                        }
+                                    }
+                                } label: {
+                                    Image(systemName: "phone.fill")
+                                        .foregroundStyle(Color.accentColor)
+                                }
+                                .sheet(item: $orderCourier) { orderCourier in
+                                    ContactDialog(phone: orderCourier.phone , toggle: Binding(value: $orderCourier))
+                                }
+                            }
+                            
+                        }
+                        .font(.body)
+                    }
                     
                     // MARK : CONTACT BUTTON
                     HStack {
@@ -246,7 +279,7 @@ struct OrderDetails: View {
                         
                         Spacer().frame(height: 8)
                         
-                        ForEach(order.listProducts!, id: \.productId) { product in
+                        ForEach(order.listProducts!, id: \.self) { product in
                             ProductOrderCard(orderProduct: product)
                         }
                     }
@@ -363,6 +396,11 @@ struct OrderDetails: View {
         }
         .sheet(item: $contactUser, content: { user in
             ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
+        })
+        .sheet(isPresented: $failedScreen, content: {
+            NavigationStack {
+                OrderFailed(order: $order)
+            }
         })
         .toast(isPresenting: Binding(value: $msg)){
             AlertToast(displayMode: .banner(.slide),
@@ -499,12 +537,13 @@ struct OrderDetails: View {
                     }
                 }
                 
-                #warning("Active this")
-                /*if showFailed {
+                if showFailed {
                     ButtonLarge(label: "Return Order", background: .gray) {
-                        failed()
+                        failedScreen.toggle()
+                        //failed()
                     }
-                }*/
+                    
+                }
                 
             }
             

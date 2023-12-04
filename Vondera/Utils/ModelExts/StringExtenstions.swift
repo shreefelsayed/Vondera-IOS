@@ -312,7 +312,21 @@ extension NSAttributedString {
     }
 }
 
-extension PhotosPickerItem{
+extension Array where Element == PhotosPickerItem {
+    func getUIImages() async -> [UIImage] {
+        var items:[UIImage] = []
+        
+        for image in self {
+            if let uiImage = try? await image.getImage() {
+                items.append(uiImage)
+            }
+        }
+        
+        return items
+    }
+}
+
+extension PhotosPickerItem {
     func getImage() async throws -> UIImage?{
         let data = try await self.loadTransferable(type: Data.self)
         guard let data = data, let image = UIImage(data: data) else{

@@ -16,6 +16,7 @@ struct EmployeeReports: View {
     @State var items:[Order] = []
 
     @State var isLoading = false
+    @State var report = false
 
     var body: some View {
         List() {
@@ -71,15 +72,14 @@ struct EmployeeReports: View {
                 Image(systemName: "square.and.arrow.up.fill")
                     .foregroundColor(Color.accentColor)
                     .onTapGesture {
-                        if let url = SalesExcel(listOrders: items).generateReport() {
-                            DispatchQueue.main.async {
-                                FileUtils().shareFile(url: url)
-                            }
-                        }
+                        report.toggle()
                     }
                     .isHidden(items.isEmpty)
             }
         }
+        .sheet(isPresented: $report, content: {
+            ReportsDialog(listOrder: items)
+        })
         .navigationTitle("\(employee.name) Report")
         .onAppear {
             fetch()

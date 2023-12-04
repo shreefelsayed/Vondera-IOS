@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct PaymobSettings: View {
     @State var integrationId = ""
@@ -32,6 +33,7 @@ struct PaymobSettings: View {
             Toggle("Default Payment Gateway", isOn: $active)
             
             Text("Don't have a paymob account ? Sign Up now !")
+                .font(.caption)
                 .foregroundColor(Color.accentColor)
                 .multilineTextAlignment(.center)
                 .onTapGesture {
@@ -41,10 +43,7 @@ struct PaymobSettings: View {
                 }
             
             // -- MARK : Link
-            VStack (alignment: .leading) {
-                Text("Edit your integration id and add this link to your Transaction processed callback")
-                    .foregroundStyle(.red)
-                
+            VStack (alignment: .center) {
                 HStack {
                     Text(callback)
                         .font(.caption2)
@@ -60,6 +59,10 @@ struct PaymobSettings: View {
                     }
 
                 }
+                
+                Text("Edit your integration id and add this link to your Transaction processed callback")
+                    .foregroundStyle(.red)
+                    .font(.caption)
             }
             
         }
@@ -72,6 +75,9 @@ struct PaymobSettings: View {
             }
         }
         .willProgress(saving: saving)
+        .toast(isPresenting: Binding(value: $msg), alert: {
+            AlertToast(displayMode: .banner(.pop), type: .regular, title: msg)
+        })
         .navigationTitle("Paymob")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -80,6 +86,7 @@ struct PaymobSettings: View {
                 }
             }
         }
+        
     }
     
     func connect() {
@@ -124,5 +131,5 @@ struct PaymobSettings: View {
 }
 
 #Preview {
-    Paytab()
+    PaymobSettings()
 }

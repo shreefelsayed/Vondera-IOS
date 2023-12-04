@@ -28,25 +28,16 @@ struct LoginView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            // Header
-            Image("vondera_no_slogan")
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(colorScheme == .dark ? Color.white : Color.accentColor)
-            
-            
-                .padding(.top, 30)
-            
-            Spacer().frame(height: 36)
-            
-            VStack {
-                Text("Welcome back")
-                    .font(.title3)
+            HStack {
+                Text("Welcome Back !")
+                    .font(.title2)
                     .bold()
+                    .foregroundStyle(Color.accentColor)
                 
-                Text("Please enter your details to sign in")
+                Spacer()
             }
+            
+            
             
             Spacer().frame(height: 24)
             
@@ -112,18 +103,17 @@ struct LoginView: View {
                 
                 FloatingTextField(title: "Password", text: $viewModel.password, required: nil, secure: true)
                 
-                //TODO : Add the forget password screen
+                ButtonLarge(label: "Sign in", action: callLogin)
+                
                 HStack {
-                    Spacer()
-                    
                     Text("Forget Password ?")
                         .underline()
                         .onTapGesture {
                             forgetPassword = true
                         }
+                    Spacer()
                 }
                 
-                ButtonLarge(label: "Sign in", action: callLogin)
                 
                 if count > 0 {
                     Button("Or Login to saved account") {
@@ -139,20 +129,24 @@ struct LoginView: View {
                 
                 Text("Sign Up")
                     .bold()
+                    .underline()
+                    .foregroundStyle(Color.accentColor)
                     .onTapGesture {
                         creatingAccount = true
                     }
+                
             }
                         
             Spacer()
             
-            VStack {
+            VStack(alignment: .center) {
                 Text("By signing in, you agree to our ")
                     .font(.system(size: 16))
                 
                 HStack(spacing:0) {
                     Text("Terms & Conditions")
                         .font(.system(size: 16))
+                        .bold()
                         .foregroundStyle(Color.accentColor)
                         .underline()
                         .onTapGesture {
@@ -164,6 +158,7 @@ struct LoginView: View {
                     
                     Text("Privacy Policy")
                         .font(.system(size: 16))
+                        .bold()
                         .foregroundStyle(Color.accentColor)
                         .underline()
                         .onTapGesture {

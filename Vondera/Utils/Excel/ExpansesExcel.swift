@@ -22,11 +22,17 @@ class ExpansesExcel {
     
     func generateReport() -> URL? {
         // MARK : Create the header
-        createHeader(["#", "Amount", "Desceibtion", "Date"])
+        createHeader(["#",
+                      "Amount",
+                      "Description",
+                      "Date"])
         
         //MARK : Add Items
         for (index, expanse) in items.enumerated() {
-            let data:[String] = ["#\(index)", "\(expanse.amount) LE", expanse.description, "\(expanse.date.toDate().formatted())"]
+            let data:[String] = ["#\(index + 1)",
+                                 "\(expanse.amount) LE",
+                                 expanse.description,
+                                 "\(expanse.date.toDate().formatted())"]
             
             addRow(rowNumber: (index + 2), items: data)
         }

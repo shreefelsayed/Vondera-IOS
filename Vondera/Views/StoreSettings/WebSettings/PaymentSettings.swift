@@ -17,9 +17,14 @@ struct PaymentSettings: View {
                 .onChange(of: cod) { newValue in
                     updateCod(newValue)
                 }
+                .disabled(user.user?.store?.paymentOptions?.mustEnableCOD() ?? true)
             
             NavigationLink("Paytabs Gateway") {
                 Paytab()
+            }
+            
+            NavigationLink("Paymob Gateway") {
+                PaymobSettings()
             }
         }
         .navigationTitle("Payment Settings")

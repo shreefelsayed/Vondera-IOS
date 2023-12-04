@@ -70,6 +70,8 @@ class StoreProductsViewModel : ObservableObject {
     func getCategories() async {
         do {
             self.categories = try await categoryDao.getAll()
+            self.categories.append(Category(id: "", name: "Without", url: ""))
+            
             if !categories.isEmpty {
                 await selectCategory(id: categories[0].id)
             }

@@ -11,7 +11,8 @@ import SwiftUIGenericDialog
 extension UIImage {
     func compress(h:CGFloat = 1024, w:CGFloat = 1024) -> Data? {
         var compression: CGFloat = 1.0
-        let maxSize: CGFloat = h * w // 1MB
+        let maxSize: CGFloat = h * w
+        
         guard var imageData = self.jpegData(compressionQuality: compression) else {
             return nil
         }
@@ -26,6 +27,44 @@ extension UIImage {
         
         return imageData
     }
+    
+    func compress(image: UIImage, maxByte: Int = 250000, completion: @escaping (UIImage?) -> ()) {
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let currentImageSize = image.jpegData(compressionQuality: 1.0)?.count else {
+                    return completion(nil)
+                }
+            
+                var iterationImage: UIImage? = image
+                var iterationImageSize = currentImageSize
+                var iterationCompression: CGFloat = 1.0
+            
+                while iterationImageSize > maxByte && iterationCompression > 0.01 {
+                    let percentageDecrease = self.getPercentageToDecreaseTo(forDataCount: iterationImageSize)
+                
+                    let canvasSize = CGSize(width: image.size.width * iterationCompression,
+                                            height: image.size.height * iterationCompression)
+                    UIGraphicsBeginImageContextWithOptions(canvasSize, false, image.scale)
+                    defer { UIGraphicsEndImageContext() }
+                    image.draw(in: CGRect(origin: .zero, size: canvasSize))
+                    iterationImage = UIGraphicsGetImageFromCurrentImageContext()
+                
+                    guard let newImageSize = iterationImage?.jpegData(compressionQuality: 1.0)?.count else {
+                        return completion(nil)
+                    }
+                    iterationImageSize = newImageSize
+                    iterationCompression -= percentageDecrease
+                }
+                completion(iterationImage)
+            }
+        }
+
+        func getPercentageToDecreaseTo(forDataCount dataCount: Int) -> CGFloat {
+            switch dataCount {
+            case 0..<5000000: return 0.03
+            case 5000000..<10000000: return 0.1
+            default: return 0.2
+            }
+        }
 }
 
 extension Image {
@@ -46,7 +85,6 @@ extension Image {
             .frame(width: redius, height: redius)
             .padding(padding)
             .clipShape(Circle())
-        
     }
 }
 

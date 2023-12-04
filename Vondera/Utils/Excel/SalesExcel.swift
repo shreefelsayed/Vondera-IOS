@@ -22,11 +22,30 @@ class SalesExcel {
     
     func generateReport() -> URL? {
         // MARK : Create the header
-        createHeader(["Order ID", "Name", "Government", "Order Price", "Courier Commission", "COD", "Product Cost", "Sales Commission", "Net Profit", "Statue", "Sold By"])
+        createHeader(["Order ID",
+                      "Name",
+                      "City",
+                      "Order Price",
+                      "Courier Commission",
+                      "COD",
+                      "Cost",
+                      "Sales Commission",
+                      "Net Profit",
+                      "Statue",
+                      "Sold By"])
         
         //MARK : Add Items
         for (index, order) in listOrders.enumerated() {
-            let data:[String] = ["#\(order.id)", order.name, order.gov, "\(order.totalPrice) LE", "\(order.courierShippingFees ?? 0) LE", "\(order.COD) LE", "\(order.buyingPrice) LE", "\(order.finalCommission) LE", "\(order.netProfitFinal) LE", order.statue, order.owner ?? ""]
+            let data:[String] = ["#\(order.id)",
+                                 order.name, order.gov,
+                                 "\(order.totalPrice) LE",
+                                 "\(order.courierShippingFees ?? 0) LE",
+                                 "\(order.COD) LE",
+                                 "\(order.buyingPrice) LE",
+                                 "\(order.finalCommission) LE",
+                                 "\(order.netProfitFinal) LE",
+                                 order.statue,
+                                 order.owner ?? ""]
             
             addRow(rowNumber: (index + 2), items: data)
         }

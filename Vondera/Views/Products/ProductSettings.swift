@@ -61,14 +61,11 @@ struct ProductSettings: View {
     
     func deleteProduct() {
         Task {
-            do {
-                try await ProductsDao(storeId: product.storeId).delete(id: product.id)
-                onDeleted(product)
+            if let _ = try? await ProductsDao(storeId: product.storeId).delete(id: product.id) {
                 DispatchQueue.main.async {
+                    onDeleted(product)
                     self.presentationMode.wrappedValue.dismiss()
                 }
-            } catch {
-                print("Error deleting product: \(error)")
             }
         }
     }

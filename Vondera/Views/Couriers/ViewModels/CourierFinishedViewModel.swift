@@ -50,7 +50,7 @@ class CourierFinishedViewModel : ObservableObject {
         self.isLoading = true
         
         do {
-            let result = try await ordersDao.getCouriersFinished(id: courier.id, lastSnapShot: lastSnapshot)
+            let result = try await ordersDao.getCourierDelivered(id: courier.id, lastSnapShot: lastSnapshot)
             DispatchQueue.main.async {
                 self.lastSnapshot = result.lastDocument
                 self.items.append(contentsOf: result.items)

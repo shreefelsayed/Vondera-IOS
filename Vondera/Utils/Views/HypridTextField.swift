@@ -29,7 +29,7 @@ struct HybridTextField: View {
                     isSecure.toggle()
                 }
             } label: {
-                Image(systemName: !isSecure ? "eye.slash" : "eye" )
+                Image(systemName: isSecure ? "eye.slash" : "eye" )
             }
             .buttonStyle(.plain)
         }

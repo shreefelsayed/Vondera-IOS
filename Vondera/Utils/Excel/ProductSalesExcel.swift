@@ -8,13 +8,13 @@
 import Foundation
 import SwiftXLSX
 
-class OrderShippingExcel {
-    var name = "Orders"
+class ProductSalesExcel {
+    var name = "Product Sales"
     var listOrders:[Order]
     let book = XWorkBook()
     var sheet:XSheet
     
-    init(name: String = "Orders", listOrders: [Order]) {
+    init(name: String = "Product Sales", listOrders: [Order]) {
         self.name = name
         self.listOrders = listOrders
         sheet = book.NewSheet(name)
@@ -22,21 +22,22 @@ class OrderShippingExcel {
     
     func generateReport() -> URL? {
         // MARK : Create the header
-        createHeader(["Order ID",
-                      "Name",
-                      "Phone",
-                      "Address",
-                      "Cash",
-                      "Statue"])
+        createHeader(["Product ID",
+                      "Product Name",
+                      "Product Variants",
+                      "Sold Count",
+                      "Total Sales (EGP)",
+                      "Total Cost (EGP)"])
         
+        let totalItems = listOrders.getFinalProductList()
         //MARK : Add Items
-        for (index, order) in listOrders.enumerated() {
-            let data:[String] = ["#\(order.id)",
-                                 order.name,
-                                 order.phone,
-                                 order.gov + " - " + order.address,
-                                 "\(order.COD) LE",
-                                 order.statue]
+        for (index, productObject) in totalItems.enumerated() {
+            let data:[String] = ["#\(productObject.productId)",
+                                 productObject.name,
+                                 productObject.getVarientsString(),
+                                 "\(productObject.quantity) Pieces",
+                                 "\((Int(productObject.price) * productObject.quantity)) LE",
+                                 "\((Int(productObject.buyingPrice) * productObject.quantity)) LE"]
             
             addRow(rowNumber: (index + 2), items: data)
         }
@@ -50,19 +51,25 @@ class OrderShippingExcel {
     }
     
     func addFinalRow() {
-        var cod = 0
+        let totalItems = listOrders.getFinalProductList()
         
-        listOrders.forEach { order in
-            cod += order.COD
+        var count = 0
+        var sales = 0
+        var cost = 0
+
+        totalItems.forEach { item in
+            count += item.quantity
+            sales += Int(item.price * Double(item.quantity))
+            cost += Int(item.buyingPrice * Double(item.quantity))
+
         }
         
         let data:[String] = [
-            "\(listOrders.count) Orders",
+            "\(totalItems.count) Products",
             "",
-            "",
-            "",
-            "\(cod) LE",
-            ""]
+            "\(count) Pieces",
+            "\(sales) EGP",
+            "\(cost) EGP"]
         
         addRow(rowNumber: listOrders.count + 2, items: data)
     }
@@ -77,6 +84,8 @@ class OrderShippingExcel {
             cell.alignmentHorizontal = .center
         }
     }
+    
+    
     
     func addRow(rowNumber:Int, items:[String]) {
         for (index, title) in items.enumerated() {

@@ -11,10 +11,10 @@ struct ButtonLarge: View {
     
     var label: LocalizedStringKey
     var background: Color = .accentColor
-    var textColor: Color = .white.opacity(0.9)
+    var textColor: Color = .white
     var action: (() -> ())
     
-    let cornorRadius: CGFloat = 8
+    let cornorRadius: CGFloat = 24
     
     var body: some View {
         Button {
@@ -34,7 +34,7 @@ struct ButtonLarge: View {
         }
         .background(background)
         .cornerRadius(cornorRadius)
-        .frame(height: 36)
+        .frame(height: 46)
     }
 }
 

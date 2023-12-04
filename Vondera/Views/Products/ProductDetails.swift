@@ -18,8 +18,6 @@ struct ProductDetails: View {
     
     
     var body: some View {
-        
-        
         ScrollView(showsIndicators: false) {
             VStack (alignment: .leading) {
                 ZStack (alignment: .bottom){

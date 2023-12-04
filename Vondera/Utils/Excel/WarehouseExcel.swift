@@ -24,11 +24,19 @@ class WarehouseExcel {
     
     func generateReport() -> URL? {
         // MARK : Create the header
-        createHeader(["Item Id.", "Product Name", "Avilable Quantity", "Sold Quantity", "Current Stock Cost"])
+        createHeader(["Item Id.",
+                      "Product Name",
+                      "Avilable Quantity",
+                      "Sold Quantity",
+                      "Current Stock Cost"])
         
         //MARK : Add Items
         for (index, item) in list.enumerated() {
-            let data:[String] = ["#\(item.id)", item.name, "\(item.quantity) Pieces", "\(item.realSold) Pieces","\(item.quantity * Int(item.buyingPrice)) LE"]
+            let data:[String] = ["#\(item.id)",
+                                 item.name,
+                                 "\(item.quantity) Pieces",
+                                 "\(item.realSold) Pieces",
+                                 "\(item.quantity * Int(item.buyingPrice)) LE"]
             
             addRow(rowNumber: (index + 2), items: data)
         }

@@ -62,11 +62,17 @@ struct Paytab: View {
         }
         
         Task {
-            let data = [
+            var data = [
                 "paymentOptions.paytabs.profile_id" : profileId,
                 "paymentOptions.paytabs.apiKey" : apiKey,
                 "paymentOptions.paytabs.selected" : active,
+                "paymentOptions.paytabs.connected" : true,
+                "paymentOptions.paytabs.gateway" : true,
             ]
+            
+            if active {
+                data["paymentOptions.paymob.selected"] = false
+            }
             
             if let storeId = user.user?.storeId {
                 saving = true

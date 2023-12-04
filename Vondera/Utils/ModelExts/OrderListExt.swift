@@ -12,6 +12,15 @@ extension Array where Element == OrderProductObject {
     func getTotalCost() -> Int {
         var total = 0
         for prod in self {
+            total += Int(prod.quantity * Int(prod.buyingPrice))
+        }
+        
+        return total
+    }
+    
+    func getTotalPrice() -> Int {
+        var total = 0
+        for prod in self {
             total += Int(prod.quantity * Int(prod.price))
         }
         
