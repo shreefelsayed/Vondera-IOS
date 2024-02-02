@@ -72,6 +72,8 @@ struct Paytab: View {
             
             if active {
                 data["paymentOptions.paymob.selected"] = false
+                data["paymentOptions.vPay.selected"] = false
+
             }
             
             if let storeId = user.user?.storeId {
