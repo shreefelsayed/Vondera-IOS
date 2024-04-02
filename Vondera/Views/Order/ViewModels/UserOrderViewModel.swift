@@ -9,55 +9,80 @@ import Foundation
 import FirebaseFirestore
 
 class UserOrdersViewModel: ObservableObject {
-    var id:String
-    var storeId:String
-    private var ordersDao:OrdersDao
+    var id:String = ""
+    var storeId:String = ""
     
-    @Published var isLoading = false
+    // Pagination Values
     @Published var items = [Order]()
-    
     @Published var canLoadMore = true
-    @Published var error = ""
-    
+    @Published var isLoading = false
+    @Published var intialDataLoaded = false
+    @Published var searchText = ""
     private var lastSnapshot:DocumentSnapshot?
     
     
-    init(id:String, storeId:String) {
-        self.id = id
-        self.storeId = storeId
-        self.ordersDao = OrdersDao(storeId: storeId)
-        
-        Task {
-            await getData()
+    init() {
+        if let user = UserInformation.shared.user  {
+            self.id = user.id
+            self.storeId = user.storeId
+            
+            Task {
+                await getIntialData()
+            }
         }
     }
     
-    
-    
-    func refreshData() async {
-        self.canLoadMore = true
-        self.lastSnapshot = nil
-        self.items.removeAll()
-        await getData(refreshing: true)
-    }
-    
-    func getData(refreshing:Bool = false) async {
-        guard !isLoading || !canLoadMore else {
+    func getIntialData() async {
+        guard let storeId = UserInformation.shared.user?.storeId, !intialDataLoaded else {
             return
         }
         
-        do {
-            isLoading = true
-            let result = try await ordersDao.getUserOrders(id: id, lastSnapShot: lastSnapshot)
+            do {
+            let result = try await OrdersDao(storeId: storeId).getUserOrders(id: id, lastSnapShot: lastSnapshot)
+            
             DispatchQueue.main.async {
                 self.lastSnapshot = result.1
                 self.items.append(contentsOf: result.0)
-                self.canLoadMore = !result.0.isEmpty
+                self.canLoadMore = (result.0.count >= OrdersDao.pageSize)
+                self.intialDataLoaded = true
+            }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+        }
+    }
+    
+    func getData() async {
+        guard let storeId = UserInformation.shared.user?.storeId, !isLoading, canLoadMore, intialDataLoaded else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        do {
+            let result = try await OrdersDao(storeId: storeId).getUserOrders(id: id, lastSnapShot: lastSnapshot)
+            
+            DispatchQueue.main.async {
+                self.lastSnapshot = result.1
+                self.items.append(contentsOf: result.0)
+                self.canLoadMore = (result.0.count >= OrdersDao.pageSize)
                 self.isLoading = false
             }
         } catch {
-            self.isLoading = false
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
-        
+    }
+    
+    // --> Refresh Data
+    func refreshData() {
+        self.intialDataLoaded = false
+        self.isLoading = false
+        self.canLoadMore = true
+        self.lastSnapshot = nil
+        self.items.removeAll()
+        Task {
+            await getIntialData()
+        }
     }
 }

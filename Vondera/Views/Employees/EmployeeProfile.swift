@@ -21,7 +21,6 @@ struct EmployeeProfile: View {
         List {
             ForEach($viewModel.items) { order in
                 OrderCard(order: order)
-                    .listRowSeparator(.hidden)
                 
                 if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
                     HStack {
@@ -35,13 +34,13 @@ struct EmployeeProfile: View {
                 }
             }
         }
+        .background(Color.background)
         .refreshable {
             await refreshData()
         }
-        .listStyle(.plain)
         .overlay {
             if !viewModel.isLoading && viewModel.items.isEmpty {
-                EmptyMessageView(msg: "This user doesn't have any orders")
+                EmptyMessageWithResource(imageResource: .emptyUserOrders, msg: "This team member hasn't added any orders to your store yet !")
             }
         }
         .toolbar {
@@ -79,8 +78,6 @@ struct EmployeeProfile: View {
     }
 }
 
-struct EmployeeProfile_Previews: PreviewProvider {
-    static var previews: some View {
-        EmployeeProfile(user:UserData.example())
-    }
+#Preview {
+    EmployeeProfile(user: UserData.example())
 }

@@ -23,7 +23,7 @@ class CreateAccountViewModel: ObservableObject {
     @Published var refferCode = ""
     
     
-    @Published var selectedCateogry:Int? = 0
+    @Published var selectedCateogry:Int? = 7
     @Published var selectedMarkets:[String] = []
 
     @Published var address = ""

@@ -6,28 +6,14 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct UserCircle: View {
     var user:UserData
     
     var body: some View {
         VStack (alignment: .center, spacing: 8){
-            NetworkImage(url: URL(string: user.userURL)) { image in
-                image.centerCropped()
-            } placeholder : {
-                Color.gray
-            } fallback: {
-                Image("defaultPhoto")
-                    .resizable()
-                    .centerCropped()
-            }
-            .background {
-                Color.white
-            }
-            .id(user.userURL)
+            CachcedCircleView(imageUrl: user.userURL, scaleType: .centerCrop, placeHolder: defaultEmployeeImage)
             .frame(width: 60, height: 60)
-            .clipShape(Circle())
             .overlay(
                 Circle()
                     .fill(user.online ?? false ? Color.green : Color.gray)
@@ -35,11 +21,10 @@ struct UserCircle: View {
                     .offset(x: 20, y: -20)
             )
             
-            Text(user.name)
-                .font(.body)
-                .bold()
-                .lineLimit(1)
-            
+            Text(user.name.firstName)
+                .font(.callout)
+                .frame(maxWidth: 75)
+                .lineLimit(2)
         }
     }
 }

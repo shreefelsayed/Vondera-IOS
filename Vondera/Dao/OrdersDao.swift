@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 class OrdersDao {
     var collection:CollectionReference
-    var pageSize = 25
+    public static let pageSize:Int = 25
     
     
     init(storeId:String) {
@@ -36,7 +36,7 @@ class OrdersDao {
             query = query.start(afterDocument: lastSnapshot!)
         }
         
-        query.limit(to: pageSize)
+        query.limit(to: OrdersDao.pageSize)
         
         let docs = try await query.getDocuments()
         return (convertToList(snapShot: docs), docs.documents.last)
@@ -78,7 +78,7 @@ class OrdersDao {
             query = query.start(afterDocument: lastSnapShot!)
         }
         
-        query.limit(to: pageSize)
+        query.limit(to:  OrdersDao.pageSize)
         
         let docs = try await query.getDocuments()
         return (convertToList(snapShot: docs), docs.documents.last)
@@ -139,7 +139,7 @@ class OrdersDao {
         var query:Query = collection
             .whereField("statue", isEqualTo: "Deleted")
             .order(by: "date", descending: true)
-            .limit(to: pageSize)
+            .limit(to: OrdersDao.pageSize)
         
         if lastSnapShot != nil {
             query = query.start(afterDocument: lastSnapShot!)
@@ -149,10 +149,19 @@ class OrdersDao {
         return (convertToList(snapShot: docs), docs.documents.last)
     }
     
+    func getQueryByStatuePagination(statue:String, lastSnapShot:DocumentSnapshot?, sortBy:String = "date", desc:Bool = true, limit:Int = OrdersDao.pageSize)  async throws -> (items:[Order], lastDocument:DocumentSnapshot?) {
+        
+        return try await collection.whereField("statue", isEqualTo: statue)
+            .order(by: sortBy, descending: desc)
+            .limit(to: limit)
+            .startAfter(lastDocument: lastSnapShot)
+            .getDocumentWithLastSnapshot(as: Order.self)
+    }
+    
     func getAll(lastSnapShot:DocumentSnapshot?) async throws -> ([Order], QueryDocumentSnapshot?) {
         var query:Query = collection
             .order(by: "date", descending: true)
-            .limit(to: pageSize)
+            .limit(to: OrdersDao.pageSize)
         
         if lastSnapShot != nil {
             query = query.start(afterDocument: lastSnapShot!)
@@ -167,7 +176,7 @@ class OrdersDao {
         return try await collection
             .order(by: "date", descending: true)
             .whereField("marketPlaceId", isEqualTo: marketId)
-            .limit(to: pageSize)
+            .limit(to: OrdersDao.pageSize)
             .startAfter(lastDocument: lastSnapShot)
             .getDocumentWithLastSnapshot(as: Order.self)
     }
@@ -177,9 +186,57 @@ class OrdersDao {
             .order(by: "dateDelivered", descending: true)
             .whereField("courierId", isEqualTo: id)
             .whereField("statue", isEqualTo: "Delivered")
-            .limit(to: pageSize)
+            .limit(to: OrdersDao.pageSize)
             .startAfter(lastDocument: lastSnapShot)
             .getDocumentWithLastSnapshot(as: Order.self)
+    }
+    
+    /// MARK : This query filter the orders based on a lot of variables, you can pass some of them or none of them
+    func filterOrders(lastSnapShot:DocumentSnapshot? = nil, isPaginated:Bool = true , sortIndex:String = "date", desc:Bool = true, filterModel:FilterModel?) async throws -> (items : [Order], lastDocument : DocumentSnapshot?) {
+        
+        var query:Query = collection
+        
+        if let statue = filterModel?.filterStatue, !statue.isEmpty {
+            query = query.whereField("statue", in: statue)
+        }
+        
+        if let govs = filterModel?.filterGovs, !govs.isEmpty {
+            query = query.whereField("gov", in: govs)
+        }
+        
+        if let isShipping = filterModel?.filterShipping, !isShipping.isEmpty {
+            query = query.whereField("requireDelivery", in: isShipping)
+        }
+        
+        if let marketPlaceId = filterModel?.filterMarkets, !marketPlaceId.isEmpty {
+            query = query.whereField("marketPlaceId", in: marketPlaceId)
+        }
+        
+        if let courierId = filterModel?.filterCouriers, !courierId.isEmpty {
+            query = query.whereField("courierId", in: courierId)
+        }
+        
+        if let isPaid = filterModel?.filterPaid, !isPaid.isEmpty {
+            query = query.whereField("isPaid", in: isPaid)
+        }
+        
+        if let employeeId = filterModel?.filterUsers, !employeeId.isEmpty {
+            query = query.whereField("addBy", in: employeeId)
+        }
+        
+        if let minPrice = filterModel?.minPrice, minPrice != 0 {
+            query = query.whereField("salesTotal", isLessThanOrEqualTo: minPrice)
+        }
+        
+        if let maxPrice = filterModel?.maxPrice, maxPrice != 0 {
+            query = query.whereField("salesTotal", isGreaterThanOrEqualTo: maxPrice)
+        }
+        
+        query = query.order(by: sortIndex, descending: desc)
+            .startAfter(lastDocument: lastSnapShot)
+            .limit(to: isPaginated ? OrdersDao.pageSize : 1000)
+        
+        return try await query.getDocumentWithLastSnapshot(as: Order.self)
     }
     
     func getCourierFailed(id:String, lastSnapShot:DocumentSnapshot?) async throws -> (items : [Order],lastDocument : DocumentSnapshot?) {
@@ -187,7 +244,7 @@ class OrdersDao {
             .order(by: "dateDelivered", descending: true)
             .whereField("courierId", isEqualTo: id)
             .whereField("statue", isEqualTo: "Failed")
-            .limit(to: pageSize)
+            .limit(to: OrdersDao.pageSize)
             .startAfter(lastDocument: lastSnapShot)
             .getDocumentWithLastSnapshot(as: Order.self)
     }
@@ -198,7 +255,7 @@ class OrdersDao {
         let docs = try await collection
             .whereField("addBy", isEqualTo: id)
             .order(by: "date", descending: true)
-            .limit(to: pageSize)
+            .limit(to: OrdersDao.pageSize)
             .startAfter(lastDocument: lastSnapShot)
             .getDocuments()
 
@@ -250,6 +307,9 @@ class OrdersDao {
         
     }
     
+    
+
+    
     func getOrdersQueryByStatue(statue:String) -> Query {
         return collection.whereField("statue", isEqualTo: statue)
             .order(by: "date", descending: true)
@@ -263,6 +323,7 @@ class OrdersDao {
         
         return arr
     }
+    
     
     func convertToList(snapShot:[QueryDocumentSnapshot]) -> [Order] {
         let arr = snapShot.compactMap{doc -> Order? in

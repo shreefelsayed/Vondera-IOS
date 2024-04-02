@@ -11,39 +11,32 @@ struct TopSellingAreas: View {
     var list = [GovStatics]()
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                Text("Top Selling Areas 🏙️")
-                    .font(.title2.bold())
-            
-                ForEach(list, id: \.self) { govStatic in
-                    AreaCount(govStatic: govStatic)
-                }
-            }
-
-        }
-    }
-}
-
-struct TopSellingAreas_Previews: PreviewProvider {
-    static var previews: some View {
-        TopSellingAreas(list: GovStatics.listExample())
-    }
-}
-
-struct AreaCount: View {
-    var govStatic: GovStatics
-    var body: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Text(govStatic.name ?? "")
-                    .bold()
-                Spacer()
-                Text("\(govStatic.count) Orders")
-                    .foregroundColor(.secondary)
+            Text("Places where you sell the most")
+                .font(.title2.bold())
+        
+            ForEach(list.indices, id: \.self) { index in
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        Text("\(index + 1). \(list[index].name ?? "")")
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Text("\(list[index].count) Orders")
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    if index != list.count - 1 {
+                        Divider()
+                    }
+                    
+                }
+                .padding(2)
             }
-            
-            Divider()
-        }.padding(2)
+        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(12)
     }
 }

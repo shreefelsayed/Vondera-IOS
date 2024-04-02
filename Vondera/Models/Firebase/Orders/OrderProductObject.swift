@@ -5,16 +5,16 @@ struct OrderProductObject: Codable, Hashable {
     var name: String = ""
     var storeId: String = ""
     var quantity: Int = 0
-    var price: Double = 0
+    var price: Int = 0
     var image: String = ""
-    var buyingPrice: Double = 0
+    var buyingPrice: Int = 0
     var hashVaraients: [String: String] = [:]
     var savedItemId: String = ""
     var product: StoreProduct?
     
     init() {}
     
-    init(productId: String, name: String, storeId: String, quantity: Int, price: Double, image: String, buyingPrice: Double, hashVaraients: [String: String], savedItemId: String, product: StoreProduct) {
+    init(productId: String, name: String, storeId: String, quantity: Int, price: Int, image: String, buyingPrice: Int, hashVaraients: [String: String], savedItemId: String, product: StoreProduct) {
             self.productId = productId
             self.name = name
             self.storeId = storeId
@@ -27,6 +27,7 @@ struct OrderProductObject: Codable, Hashable {
             self.product = product
     }
     
+
     func getVarientsString() -> String {
         if hashVaraients.isEmpty {
             return ""
@@ -73,9 +74,9 @@ struct OrderProductObject: Codable, Hashable {
         name = try container.decode(String.self, forKey: .name)
         storeId = try container.decodeIfPresent(String.self, forKey: .storeId) ?? ""
         quantity = try container.decode(Int.self, forKey: .quantity)
-        price = try container.decode(Double.self, forKey: .price)
+        price = try container.decode(Int.self, forKey: .price)
         image = try container.decodeIfPresent(String.self, forKey: .image) ?? ""
-        buyingPrice = try container.decode(Double.self, forKey: .buyingPrice)
+        buyingPrice = try container.decode(Int.self, forKey: .buyingPrice)
         hashVaraients = try container.decodeIfPresent([String:String].self, forKey: .hashVaraients) ?? [String:String]()
         savedItemId = try container.decodeIfPresent(String.self, forKey: .savedItemId) ?? ""
         product = try container.decodeIfPresent(StoreProduct.self, forKey: .product)

@@ -34,7 +34,7 @@ struct OrderFailed: View {
                 if partialReturn {
                     Section {
                         ForEach($items.indices, id: \.self) { index in
-                            CartAdapter(orderProduct: $items[index])
+                            CartCard(orderProduct: $items[index])
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                         }
@@ -64,7 +64,7 @@ struct OrderFailed: View {
                     
                     Spacer()
                     
-                    Text(partialReturn ? "\(clientShippingFees - courierShippingFees - (order.discount ?? 0) + items.getTotalPrice()) LE" : "\((clientShippingFees - courierShippingFees)) LE")
+                    Text(partialReturn ? "\(clientShippingFees - courierShippingFees - Int(order.discount ?? 0) + items.getTotalPrice()) LE" : "\((clientShippingFees - courierShippingFees)) LE")
                 }
             }
             .padding()

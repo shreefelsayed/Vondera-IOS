@@ -6,56 +6,61 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct UserHome: View {
     @State var myUser = UserInformation.shared.getUser()
     @State var selectedTab = 0
     
+    @StateObject var dynamicNaivgation = DynamicNavigation.shared
     @StateObject var viewModel = UserHomeViewModel()
     @Environment(\.scenePhase) var scenePhase
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            HomeFragment()
-                .tabItem {
-                    Image(systemName: selectedTab == 0 ? "house.fill" : "house")
-                        .environment(\.symbolVariants, selectedTab == 0 ? .fill : .none)
-                    Text("Home")
-                }
-                .tag(0)
+        ZStack {
+            Color.background.ignoresSafeArea(.all)
             
-            OrdersFragment()
-                .tabItem {
-                    Image(systemName: selectedTab == 1 ? "cart.fill" : "cart")
-                        .environment(\.symbolVariants, selectedTab == 1 ? .fill : .none)
-                    Text("Orders")
+            TabView(selection: $selectedTab) {
+                HomeFragment()
+                    .tabItem {
+                        Image(selectedTab != 0 ? .icHomeOutline : .icHomeFill)
+                        Text("Home")
+                    }
+                    .tag(0)
+                
+                OrdersFragment()
+                    .tabItem {
+                        Image(selectedTab != 1 ? .icCartOutline : .icCartFill)
+                        Text("Orders")
+                    }
+                    .tag(1)
+                
+                ProductsFragment()
+                    .tabItem {
+                        Image(selectedTab != 2 ? .icBagOutline : .icBagFill)
+                        Text("Products")
+                    }
+                    .tag(2)
+                
+                SettingsFragment()
+                    .tabItem {
+                        Image(selectedTab == 3 ? .icSettingsFill : .icSettingsOutline)
+                        
+                        Text("Settings")
+                    }
+                    .tag(3)
+            }
+            .task {
+                await getUser()
+            }
+            .navigationBarBackButtonHidden(true)
+            .onChange(of: scenePhase) { newPhase in
+                handleOnlineState(phase: newPhase)
+            }
+            .navigationDestination(isPresented: $dynamicNaivgation.isPreseneted) {
+                if let dest = dynamicNaivgation.destination?.dest {
+                    dest
                 }
-                .tag(1)
-            
-            ProductsFragment()
-                .tabItem {
-                    Image(systemName: selectedTab == 2 ? "bag.fill" : "bag")
-                        .environment(\.symbolVariants, selectedTab == 2 ? .fill : .none)
-                    Text("Products")
-                }
-                .tag(2)
-            
-            SettingsFragment()
-                .tabItem {
-                    Image(systemName: selectedTab == 3 ? "ellipsis.rectangle.fill" : "ellipsis.rectangle")
-                        .environment(\.symbolVariants, selectedTab == 3 ? .fill : .none)
-                    
-                    Text("Settings")
-                }
-                .tag(3)
-        }
-        .task {
-            await getUser()
-        }
-        .navigationBarBackButtonHidden(true)
-        .onChange(of: scenePhase) { newPhase in
-            handleOnlineState(phase: newPhase)
+            }
         }
     }
     
@@ -99,10 +104,15 @@ struct IconAndName : View {
     var myUser: UserData
     var body: some View {
         HStack {
-            ImagePlaceHolder(url: myUser.store?.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis:42)
+            if let store = myUser.store {
+                ImagePlaceHolder(url: store.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis:42)
+                
+                Text(store.name)
+                    .font(store.name.count > 14 ? .headline : .title2)
+                    .bold()
+                    .lineLimit(1)
+            }
             
-            Text(myUser.store?.name ?? "")
-                .bold()
         }
     }
 }

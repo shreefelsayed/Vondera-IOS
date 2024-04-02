@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct ImagePickupHolder: View {
     var currentImageURL:String?
@@ -17,30 +16,24 @@ struct ImagePickupHolder: View {
     var iconOverly:String? = "photo.fill.on.rectangle.fill"
     
     var body: some View {
-        if selectedImage != nil {
+        if let selectedImage = selectedImage {
             Image(uiImage: selectedImage)
                 .centerCropped()
                 .overlay(alignment: .center) {
-                    Image(systemName: iconOverly)
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .opacity(0.4)
-                    
+                    if let iconOverly = iconOverly {
+                        Image(systemName: iconOverly)
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .opacity(0.4)
+                    }
                 }
                 .background(Color.gray)
                 .frame(width: reduis, height: reduis)
                 .clipShape(Circle())
         } else {
-            NetworkImage(url: URL(string: currentImageURL ?? "")) { image in
-                image.centerCropped()
-            } placeholder: {
-                ProgressView()
-            } fallback: {
-                Image(uiImage: currentImagePlaceHolder)
-                    .resizable()
-            }
+            CachedImageView(imageUrl: currentImageURL ?? "", scaleType: .centerCrop, placeHolder: currentImagePlaceHolder)
             .overlay(alignment: .center) {
-                if iconOverly != nil {
+                if let iconOverly = iconOverly {
                     Image(systemName: iconOverly)
                         .resizable()
                         .frame(width: 40, height: 40)
@@ -57,24 +50,13 @@ struct ImagePickupHolder: View {
 struct ImagePlaceHolder: View {
     var url:String
     var placeHolder:UIImage?
-    
     var reduis:CGFloat = 60
-    
     var iconOverly:String?
     
     var body: some View {
-        NetworkImage(url: URL(string: url )) { image in
-            image.centerCropped()
-        } placeholder: {
-            Color.gray
-        } fallback: {
-            if placeHolder != nil {
-                Image(uiImage: placeHolder)
-                    .resizable()
-            }
-        }
+        CachedImageView(imageUrl: url, scaleType: .centerCrop, placeHolder: placeHolder)
         .overlay(alignment: .center) {
-            if iconOverly != nil {
+            if let iconOverly = iconOverly {
                 Image(systemName: iconOverly)
                     .resizable()
                     .frame(width: 40, height: 40)

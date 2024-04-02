@@ -40,6 +40,7 @@ class ProductsDao {
     func getFeatured() async throws -> [StoreProduct] {
         return try await collection
             .whereField("featured", isEqualTo: true)
+            .whereField("visible", isEqualTo: true)
             .order(by: "createDate", descending: true)
             .getDocuments(as: StoreProduct.self)
     }

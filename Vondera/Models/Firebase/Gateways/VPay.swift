@@ -7,10 +7,7 @@
 
 import Foundation
 
-class Paytabs : Codable {
-    var profile_id:String? = ""
-    var apiKey:String? = ""
-    var selected:Bool? = false
-    var connected:Bool? = false
+class VPay : Codable {
+    var selected:Bool? = true
     var gateway:Bool? = true
 }

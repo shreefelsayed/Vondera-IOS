@@ -8,8 +8,8 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var quantity: Int = 0
     var addedBy: String? = ""
     var collectionId: String? = ""
-    var price: Double = 0
-    var buyingPrice: Double = 0
+    var price: Int = 0
+    var buyingPrice: Int = 0
     var sold: Int? = 0
     var lastOrderDate: Timestamp?
     var createDate:Timestamp? = Timestamp(date: Date())
@@ -27,13 +27,17 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var featured:Bool? = false
     var views:Int? = 0
     
+    var totalReviews:Double? = 0;
+    var avgRating:Float? = 0;
+    var totalRating:Double? = 0;
+    
     func hash(into hasher: inout Hasher) {
             hasher.combine(id)
     }
     
     init() {}
     
-    init(name: String, id: String, quantity: Int, addedBy: String, price: Double, buyingPrice: Double) {
+    init(name: String, id: String, quantity: Int, addedBy: String, price: Int, buyingPrice: Int) {
         self.name = name
         self.id = id
         self.quantity = quantity
@@ -63,8 +67,21 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
         return String(format: "%.1f", margin)
     }
     
-    func getProductLink(mId:String) -> URL {
-        return URL(string: "https://vondera.store/product?store=\(mId)&id=\(id)")!
+    func getMinQuantity() -> Int {
+        if alwaysStocked ?? false {
+            return 1000
+        }
+        
+        if quantity < 1 {
+            return 1
+        }
+        
+        return quantity
+    }
+    
+    
+    func getProductLink(baseLink:String) -> URL {
+        return URL(string: "\(baseLink)/product/\(id)")!
     }
     
     func defualtPhoto() -> String {

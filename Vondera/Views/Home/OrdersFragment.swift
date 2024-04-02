@@ -32,15 +32,18 @@ class OrdersFragmentViewModel: ObservableObject {
                     print("Data loaded")
                 }
             } catch {
-                print(error.localizedDescription)
+                print("Order error \(error)")
             }
+        } else {
+            print("Couldn't find a store id")
         }
     }
 }
+
+
 struct OrdersFragment: View {
     @ObservedObject var myUser = UserInformation.shared
     @StateObject var vm = OrdersFragmentViewModel()
-    @State var latestOrders = false
    
     var body: some View {
         VStack {
@@ -68,15 +71,18 @@ struct OrdersFragment: View {
                     .bold()
                     
                 }
-                .padding()
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
                 
                 List {
                     // MARK : 3 Cards with counters
                     Section {
                         NavigationLink(destination: FullfillOrdersFragment()) {
                             HStack {
-                                Label("Orders to fullfil", systemImage: "plus.diamond.fill")
-                                    .bold()
+                                Label(
+                                    title: { Text("Orders to fulfill").bold() },
+                                    icon: { Image(.btnNewOrders) }
+                                )
                                 
                                 Spacer()
                                 
@@ -85,10 +91,14 @@ struct OrdersFragment: View {
                         }
                         
                         if user.accountType != "Marketing" {
-                            NavigationLink(destination: StoreAllOrders(storeId: user.storeId)) {
+                            NavigationLink(destination: NewAllOrders()) {
                                 HStack {
-                                    Label("All Orders", systemImage: "basket.fill")
-                                        .bold()
+                                
+                                    Label(
+                                        title: { Text("All Orders").bold() },
+                                        icon: { Image(.btnOrders) }
+                                    )
+
                                     
                                     Spacer()
                                     
@@ -98,10 +108,12 @@ struct OrdersFragment: View {
                         }
                         
                                                 
-                        NavigationLink(destination: UserOrders(id: user.id, storeId: user.storeId)) {
+                        NavigationLink(destination: UserOrders()) {
                             HStack {
-                                Label("My Orders", systemImage: "person.crop.circle")
-                                    .bold()
+                                Label(
+                                    title: { Text("My Orders").bold() },
+                                    icon: { Image(.btnOrders) }
+                                )
                                 
                                 Spacer()
                                 
@@ -109,70 +121,69 @@ struct OrdersFragment: View {
                             }
                         }
                         
+                        NavigationLink(destination: StoreCouriers()) {
+                            HStack {
+                                Label(
+                                    title: { Text("With Couriers").bold() },
+                                    icon: { Image(.btnShipping) }
+                                )
+                                
+                                Spacer()
+                                
+                                Text("\(user.store?.ordersCountObj?.OutForDelivery ?? 0)")
+                            }
+                        }
+                        
                     }
                     .buttonStyle(.plain)
                     .listRowSpacing(4)
-                    .listRowSeparator(.hidden)
+                    
                     
                     // MARK : Latest Orders
-                    
                     if !vm.itemsLatest.isEmpty {
-                        Section {
+                        Section("Latest Orders") {
                             ForEach($vm.itemsLatest.indices, id: \.self) { index in
                                 OrderCard(order: $vm.itemsLatest[index])
                             }
-                        } header: {
-                            HStack {
-                                Text("Latest Orders")
-                                    .font(.title3)
-                                    .bold()
-                                
-                                Spacer()
-                                if user.accountType != "Marketing" {
-                                    Text("See All")
-                                        .underline()
-                                        .foregroundStyle(.secondary)
-                                        .onTapGesture {
-                                            latestOrders.toggle()
-                                        }
-                                }
-                            }
                         }
+                        .listStyle(.plain)
                     }
                     
-                    
                     if !vm.itemsUpdated.isEmpty {
-                        Section {
+                        Section("Latest Updated") {
                             ForEach($vm.itemsUpdated.indices, id: \.self) { index in
                                 OrderCard(order: $vm.itemsUpdated[index])
                             }
-                        } header: {
-                            Text("Latest Updated")
-                                .font(.title3)
-                                .bold()
                         }
+                        .listStyle(.plain)
                     }
+                    
                 }
-                .listStyle(.plain)
                 .scrollIndicators(.hidden)
                 .listRowSeparator(.hidden)
             }
-           
         }
         .isHidden(vm.isLoading)
         .overlay {
             ProgressView()
                 .isHidden(!vm.isLoading)
         }
-        
+        .overlay {
+            if !vm.isLoading && vm.itemsLatest.isEmpty && vm.itemsUpdated.isEmpty {
+                EmptyMessageViewWithButton(systemName: "bag.badge.questionmark", msg: "Your store has no orders") {
+                    NavigationLink {
+                        AddToCart()
+                    } label: {
+                        Text("Add your first order")
+                    }
+                    .buttonStyle(.bordered)
+
+                }
+            }
+        }
         .refreshable {
             await getUser()
             await vm.getContent()
-        }
-        .navigationDestination(isPresented: $latestOrders) {
-            if let storeId = myUser.user?.storeId {
-                StoreAllOrders(storeId: storeId)
-            }
         }
     }
     

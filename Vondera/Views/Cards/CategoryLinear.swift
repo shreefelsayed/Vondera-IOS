@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct CategoryLinear: View {
     @Binding var category:Category
@@ -15,17 +14,11 @@ struct CategoryLinear: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
-                NetworkImage(url: URL(string: category.url)) { image in
-                    image.centerCropped()
-                } placeholder : {
-                    Color.gray
-                } fallback: {
-                    Color.gray
-                }
-                .background(Color.white)
-                .frame(width: 60, height: 60)
-                .clipShape(Circle())
-                .id(category.url)
+                CachedImageView(imageUrl: category.url, scaleType: .centerCrop, placeHolder: defaultCategoryImage)
+                    .frame(width: 60, height: 60)
+                    .clipShape(Circle())
+                    .id(category.url)
+                
                 
                 Text(category.name)
                     .font(.headline)

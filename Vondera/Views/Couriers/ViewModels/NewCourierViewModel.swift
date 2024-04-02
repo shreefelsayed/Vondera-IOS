@@ -10,12 +10,7 @@ import Combine
 import SwiftUI
 
 class NewCourierViewModel : ObservableObject {
-    var storeId:String
-    var couriersDao:CouriersDao
-   
     @Published var newItem:Courier?
-
-
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     private var shouldDismissView = false {
         didSet {
@@ -31,12 +26,27 @@ class NewCourierViewModel : ObservableObject {
     @Published var isSaving = false
     
     
-    init(storeId:String) {
-        self.storeId = storeId
-        couriersDao = CouriersDao(storeId: storeId)
+    init() {
+        setDefaultPrices()
+    }
+    
+    func setDefaultPrices() {
+        if let prices = UserInformation.shared.user?.store?.listAreas {
+            for i in items.indices {
+                let area = items[i]
+                
+                if let priceIndex = prices.firstIndex(where: { storeArea in storeArea.govName == area.govName }) {
+                    items[i].price = prices[priceIndex].price
+                }
+            }
+        }
     }
     
     func save() async {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
         guard !name.isBlank else {
             showTosat(msg: "Fill the courier name")
             return
@@ -56,7 +66,7 @@ class NewCourierViewModel : ObservableObject {
             var courier = Courier(id: "", name: name, phone: phone, storeId: storeId)
             courier.listPrices = items.uniqueElements()
             
-            try await couriersDao.addCourier(courier: &courier)
+            try await CouriersDao(storeId: storeId).addCourier(courier: &courier)
             
             // --> Saving Local
             let myUser = UserInformation.shared.getUser()
@@ -68,10 +78,9 @@ class NewCourierViewModel : ObservableObject {
                 }
             }
             
-            showTosat(msg: "Courier Added")
-            
             // Dispatch UI updates on the main thread
             DispatchQueue.main.async { [courier] in
+                self.showTosat(msg: "Courier Added")
                 self.newItem = courier
                 self.shouldDismissView = true
                 self.isSaving = false

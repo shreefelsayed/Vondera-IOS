@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VPay: View {
+struct VPaySettings: View {
     @State var active = true
     @ObservedObject var user = UserInformation.shared
     
@@ -20,43 +20,41 @@ struct VPay: View {
         List {
             Toggle("Default Payment Gateway", isOn: $active)
             
-            Text("")
+            Text("V Pay is a payment gateway connected to your vondera account, it's created by us, this is no setup needed")
+                .font(.caption)
         }
         .task {
-            if let paytabs = user.user?.store?.paymentOptions?.paytabs {
-                profileId = paytabs.profile_id ?? ""
-                apiKey = paytabs.apiKey ?? ""
-                active = paytabs.selected ?? false
+            if let vPay = user.user?.store?.paymentOptions?.vPay {
+                active = vPay.selected ?? true
             }
         }
         .willProgress(saving: saving)
-        .navigationTitle("Paytabs")
+        .navigationTitle("V Pay")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Connect") {
+                Button("Update") {
                     connect()
+                }
+                
+                Link(destination: URL(string: "https://www.youtube.com/watch?v=n_r5XrV38ww&t=3s&pp=ygUHVm9uZGVyYQ%3D%3D")!) {
+                    Text("Help")
                 }
             }
         }
     }
     
     func connect() {
-        guard !profileId.isBlank, !apiKey.isBlank else {
-            msg = "Please fill the required data"
-            return
-        }
-        
         Task {
             var data = [
-                "paymentOptions.paytabs.profile_id" : profileId,
-                "paymentOptions.paytabs.apiKey" : apiKey,
-                "paymentOptions.paytabs.selected" : active,
-                "paymentOptions.paytabs.connected" : true,
-                "paymentOptions.paytabs.gateway" : true,
+                "paymentOptions.vPay.gateway" : true,
+                "paymentOptions.vPay.selected" : active,
             ]
             
             if active {
                 data["paymentOptions.paymob.selected"] = false
+                data["paymentOptions.paytabs.selected"] = false
+                data["paymentOptions.kashier.selected"] = false
+                data["paymentOptions.myFatoorah.selected"] = false
             }
             
             if let storeId = user.user?.storeId {
@@ -64,9 +62,8 @@ struct VPay: View {
                 Task {
                     try? await StoresDao().update(id:storeId, hashMap:data)
                     DispatchQueue.main.async {
-                        UserInformation.shared.user?.store?.paymentOptions?.paytabs?.selected = active
-                        UserInformation.shared.user?.store?.paymentOptions?.paytabs?.profile_id = profileId
-                        UserInformation.shared.user?.store?.paymentOptions?.paytabs?.apiKey = apiKey
+                        UserInformation.shared.user?.store?.paymentOptions?.vPay?.gateway = true
+                        UserInformation.shared.user?.store?.paymentOptions?.vPay?.selected = active
                         UserInformation.shared.updateUser()
                         saving = false
                         presentationMode.wrappedValue.dismiss()
@@ -75,8 +72,4 @@ struct VPay: View {
             }
         }
     }
-}
-
-#Preview {
-    Paytab()
 }

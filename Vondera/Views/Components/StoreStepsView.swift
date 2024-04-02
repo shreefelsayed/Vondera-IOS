@@ -47,7 +47,7 @@ struct StoreStepsView: View {
                     
                     StepItem(isDone: store.listAreas?.count ?? 0 > 0, view: AnyView(StoreShipping(storeId: myUser.storeId)), text: "Add your supported shipping areas")
                     
-                    StepItem(isDone: store.couriersCount ?? 0 > 0, view: AnyView(NewCourier(storeId: myUser.storeId, currentList: .constant([Courier]()))), text: "Add your couriers info")
+                    StepItem(isDone: store.couriersCount ?? 0 > 0, view: AnyView(NewCourier(currentList: .constant([Courier]()))), text: "Add your couriers info")
                     
                     StepItem(isDone: store.ordersCount ?? 0 > 0, view: AnyView(AddToCart()), text: "Create your first order", isLast: true)
                     

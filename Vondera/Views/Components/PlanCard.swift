@@ -9,24 +9,21 @@ import SwiftUI
 
 struct PlanCard: View {
     var store:Store
-    
+    @State private var showPlans = false
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                NavigationLink {
-                    AppPlans()
-                } label: {
-                    HStack {
-                        Text(store.subscribedPlan?.planName ?? "")
-                            .bold()
-                        
-                        Spacer()
-                        
-                        Text("Change Plan")
-                            .bold()
+                Text(store.subscribedPlan?.planName ?? "")
+                    .bold()
+                
+                Spacer()
+                
+                Text("Change Plan")
+                    .bold()
+                    .foregroundStyle(Color.accentColor)
+                    .onTapGesture {
+                        showPlans.toggle()
                     }
-                }
-                .buttonStyle(.plain)
             }
             
             
@@ -68,14 +65,13 @@ struct PlanCard: View {
             }
             
         }
+        .navigationDestination(isPresented: $showPlans, destination: {
+            AppPlans()
+        })
     }
 }
 
-struct PlanCard_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            PlanCard(store: Store.example())
-                .padding()
-        }
-    }
+#Preview {
+    PlanCard(store: Store.example())
+        .padding()
 }

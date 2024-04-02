@@ -31,8 +31,6 @@ class ProductVarientsViewModel : ObservableObject {
         setArrayData()
     }
     
-    
-    
     func setArrayData() {
         listOptions.removeAll()
         listTitles.removeAll()
@@ -63,8 +61,6 @@ class ProductVarientsViewModel : ObservableObject {
         do {
             let map:[String:Any] = ["hashVarients": list]
             try await productsDao.update(id: product.id, hashMap: map)
-            
-            
             
             DispatchQueue.main.async {
                 self.showTosat(msg: "Product variants updated")

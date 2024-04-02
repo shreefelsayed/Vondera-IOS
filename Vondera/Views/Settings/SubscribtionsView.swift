@@ -6,60 +6,66 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SubscribtionsView: View {
-    @State var myUser: UserData?
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .center) {
-                    Text("Current plan")
-                        .font(.title3)
-                        .bold()
-                    
-                    Spacer()
-                    
-                    Text("\(myUser?.store?.subscribedPlan?.planName ?? "")")
-                }
-                
-                if myUser?.store?.subscribedPlan?.isFreePlan() ?? true {
-                    HStack {
+            if let plan = UserInformation.shared.user?.store?.subscribedPlan {
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(alignment: .center) {
+                        Text("Current plan")
+                            .font(.title3)
+                            .bold()
+                        
                         Spacer()
                         
-                        NavigationLink("Upgrade your plan") {
-                            AppPlans()
-                        }
+                        Text("\(plan.planName)")
                     }
-                } else {
-                    VStack(alignment: .center) {
+                    
+                    if plan.isFreePlan() {
                         HStack {
-                            NavigationLink("Renew Now") {
-                                AppPlans()
-                            }
-                            
                             Spacer()
                             
                             NavigationLink("Upgrade your plan") {
                                 AppPlans()
                             }
                         }
-                        
-                        /*Text("Unsubscribe")
-                            .foregroundStyle(.red)
-                            .bold()*/
+                    } else {
+                        VStack(alignment: .center) {
+                            HStack {
+                                NavigationLink("Upgrade / Change Plan") {
+                                    AppPlans()
+                                }
+                                
+                                Spacer()
+                                
+                                Button("Cancel", role: .destructive) {
+                                    Task {
+                                        await manageSubscriptions()
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-                
-                
             }
         }
         .padding()
-        .onAppear {
-            self.myUser = UserInformation.shared.getUser()
-        }
         .navigationTitle("Subscribtions")
         
+    }
+    
+    @MainActor
+    func manageSubscriptions() async {
+        if let windowScene = UIApplication.shared.connectedScenes.first {
+            do {
+                try await AppStore.showManageSubscriptions(in: windowScene as! UIWindowScene)
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 

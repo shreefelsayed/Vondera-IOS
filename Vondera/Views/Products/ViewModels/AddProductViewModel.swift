@@ -221,7 +221,6 @@ class AddProductViewModel : ObservableObject {
                 }
             }
         }
-        
     }
     
     func updateRecentProducts() async {
@@ -257,7 +256,7 @@ class AddProductViewModel : ObservableObject {
     func saveProduct(uris: [URL]) {
         Task {
             // MARK : Create a product Object
-            var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
+            var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Int(sellingPrice) ?? 0, buyingPrice: Int(cost) ?? 0)
             
             product.desc = desc
             product.storeId = storeId
@@ -297,7 +296,9 @@ class AddProductViewModel : ObservableObject {
     func getStoreCategories() async {
         do {
             categories = try await categorysDao.getAll()
-            selectedCategory = categories.first
+            if let cat = categories.first {
+                selectedCategory = cat
+            }
         } catch {
             print(error.localizedDescription)
         }

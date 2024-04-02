@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-//TODO
 struct MarketPlaceReport: View {
     var marketPlaceId:String
     

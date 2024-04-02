@@ -69,7 +69,7 @@ struct ProductsFragment: View {
     
     var body: some View {
         VStack {
-            if let user = UserInformation.shared.user {
+            if let user = UserInformation.shared.getUser() {
                 //TOOLBAR
                 HStack {
                     Text("Products")
@@ -102,169 +102,193 @@ struct ProductsFragment: View {
                     .bold()
                     
                 }
-                .padding()
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
                 
-                List {
-                    // MARK : 3 Cards with counters
-                    Section {
-                        NavigationLink(destination: StoreProducts(storeId: user.storeId)) {
-                            Label("All Products", systemImage: "cart.fill")
-                                .bold()
+                if let count = user.store?.productsCount, count <= 0 {
+                    EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No Products in this category, add a new product") {
+                        VStack {
+                            if UserInformation.shared.user?.canAccessAdmin ?? false {
+                                NavigationLink {
+                                    AddProductView()
+                                } label: {
+                                    Text("Add Product")
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                        }
+                    }
+                } else {
+                    List {
+                        // MARK : 3 Cards with counters
+                        Section {
+                            NavigationLink(destination: StoreProducts(storeId: user.storeId)) {
+                                HStack {
+                                    Label(
+                                        title: { Text("All Products").bold() },
+                                        icon: { Image(.btnProducts) }
+                                    )
+                                    
+                                    Spacer()
+                                    
+                                    Text("\(user.store?.productsCount ?? 0)")
+                                }
+                                
+                                
+                            }
+                            
+                            if user.canAccessAdmin {
+                                NavigationLink(destination: StoreCategories(store: user.store!)) {
+                                    HStack {
+                                        Label(
+                                            title: { Text("Categories").bold() },
+                                            icon: { Image(.btnCollections) }
+                                        )
+                                        Spacer()
+                                        
+                                        Text("\(user.store?.categoriesCount ?? 0)")
+                                    }
+                                }
+                                
+                                
+                                NavigationLink {
+                                    (user.store?.subscribedPlan?.accessStockReport ?? false) ?
+                                    AnyView(WarehouseView(storeId: user.storeId)) : AnyView(AppPlans(selectedSlide: 7))
+                                } label: {
+                                    
+                                    Label(
+                                        title: { Text("Warehouse").bold() },
+                                        icon: { Image(.btnWarehouse) }
+                                    )
+                                }
+                            }
                         }
                         
+                        // MARK : Top Selling
+                        if !vm.itemsTopSelling.isEmpty {
+                            Section("Most Selling Products") {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack {
+                                        ForEach($vm.itemsTopSelling.indices, id: \.self) { index in
+                                            NavigationLink {
+                                                ProductDetails(product: $vm.itemsTopSelling[index]) { item in
+                                                    if let index = vm.itemsTopSelling.firstIndex(where: {$0.id == item.id}) {
+                                                        vm.itemsTopSelling.remove(at: index)
+                                                    }
+                                                }
+                                            } label: {
+                                                ProductCard(product: $vm.itemsTopSelling[index])
+                                            }
+                                            .frame(width: 200)
+                                            .buttonStyle(.plain)
+                                        }
+                                    }
+                                }
+                            }
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
+                            
+                        }
+                        
+                        // MARK : Most Viewed
+                        if !vm.itemsMostViewed.isEmpty {
+                            Section("Most viewed items") {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack {
+                                        ForEach($vm.itemsMostViewed.indices, id: \.self) { index in
+                                            NavigationLink {
+                                                ProductDetails(product: $vm.itemsMostViewed[index]) { item in
+                                                    if let index = vm.itemsMostViewed.firstIndex(where: {$0.id == item.id}) {
+                                                        vm.itemsMostViewed.remove(at: index)
+                                                    }
+                                                }
+                                            } label: {
+                                                ProductCard(product: $vm.itemsMostViewed[index])
+                                            }
+                                            .frame(width: 200)
+                                            .buttonStyle(.plain)
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
+                        }
+                        
+                        // MARK : REPORTS
                         if user.canAccessAdmin {
-                            NavigationLink(destination: StoreCategories(store: user.store!)) {
-                                Label("Categories", systemImage: "tablecells.fill.badge.ellipsis")
-                                    .bold()
-                            }
-                            
-                            NavigationLink {
-                                (user.store?.subscribedPlan?.accessStockReport ?? false) ?
-                                AnyView(WarehouseView(storeId: user.storeId)) : AnyView(AppPlans(selectedSlide: 7))
-                            } label: {
-                                Label("Warehouse", systemImage: "homekit")
-                                    .bold()
-                            }
-                        }
-                    }
-                    .buttonStyle(.plain)
-                    .listRowSpacing(4)
-                    .listRowSeparator(.hidden)
-                    
-                    // MARK : Top Selling
-                    if !vm.itemsTopSelling.isEmpty {
-                        Section {
-                            ScrollView(.horizontal, showsIndicators: false) {
+                            Section {
                                 HStack {
-                                    ForEach($vm.itemsTopSelling.indices, id: \.self) { index in
-                                        NavigationLink {
-                                            ProductDetails(product: $vm.itemsTopSelling[index]) { item in
-                                                if let index = vm.itemsTopSelling.firstIndex(where: {$0.id == item.id}) {
-                                                    
-                                                    vm.itemsTopSelling.remove(at: index)
-                                                }
-                                            }
-                                        } label: {
-                                            ProductCard(product: $vm.itemsTopSelling[index])
-                                        }
-                                        .frame(width: 200)
-                                        .buttonStyle(.plain)
+                                    // MARK : Added to Cart
+                                    ReportCardView(title: "Added to cart",
+                                                   desc: "\(vm.siteReports.getTotalAddedToCart()) Items added",
+                                                   dataSuffix: "Items",
+                                                   data: vm.siteReports.getAddedToCartData(), lineColor: .blue, smallSize: true)
+                                    
+                                    // MARK : Products View
+                                    ReportCardView(title: "Products view",
+                                                   desc: "\(vm.siteReports.getTotalProductsView()) Views",
+                                                   dataSuffix: "Views",
+                                                   data: vm.siteReports.getProductsViewsData(),
+                                                   lineColor: .mint, smallSize: true)
+                                }
+                                .listRowSeparator(.hidden)
+                                
+                            } header: {
+                                HStack {
+                                    Text("Overview")
+                                        .font(.headline)
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Picker("Date Range", selection: $vm.staticsDays) {
+                                        Text("Today")
+                                            .tag(1)
+                                        
+                                        Text("This Week")
+                                            .tag(7)
+                                        
+                                        Text("This Month")
+                                            .tag(30)
+                                        
+                                        Text("This Quarter")
+                                            .tag(90)
+                                        
+                                        Text("This year")
+                                            .tag(365)
                                     }
                                 }
-                                
                             }
-                        } header: {
-                            HStack {
-                                Text("Most Selling Products")
-                                    .font(.title3)
-                                    .bold()
-                                
-                                Spacer()
-                            }
-                        }
-                    }
-                    
-                    // MARK : Most Viewed
-                    if !vm.itemsMostViewed.isEmpty {
-                        Section {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach($vm.itemsMostViewed.indices, id: \.self) { index in
-                                        NavigationLink {
-                                            ProductDetails(product: $vm.itemsMostViewed[index]) { item in
-                                                if let index = vm.itemsMostViewed.firstIndex(where: {$0.id == item.id}) {
-                                                    vm.itemsMostViewed.remove(at: index)
-                                                }
-                                            }
-                                        } label: {
-                                            ProductCard(product: $vm.itemsMostViewed[index])
-                                        }
-                                        .frame(width: 200)
-                                        .buttonStyle(.plain)
-                                    }
-                                }
-                                
-                            }
-                        } header: {
-                            Text("Most viewed items")
-                                .font(.title3)
-                                .bold()
-                        }
-                    }
-                    
-                    // MARK : REPORTS
-                    if user.canAccessAdmin {
-                        Section {
-                            HStack {
-                                // MARK : Added to Cart
-                                ReportCardView(title: "Added to cart",
-                                               desc: "\(vm.siteReports.getTotalAddedToCart()) Items added",
-                                               dataSuffix: "Items",
-                                               data: vm.siteReports.getAddedToCartData(), lineColor: .blue, smallSize: true)
-                                
-                                // MARK : Products View
-                                ReportCardView(title: "Products view",
-                                               desc: "\(vm.siteReports.getTotalProductsView()) Views",
-                                               dataSuffix: "Views",
-                                               data: vm.siteReports.getProductsViewsData(),
-                                               lineColor: .mint, smallSize: true)
-                            }
-                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
                             
-                        } header: {
-                            HStack {
-                                Text("Overview")
-                                    .font(.title3)
-                                    .bold()
-                                
-                                Spacer()
-                                
-                                Picker("Date Range", selection: $vm.staticsDays) {
-                                    Text("Today")
-                                        .tag(1)
-                                    
-                                    Text("This Week")
-                                        .tag(7)
-                                    
-                                    Text("This Month")
-                                        .tag(30)
-                                    
-                                    Text("This Quarter")
-                                        .tag(90)
-                                    
-                                    Text("This year")
-                                        .tag(365)
-                                }
-                            }
                         }
                         
-                    }
-                    // MARK : Last ordered
-                    if !vm.itemsLastOrdered.isEmpty {
-                        Section {
-                            ForEach($vm.itemsLastOrdered.indices, id: \.self) { index in
-                                NavigationLink(destination: ProductDetails(product: $vm.itemsLastOrdered[index], onDelete: { item in
-                                    if let index = vm.itemsLastOrdered.firstIndex(where: {$0.id == item.id}) {
-                                        vm.itemsLastOrdered.remove(at: index)
-                                    }
-                                })) {
-                                    WarehouseCard(prod: $vm.itemsLastOrdered[index])
+                        // MARK : Last ordered
+                        if !vm.itemsLastOrdered.isEmpty {
+                            Section("Last Ordered") {
+                                ForEach($vm.itemsLastOrdered.indices, id: \.self) { index in
+                                    WarehouseCard(prod: $vm.itemsLastOrdered[index], sold: true)
+                                        .background(
+                                            NavigationLink("", destination: {
+                                                ProductDetails(product: $vm.itemsLastOrdered[index], onDelete: { item in
+                                                    if let index = vm.itemsLastOrdered.firstIndex(where: {$0.id == item.id}) {
+                                                        vm.itemsLastOrdered.remove(at: index)
+                                                    }
+                                                })
+                                            })
+                                        )
+                                    
                                 }
-                                .buttonStyle(.plain)
-                                
                             }
-                        } header: {
-                            Text("Last Ordered")
-                                .font(.title3)
-                                .bold()
+                            .listStyle(.plain)
                         }
                     }
-                    
-                    
+                    .scrollIndicators(.hidden)
+                    .listRowSeparator(.hidden)
                 }
-                .listStyle(.plain)
-                .scrollIndicators(.hidden)
-                .listRowSeparator(.hidden)
             }
         }
         .isHidden(vm.isLoading)

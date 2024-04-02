@@ -32,6 +32,27 @@ class ProductStocksViewModel : ObservableObject {
         self.productsDao = ProductsDao(storeId: product.storeId)
     }
     
+    func reset() async {
+        DispatchQueue.main.async {
+            self.isSaving = true
+        }
+        
+        do {
+            // --> Update the database
+            try await productsDao.addToStock(id: product.id, q: Double(-(product.quantity)))
+            DispatchQueue.main.async {
+                self.showTosat(msg: "Product marked as out of stock")
+            }
+        } catch {
+            showTosat(msg: error.localizedDescription)
+        }
+        
+        DispatchQueue.main.async {
+            self.isSaving = false
+        }
+        
+    }
+    
     func update() async {
         guard stock != 0 else {
             showTosat(msg: "Enter how many pieces you want to add")
@@ -45,7 +66,6 @@ class ProductStocksViewModel : ObservableObject {
         do {
             // --> Update the database
             try await productsDao.addToStock(id: product.id, q: Double(stock))
-            
             
             showTosat(msg: "Pieces added to stock")
             DispatchQueue.main.async {

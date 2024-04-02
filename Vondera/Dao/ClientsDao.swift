@@ -49,19 +49,16 @@ class ClientsDao {
                                                                                                        
                                                                                                 
     
-    func getClients(sort:String = "lastOrder", lastSnapShot:DocumentSnapshot?) async throws -> ([Client], QueryDocumentSnapshot?) {
-        var query:Query = collection
+    func getClients(sort:String = "lastOrder", lastSnapShot:DocumentSnapshot?) async throws -> (items: [Client], lastDocument: DocumentSnapshot?) {
+        return try await collection
             .order(by: sort, descending: true)
-            
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        query.limit(to: pageSize)
-        
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
+            .limit(to: pageSize)
+            .startAfter(lastDocument: lastSnapShot)
+            .getDocumentWithLastSnapshot(as: Client.self)
+    }
+    
+    func update(id:String, hashMap:[String:Any]) async throws {
+        return try await collection.document(id).updateData(hashMap)
     }
     
     func convertToList(snapShot:QuerySnapshot) -> [Client] {

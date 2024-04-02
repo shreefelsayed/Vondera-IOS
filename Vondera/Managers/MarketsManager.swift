@@ -35,6 +35,14 @@ class MarketsManager {
         return markets
     }
 
+    func getEnabledMarketsWithWebsite(storeMarkets: [StoreMarketPlace]) -> [Markets] {
+        var markets = getEnabledMarkets(storeMarkets: storeMarkets)
+        
+        if let websiteEnabled = UserInformation.shared.user?.store?.websiteEnabled, websiteEnabled {
+            markets.insert(getCommerceMarket(), at: 0)
+        }
+        return markets
+    }
     func getEnabledMarkets(storeMarkets: [StoreMarketPlace]) -> [Markets] {
         var list = [Markets]()
 
@@ -116,6 +124,10 @@ class MarketsManager {
         return list
     }
 
+    func getCommerceMarket() -> Markets {
+        return Markets(id: "ecommerce", name: "Website", icon: "icon", startColor: "#FFFFFF", endColor: "#FFFFFF")
+    }
+    
     func getGradientColors(id: String) -> [String] {
         switch id {
         case "instagram":

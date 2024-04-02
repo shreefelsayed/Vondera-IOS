@@ -11,9 +11,6 @@ import FirebaseFirestore
 import SwiftUI
 
 class StoreExpansesViewModel : ObservableObject {
-    var storeId:String
-    
-    var expansesDao:ExpansesDao
     @Published var isLoading = false
     
     @Published var items = [Expense]()
@@ -28,10 +25,7 @@ class StoreExpansesViewModel : ObservableObject {
     
     private var lastSnapshot:DocumentSnapshot?
     
-    init(storeId:String) {
-        self.storeId = storeId
-        self.expansesDao = ExpansesDao(storeId: storeId)
-        
+    init() {
         Task {
             await getData()
             initSearch()
@@ -40,9 +34,13 @@ class StoreExpansesViewModel : ObservableObject {
     
     
     func deleteItem(item:Expense) {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
         Task {
-            try await expansesDao.delete(id:item.id)
+            try await ExpansesDao(storeId: storeId).delete(id:item.id)
             DispatchQueue.main.sync {
+                ToastManager.shared.showToast(msg: "Expanses Deleted", toastType: .success)
                 items.removeAll(where: { $0.id == item.id })
             }
         }
@@ -61,24 +59,34 @@ class StoreExpansesViewModel : ObservableObject {
             return
         }
         
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        self.isLoading = true
+        
         do {
-            self.isLoading = true
-            let result = try await expansesDao.getExpanses(lastSnapShot: lastSnapshot)
-                lastSnapshot = result.1
-                items.append(contentsOf: result.0)
+            let result = try await ExpansesDao(storeId: storeId).getExpanses(lastSnapShot: lastSnapshot)
+            DispatchQueue.main.sync {
+                self.lastSnapshot = result.1
+                self.items.append(contentsOf: result.0)
                 if result.0.count == 0 {
                     self.canLoadMore = false
                 }
                 
-                isLoading = false
-            
+                self.isLoading = false
+            }
         } catch {
-            isLoading = false
+            self.isLoading = false
         }
         
     }
     
     func initSearch() {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
         $searchText
             .debounce(for: .seconds(1.2), scheduler: RunLoop.main) // Adjust the debounce time as needed
             .removeDuplicates() // To avoid duplicate values
@@ -86,7 +94,11 @@ class StoreExpansesViewModel : ObservableObject {
                 if !newValue.isBlank {
                     Task {
                         do {
-                            result = try await self.expansesDao.search(text: searchText).sorted(by: { $0.date.toDate() < $1.date.toDate() })
+                            let result = try await ExpansesDao(storeId: storeId).search(text: searchText).sorted(by: { $0.date.toDate() < $1.date.toDate() })
+                            
+                            DispatchQueue.main.sync {
+                                self.result = result
+                            }
                         } catch {
                             print(error.localizedDescription)
                         }

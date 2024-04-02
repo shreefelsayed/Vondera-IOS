@@ -8,15 +8,11 @@
 import SwiftUI
 import AlertToast
 import PhotosUI
-import NetworkImage
 
 struct WebsiteCover: View {
-    
-    @State var items = [String]()
+    @State var listPhotos = [ImagePickerWithUrL]()
     @State var images = [PhotosPickerItem]()
-    @State var uiImages = [UIImage]()
-    
-    
+
     @ObservedObject var user = UserInformation.shared
     @State var saving = false
     @State var msg:String?
@@ -24,49 +20,43 @@ struct WebsiteCover: View {
     
     var body: some View {
         List {
-            ForEach(items, id: \.self) { image in
-                NetworkImageViewWithDeleteButton(imageUrl: URL(string: image)!) {
-                    if let index = items.firstIndex(of: image) {
-                        items.remove(at: index)
-                    }
+            ForEach(listPhotos, id: \.id) { item in
+                if let index = listPhotos.firstIndex(where: { image in image.id == item.id }) {
+                    ImageRow(pathOrLink: item, title: "Cover", index: index)
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: 240)
+            }
+            .onDelete { indexSet in
+                if let index = indexSet.first {
+                    // --> Remove it from picker
+                    if let _ = listPhotos[index].image {
+                        images.remove(at: listPhotos[index].index)
+                    }
+                    
+                    // --> Remove it from list
+                    listPhotos.remove(at: index)
+                }
+                
+            }
+            .onMove { indexSet, index in
+                listPhotos.move(fromOffsets: indexSet, toOffset: index)
             }
             
-            ForEach(uiImages, id: \.self) { image in
-                ImageViewWithDeleteButton(image: image) {
-                    if let index = uiImages.firstIndex(of: image) {
-                        uiImages.remove(at: index)
-                    }
+            if(listPhotos.count < 6) {
+                PhotosPicker(selection: $images, maxSelectionCount: (6 - listPhotos.count), matching: .images) {
+                    Label("Add a new picture", systemImage: "plus")
                 }
-                .frame(maxWidth: .infinity)
-                .frame(height: 240)
-            }
-            
-            if (images.count + items.count) < 6 {
-                PhotosPicker(selection: $images, maxSelectionCount: (6 - (images.count + items.count)), matching: .images) {
-                    ImageView(removeClicked: {
-                    }, showDelete: false) {
-                        
+                .onChange(of: images) { newValue in
+                    Task {
+                        let photos = await newValue.addToListPhotos(list: listPhotos)
+                        DispatchQueue.main.async {
+                            self.listPhotos = photos
+                        }
                     }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 240)
                 }
             }
         }
+        .listRowSeparator(.hidden)
         .listStyle(.plain)
-        // MARK : Recive New Images
-        .onChange(of: images) { newValue in
-            Task {
-                uiImages.removeAll()
-                for picker in newValue {
-                    if let image = try? await picker.getImage() {
-                        uiImages.append(image)
-                    }
-                }
-            }
-        }
         .willProgress(saving: saving)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -79,7 +69,7 @@ struct WebsiteCover: View {
         .navigationBarBackButtonHidden(saving)
         .task {
             if let siteData = user.user?.store?.siteData {
-                items = siteData.listCover ?? []
+                self.listPhotos = siteData.listCover?.convertImageUrlsToItems() ?? []
             }
         }
         .toast(isPresenting: Binding(value: $msg)) {
@@ -91,34 +81,35 @@ struct WebsiteCover: View {
     func update() {
         if let storeId = user.user?.storeId {
             saving = true
-            if !uiImages.isEmpty {
-                FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: uiImages, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
-                    if let error = error {
-                        self.saving = false
-                        self.msg = error.localizedDescription
-                    } else if let imageURLs = imageURLs {
-                        self.updateURL(uris: imageURLs)
-                    }
+            
+            guard !listPhotos.isEmpty else {
+                updateURL()
+                return
+            }
+            
+            
+            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
+                if let error = error {
+                    self.saving = false
+                    self.msg = error.localizedDescription
+                } else if let urls = imageURLs {
+                    self.listPhotos = self.listPhotos.mapUrlsToLinks(urls: urls)
+                    self.updateURL()
                 }
-            } else {
-                updateURL(uris: [])
             }
         }
     }
     
-    func updateURL(uris:[URL]) {
+    func updateURL() {
         Task {
             if let id = UserInformation.shared.user?.storeId {
-                var finalList = uris.map({ $0.absoluteString })
-                finalList.append(contentsOf: items)
-                
                 let data = [
-                    "siteData.listCover" : finalList,
+                    "siteData.listCover" : listPhotos.getLinks(),
                 ]
                 
                 if let _ = try? await StoresDao().update(id: id, hashMap: data) {
                     DispatchQueue.main.async { [self] in
-                        UserInformation.shared.user?.store?.siteData?.listCover = finalList
+                        UserInformation.shared.user?.store?.siteData?.listCover = listPhotos.getLinks()
                         UserInformation.shared.updateUser()
                         presentationMode.wrappedValue.dismiss()
                         msg = "Updated"
@@ -135,58 +126,4 @@ struct WebsiteCover: View {
 
 #Preview {
     WebsiteCover()
-}
-
-struct NetworkImageViewWithDeleteButton: View {
-    var imageUrl: URL
-    var onDelete: () -> Void
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .topTrailing) {
-                AsyncImage(url: imageUrl) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .aspectRatio(6/4, contentMode: .fit)
-                            .cornerRadius(10)
-                    } else if phase.error != nil {
-                        Text("Image Load Error")
-                    } else {
-                        Color.gray
-                    }
-                }
-                
-                Button(action: onDelete) {
-                    Image(systemName: "trash.circle.fill")
-                        .foregroundColor(.red)
-                        .font(.system(size: 30))
-                }
-                .padding()
-            }
-        }
-    }
-}
-
-struct ImageViewWithDeleteButton: View {
-    var image: UIImage
-    var onDelete: () -> Void
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .topTrailing) {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(6/4, contentMode: .fit)
-                    .cornerRadius(10)
-                
-                Button(action: onDelete) {
-                    Image(systemName: "trash.circle.fill")
-                        .foregroundColor(.red)
-                        .font(.system(size: 30))
-                }
-                .padding()
-            }
-        }
-    }
 }

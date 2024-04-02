@@ -10,63 +10,47 @@ import AlertToast
 
 
 struct StoreExpanses: View {
-    var storeId:String
-    
     @State var selectedExpanse:Expense?
     @State var addExpanses = false
-    @ObservedObject var viewModel:StoreExpansesViewModel
-    
-    init(storeId:String) {
-        self.storeId = storeId
-        self.viewModel = StoreExpansesViewModel(storeId: storeId)
-    }
+    @ObservedObject var viewModel = StoreExpansesViewModel()
     
     var body: some View {
         List {
             ForEach(viewModel.searchText.isBlank ? $viewModel.items : $viewModel.result) { item in
-                VStack(alignment: .center) {
-                    ExpansesCard(expanse: item)
-                        .swipeActions(allowsFullSwipe: false) {
-                            Button(role: .destructive) {
-                                withAnimation {
-                                    viewModel.deleteItem(item: item.wrappedValue)
-                                }
-                            } label: {
-                                Image(systemName: "trash.fill")
-                            }
-
-                            Button {
-                                selectedExpanse = item.wrappedValue
-                            } label: {
-                                Image(systemName: "pencil")
-                            }
-                            .tint(.blue)
-                        }
-                    
-                    // MARK : Loading indec
-                    if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
-                        HStack {
-                            Spacer()
-                            ProgressView()
-                            Spacer()
-                        }
-                        .onAppear {
-                            loadItem()
-                        }
+                ExpansesCard(expanse: item) {
+                    withAnimation {
+                        viewModel.deleteItem(item: item.wrappedValue)
                     }
+                    
+                } onClicked: {
+                    selectedExpanse = item.wrappedValue
                 }
                 
-                
+                // MARK : Loading indec
+                if viewModel.canLoadMore && viewModel.items.last?.id == item.id {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .onAppear {
+                        loadItem()
+                    }
+                }
             }
         }
-        .searchable(text: $viewModel.searchText, prompt: "Search for expanse")
-        .refreshable {
-            await refreshData()
-        }
+        .scrollIndicators(.hidden)
         .listStyle(.plain)
+        .padding()
+        
+        .searchable(text: $viewModel.searchText, prompt: "Search for expanse")
         .overlay {
             if !viewModel.isLoading && viewModel.items.isEmpty {
-                EmptyMessageView(systemName: "coloncurrencysign.circle.fill", msg: "You haven't recorded any expanses yet !")
+                EmptyMessageResourceWithButton(imageResource: .emptyExpanses, msg: "You haven't recorded any expanses yet !") {
+                    Button("Add a new expanse") {
+                        addExpanses.toggle()
+                    }
+                }
             }
         }
         .toolbar {
@@ -80,7 +64,7 @@ struct StoreExpanses: View {
                         }
                         
                         NavigationLink {
-                            ExpansesReport(storeId: storeId)
+                            ExpansesReport(storeId: myUser.storeId)
                         } label: {
                             Label("Reports", systemImage: "filemenu.and.selection")
                         }
@@ -91,13 +75,15 @@ struct StoreExpanses: View {
             }
             
         }
+        .refreshable {
+            await refreshData()
+        }
         .toast(isPresenting: Binding(value: $viewModel.msg), alert : {
             AlertToast(displayMode: .banner(.slide), type: .regular, title: viewModel.msg?.toString())
         })
-        
         .sheet(isPresented: $addExpanses, content: {
             NavigationStack {
-                AddExpanse(storeId: storeId) { newValue in
+                AddExpanse() { newValue in
                     withAnimation {
                         viewModel.items.insert(newValue, at: 0)
                     }
@@ -106,7 +92,7 @@ struct StoreExpanses: View {
         })
         .sheet(item: $selectedExpanse) { item in
             NavigationStack {
-                EditExpanse(expanse: item, storeId: storeId) { newValue in
+                EditExpanse(expanse: item) { newValue in
                     let index = viewModel.items.firstIndex { $0.id == newValue.id }
                     if let index = index {
                         DispatchQueue.main.async {
@@ -117,7 +103,7 @@ struct StoreExpanses: View {
                 }
             }
         }
-
+        .background(Color.background)
         .navigationTitle("Expanses 💳")
     }
     
@@ -134,7 +120,7 @@ struct StoreExpanses: View {
 
 #Preview {
     NavigationView {
-        StoreExpanses(storeId: Store.Qotoofs())
+        StoreExpanses()
 
     }
 }

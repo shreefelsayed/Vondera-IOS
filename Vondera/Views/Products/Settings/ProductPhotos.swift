@@ -9,9 +9,52 @@ import SwiftUI
 import AlertToast
 import PhotosUI
 
+struct ImageRow: View {
+    var pathOrLink: ImagePickerWithUrL
+    var title:String = "Product"
+    var index:Int
+    
+    var body: some View {
+        HStack {
+            Group {
+                if let link = pathOrLink.link  {
+                    CachedImageView(imageUrl: link, scaleType: .centerCrop)
+                    .id(pathOrLink.id)
+                } else if let image = pathOrLink.image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .id(pathOrLink.id)
+                }
+            }
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 180, height: 100)
+            .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
+            .padding(.trailing, 12)
+            .tag(pathOrLink.id)
+            
+            
+            Text("\(title) Image (\((index + 1)))")
+            
+            
+            Image(systemName: "arrow.up.arrow.down")
+                .opacity(0.5)
+                .font(.body)
+        }
+    }
+}
+
+struct ImagePickerWithUrL  : Identifiable{
+    var id = UUID().uuidString
+    var image:UIImage?
+    var link:String?
+    var index:Int
+}
+
 struct ProductPhotos: View {
     var product:StoreProduct
     @State var images = [PhotosPickerItem]()
+    @State var imagesWithIndexs = [(PhotosPickerItem, Int)]()
+    
     @ObservedObject var viewModel:ProductPhotosViewModel
     @Environment(\.presentationMode) private var presentationMode
     
@@ -21,13 +64,47 @@ struct ProductPhotos: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
-                photos
+        List {
+            ForEach(viewModel.listPhotos, id: \.id) { item in
+                if let index = viewModel.listPhotos.firstIndex(where: { image in image.id == item.id }) {
+                    ImageRow(pathOrLink: item, index: index)
+                }
             }
-            .isHidden(viewModel.isLoading)
+            .onDelete { indexSet in
+                if let index = indexSet.first {
+                    // --> Remove it from picker
+                    if let image = viewModel.listPhotos[index].image {
+                        images.remove(at: viewModel.listPhotos[index].index)
+                    }
+                    
+                    // --> Remove it from list
+                    viewModel.listPhotos.remove(at: index)
+                }
+                
+            }
+            .onMove { indexSet, index in
+                viewModel.listPhotos.move(fromOffsets: indexSet, toOffset: index)
+            }
+            
+            if(viewModel.listPhotos.count < 6) {
+                PhotosPicker(selection: $images, maxSelectionCount: (6 - viewModel.listPhotos.count), matching: .images) {
+                    Label("Add a new picture", systemImage: "plus")
+                }
+                .onChange(of: images) { newValue in
+                    Task {
+                        let photos = await newValue.addToListPhotos(list: viewModel.listPhotos)
+                        DispatchQueue.main.async {
+                            self.viewModel.listPhotos = photos
+                        }
+                    }
+                }
+            }
+            
+            Text("At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.")
+                .font(.caption)
         }
-        .padding()
+        .listRowSeparator(.hidden)
+        .listStyle(.plain)
         .navigationTitle("Product photos")
         .navigationBarBackButtonHidden(viewModel.isSaving)
         .toolbar {
@@ -35,7 +112,7 @@ struct ProductPhotos: View {
                 Button("Update") {
                     update()
                 }
-                .disabled(viewModel.isLoading || viewModel.isSaving || (product.listPhotos == viewModel.listPhotos && viewModel.selectedPhotos.isEmpty) || (viewModel.listPhotos.count + images.count) == 0)
+                .disabled(viewModel.isLoading || viewModel.isSaving || product.listPhotos.isEmpty)
             }
         }
         .overlay(alignment: .center, content: {
@@ -61,58 +138,6 @@ struct ProductPhotos: View {
         }
     }
     
-    var photos: some View {
-        VStack(alignment: .leading) {
-            // MARK : Photos title
-            HStack {
-                Text("Product photos")
-                    .font(.title2)
-                    .bold()
-                
-                Spacer()
-                
-                PhotosPicker(selection: $images, maxSelectionCount: (6 - viewModel.listPhotos.count)) {
-                    Text("Add")
-                }
-                .disabled((images.count + viewModel.listPhotos.count) >= 6)
-            }
-            
-            // MARK : Selected Photos
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(viewModel.listPhotos, id: \.self) { image in
-                        ImageViewNetwork(image: image) {
-                            viewModel.removePhoto(image: image)
-                        }
-                    }
-                    
-                    ForEach(viewModel.selectedPhotos.indices, id: \.self) { index in
-                        ImageView(image: viewModel.selectedPhotos[index], removeClicked: {
-                            images.remove(at: index)
-                        })
-                    }
-                    
-                    if (images.count - viewModel.listPhotos.count) < 6 {
-                        PhotosPicker(selection: $images, maxSelectionCount: (6 - viewModel.listPhotos.count), matching: .images) {
-                            ImageView(removeClicked: {
-                            }, showDelete: false) {
-                                
-                            }
-                        }
-                        .disabled((images.count + viewModel.listPhotos.count) >= 6)
-                    }
-                }
-            }
-            
-            Text("At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.")
-                .font(.caption)
-        }
-        .onChange(of: images) { newValue in
-            Task {
-                viewModel.selectedPhotos = await newValue.getUIImages()
-            }
-        }
-    }
 }
 
 struct ProductPhotos_Previews: PreviewProvider {

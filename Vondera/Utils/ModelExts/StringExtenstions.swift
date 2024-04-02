@@ -47,6 +47,15 @@ extension String {
         return LocalizedStringKey(self)
     }
     
+    var firstName: String {
+        let components = self.components(separatedBy: " ")
+        if let firstName = components.first {
+            return firstName
+        } else {
+            return self
+        }
+    }
+    
     var isValidEmail: Bool {
         // Regular expression pattern to match the email format
         let emailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
@@ -324,6 +333,36 @@ extension Array where Element == PhotosPickerItem {
         
         return items
     }
+    
+    func addToListPhotos(list:[ImagePickerWithUrL]) async -> [ImagePickerWithUrL]{
+        var listPhotos = list
+        let uiImages = await self.getUIImages()
+        for imageIndex in uiImages.indices {
+            let image = uiImages[imageIndex]
+            
+            var foundImage = false
+            for photoIndex in listPhotos.indices {
+                // MARK : Delete changed images
+                let item = listPhotos[photoIndex].image
+                if let item = item, uiImages.firstIndex(of: item) == nil {
+                    listPhotos.remove(at: photoIndex)
+                    continue
+                }
+                
+                if item == image {
+                    foundImage = true
+                }
+            }
+            
+            // --> Add the image
+            if !foundImage {
+                listPhotos.append(ImagePickerWithUrL(image: image, link: nil, index: imageIndex))
+            }
+        }
+        
+        return listPhotos
+    }
+    
 }
 
 extension PhotosPickerItem {
@@ -333,6 +372,100 @@ extension PhotosPickerItem {
             return nil
         }
         return image
+    }
+    
+    func getPath() async  -> String {
+        if let id = try? await self.getURL(item: self) {
+            print("Path \(id)")
+            return id.path()
+        }
+        
+        print("Couldn't get id")
+        return ""
+    }
+    
+    func getURL(item: PhotosPickerItem) async throws -> URL? {
+        // Step 1: Load as Data object.
+        let data = try await item.loadTransferable(type: Data.self)
+
+        if let contentType = item.supportedContentTypes.first {
+            // Step 2: make the URL file name and get a file extension.
+            let url = getDocumentsDirectory().appendingPathComponent("\(UUID().uuidString).\(contentType.preferredFilenameExtension ?? "")")
+
+            if let data = data {
+                do {
+                    try data.write(to: url)
+                    return url
+                } catch {
+                    throw error
+                }
+            }
+            
+        }
+        
+        return nil
+    }
+
+    /// from: https://www.hackingwithswift.com/books/ios-swiftui/writing-data-to-the-documents-directory
+    func getDocumentsDirectory() -> URL {
+        // find all possible documents directories for this user
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
+        // just send back the first one, which ought to be the only one
+        return paths[0]
+    }
+
+}
+
+extension Array where Element == String {
+    func convertImageUrlsToItems() -> [ImagePickerWithUrL] {
+        let items = self.filter { !$0.isBlank }
+        return items.map { link in
+            ImagePickerWithUrL(image: nil, link: link, index: 0)
+        }
+    }
+}
+
+
+    
+extension Array where Element == ImagePickerWithUrL {
+    func getItemsToUpload() -> [ImagePickerWithUrL] {
+        var images = [ImagePickerWithUrL]()
+        for items in self {
+            if let image = items.image{
+                images.append(items)
+            }
+        }
+        return images
+    }
+    
+    func mapUrlsToLinks(urls : [URL]) -> [ImagePickerWithUrL] {
+        var listPhotos = self
+        let uploadedItems = listPhotos.getItemsToUpload()
+        for photoIndex in listPhotos.indices {
+            let photo = listPhotos[photoIndex]
+            
+            for uiImageIndex in uploadedItems.indices {
+                let uiImage = uploadedItems[uiImageIndex]
+                if photo.id == uiImage.id {
+                    listPhotos[photoIndex].image = nil
+                    listPhotos[photoIndex].link = urls[uiImageIndex].absoluteString
+                }
+            }
+        }
+        
+        return listPhotos
+    }
+    
+    func getLinks() -> [String] {
+        var allLinks = [String]()
+        for item in self {
+            if let link = item.link, !link.isBlank, item.image == nil {
+                allLinks.append(link)
+            }
+        }
+        
+        return allLinks
     }
 }
 

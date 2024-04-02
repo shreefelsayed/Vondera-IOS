@@ -223,7 +223,7 @@ struct EditOrder: View {
         address = order.address
         notes = order.notes ?? ""
         clientShippingFees = order.clientShippingFees
-        discount = order.discount ?? 0
+        discount = Int(order.discount ?? 0)
         paid = order.paid ?? false
     }
     
@@ -272,7 +272,7 @@ struct EditOrder: View {
         order.address = address
         order.notes = notes
         order.clientShippingFees = clientShippingFees
-        order.discount = discount
+        order.discount = Double(discount)
         order.paid = paid
     }
     

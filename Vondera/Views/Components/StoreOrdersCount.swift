@@ -15,7 +15,7 @@ struct StoreOrdersCount: View {
             if let myUser = user.user, let store = myUser.store {
                 NavigationLink(destination: FullfillOrdersFragment()) {
                     HStack {
-                        Text("Orders to fullfil")
+                        Text("Orders to fulfill")
                             .font(.headline)
                             .bold()
                         
@@ -26,7 +26,7 @@ struct StoreOrdersCount: View {
                 
                 Divider()
                 
-                NavigationLink(destination: StoreCouriers(storeId: myUser.storeId)) {
+                NavigationLink(destination: StoreCouriers()) {
                     HStack {
                         Text("With Courier")
                             .font(.headline)
@@ -39,7 +39,7 @@ struct StoreOrdersCount: View {
                 
                 Divider()
                 
-                NavigationLink(destination: UserOrders(id: myUser.id, storeId: myUser.storeId)) {
+                NavigationLink(destination: UserOrders()) {
                     HStack {
                         Text("My Orders")
                             .font(.headline)

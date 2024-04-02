@@ -6,104 +6,146 @@
 //
 
 import SwiftUI
-import NetworkImage
 import SwipeCell
 import PDFViewer
 
+struct OrderCardSkelton: View {
+    var body: some View {
+        HStack {
+            SkeletonCellView(isDarkColor: true)
+            .frame(width: 70, alignment: .trailing)
+            .frame(maxHeight: .infinity)
+            .cornerRadius(8)
+            
+            
+            // MARK : Card Content
+            VStack(alignment: .leading) {
+                // MARK : First Row
+                HStack(alignment: .center) {
+                    SkeletonCellView(isDarkColor: false)
+                        .frame(width: 30, height: 30)
+                        .cornerRadius(30)
+                    
+                    SkeletonCellView(isDarkColor: true)
+                        .frame(width:80, height: 15)
+                    
+                    Spacer()
+                    
+                    SkeletonCellView(isDarkColor: true)
+                        .frame(width:40, height: 15)
+                }
+                
+                // MARK : Address & Name
+                SkeletonCellView(isDarkColor: false)
+                    .frame(height: 15)
+                
+               
+                // MARK : Second Row
+                SkeletonCellView(isDarkColor: false)
+                    .frame(height: 15)
+                
+                // MARK : Forth Row
+                SkeletonCellView(isDarkColor: false)
+                    .frame(height: 15)
+            }
+            .padding(.leading, 6)
+            
+        }
+        .cardView()
+        
+    }
+}
+
 struct OrderCard: View {
     @Binding var order:Order
+    var showPreview:Bool = true
     var allowSelect:(() -> ())?
-
+    
     @State private var sheetHeight: CGFloat = .zero
     @State private var contact = false
     @State private var options = false
-    
+    @State private var openOrderDetails = false
+        
     var body: some View {
-        NavigationLink(destination: NavigationLazyView(OrderDetails(order: $order))) {
-            VStack(alignment: .leading, spacing: 2) {
-                //MARK : Top View
-                HStack {
+        HStack {
+            if showPreview {
+                ZStack(alignment: .bottom) {
+                    CachedImageView(imageUrl: order.defaultPhoto, scaleType: .centerCrop)
+                        .id(order.defaultPhoto)
+                    
+                    HStack {
+                        Text("\(order.productsCount) Items")
+                            .font(.caption)
+                            .foregroundStyle(.white)
+                    }
+                    .padding(4)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.accentColor)
+                }
+                .frame(width: 70, alignment: .trailing)
+                .frame(maxHeight: .infinity)
+                .background(Color.gray)
+                .cornerRadius(8)
+            }
+            
+            // MARK : Card Content
+            VStack(alignment: .leading) {
+                // MARK : First Row
+                HStack(alignment: .center) {
                     if order.marketPlaceId != nil && !order.marketPlaceId!.isBlank {
                         MarketHeaderCard(marketId: order.marketPlaceId!, withText: false)
                     }
                     
                     Text("#\(order.id)")
+                        .font(.caption)
                         .bold()
                     
                     
-                    Text(order.date.toString())
+                    Spacer()
+                    
+                    Text(order.getStatueLocalized())
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    Spacer()
-                    
-                    Text("$ \(order.COD)")
-                        .font(.subheadline)
-                        .bold()
                 }
                 
-                //MARK
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        // MARK : Statue
-                        HStack {
-                            Text(order.statue != "Out For Delivery" ? order.getStatueLocalized() : "With \(order.courierName ?? "")")
-                                .bold()
-                            
-                            Text($order.wrappedValue.getPaidStatue().0)
-                                .foregroundColor($order.wrappedValue.getPaidStatue().1)
-                            
-                            Spacer()
-                            
-                        }
-                        
-                        // MARK : Client Name
-                        HStack(spacing: 0) {
-                            Text("\(order.name)")
-                                .foregroundColor(.secondary)
-                            
-                            Text(" , \(order.requireDelivery ?? true ? order.gov : "Not Shipping")")
-                                .lineLimit(1)
-                                .foregroundColor((order.requireDelivery ?? true) ? .secondary : .red)
-                                .bold((order.requireDelivery ?? true) ? false : true)
-                        }
-                        
-                        // MARK : Client Name
-                        Text("By : \(order.owner ?? "")")
-                            .foregroundColor(.secondary)
-                    }
-                    
+                // MARK : Address & Name
+                Text("\(order.name), \(order.gov)")
+                    .font(.caption)
+                
+               
+                // MARK : Second Row
+                HStack {
+                    Text("By : \(order.owner ?? "")")
+                    Spacer()
+                    Text(order.date.toString())
+                }
+                .font(.caption)
+                
+                // MARK : Forth Row
+                HStack {
+                    Text(order.getPaymentStatue)
+                        .font(.caption)
+                        .foregroundStyle(order.getPaymentStatueColor)
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .fill(order.getPaymentStatueColor.opacity(0.2))
+                        )
                     
                     Spacer()
                     
-                    ZStack(alignment: .center) {
-                        NetworkImage(url: URL(string: order.defaultPhoto )) { image in
-                            image
-                                .centerCropped()
-                                .scaledToFit()
-                        } placeholder: {
-                            ProgressView()
-                        } fallback: {
-                            Color.gray
-                        }
-                        .background(Color.gray)
-                        .id(order.defaultPhoto)
-                        
-                        Rectangle()
-                            .foregroundColor(.black.opacity(0.2))
-                        
-                        Text("\(order.productsCount)")
-                            .font(.title)
-                            .bold()
-                            .foregroundColor(.white)
-                    }
-                    .frame(width: 60, height: 60, alignment: .trailing)
-                    .cornerRadius(8)
+                    Text("EGP \(order.totalPrice)")
+                        .font(.caption)
+                        .bold()
+                        .foregroundStyle(Color.accentColor)
                 }
             }
+            .padding(.leading, 6)
             
         }
-        .buttonStyle(.plain)
+        .navigationCardView(destination: OrderDetails(order: $order))
         .swipeActions(edge:.trailing, allowsFullSwipe: false) {
             if allowSelect != nil {
                 Button {
@@ -136,11 +178,12 @@ struct OrderCard: View {
             OrderOptionsSheet(order: $order, isPreseneted: $options)
         }
     }
-    
 }
 
-struct OrderCard_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    List {
         OrderCard(order: .constant(Order.example()))
+        OrderCardSkelton()
     }
+    .listStyle(.plain)
 }

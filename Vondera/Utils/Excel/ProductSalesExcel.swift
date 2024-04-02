@@ -59,8 +59,8 @@ class ProductSalesExcel {
 
         totalItems.forEach { item in
             count += item.quantity
-            sales += Int(item.price * Double(item.quantity))
-            cost += Int(item.buyingPrice * Double(item.quantity))
+            sales += Int(item.price * item.quantity)
+            cost += Int(item.buyingPrice * item.quantity)
 
         }
         

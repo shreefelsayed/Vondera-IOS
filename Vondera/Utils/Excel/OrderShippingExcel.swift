@@ -25,18 +25,25 @@ class OrderShippingExcel {
         createHeader(["Order ID",
                       "Name",
                       "Phone",
+                      "Other Phone",
+                      "Products",
                       "Address",
                       "Cash",
-                      "Statue"])
+                      "Statue",
+                      "Notes"])
         
         //MARK : Add Items
         for (index, order) in listOrders.enumerated() {
+            
             let data:[String] = ["#\(order.id)",
                                  order.name,
                                  order.phone,
+                                 order.otherPhone ?? "",
+                                 order.productsInfo,
                                  order.gov + " - " + order.address,
                                  "\(order.COD) LE",
-                                 order.statue]
+                                 order.statue,
+                                 order.notes ?? ""]
             
             addRow(rowNumber: (index + 2), items: data)
         }
@@ -58,6 +65,7 @@ class OrderShippingExcel {
         
         let data:[String] = [
             "\(listOrders.count) Orders",
+            "",
             "",
             "",
             "",

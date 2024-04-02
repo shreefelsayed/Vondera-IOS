@@ -55,7 +55,7 @@ class StoreLogoViewModel : ObservableObject {
 
         if selectedImage != nil {
             isSaving = true
-            FirebaseStorageUploader().oneImageUpload(image: image ,name: "\(String(describing: store.ownerId)) - Logo" ,ref: ref) { [self] url, error in
+            FirebaseStorageUploader().oneImageUpload(image: image, ref: "stores/\(String(describing: store.ownerId)) - Logo.jpeg") { [self] url, error in
                 if let error = error {
                     isSaving = false
                     showMessage(error.localizedDescription.localize())

@@ -117,21 +117,24 @@ struct CreateAccountView: View {
                 
                 FloatingTextField(title: "Slogan", text: $viewModel.slogan, caption: "Your store slogan, it will be shown on your receipts and in your website", required: false, autoCapitalize: .words)
                 
-                HStack {
-                    Text("Category")
-                    
-                    Spacer()
-                    
-                    Text(CategoryManager().getCategoryById(id: viewModel.selectedCateogry ?? 0).nameEn)
-                        .foregroundStyle(Color.accentColor)
-                        .bold()
-                    
-                    Image(systemName: "chevron.right")
-                        .font(.title3)
-                        .foregroundStyle(Color.accentColor)
-                }.onTapGesture {
-                    openCategory.toggle()
+                if let category = CategoryManager().getCategoryById(id: viewModel.selectedCateogry ?? 7) {
+                    HStack {
+                        Text("Category")
+                        
+                        Spacer()
+                        
+                        Text(category.name)
+                            .foregroundStyle(Color.accentColor)
+                            .bold()
+                        
+                        Image(systemName: "chevron.right")
+                            .font(.title3)
+                            .foregroundStyle(Color.accentColor)
+                    }.onTapGesture {
+                        openCategory.toggle()
+                    }
                 }
+                
                 
                 VStack{
                     HStack {
@@ -203,12 +206,12 @@ struct PickCategory: View {
     @Binding var selected:Int?
     var body: some View {
         VStack {
-            List(CategoryManager().getAll(), id: \.self) { category in
+            /*List(CategoryManager().getAll(), id: \.self) { category in
                 StoreCategoryLinearCard(storeCategory: category, selected: $selected, onClicked: {
                     sheetVisible.toggle()
                 })
             }
-            .listStyle(.plain)
+            .listStyle(.plain)*/
         }
         .navigationTitle("Choose your category")
     }

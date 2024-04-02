@@ -26,6 +26,7 @@ struct StoreMarketPlacesUpdate : View {
                 }
             }
         }
+        .listStyle(.plain)
         .willProgress(saving: isSaving)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

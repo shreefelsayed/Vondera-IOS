@@ -13,7 +13,6 @@ struct AddToCart: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            
             // MARK : Categories
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(alignment: .center) {
@@ -33,33 +32,51 @@ struct AddToCart: View {
                 .padding()
             }
             
+            
+            // MARK : Items
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                ForEach($viewModel.products.indices, id: \.self) { index in
+                    if $viewModel.products[index].wrappedValue.filter(viewModel.searchText) {
+                        NavigationLink(destination: ProductDetails(product: $viewModel.products[index], onDelete: { item in
+                            
+                            if let index = viewModel.products.firstIndex(where: {$0.id == item.id}) {
+                                viewModel.products.remove(at: index)
+                            }
+                            
+                        })) {
+                            ProductCard(product: $viewModel.products[index]) {
+                                self.selectedProduct = viewModel.products[index]
+                            }
+                            .id(viewModel.products[index].id)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+            .padding(.horizontal, 12)
+        }
+        .overlay {
             if viewModel.isLoading {
                 ProgressView()
-            } else {
-                if viewModel.products.isEmpty {
-                    EmptyMessageView(msg: "No Products are in this category")
-                } else {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                        ForEach($viewModel.products.indices, id: \.self) { index in
-                            if $viewModel.products[index].wrappedValue.filter(viewModel.searchText) {
-                                NavigationLink(destination: ProductDetails(product: $viewModel.products[index], onDelete: { item in
-                                    
-                                    if let index = viewModel.products.firstIndex(where: {$0.id == item.id}) {
-                                        viewModel.products.remove(at: index)
-                                    }
-                                    
-                                })) {
-                                    ProductBuyingCard(product: $viewModel.products[index]) {
-                                        self.selectedProduct = viewModel.products[index]
-                                    }
-                                }
-                                .buttonStyle(PlainButtonStyle())
+            }
+        }
+        .overlay {
+            if !viewModel.isLoading, viewModel.products.isEmpty {
+                EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No Products in this category, add a new product") {
+                    VStack {
+                        if UserInformation.shared.user?.canAccessAdmin ?? false {
+                            NavigationLink {
+                                AddProductView()
+                            } label: {
+                                Text("Add Product")
                             }
+                            .buttonStyle(.bordered)
                         }
                     }
                 }
             }
         }
+        .background(Color.background)
         .refreshable {
             await viewModel.selectCategory(id: viewModel.selectedCategory)
         }
@@ -73,7 +90,7 @@ struct AddToCart: View {
         .onAppear {
             viewModel.getCart()
         }
-        .navigationTitle("New Order")
+        .navigationTitle("Add to cart")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
@@ -129,12 +146,5 @@ struct CartBadgeView: View {
                 .offset(x: 15, y: -15)
             
         }
-    }
-}
-
-
-#Preview {
-    NavigationView {
-        AddToCart()
     }
 }

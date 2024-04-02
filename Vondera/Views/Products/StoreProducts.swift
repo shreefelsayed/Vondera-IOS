@@ -50,6 +50,7 @@ struct StoreProducts: View {
                                 }
                             })) {
                                 ProductCard(product: $viewModel.products[index])
+                                    .id(viewModel.products[index].id)
                             }
                             .buttonStyle(.plain)
                             
@@ -58,11 +59,22 @@ struct StoreProducts: View {
                 }
             }
         }
-        .overlay(content: {
+        .overlay(alignment: .center, content: {
             if viewModel.isLoading {
                 ProgressView()
             } else if viewModel.products.isEmpty {
-                EmptyMessageView(msg: "No Products are in this category")
+                EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "You haven't added any products to your store yet !") {
+                    VStack {
+                        if UserInformation.shared.user?.canAccessAdmin ?? false {
+                            NavigationLink {
+                                AddProductView()
+                            } label: {
+                                Text("Add Product")
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                    }
+                }
             }
         })
         .refreshable {
@@ -116,6 +128,5 @@ struct StoreProducts_Previews: PreviewProvider {
         NavigationView {
             StoreProducts(storeId: "lcvPuRAIVVUnRcZpttlPsRPLqoY2")
         }
-        
     }
 }

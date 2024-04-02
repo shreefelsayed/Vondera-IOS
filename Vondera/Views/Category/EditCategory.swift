@@ -8,7 +8,6 @@
 import SwiftUI
 import AlertToast
 import FirebaseStorage
-import NetworkImage
 import PhotosUI
 
 
@@ -157,8 +156,7 @@ struct EditCategory: View {
     }
     
     func uploadImage() {
-        let ref = Storage.storage().reference().child("stores").child(storeId)
-        FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,name: name ,ref: ref) { url, error in
+        FirebaseStorageUploader().oneImageUpload(image: selectedImage!, ref: "stores/\(storeId)/categories/\(category.id).jpeg") { url, error in
             if error != nil {
                 DispatchQueue.main.async {
                     self.isSaving = false

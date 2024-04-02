@@ -2,9 +2,8 @@ import Foundation
 import StoreKit
 import FirebaseAuth
 
-//alias
-typealias RenewalInfo = StoreKit.Product.SubscriptionInfo.RenewalInfo //The Product.SubscriptionInfo.RenewalInfo provides information about the next subscription renewal period.
-typealias RenewalState = StoreKit.Product.SubscriptionInfo.RenewalState // the renewal states of auto-renewable subscriptions.
+typealias RenewalInfo = StoreKit.Product.SubscriptionInfo.RenewalInfo
+typealias RenewalState = StoreKit.Product.SubscriptionInfo.RenewalState
 
 
 class StoreVM: ObservableObject {
@@ -34,10 +33,10 @@ class StoreVM: ObservableObject {
     }
     
     func getProductsId() async {
-        let items = try! await PlanDao().getPaid();
-        
-        productIds = items.map { plan in
-            plan.id
+        if let items = try? await PlanDao().getPaid() {
+            self.productIds = items.map { $0.id }
+        } else {
+            msg = "Couldn't get the plans, check your network"
         }
     }
     
@@ -76,6 +75,7 @@ class StoreVM: ObservableObject {
     
     // purchase the product
     func purchase(planId: String) async throws -> Bool {
+        guard let storeId = UserInformation.shared.user?.storeId else { return false }
         let item = subscriptions.first(where: {$0.id == planId})
         
         guard let product = item else {
@@ -84,18 +84,12 @@ class StoreVM: ObservableObject {
         }
         
         isBuying = true
+        let uuid = UUID(uuidString: storeId) ?? UUID()
+        let result = try await product.purchase(options: [.appAccountToken(uuid)])
         
-        let result = try await product.purchase()
         switch result {
         case .success(let verification):
-            //Check whether the transaction is verified. If it isn't,
-            //this function rethrows the verification error.
             let transaction = try checkVerified(verification)
-            
-            //The transaction is verified. Deliver content to the user.
-            
-            
-            //Always finish a transaction.
             await transaction.finish()
             msg = "Payment made"
             isBuying = false
@@ -160,7 +154,8 @@ class StoreVM: ObservableObject {
         let data = [
             "storeId" : uId,
             "planId" : id,
-            "onEnd" : "Unsubscribe"
+            "onEnd" : "Unsubscribe",
+            "method" : "Apple",
         ]
         
         do {

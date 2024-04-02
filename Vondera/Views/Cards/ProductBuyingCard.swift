@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct ProductBuyingCard: View {
     @Binding var product:StoreProduct
@@ -16,21 +15,9 @@ struct ProductBuyingCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let url = product.listPhotos.first {
-                NetworkImage(url: URL(string: url )) { image in
-                    image.centerCropped()
-                } placeholder: {
-                    ZStack(alignment: .center) {
-                        Color.gray
-                        ProgressView()
-                    }
-                } fallback: {
-                    Color.gray
-                }
-                .id(product.id)
-                .background(Color.white)
+                CachedImageView(imageUrl: url, scaleType: .centerCrop)
                 .frame(height: 200)
             }
-            
             
             VStack(alignment: .leading) {
                 Text(product.name.uppercased())

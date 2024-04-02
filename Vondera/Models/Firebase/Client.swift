@@ -10,7 +10,7 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 struct Client: Codable, Hashable, Identifiable {
-    @DocumentID var id:String? = ""
+    @DocumentID var id:String?
     var phone: String = ""
     var name: String = ""
     var address: String? = ""
@@ -19,7 +19,7 @@ struct Client: Codable, Hashable, Identifiable {
     var ordersCount: Int? = 0
     var total: Double? = 0
     var isBanned: Bool? = false
-    var lastOrder:Timestamp = Timestamp(date: Date())
+    var lastOrder:Timestamp? = Timestamp(date: Date())
 }
 
 extension Client {

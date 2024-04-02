@@ -8,17 +8,13 @@
 import Foundation
 
 class StoreEmployeesViewModel: ObservableObject {
-    var storeId:String
-        
     @Published var items = [UserData]()
     @Published var searchText = ""
 
     @Published var isLoading = false
     @Published var error = ""
     
-    init(storeId:String) {
-        self.storeId = storeId
-        
+    init() {
         Task {
             await getData()
         }
@@ -35,8 +31,8 @@ class StoreEmployeesViewModel: ObservableObject {
         
 
         do {
-            if let uId = UserInformation.shared.user?.id {
-                var data = try await UsersDao().storeEmployees(expect: uId, storeId: storeId, active: true)
+            if let user = UserInformation.shared.user {
+                var data = try await UsersDao().storeEmployees(expect: user.id, storeId: user.storeId, active: true)
                 data = data.filter({ $0.accountType != "Owner" })
                 DispatchQueue.main.async { [data] in
                     self.items = data

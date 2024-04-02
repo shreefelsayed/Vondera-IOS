@@ -7,7 +7,6 @@
 
 import SwiftUI
 import AlertToast
-import LoadingButton
 
 struct StoreSocial: View {
     var store:Store
@@ -46,7 +45,8 @@ struct StoreSocial: View {
                 FloatingTextField(title: "Tik Tok Link", text: $viewModel.tiktok, required: nil, keyboard: .URL)
             }
         }
-        .navigationTitle("Social")
+        .listStyle(.plain)
+        .navigationTitle("Social Media Accounts")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Update") {

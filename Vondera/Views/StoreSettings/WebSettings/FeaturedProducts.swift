@@ -41,7 +41,12 @@ struct FeaturedProducts: View {
             if isLoading {
                 ProgressView()
             } else if !isLoading && listProducts.isEmpty {
-                EmptyMessageView(systemName:"star.slash" ,msg: "No Products are featured on the website")
+                EmptyMessageViewWithButton(systemName: "star.slash", msg: "No Products are featured on the website") {
+                    Button("Add product to featured") {
+                        showSheet.toggle()
+                    }
+                    .buttonStyle(.bordered)
+                }
             }
         })
         .listStyle(.plain)
@@ -111,7 +116,7 @@ struct PickProductView : View {
     var skiped:[StoreProduct]
     @Binding var isPresented:Bool
     var onClicked:((StoreProduct) -> ())
-
+    
     @State private var isLoading = false
     @State private var products = [StoreProduct]()
     @State private var searchText = ""
@@ -137,6 +142,7 @@ struct PickProductView : View {
             if isLoading {
                 ProgressView()
             } else if !isLoading && products.isEmpty {
+                
                 EmptyMessageView(msg: "No Products are added to the store")
             }
         })

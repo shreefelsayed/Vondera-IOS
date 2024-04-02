@@ -14,7 +14,8 @@ class StoreCategoriesViewModel : ObservableObject {
     @Published var loading = false
     @Published var msg:LocalizedStringKey?
     @Published var items = [Category]()
-    
+    @Published var searchText = ""
+
     
     init(store:Store) {
         self.store = store

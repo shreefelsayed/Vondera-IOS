@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct UpdateCard: View {
     var update:Updates
@@ -16,62 +15,76 @@ struct UpdateCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                if let user  = user {
-                    ImagePlaceHolder(url: user.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
-                } else if update.uId == "Shopify" {
-                    Image("shopify")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                } else if update.uId == "System" ||  update.uId == "Website"{
-                    Image("app_icon")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                } else if deleted {
-                    ImagePlaceHolder(url: "", placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
-                } else {
-                    Circle()
-                        .foregroundColor(.gray)
-                        .frame(width: 60, height: 60)
-                }
-                
-                
-                VStack(alignment:.leading) {
-                    Text(update.desc())
-                        .font(.headline)
-                    
-                    HStack {
-                        Text("By : \(getBy().toString())")
-                            .font(.body)
-                            .foregroundStyle(deleted ? .red : .black)
-                        
-                        Spacer()
-                        
-                        Text(update.date.toDate().timeAgoString())
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+            if let store = UserInformation.shared.user?.store {
+                HStack(alignment: .center) {
+                    Group {
+                        if let user  = user {
+                            ImagePlaceHolder(url: user.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
+                        } else if update.uId == "Shopify" {
+                            Image("shopify")
+                                .resizable()
+                                .frame(width: 60, height: 60)
+                        } else if update.uId == "System" ||  update.uId == "Website" {
+                            CachcedCircleView(imageUrl: store.logo ?? "", scaleType: .centerCrop, placeHolder: defaultStoreImage)
+                                .frame(width: 60, height: 60)
+                        } else if deleted {
+                            ImagePlaceHolder(url: "", placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
+                        } else {
+                            Circle()
+                                .foregroundColor(.gray)
+                                .frame(width: 60, height: 60)
+                        }
                     }
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .clipShape(Circle())
+                    
+                    
+                    
+                    VStack(alignment:.leading) {
+                        Text(update.desc())
+                            .font(.headline)
+                        
+                        HStack {
+                            Text("By : \(getBy().toString())")
+                                .font(.body)
+                            
+                            Spacer()
+                            
+                            Text(update.date.toDate().timeAgoString())
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    }
                 }
+                .padding(2)
+                
+                Divider()
             }
-            .padding(2)
             
-            Divider()
         }
         .task {
-            do {
-                let result = try await UsersDao().getUser(uId: update.uId)
-                DispatchQueue.main.async {
-                    if result.exists {
-                        self.user = result.item
-                        return
-                    }
-                    self.deleted = true
+            await getUserInfo()
+        }
+    }
+    
+    private func getUserInfo() async {
+        guard update.uId.count > 12 else {
+            return
+        }
+        
+        do {
+            let result = try await UsersDao().getUser(uId: update.uId)
+            DispatchQueue.main.async {
+                if result.exists {
+                    self.user = result.item
+                    return
                 }
-            } catch {
-                print(error.localizedDescription)
+                
+                self.deleted = true
             }
+        } catch {
+            print(error.localizedDescription)
         }
     }
     

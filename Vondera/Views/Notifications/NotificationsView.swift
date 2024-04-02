@@ -97,13 +97,10 @@ struct NotificationsView: View {
                     }
                 }
             }
-            
-            
         }
         .refreshable {
             await refreshData()
         }
-        .listStyle(.plain)
         .overlay {
             if !viewModel.isLoading && viewModel.items.isEmpty {
                 EmptyMessageView(systemName: "bell.slash", msg: "No notifications")
@@ -124,54 +121,6 @@ struct NotificationsView: View {
     }
 }
 
-struct NotificationCard : View {
-    var notification:NotificationModel
-    
-    var body: some View {
-        HStack {
-            VStack(alignment:.leading) {
-                HStack {
-                    Text(notification.title)
-                        .font(.title3)
-                        .bold()
-                    
-                    
-                    Spacer()
-                    
-                    if !notification.read {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .frame(width: 10, height: 10)
-                            .foregroundStyle(Color.accentColor)
-                    }
-                }
-                
-                
-                Text(notification.body)
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                
-                HStack {
-                    Spacer()
-                    
-                    Text(notification.date.toString())
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                
-            }
-            
-            Spacer()
-        }
-        .padding(12)
-        .background(notification.read ? Color.background : .secondary.opacity(0.2))
-        .task {
-            if let id = UserInformation.shared.user?.id {
-                try? await NotificationsDao(userId: id).markAsRead(id: notification.id)
-            }
-        }
-    }
-}
 #Preview {
     NotificationsView()
 }

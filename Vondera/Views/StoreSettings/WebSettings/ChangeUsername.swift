@@ -23,10 +23,16 @@ struct ChangeUsername: View {
     var body: some View {
         List {
             HStack {
-                FloatingTextField(title: "Username", text: $userName, caption: "This will be your link, it should be english, no spaces, uniquie, no numbers", required: true, autoCapitalize: .never)
-                    .onChange(of: userName, perform: { value in
-                        validateUserName()
-                    })
+                VStack (alignment: .leading) {
+                    FloatingTextField(title: "Username", text: $userName, caption: "This will be your link, it should be english, no spaces, uniquie, no numbers", required: true, autoCapitalize: .never)
+                        .onChange(of: userName, perform: { value in
+                            validateUserName()
+                        })
+                    
+                    Text("Your website url will be https://\(userName).vondera.shop/")
+                        .font(.caption)
+                }
+                
                 
                 if validatingName {
                     ProgressView()

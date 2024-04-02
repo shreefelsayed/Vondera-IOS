@@ -17,36 +17,34 @@ struct CourierCardWithNavigation: View {
     }
 }
 
+struct CourierCardSkelton : View {
+    var body: some View {
+        HStack {
+            SkeletonCellView(isDarkColor: true)
+            .frame(width: 45, height: 45)
+            .cornerRadius(45)
+            
+            VStack {
+                SkeletonCellView(isDarkColor: true)
+                    .frame(height: 15)
+            }
+        }
+    }
+}
 struct CourierCard: View {
     var courier:Courier
     
     @State private var sheetHeight: CGFloat = .zero
     @State private var showContact = false
-    @State private var ordersCount = 0
 
     var body: some View {
         HStack {
+            CachcedCircleView(imageUrl: courier.imageUrl ?? "", scaleType: .centerCrop, placeHolder: defaultCourier)
+                .frame(width: 45, height: 45)
+            
             VStack(alignment: .leading) {
                 Text(courier.name)
-                    .font(.title2)
                     .bold()
-                
-                Text("\(ordersCount) Orders with Courier")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-        }
-        .buttonStyle(.plain)
-        .task {
-            if let storeId = courier.storeId {
-                if let count = try? await OrdersDao(storeId: storeId)
-                    .getPendingCouriersOrderCount(id: courier.id) {
-                    ordersCount = count
-                }
             }
         }
         .swipeActions(edge: .leading, allowsFullSwipe: false) {

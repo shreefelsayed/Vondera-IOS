@@ -21,8 +21,6 @@ class OrderManager {
     let FAILED_CODE = 17
     let PART_CODE = 18
     let EDIT_CODE = 19
-
-    
     
     func outForDelivery(list: inout [Order], courier:Courier) async -> [Order] {
         for var order in list {
@@ -71,6 +69,8 @@ class OrderManager {
         hash["courierName"] = courier.name
         hash["courierShippingFees"] = fees
         hash["dateShipping"] = Timestamp(date: Date())
+        hash["courierConnected"] = !(courier.courierHandler ?? "").isBlank
+        hash["courierInfo"] = [:]
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
         order = await addComment(order: &order, msg: "", code: OUT_FOR_DELV_CODE)
@@ -304,7 +304,7 @@ class OrderManager {
     func checkCommission(order: inout Order) async {
         let myUser = UserInformation.shared.getUser()
         if myUser!.accountType == "Marketing" && (myUser?.percentage ?? 0 ) > 0 {
-            order.commission = (Int(myUser!.percentage! / 100) * order.netProfit)
+            order.commission = Double(Int(myUser!.percentage! / 100) * order.netProfit)
         } else {
             order.percPaid = true
         }

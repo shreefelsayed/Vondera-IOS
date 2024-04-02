@@ -11,16 +11,22 @@ import SwiftUI
 struct HybridTextField: View {
     @Binding var text: String
     @State var isSecure: Bool = true
+    @Binding var isFocused:Bool
     var titleKey: LocalizedStringKey
     
     var body: some View {
         HStack{
             Group{
                 if isSecure{
-                    SecureField(titleKey, text: $text)
+                    SecureField(titleKey, text: $text, onCommit: {isFocused = false})
+                        .onTapGesture {
+                            isFocused = true
+                        }
                     
                 } else{
-                    TextField(titleKey, text: $text)
+                    TextField(titleKey, text: $text) { focus in
+                        isFocused = focus
+                    }
                 }
             }
             //.animation(.easeInOut(duration: 0.2), value: isSecure)
@@ -35,8 +41,3 @@ struct HybridTextField: View {
         }
     }
 }
-
-#Preview {
-    HybridTextField(text: .constant(""), isSecure: true, titleKey: "Password")
-}
-

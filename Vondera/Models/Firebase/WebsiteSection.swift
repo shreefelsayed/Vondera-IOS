@@ -17,8 +17,8 @@ struct WebsiteSection : Codable, Identifiable{
     var sortValue = 0;
     var date = Timestamp(date: Date())
     
-    func getLink(mId:String) -> URL {
-        let link = "https://vondera.store/pages?store=\(mId)&id=\(id)"
+    func getLink(baseLink:String) -> URL {
+        let link = "\(baseLink)/page/\(id)"
         return URL(string: link)!
     }
 }

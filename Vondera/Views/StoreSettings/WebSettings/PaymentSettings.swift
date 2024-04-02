@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PaymentSettings: View {
-    @ObservedObject var user = UserInformation.shared
+    @StateObject var user = UserInformation.shared
     @State var cod = true
-    //@State var disableCOD = true
+    
     var body: some View {
         List {
             Toggle("Cash on Delivery", isOn: $cod)
@@ -19,23 +19,150 @@ struct PaymentSettings: View {
                 }
                 .disabled(user.user?.store?.paymentOptions?.mustEnableCOD() ?? true)
             
-            NavigationLink("Paytabs Gateway") {
-                Paytab()
+            Section("Gateways") {
+                NavigationLink {
+                    VPaySettings()
+                } label: {
+                    HStack {
+                        if (user.user?.store?.paymentOptions?.vPay?.selected ?? true) {
+                            Label("VPay Gateway", systemImage: "checkmark")
+                        } else {
+                            Text("VPay Gateway")
+                        }
+                        
+                        Spacer()
+                        
+                        Image(.mastercard)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
+                        Image(.visa)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                    }
+                    
+                }
+                
+                NavigationLink {
+                    Paytab()
+                } label: {
+                    HStack {
+                        if let selected = user.user?.store?.paymentOptions?.paytabs?.selected, selected == true {
+                            Label("Paytabs Gateway", systemImage: "checkmark")
+                        } else {
+                            Text("Paytabs Gateway")
+                        }
+                        
+                        Spacer()
+                        
+                        Image(.mastercard)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
+                        Image(.visa)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                    }
+                }
+                
+                NavigationLink {
+                    KashierSettings()
+                } label: {
+                    HStack{
+                        if let selected = user.user?.store?.paymentOptions?.kashier?.selected, selected == true {
+                            Label("Kashier Gateway", systemImage: "checkmark")
+                        } else {
+                            Text("Kashier Gateway")
+                        }
+                        
+                        Spacer()
+                        
+                        Image(.wallet)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
+                        Image(.mastercard)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
+                        Image(.visa)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                    }
+                }
+                
+                NavigationLink {
+                    MyFatoorahSettings()
+                } label: {
+                    HStack{
+                        if let selected = user.user?.store?.paymentOptions?.myFatoorah?.selected, selected == true {
+                            Label("My Fatoorah Gateway", systemImage: "checkmark")
+                        } else {
+                            Text("My Fatoorah Gateway")
+                        }
+                        
+                        Spacer()
+                        
+                        Image(.mastercard)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
+                        Image(.visa)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                    }
+                }
+                
+                NavigationLink {
+                    PaymobSettings()
+                } label: {
+                    HStack {
+                        if let selected = user.user?.store?.paymentOptions?.paymob?.selected, selected == true {
+                            Label("Paymob Gateway", systemImage: "checkmark")
+                        } else {
+                            Text("Paymob Gateway")
+                        }
+                        
+                        Spacer()
+                        
+                        Image(.mastercard)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
+                        Image(.visa)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                    }
+                }
             }
+            .buttonStyle(.plain)
             
-            NavigationLink("Paymob Gateway") {
-                PaymobSettings()
-            }
         }
         .navigationTitle("Payment Settings")
+        .onAppear {
+            refreshData()
+        }
         .task {
             if let cashSelected = user.user?.store?.paymentOptions?.cash?.selected {
                 cod = cashSelected
             }
-            
-            /*if let paymentOptions = user.user?.store?.paymentOptions {
-                disableCOD = !paymentOptions.mustEnableCOD()
-            }*/
+        }
+    }
+    
+    func refreshData() {
+        Task {
+            await UserInformation.shared.refetchUser()
         }
     }
     

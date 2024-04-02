@@ -13,6 +13,7 @@ struct CategoryPicker: View {
     @Binding var selectedItem: Category?
     @Environment(\.presentationMode) var presentationMode
     @State private var showAdd = false
+    
     var body: some View {
         List {
             ForEach($items.indices, id: \.self) { index in
@@ -23,10 +24,26 @@ struct CategoryPicker: View {
                     }
             }
         }
+        .overlay(alignment: .center, content: {
+            if items.isEmpty {
+                EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No categories were added to your store yet !") {
+                    VStack {
+                        if UserInformation.shared.user?.canAccessAdmin ?? false {
+                            Button("Create new Category") {
+                                showAdd.toggle()
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                    }
+                }
+            }
+        })
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("New") {
-                    showAdd.toggle()
+            if UserInformation.shared.user?.canAccessAdmin ?? false {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("New") {
+                        showAdd.toggle()
+                    }
                 }
             }
         }
@@ -36,11 +53,8 @@ struct CategoryPicker: View {
                     items.append(newValue)
                 }
             }
-            
         })
         .listStyle(.plain)
         .navigationTitle("Categories")
-        
-        
     }
 }

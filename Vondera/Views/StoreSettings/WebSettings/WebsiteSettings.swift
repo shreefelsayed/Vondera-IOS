@@ -12,76 +12,121 @@ struct WebsiteSettings: View {
     @State var active = true
     var body: some View {
         List {
-            if let myUser = user.user, let store = myUser.store {
-                
-                VStack(alignment: .leading) {
+            if let myUser = user.getUser(), let store = myUser.store {
+                Section {
                     Toggle(isOn: $active) {
                         Label("Live website", systemImage: "antenna.radiowaves.left.and.right.circle")
                     }
-                    .disabled(!(store.subscribedPlan?.website ?? false))
+                }
+                
+                Section("Theming") {
+                    NavigationLink {
+                        WebsiteTheme()
+                    } label: {
+                        Label("Website theme", systemImage: "tshirt")
+                    }
                     
-                    if !(store.subscribedPlan?.website ?? false) {
-                        NavigationLink("Upgrade your plan to enable the website") {
-                            AppPlans()
-                        }
-                        .font(.caption)
-                        //Text("Upgrade your plan to enable the website")
+                    NavigationLink {
+                        WebsiteCover()
+                    } label: {
+                        Label("Cover photos", systemImage: "photo.on.rectangle.angled")
+                    }
+                    
+                    NavigationLink {
+                        BannerTitles()
+                    } label: {
+                        Label("Banner titles", systemImage: "list.dash.header.rectangle")
+                    }
+                    
+                }
+                
+                Section("Content") {
+                    NavigationLink {
+                        CustomPage()
+                    } label: {
+                        Label("Custom Pages", systemImage: "book")
+                    }
+                    
+                    NavigationLink {
+                        FeaturedProducts()
+                    } label: {
+                        Label("Featured Products", systemImage: "star")
+                    }
+                    
+                    NavigationLink {
+                        StoreSocial(store: store)
+                    } label: {
+                        Label("Social Media Accounts", systemImage: "person.crop.circle.badge.checkmark")
+                    }
+                    
+                }
+                
+                Section("Payment") {
+                    NavigationLink {
+                        PaymentSettings()
+                    } label: {
+                        Label("Payment Options", systemImage: "creditcard.fill")
+                    }
+                    
+                    NavigationLink {
+                        DiscountCodes()
+                    } label: {
+                        Label("Discount Codes", systemImage: "coloncurrencysign")
                     }
                 }
                 
-                
-                NavigationLink {
-                    ChangeUsername()
-                } label: {
-                    Label("Website Username", systemImage: "link.circle")
+                Section("Domain Settings") {
+                    NavigationLink {
+                        ChangeUsername()
+                    } label: {
+                        Label("Website Username", systemImage: "link.circle")
+                    }
+                 
+                    NavigationLink {
+                        CustomDomain()
+                    } label: {
+                        Label("Custom Domain", systemImage: "w.circle")
+                    }
                 }
                 
-                NavigationLink {
-                    WebsiteTheme()
-                } label: {
-                    Label("Website theme", systemImage: "tshirt")
-                }
-
-                NavigationLink {
-                    WebsiteCover()
-                } label: {
-                    Label("Cover photos", systemImage: "photo.on.rectangle.angled")
-                }
-                
-                NavigationLink {
-                    FeaturedProducts()
-                } label: {
-                    Label("Featured Products", systemImage: "star")
-                }
-                
-                NavigationLink {
-                    CustomPage()
-                } label: {
-                    Label("Custom Pages", systemImage: "book")
-                }
-                
-                NavigationLink {
-                    DiscountCodes()
-                } label: {
-                    Label("Discount Codes", systemImage: "coloncurrencysign")
+                Section("Pixels") {
+                    NavigationLink {
+                        GTMScreen()
+                    } label: {
+                        Label {
+                            Text("Google Tag Manager")
+                        } icon: {
+                            Image(.google)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                        }
+                    }
+                    
+                    NavigationLink {
+                        FbPixelScreen()
+                    } label: {
+                        Label {
+                            Text("Facebook Pixel")
+                        } icon: {
+                            Image(.facebook)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                        }
+                    }
                 }
                 
-                NavigationLink {
-                    PaymentSettings()
-                } label: {
-                    Label("Payment Options", systemImage: "creditcard.fill")
-                }
-                
-                NavigationLink {
-                    StoreSocial(store: store)
-                } label: {
-                    Label("Social Media Account", systemImage: "person.crop.circle.badge.checkmark")
-                }
-                
-                NavigationLink {
-                    SiteOptions()
-                } label: {
-                    Label("More options", systemImage: "option")
+                Section("Other Settings") {
+                    NavigationLink {
+                        SiteOptions()
+                    } label: {
+                        Label("More options", systemImage: "option")
+                    }
+                    
+                    NavigationLink {
+                        EmailSettings()
+                    } label: {
+                        Label("Mailing Settings", systemImage: "envelope.circle")
+                    }
                 }
             }
         }
@@ -94,12 +139,15 @@ struct WebsiteSettings: View {
             }
             
         })
+        .navigationTitle("Website settings")
         .task {
-            active = user.user?.store?.websiteEnabled ?? true
+            active = user.getUser()?.store?.websiteEnabled ?? true
         }
     }
 }
 
 #Preview {
-    WebsiteSettings()
+    NavigationStack {
+        WebsiteSettings()
+    }
 }

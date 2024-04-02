@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import ProgressIndicatorView
 
 struct NonDismiss: View {
     var body: some View {

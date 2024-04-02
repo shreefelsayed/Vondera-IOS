@@ -7,45 +7,94 @@
 
 import SwiftUI
 
+struct ClientCardSkelton : View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            
+            SkeletonCellView(isDarkColor: true)
+                .frame(height: 24)
+            
+            SkeletonCellView(isDarkColor: false)
+                .frame(height: 15)
+            
+            SkeletonCellView(isDarkColor: false)
+                .frame(height: 15)
+            
+            SkeletonCellView(isDarkColor: false)
+                .frame(height: 2)
+            
+            HStack {
+                SkeletonCellView(isDarkColor: true)
+                    .frame(width: 32, height: 32, alignment: .trailing)
+                    .cornerRadius(32)
+                
+                SkeletonCellView(isDarkColor: false)
+                    .frame(width: 100, height: 15)
+                
+                Spacer()
+                
+                SkeletonCellView(isDarkColor: true)
+                    .frame(width: 32, height: 32, alignment: .trailing)
+                    .cornerRadius(32)
+                
+                SkeletonCellView(isDarkColor: false)
+                    .frame(width: 100, height: 15)
+            }
+        }
+        .cardView()
+    }
+}
+
 struct ClientCard: View {
     var client:Client
-    var storeId:String
-    @State var showContact = false
+    @State private var showContact = false
     @State private var sheetHeight: CGFloat = .zero
 
-    
     var body: some View {
-        NavigationLink(destination: ClientOrders(client: client, storeId: storeId)) {
-            VStack (alignment: .leading) {
-                HStack {
-                    Text(client.name)
-                        .font(.headline)
-                        .bold()
+        VStack (alignment: .leading) {
+            Text(client.name)
+                .font(.headline)
+                .bold()
+            
+            Label {
+                Text(client.phone)
+            } icon: {
+                Image(.icCall)
+            }
+            
+            Label {
+                Text("\(client.gov ?? "") - \(client.address ?? "")")
+            } icon: {
+                Image(.icLocation)
+            }
+
+            Divider()
+            
+            HStack {
+                if let ordersCount = client.ordersCount {
+                    HStack {
+                        Image(.btnOrders)
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                        
+                        Text("\(ordersCount) Orders")
+                    }
                     
                     Spacer()
-                    
-                    Text("\(client.ordersCount ?? 0) 📦")
                 }
-                VStack(alignment: .leading) {
-                    Text(client.gov)
-                        .font(.caption)
-                    
+                                
+                if let total = client.total, !total.isNaN, !total.isInfinite {
                     HStack {
-                        Text("Last order \(client.lastOrder.toString())")
-                            .font(.caption)
-                        
-                        Spacer()
-                        
-                        if client.total != nil && !client.total!.isNaN && !client.total!.isInfinite{
-                            Text("Spent \(Int(client.total ?? 0)) EGP")
-                                .font(.caption)
-                        }
-                        
+                        Image(.btnMoney)
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                                            
+                        Text("\(Int(total)).0 EGP")
                     }
                 }
             }
         }
-        .buttonStyle(.plain)
+        .navigationCardView(destination: CutomerProfile(client: client))
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
             Button {
                 showContact.toggle()
@@ -57,6 +106,18 @@ struct ClientCard: View {
         .sheet(isPresented: $showContact) {
             ContactDialog(phone: client.phone, toggle: $showContact)
         }
-        
     }
+}
+
+#Preview {
+    NavigationStack {
+        List {
+            ClientCard(client: Client.example())
+            ClientCardSkelton()
+        }
+        .listStyle(.plain)
+        .padding()
+        .background(Color.background)
+    }
+    .navigationTitle("Customers")
 }

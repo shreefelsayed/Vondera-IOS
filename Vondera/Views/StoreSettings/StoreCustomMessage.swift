@@ -10,15 +10,29 @@ import AlertToast
 
 struct StoreCustomMessage: View {
     @State private var customMessage = ""
+    
+    @State private var label = false
+    @State private var seller = false
+    @State private var serial = false
+
     @State private var msg:LocalizedStringKey?
     @State private var isSaving = false
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         Form {
-            FloatingTextField(title: "Custom text", text: $customMessage, caption: "This will be displayed at the end of your receipt", required: false, multiLine: true, autoCapitalize: .words)
+            Section("Options") {
+                Toggle("Cannot open Label", isOn: $label)
+                Toggle("Print Seller name", isOn: $seller)
+                Toggle("Print Shipping Serial no.", isOn: $serial)
+            }
+            
+            Section("Custom Message") {
+                FloatingTextField(title: "Custom message", text: $customMessage, caption: "This will be displayed at the end of your receipt", required: nil, multiLine: true, autoCapitalize: .words)
+            }
         }
-        .navigationTitle("Custom Receipt Text")
+        .listStyle(.plain)
+        .navigationTitle("Receipt Options")
         .willProgress(saving: isSaving)
         .navigationBarBackButtonHidden(isSaving)
         .toast(isPresenting: Binding(value: $msg)){
@@ -35,15 +49,33 @@ struct StoreCustomMessage: View {
             }
         }
         .task {
-            customMessage = UserInformation.shared.user?.store?.customMessage ?? ""
+            updateUI()
+            
         }
     }
     
+    func updateUI() {
+        if let store = UserInformation.shared.user?.store {
+            self.customMessage = store.customMessage ?? ""
+            self.label = store.cantOpenPackage ?? false
+            self.seller = store.sellerName ?? false
+            self.serial = store.printSerial ?? false
+        }
+    }
+    
+    
     func save() {
         Task {
+            let data = [
+                "customMessage": customMessage,
+                "cantOpenPackage": label,
+                "sellerName": seller,
+                "printSerial": serial
+            ]
+            
             if let storeId = UserInformation.shared.user?.storeId {
                 do {
-                    try await StoresDao().update(id: storeId, hashMap: ["customMessage": customMessage])
+                    try await StoresDao().update(id: storeId, hashMap: data)
                     DispatchQueue.main.async {
                         UserInformation.shared.user?.store?.customMessage = customMessage
                         UserInformation.shared.updateUser()
@@ -61,5 +93,8 @@ struct StoreCustomMessage: View {
 }
 
 #Preview {
-    StoreCustomMessage()
+    NavigationStack {
+        StoreCustomMessage()
+    }
+    
 }

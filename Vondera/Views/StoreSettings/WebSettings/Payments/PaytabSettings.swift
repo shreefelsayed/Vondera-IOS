@@ -51,6 +51,10 @@ struct Paytab: View {
                 Button("Connect") {
                     connect()
                 }
+                
+                Link(destination: URL(string: "https://www.youtube.com/watch?v=x2Cod35VBd8&pp=ygUHVm9uZGVyYQ%3D%3D")!) {
+                    Text("Help")
+                }
             }
         }
     }
@@ -74,7 +78,7 @@ struct Paytab: View {
                 data["paymentOptions.paymob.selected"] = false
                 data["paymentOptions.vPay.selected"] = false
                 data["paymentOptions.kashier.selected"] = false
-
+                data["paymentOptions.myFatoorah.selected"] = false
             }
             
             if let storeId = user.user?.storeId {

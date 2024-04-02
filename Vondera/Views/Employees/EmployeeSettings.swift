@@ -68,19 +68,14 @@ struct EmployeeSettings: View {
                         .bold()
                         .onTapGesture {
                             CopyingData().copyToClipboard("Email : \(viewModel.email)\n Password: \(viewModel.pass)")
-                            viewModel.showToast("Copied to clipboard")
                         }
                 }
             }
             
             
         }
-        .isHidden(viewModel.isLoading)
-        .navigationTitle("Edit Employee")
-        .overlay(alignment: .center) {
-            ProgressView()
-                .isHidden(!viewModel.isLoading)
-        }
+        .listStyle(.plain)
+        .navigationTitle("Member settings")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
@@ -89,7 +84,9 @@ struct EmployeeSettings: View {
                 .disabled(viewModel.isLoading || viewModel.isSaving)
             }
         }
+        .isHidden(viewModel.isLoading)
         .willProgress(saving: viewModel.isSaving)
+        .willLoad(loading: viewModel.isLoading)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()

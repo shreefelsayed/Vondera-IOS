@@ -19,7 +19,7 @@ struct StoreCategoryUpdate: View {
         ScrollView {
             VStack {
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 2), GridItem(.flexible() , spacing: 2), GridItem(.flexible(), spacing: 2)]) {
-                    ForEach(categories, id: \.self) { cateogry in
+                    ForEach(categories, id: \.id) { cateogry in
                         StoreCategorySquareCard(isSelected: $selectedIndex, category: cateogry)
                             .frame(maxWidth: .infinity)
                             //.aspectRatio(1, contentMode: .fill)
@@ -87,7 +87,7 @@ struct StoreCategorySquareCard : View {
             
             Spacer()
             
-            Text(category.nameEn)
+            Text(category.name)
                 .font(.caption)
                 .lineLimit(3, reservesSpace: true)
                 

@@ -40,7 +40,13 @@ struct DiscountCodes: View {
             if isLoading {
                 ProgressView()
             } else if !isLoading && items.isEmpty {
-                EmptyMessageView(systemName: "book", msg: "No custom pages were added to your website")
+                EmptyMessageViewWithButton(systemName: "tag.slash", msg: "You have no active discount codes, create one now !") {
+                    Button("Create discount code") {
+                        addItem.toggle()
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(saving)
+                }
             }
         }
         .toolbar {
@@ -295,7 +301,6 @@ struct DiscountCodeItem: View {
             
             Button {
                 if let mId = UserInformation.shared.user?.store?.merchantId {
-                    msg = "Copied to clipboard"
                     CopyingData().copyToClipboard(discountCode.id)
                 }
             } label: {

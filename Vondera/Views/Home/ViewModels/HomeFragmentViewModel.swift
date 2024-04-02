@@ -95,14 +95,6 @@ class HomeFragmentViewModel : ObservableObject {
         }
     }
     
-    func getUser() async {
-        if let user = UserInformation.shared.getUser() {
-            DispatchQueue.main.async {
-                self.myUser = user
-            }
-        }
-    }
-    
     func getTopCities() async {
         do {
             if let id = myUser?.storeId {

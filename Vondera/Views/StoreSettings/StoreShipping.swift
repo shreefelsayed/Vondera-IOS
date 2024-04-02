@@ -22,10 +22,16 @@ struct StoreShipping: View {
     
     var body: some View {
         List {
-            Text("This is the prices you charge your customers for shipping, note that if you deal with courier please add his info and shipping fees for better net profit calculations")
+            // DESC
+            Text("Check the governments you ship to, and enter their shipping fees")
                 .font(.body)
             
+            // HEADER
             HStack {
+                Text("Active")
+                
+                Spacer()
+                
                 Text("Government")
                 
                 Spacer()
@@ -33,13 +39,25 @@ struct StoreShipping: View {
                 Text("Shipping Price")
             }
             
-            
+            // GOVS
             ForEach(govManager.getDefaultCourierList(), id: \.self) { item in
                 HStack(alignment: .center) {
-                    Toggle("\(item.govName)", isOn: Binding(items: $viewModel.list, currentItem: item))
+                    Toggle(isOn: Binding(items: $viewModel.list, currentItem: item)) {
+                        EmptyView()
+                    }
+                    .frame(width: 60)
+                        
+
+                    Text(item.govName)
+                        .frame(maxWidth: .infinity)
+                        .frame(maxHeight:  .infinity)
+                        .background(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(.gray, lineWidth: 1)
+                        )
+                        .padding(.vertical, 6)
                     
                     let selectedItem = viewModel.list.first(where: { $0 == item })
-                    
                     FloatingTextField(title: "Price", text: .constant(""), required: nil, isNumric: true, number: Binding(
                         get: { viewModel.list.contains(where: { place in
                             place.govName == item.govName
@@ -52,11 +70,16 @@ struct StoreShipping: View {
                     ), isDiabled : !viewModel.list.contains(where: { place in
                         place.govName == item.govName
                     }))
-                    .frame(width: 60)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(.gray, lineWidth: 1)
+                    )
                 }
             }
         }
-        .navigationTitle("Shipping Prices")
+        .listStyle(.plain)
+        .navigationTitle("Areas")
         .overlay(alignment: .center, content: {
             ProgressView()
                 .isHidden(!viewModel.isLoading)
@@ -86,5 +109,12 @@ struct StoreShipping: View {
         Task {
             await viewModel.update()
         }
+    }
+}
+
+
+#Preview {
+    NavigationStack {
+        StoreShipping(storeId: Store.example().ownerId)
     }
 }

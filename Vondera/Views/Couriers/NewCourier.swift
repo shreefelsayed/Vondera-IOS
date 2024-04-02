@@ -9,15 +9,12 @@ import SwiftUI
 import AlertToast
 
 struct NewCourier: View {
-    var storeId:String
-    @ObservedObject var viewModel:NewCourierViewModel
+    @ObservedObject var viewModel = NewCourierViewModel()
     @Binding var currentList:[Courier]
     @Environment(\.presentationMode) private var presentationMode
     
-    init(storeId: String, currentList: Binding<[Courier]>) {
-        self.storeId = storeId
+    init(currentList: Binding<[Courier]>) {
         self._currentList = currentList
-        self.viewModel = NewCourierViewModel(storeId: storeId)
     }
     
     var body: some View {

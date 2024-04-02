@@ -10,7 +10,6 @@ import AlertToast
 
 struct EditExpanse: View {
     var expanse:Expense
-    var storeId:String
     var onUpdated:((Expense) -> ())
 
     
@@ -54,6 +53,10 @@ struct EditExpanse: View {
         guard check() else {
             return
         }
+        
+        guard let storeId = UserInformation.shared.user?.storeId else {
+                    return
+                }
         
         do {
             isSaving = true

@@ -20,7 +20,6 @@ class StoreOptionsViewModel: ObservableObject {
     @Published var label:Bool = false
     @Published var whatsapp:Bool = false
     @Published var chat:Bool = false
-    @Published var website:Bool = false
     @Published var sellerName = false
     
     @Published var editPrice:Bool = false
@@ -45,7 +44,6 @@ class StoreOptionsViewModel: ObservableObject {
         attachments = store.orderAttachments ?? true
         label = store.cantOpenPackage ?? false
         whatsapp = store.localWhatsapp ?? true
-        website = store.websiteEnabled ?? false
         chat = store.chatEnabled ?? true
         reset = store.canWorkersReset ?? false
         editPrice = store.canEditPrice ?? false
@@ -62,7 +60,6 @@ class StoreOptionsViewModel: ObservableObject {
             // --> Update the database
             let map:[String:Any] = ["canOrder": ordering,
                                     "onlyOnline":!offline,
-                                    "websiteEnabled":website,
                                     "canPrePaid":prepaid,
                                     "orderAttachments":attachments,
                                     "cantOpenPackage":label,
@@ -76,7 +73,6 @@ class StoreOptionsViewModel: ObservableObject {
             try await storesDao.update(id: store.ownerId, hashMap: map)
             store.canOrder = map["canOrder"] as? Bool ?? false
             store.onlyOnline = !(map["onlyOnline"] as? Bool ?? true)
-            store.websiteEnabled = map["websiteEnabled"] as? Bool ?? false
             store.canPrePaid = map["canPrePaid"] as? Bool ?? false
             store.orderAttachments = map["orderAttachments"] as? Bool ?? true
             store.cantOpenPackage = map["cantOpenPackage"] as? Bool ?? false

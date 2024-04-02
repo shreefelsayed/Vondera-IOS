@@ -27,9 +27,22 @@ struct Category: Codable, Identifiable, Equatable, Hashable {
     static func ==(lhs: Category, rhs: Category) -> Bool {
             return lhs.id == rhs.id
         }
+    
+    func filter(searchText:String) -> Bool {
+        if searchText.isBlank {
+            return true
+        }
+        
+        return self.id.localizedCaseInsensitiveContains(searchText)
+        || self.name.localizedCaseInsensitiveContains(searchText)
+        || ((self.desc?.localizedCaseInsensitiveContains(searchText)) != nil)
+    }
+    
 }
 
 extension Category {
+    
+    
     static func example() -> Category {
         return Category(id: "", name: "T-shirts", url: "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/61/805162/1.jpg?1359")
     }

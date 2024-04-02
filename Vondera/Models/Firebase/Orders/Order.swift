@@ -10,6 +10,18 @@ import FirebaseFirestore
 import CoreLocation
 import SwiftUI
 
+
+// Statue Enum
+enum OrderStatues:String, CaseIterable {
+    case pending = "Pending"
+    case confirmed = "Confirmed"
+    case assembled = "Assembled"
+    case withCourier = "Out For Delivery"
+    case failed = "Failed"
+    case delivered = "Delivered"
+    case deleted = "Deleted"
+}
+
 struct Order: Codable, Identifiable, Equatable {
     var id: String = ""
     var name: String = ""
@@ -36,14 +48,15 @@ struct Order: Codable, Identifiable, Equatable {
     // --> Market Place
     var marketPlaceId: String? = ""
     
-    var discount: Int? = 0
+    var discount: Double? = 0
     var clientShippingFees: Int = 0
     var courierShippingFees: Int? = 0
-    var commission: Int? = 0
+    var commission: Double? = 0
+    var salesTotal:Double? = 0
     
     var lat: Double? = 0
     var lang: Double? = 0
-    var deposit:Int? = 0
+    var deposit:Double? = 0
     
     var percPaid: Bool? = false
     var part: Bool? = false
@@ -57,10 +70,14 @@ struct Order: Codable, Identifiable, Equatable {
     var storeId: String? = ""
     var requireDelivery: Bool? = true
     var shopify: Bool? = false
+    var email:String? = ""
+    
+    var payment:OrderPayment? = OrderPayment()
+    var courierInfo:CourierInfo?
     
     //init() {}
     
-    init(id: String, name: String, address: String, phone: String, gov: String, notes: String, discount: Int, clientShippingFees: Int) {
+    init(id: String, name: String, address: String, phone: String, gov: String, notes: String, discount: Double?, clientShippingFees: Int) {
         self.id = id
         self.name = name
         self.address = address
@@ -71,9 +88,50 @@ struct Order: Codable, Identifiable, Equatable {
         self.clientShippingFees = clientShippingFees
     }
     
+    static func getNotFoundMessage(statue:String) -> LocalizedStringKey {
+        switch OrderStatues(rawValue: statue) {
+            case .pending :
+            return "Sorry :(\nThere is no new orders in your store."
+            case .confirmed :
+            return "You have no orders that were confirmed with your customers."
+            case .assembled :
+            return "There is no ready orders in your store, assemble some orders to get them ready"
+            case .withCourier :
+            return "We are all good\nThere is no orders are still pending with couriers"
+            case .delivered :
+            return "No orders were delivered to your clients yet"
+            case .failed :
+            return "We are all good\nThere is no failed orders in your store"
+            case .deleted :
+            return "You have no deleted orders in your store"
+            case .none:
+                return ""
+        }
+    }
+    
+    static func getNotFoundResource(statue:String) -> ImageResource {
+        switch OrderStatues(rawValue: statue) {
+            case .pending :
+            return .pendingOrders
+            case .confirmed :
+                return .ordersConfirmed
+            case .assembled :
+                return .ordersReady
+            case .withCourier :
+                return .orderWithCourier
+            case .delivered :
+                return .ordersDelivered
+            case .failed :
+                return .ordersFailed
+            case .deleted :
+                return .ordersDeleted
+            case .none:
+                return .pendingOrders
+        }
+    }
+    
     func getStatueLocalized() -> LocalizedStringKey {
         switch statue {
-            //Pending - Confirmed - Assembled - Out For Delivery - Delivered - Failed - Deleted
         case "Pending" :
             return "Pending"
         case "Confirmed" :
@@ -118,7 +176,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     var finalCommission: Int {
         if statue != "Failed" {
-            return (commission ?? 0)
+            return Int(commission ?? 0)
         } else {
             return 0
         }
@@ -158,11 +216,15 @@ struct Order: Codable, Identifiable, Equatable {
     }
     
     var COD: Int {
-        return totalPrice - (discount ?? 0) + clientShippingFees
+        return totalPrice - Int(discount ?? 0) + clientShippingFees - Int(deposit ?? 0)
+    }
+    
+    var orderPrice: Int {
+        return totalPrice - Int(discount ?? 0) + clientShippingFees
     }
     
     var amountToGet:Int {
-        return COD - (deposit ?? 0)
+        return COD - Int(deposit ?? 0)
     }
     
     var quantity: Int {
@@ -180,6 +242,34 @@ struct Order: Codable, Identifiable, Equatable {
             return true
         } else {
             return statue == "Failed" && (part != nil) && part!
+        }
+    }
+    
+    var getPaymentStatue : LocalizedStringKey {
+        if isOrderHadMoney {
+            return "Paid"
+        } else if Int(deposit ?? 0) >= orderPrice && Int(deposit ?? 0) != 0{
+            return "Prepaid"
+        } else if Int(deposit ?? 0) > 0 {
+            return "Deposit"
+        } else if orderPrice == 0 {
+            return "Free"
+        } else {
+            return "Not Paid"
+        }
+    }
+    
+    var getPaymentStatueColor: Color {
+        if isOrderHadMoney {
+            return .green
+        } else if Int(deposit ?? 0) >= orderPrice && Int(deposit ?? 0) != 0{
+            return .yellow
+        } else if Int(deposit ?? 0) > 0 {
+            return .orange
+        } else if orderPrice == 0 {
+            return .blue
+        } else {
+            return .red
         }
     }
     
@@ -227,39 +317,17 @@ struct Order: Codable, Identifiable, Equatable {
             return 0
         }
         
-        var totalMoney: Double = 0
+        var totalMoney: Int = 0
         if let listProducts = listProducts {
             listProducts.forEach { product in
-                totalMoney += product.price * Double(product.quantity)
+                totalMoney += product.price * product.quantity
             }
         }
         
-        return (totalMoney - Double((discount ?? 0)))
+        return Double(totalMoney - Int((discount ?? 0)))
     }
     
-    func canEditProducts(accountType: String) -> Bool {
-        if accountType == "Marketing" && statue == "Pending" {
-            return true
-        } else {
-            return accountType != "Marketing" && canShippingInfoEdit
-        }
-    }
     
-    var latLang: CLLocationCoordinate2D? {
-        if let lat = lat, let lang = lang, lang != 0, lat != 0 {
-            return CLLocationCoordinate2D(latitude: lat, longitude: lang)
-        }
-        
-        return nil
-    }
-    
-    func canEditPrice() -> Bool {
-        if statue == "Delivered" || statue == "Failed" {
-            return false
-        }
-        
-        return true
-    }
     
     func getMargin() -> String {
         var cost = 0.0
@@ -267,7 +335,7 @@ struct Order: Codable, Identifiable, Equatable {
         
         if let listProducts = listProducts {
             for item in listProducts {
-                cost += item.buyingPrice
+                cost += Double(item.buyingPrice)
             }
         }
         
@@ -287,9 +355,25 @@ struct Order: Codable, Identifiable, Equatable {
         return ("Not Paid", Color.red)
     }
     
-    func getLink(mId:String) -> URL {
-        let link = "https://vondera.store/order?store=\(mId)&id=\(id)"
+    func getLink(baseLink:String) -> URL {
+        let link = "\(baseLink)/order-summary/\(id)"
         return URL(string: link)!
+    }
+    
+    func canEditProducts(accountType: String) -> Bool {
+        if accountType == "Marketing" && statue == "Pending" {
+            return true
+        } else {
+            return accountType != "Marketing" && canShippingInfoEdit
+        }
+    }
+    
+    func canEditPrice() -> Bool {
+        if statue == "Delivered" || statue == "Failed" {
+            return false
+        }
+        
+        return true
     }
     
     func canDeleteOrder(accountType: String) -> Bool {
@@ -302,6 +386,42 @@ struct Order: Codable, Identifiable, Equatable {
             return true
         } else {
             return accountType == "Store Admin" || accountType == "Owner"
+        }
+    }
+    
+    func getCurrentStep() -> Int {
+        switch statue {
+        case "Pending":
+            return 1
+        case "Confirmed":
+            return 2
+        case "Assembled" :
+            return 3
+        case "Out For Delivery" :
+            return 4
+        case "Delivered":
+            return (requireDelivery ?? true) ? 5 : 4
+        case "Failed":
+            return (requireDelivery ?? true) ? 5 : 4
+        default:
+            return 0
+        }
+        
+        
+    }
+    func getOrderSteps() -> [String] {
+        if (requireDelivery ?? true) {
+            if statue == "Failed" && !(part ?? false) {
+                return ["Pending", "Confirmed", "Ready", "With Courier", "Failed"]
+            } else {
+                return ["Pending", "Confirmed", "Ready", "With Courier", "Delivered"]
+            }
+        } else {
+            if statue == "Failed" && !(part ?? false) {
+                return ["Pending", "Confirmed", "Ready", "Failed"]
+            } else {
+                return ["Pending", "Confirmed", "Ready", "Delivered"]
+            }
         }
     }
     
@@ -319,6 +439,7 @@ extension Order {
         return self.id.localizedCaseInsensitiveContains(searchText)
         || self.name.localizedCaseInsensitiveContains(searchText)
         || self.phone.localizedCaseInsensitiveContains(searchText)
+        || (self.otherPhone ?? "").localizedCaseInsensitiveContains(searchText)
         || self.gov.localizedCaseInsensitiveContains(searchText)
         || self.address.localizedCaseInsensitiveContains(searchText)
     }
@@ -344,29 +465,15 @@ extension Order {
         var order = Order(id: "2994302", name: "Shreif El Sayed", address: "15 El Emam Ali St.", phone: "01551542514", gov: "Cairo", notes: "", discount: 0, clientShippingFees: 50)
         let product:OrderProductObject = OrderProductObject.example()
         order.listProducts = [product]
+        order.marketPlaceId = "instagram"
         return order
     }
     
-    func getCurrentStep() -> Int {
-        var step = 0
-        switch self.statue {
-        case "Pending" :
-            step = 0
-        case "Confirmed":
-            step = 1
-        case "Assembled":
-            step = 2
-        case "Out For Delivery" :
-            step = 3
-        case "Delivered" :
-            step = 4
-        case "Failed":
-            step = 4
-        default:
-            step = 0
-        }
-        
-        return step
-    }
-    
+}
+
+struct OrderPayment : Codable {
+    var paid:Bool? = false
+    var gateway:String? = "COD"
+    var transId:String? = ""
+    var paymentMethod:String? = "COD"
 }

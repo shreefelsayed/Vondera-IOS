@@ -21,7 +21,7 @@ class AuthManger {
         self.storesDao = StoresDao()
     }
     
-    
+    // MARK : Sign in With Apple
     func signUserWithApple(authCred:AuthCredential, appleId:String) async -> Bool {
         do {
             let userExists = try await UsersDao().appleIdExists(appleId: appleId)
@@ -43,6 +43,7 @@ class AuthManger {
         return false
     }
     
+    // MARK : Sign in With Facebook
     func signInWithFacebook(authCred:AuthCredential, fbId:String) async -> Bool {
         do {
             let userExists = try await UsersDao().facebookIdExists(facebookId: fbId)
@@ -64,6 +65,7 @@ class AuthManger {
         return false
     }
     
+    // MARK : Sign in With Google
     func signUserWithGoogle(authCred:AuthCredential, id:String) async -> Bool {
         do {
             if try await UsersDao().googleIdExists(googleId: id) {
@@ -84,6 +86,7 @@ class AuthManger {
         return false
     }
     
+    // MARK : Ceate store owner user
     func createStoreOwnerUser(userData: inout UserData, store:Store) async -> Bool {
         do {
             let fbUserCreated = await createFirebaseUserAccount(email: userData.email, pass: userData.pass)
@@ -114,6 +117,7 @@ class AuthManger {
         }
     }
     
+    // MARK : Create firebase account
     private func createFirebaseUserAccount(email:String, pass:String) async -> User? {
         do {
             let fbUser = try await Auth.auth().createUser(withEmail: email, password: pass)
@@ -123,55 +127,72 @@ class AuthManger {
         }
     }
     
+    // MARK : Get user data
     func getData() async throws -> UserData? {
-    let uId = Auth.auth().currentUser?.uid
-    print("Current user is \(String(describing: uId))")
-    
-    
-    guard uId != nil else {
-        print("No user id not found")
-        await logOut()
-        return nil
-    }
-    
-    if var user = try await usersDao.getUser(uId: uId!).item {
-        guard user.isStoreUser else {
-            print("Unsporrted user type")
+        let uId = Auth.auth().currentUser?.uid
+        print("Current user is \(String(describing: uId))")
+        
+        
+        guard uId != nil else {
+            print("No user id not found")
             await logOut()
             return nil
         }
         
-        print("User \(user.name)")
-        
-        let store = try await storesDao.getStore(uId: user.storeId)
-        print("Loggin to store \(store.name)")
-        user.store = store
-        UserInformation.shared.updateUser(user)
-        try? await usersDao.update(id: user.id, hash: ["online": true, "ios": true])
-        
-        
-        
-        return user
-    } else {
-        print("Failed to get user")
-        await logOut()
-        return nil
-    }
-}
-    
-    private func setUsersPram() async {
-        if let user = UserInformation.shared.user {
-            // MARK : Set Analytics UID
-            AnalyticsManager.shared.setUsersParams()
+        if var user = try await usersDao.getUser(uId: uId!).item {
+            guard user.isStoreUser else {
+                print("Unsporrted user type")
+                await logOut()
+                return nil
+            }
             
-            // MARK : Set Crashlytics UID
-            Crashlytics.crashlytics().setUserID(user.id)
+            print("User \(user.name)")
             
-            // MARK : Save the messaging token
-            await saveFCM()
+            let store = try await storesDao.getStore(uId: user.storeId)
+            user.store = store
+            UserInformation.shared.updateUser(user)
+            await onSignIn()
+            return user
+        } else {
+            print("Failed to get user")
+            await logOut()
+            return nil
         }
     }
     
+    func onSignIn() async {
+        guard let user = UserInformation.shared.user else {
+            return
+        }
+        
+        
+        // --> Update user
+        try? await usersDao.update(id: user.id, hash: ["online": true, "ios": true, "lastActive": Date(), "app_version": "\(appVersion)", "device": UIDevice.current.name, "unique_id": UIDevice.current.identifierForVendor?.uuidString ?? ""])
+        
+        if !user.storeId.isBlank {
+            try? await StoresDao().update(id: user.storeId, hashMap: ["latestActive": Date()])
+        }
+        
+        // --> Set Crashlytics
+        Crashlytics.crashlytics().setUserID(user.id)
+        Crashlytics.crashlytics().setCustomValue(user.store?.merchantId ?? "", forKey: "merchantId")
+        Crashlytics.crashlytics().setCustomValue(user.storeId, forKey: "storeId")
+        Crashlytics.crashlytics().setCustomValue(user.phone, forKey: "phoneNumber")
+        
+        // --> Set Analytics
+        AnalyticsManager.shared.setUsersParams()
+        
+        await saveFCM()
+    }
+    
+    var appVersion: String {
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return version
+        }
+        return "N/A"
+    }
+    
+    // MARK : Remove FCM Token
     private func removeFCM() async {
         if let userUID = Auth.auth().currentUser?.uid {
             do {
@@ -184,6 +205,7 @@ class AuthManger {
         }
     }
     
+    // MARK : Save FCM Token
     private func saveFCM() async {
         if let userUID = Auth.auth().currentUser?.uid {
             do {
@@ -215,6 +237,7 @@ class AuthManger {
         }
     }
     
+    // MARK : Logout
     func logOut() async {
         do {
             if let currentUser = UserInformation.shared.getUser() {
@@ -228,6 +251,7 @@ class AuthManger {
         }
     }
     
+    // MARK : Connect account to another provider
     func connectToCred(cred:AuthCredential) async -> Bool {
         if let user = Auth.auth().currentUser {
             do {
@@ -240,6 +264,7 @@ class AuthManger {
         return false
     }
     
+    // MARK : Change password
     func changePassword(newPass:String, user:UserData) async throws -> Bool {
         guard mAuth.currentUser != nil else {
             return false

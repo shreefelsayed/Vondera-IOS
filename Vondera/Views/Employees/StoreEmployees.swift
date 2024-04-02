@@ -8,57 +8,74 @@
 import SwiftUI
 
 struct StoreEmployees: View {
-    var storeId:String
-    
     @StateObject var viewModel:StoreEmployeesViewModel
     @State var contactUser:UserData?
     @State private var sheetHeight: CGFloat = .zero
+    @State private var addEmployee = false
 
-    init( storeId: String) {
-        self.storeId = storeId
-        _viewModel = StateObject(wrappedValue: StoreEmployeesViewModel(storeId: storeId))
+    init() {
+        _viewModel = StateObject(wrappedValue: StoreEmployeesViewModel())
     }
     
     var body: some View {
-        VStack {
+        List {
             // MARK : Online Users
             if viewModel.items.filter( { $0.online ?? false } ).count > 0 {
-                Text("Online Employees 🧑‍💼")
-                    .font(.title2.bold())
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(alignment: .center, spacing: 12) {
-                        ForEach(viewModel.items.filter({$0.online ?? false})) { user in
-                            UserCircle(user: user)
+                Section("Online Employees") {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.items.filter({$0.online ?? false})) { user in
+                                UserCircle(user: user)
+                            }
                         }
                     }
                 }
-                
-                Spacer().frame(height: 20)
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
             }
             
-            List {
-                ForEach($viewModel.items.indices, id: \.self) { index in
-                    if $viewModel.items[index].wrappedValue.filter(viewModel.searchText) {
-                        EmployeeCard(user: viewModel.items[index])
-                            .padding(.vertical)
-                            .listRowInsets(EdgeInsets())
+            SkeltonManager(isLoading: viewModel.isLoading, count: 6, skeltonView: EmployeeCardSkelton())
+            
+            if !viewModel.items.filter({$0.filter(viewModel.searchText)}).isEmpty {
+                Section("All Employees") {
+                    ForEach($viewModel.items.indices, id: \.self) { index in
+                        if $viewModel.items[index].wrappedValue.filter(viewModel.searchText) {
+                            EmployeeCard(user: viewModel.items[index])
+                        }
                     }
                 }
             }
-            .listStyle(.plain)
             
         }
         .searchable(text: $viewModel.searchText, prompt: Text("Search \($viewModel.items.count) Employees"))
-        .padding()
-        .navigationTitle("Employees 🧑‍💼")
+        .withEmptyViewButton(image: .btnEmployees, text: "You haven't added any team members yet !", buttonText: "Add a new member", count: viewModel.items.count, loading: viewModel.isLoading, onAction: {
+            
+            addEmployee.toggle()
+        })
+        .withEmptySearchView(searchText: viewModel.searchText, resultCount: viewModel.items.filter { $0.filter(viewModel.searchText)}.count)
+        .refreshable {
+            await viewModel.getData()
+        }
         .toolbar {
             if let store = UserInformation.shared.user?.store {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink("Add") {
-                        store.employeesCount ?? 0 < store.subscribedPlan?.employeesCount ?? 0 ? 
-                        AnyView(NewEmployee(storeId: storeId)) : AnyView(AppPlans(selectedSlide: 4))
+                    HStack {
+                        NavigationLink {
+                           BannedEmployees()
+                        } label: {
+                            Image(.btnBan)
+                        }
+                        
+                        Button {
+                            addEmployee.toggle()
+                        } label: {
+                            Image(systemName: "plus.app")
+                        }
+                        
                     }
+                    .buttonStyle(.plain)
+                    .font(.title2)
+                    .bold()
                 }
             }
             
@@ -66,21 +83,11 @@ struct StoreEmployees: View {
         .sheet(item: $contactUser, content: { user in
             ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
         })
-        .refreshable {
-            await viewModel.getData()
-        }
-        .overlay(alignment: .center) {
-            if viewModel.items.isEmpty && !viewModel.isLoading {
-                EmptyMessageView(systemName: "person.crop.circle.badge.moon.fill", msg: "You haven't added any employees yet")
-            }
-        }
-        
-    }
-
-}
-
-struct StoreEmployees_Previews: PreviewProvider {
-    static var previews: some View {
-        StoreEmployees(storeId: "")
+        .navigationDestination(isPresented: $addEmployee, destination: {
+            NewEmployee()
+        })
+        .navigationTitle("Team members")
     }
 }
+
+

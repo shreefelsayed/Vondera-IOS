@@ -18,10 +18,14 @@ class CopyingData {
         
         let pasteboard = UIPasteboard.general
         pasteboard.string = text
+        
+        ToastManager.shared.showToast(msg: text.localize(), toastType: . normal)
     }
     
     func copyToClipboard(_ text: String) {
         let pasteboard = UIPasteboard.general
         pasteboard.string = text
+        
+        ToastManager.shared.showToast(msg: text.localize(), toastType: . normal)
     }
 }

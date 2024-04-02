@@ -116,18 +116,21 @@ struct CourierCurrentOrders: View {
     
     var body: some View {
         List {
-            SearchBar(text: $viewModel.searchText, hint: "Search \($viewModel.items.count) Orders")
+            if viewModel.items.count > 0 {
+                SearchBar(text: $viewModel.searchText, hint: "Search \(viewModel.items.count) Orders")
+            }
+            
+            
             ForEach($viewModel.items.indices, id: \.self) { index in
                 if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
+                    
                     OrderCard(order: $viewModel.items[index], allowSelect: {
                         selectOrders.toggle()
                     })
                 }
             }
-           
         }
         .listStyle(.plain)
-        //.searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.items.count) Orders")
         .overlay(alignment: .center) {
             if !viewModel.isLoading && viewModel.items.isEmpty {
                 EmptyMessageView(msg: "The courier has no ongoing orders")
@@ -165,9 +168,10 @@ struct CourierCurrentOrders: View {
                     } label: {
                         Image(systemName: "ellipsis.circle.fill")
                     }
+                    
+                    
                 }
             }
-            
         }
         .sheet(isPresented: $assignOrders) {
             NavigationStack {
@@ -212,16 +216,21 @@ struct CourierProfile: View {
                 .padding(.leading, 12)
                 .padding(.top, 12)
             
-            if selectedTab == 0 {
-                currentOrders
-            } else if selectedTab == 1 {
-                deliveredOrders
-            } else {
-                failedOrders
+            VStack {
+                if selectedTab == 0 {
+                    currentOrders
+                } else if selectedTab == 1 {
+                    deliveredOrders
+                } else {
+                    failedOrders
+                }
             }
+            .padding()
         }
+        .background(Color.background)
     }
 }
+
 struct CourierCurrentOrders_Previews: PreviewProvider {
     static var previews: some View {
         CourierCurrentOrders(storeId: "", courier: Courier.example())

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 import AlertToast
 
 struct ProductBuyingSheet: View {

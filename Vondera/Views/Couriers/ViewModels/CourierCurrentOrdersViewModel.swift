@@ -17,8 +17,8 @@ class CourierCurrentOrdersViewModel : ObservableObject {
     @Published var errorMsg = ""
     @Published var isLoading = false
     @Published var searchText = ""
-    
     @Published var items = [Order]()
+    
     var filteredItems: [Order] {
         guard !searchText.isEmpty else { return items }
         return items.filter { order in
@@ -37,16 +37,22 @@ class CourierCurrentOrdersViewModel : ObservableObject {
     }
     
     func getCourierOrders() async {
-        self.isLoading = true
-        
-        do {
-            items = try await ordersDao.getPendingCouriersOrder(id: courierId)
-        } catch {
-            showError(msg: error.localizedDescription)
+        DispatchQueue.main.async {
+            self.isLoading = true
         }
         
-        searchText = ""
-        self.isLoading = false
+        // --> Set the filter
+        if let items = try? await ordersDao.getPendingCouriersOrder(id: courierId) {
+            DispatchQueue.main.async {
+                self.items = items
+                self.isLoading = false
+                self.searchText = ""
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.showError(msg: "An error happened")
+            }
+        }
     }
     
     private func showError(msg:String) {

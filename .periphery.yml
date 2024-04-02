@@ -1,0 +1,6 @@
+retain_public: true
+schemes:
+- Vondera
+targets:
+- Vondera
+workspace: Vondera.xcworkspace

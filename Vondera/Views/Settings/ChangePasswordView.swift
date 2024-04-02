@@ -7,17 +7,10 @@
 
 import SwiftUI
 import AlertToast
-import LoadingButton
 
 struct ChangePasswordView: View {
-    var user:UserData
-    @ObservedObject var viewModel:ChangePasswordViewModel
+    @ObservedObject private var viewModel = ChangePasswordViewModel()
     @Environment(\.presentationMode) private var presentationMode
-    
-    init(user: UserData) {
-        self.user = user
-        self.viewModel = ChangePasswordViewModel(user: user)
-    }
     
     var body: some View {
         List {
@@ -29,7 +22,9 @@ struct ChangePasswordView: View {
                 
                 FloatingTextField(title: "Repeat Password", text: $viewModel.pass2, required: true, secure: true)
             }
+            .listRowSeparator(.hidden)
         }
+        .listStyle(.plain)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Text("Update")
@@ -60,8 +55,6 @@ struct ChangePasswordView: View {
     }
 }
 
-struct ChangePasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangePasswordView(user: UserData.example())
-    }
+#Preview {
+    ChangePasswordView()
 }

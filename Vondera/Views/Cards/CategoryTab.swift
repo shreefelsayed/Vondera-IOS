@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct CategoryTab: View {
     var category:Category

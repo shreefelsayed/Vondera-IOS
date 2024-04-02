@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MarketHeaderCard: View {
     var marketId:String
-    var withText:Bool = true
+    var withText:Bool = false
     var turnedOff:Bool = false
     
     @State var market:Markets?

@@ -25,12 +25,16 @@ struct CourierSettingsView: View {
                 NavigationLink("Finished Orders") {
                     CourierFinishedOrders(courier: courier)
                 }
-                /*
-                NavigationLink("Reports") {
-                    EmptyView()
+                
+                NavigationLink("Provider Integration") {
+                    ProviderIntegrationView(courierId: courier.id)
                 }
                 
-                NavigationLink("Failed Orders Sheet") {
+                NavigationLink("Reports") {
+                    CourierReports(courier: courier)
+                }
+                
+                /*NavigationLink("Failed Orders Sheet") {
                     EmptyView()
                 }*/
             }

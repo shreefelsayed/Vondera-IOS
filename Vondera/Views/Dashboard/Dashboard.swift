@@ -5,59 +5,70 @@ struct Dashboard: View {
     
     var body: some View {
         List() {
-            Section("") {
-                NavigationLink("Reports", destination: StoreReport(storeId: store.ownerId))
-            }
-            
             Section("Store Users") {
-                NavigationLink("Employees", destination: StoreEmployees(storeId: store.ownerId))
-                
-                NavigationLink("Couriers", destination: StoreCouriers(storeId: store.ownerId))
-                
-                NavigationLink("Shoppers") {
+                //
+                NavigationLink {
+                    StoreEmployees()
+                } label: {
+                    Label {
+                        Text("Team members")
+                    } icon: {
+                        Image(.btnEmployees)
+                    }
+                }
+
+                NavigationLink {
                     (store.subscribedPlan?.accessClient ?? false) ?
-                    AnyView(ClientsView(store: store)) : AnyView(AppPlans(selectedSlide: 6))
+                    AnyView(CustomersScreen()) : AnyView(AppPlans(selectedSlide: 6))
+                } label: {
+                    Label {
+                        Text("Customers")
+                    } icon: {
+                        Image(.btnCustomers)
+                    }
+                }
+                
+                NavigationLink {
+                    StoreCouriers()
+                } label: {
+                    Label {
+                        Text("Couriers")
+                    } icon: {
+                        Image(.btnShipping)
+                    }
                 }
             }
-            
-            
-            Section("Products") {
-                NavigationLink("New Product") {
-                    AddProductView(storeId: store.ownerId)
+        
+            Section() {
+                NavigationLink {
+                    StoreReport(storeId: store.ownerId)
+                } label: {
+                    Label {
+                        Text("Reports")
+                    } icon: {
+                        Image(.btnReports)
+                    }
                 }
                 
-                NavigationLink("Categories", destination: StoreCategories(store: store))
-                
-                NavigationLink("Store Products") {
-                    StoreProducts(storeId: store.ownerId)
-                }
-                
-                NavigationLink("Warehouse") {
-                    (store.subscribedPlan?.accessStockReport ?? false) ? 
-                    AnyView(WarehouseView(storeId: store.ownerId)) : AnyView(AppPlans(selectedSlide: 7))
-                }
-            }
-            
-            
-            Section("Others") {
-                NavigationLink("All Orders", destination: StoreAllOrders(storeId: store.ownerId))
-                NavigationLink("Deleted Orders", destination: StoreDeletedOrders(storeId: store.ownerId))
-                
-                //TODO
-                //NavigationLink("Order Complaints", destination: EmptyView())
-            }
-            
-            Section("Tools") {
-                NavigationLink("Expanses") {
+                NavigationLink {
                     (store.subscribedPlan?.accessExpanses ?? false) ?
-                    AnyView(StoreExpanses(storeId: store.ownerId)) : AnyView(AppPlans(selectedSlide: 8))
+                    AnyView(StoreExpanses()) : AnyView(AppPlans(selectedSlide: 8))
+                } label: {
+                    Label {
+                        Text("Expanses")
+                    } icon: {
+                        Image(.btnExpanses)
+                    }
                 }
                 
-                //TODO
+                //TODO : Create order sheet screen
+                //NavigationLink("Create Orders Sheet", destination: EmptyView())
+                
+                // TODO : Complaints Screen
                 //NavigationLink("Create Orders Sheet", destination: EmptyView())
             }
         }
-        .navigationTitle("Dashboard 💼")
+        .navigationTitle("Dashboard")
     }
 }
 
@@ -66,30 +77,5 @@ struct Dashboard_Previews: PreviewProvider {
         NavigationView {
             Dashboard(store: Store.example())
         }
-    }
-}
-
-struct Navigation: View {
-    var view:AnyView
-    var label:String
-    var divider = true
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            NavigationLink(destination: view) {
-                HStack {
-                    Text(label)
-                        .font(.headline)
-                        .bold()
-                    
-                    Spacer()
-                    Image(systemName: "arrow.right")
-                }
-            }
-            if divider {
-                Divider()
-            }
-        }
-        
     }
 }

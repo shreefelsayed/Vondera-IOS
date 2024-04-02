@@ -10,7 +10,6 @@ import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import PDFKit
-import NetworkImage
 
 @MainActor
 class ReciptPDF {
@@ -21,8 +20,6 @@ class ReciptPDF {
     init(orderList: [Order]) {
         self.orderList = orderList
     }
-    
-
     
     func render() async -> URL? {
         let url = URL.documentsDirectory.appending(path: "receipt.pdf")
@@ -59,15 +56,11 @@ class ReciptPDF {
             }
         }
 
-        
-        
         // 7: Close the PDF file
         pdf.closePDF()
         print("Location \(url.absoluteString)")
         return url
     }
-    
-    
 }
 
 
@@ -194,7 +187,7 @@ struct PDFReceipt: View {
                         Spacer()
                         
                         // QR CODE
-                        Image(uiImage: order.id.qrCodeUIImage)
+                        Image(uiImage: order.id.qrCodeUIImage!)
                             .resizable()
                             .frame(width: 40, height: 40)
                     }
@@ -210,6 +203,10 @@ struct PDFReceipt: View {
                             Text("Address : \(order.gov) - \(order.address)")
                             
                             Text("Purchase Date : \(order.date.toDate().formatted())")
+                            
+                            if let notes = order.notes, !notes.isBlank {
+                                Text("Notes : \(notes)")
+                            }
                             
                             if (store.sellerName ?? false) && !order.addBy.isBlank && !(order.owner?.isBlank ?? true) {
                                 Text("Order By : \(order.owner ?? "")")
@@ -282,12 +279,12 @@ struct PDFReceipt: View {
                         Text(product.getVarientsString())
                            
                         Spacer()
-                        
+                                                
                         Text("\(product.quantity) x \(Int(product.price))")
                             
                         Spacer()
                         
-                        Text("\(Int(Double(product.quantity) * product.price)) EGP")
+                        Text("\(Int(product.quantity * product.price)) EGP")
                         
                     }
                     .font(.caption2)

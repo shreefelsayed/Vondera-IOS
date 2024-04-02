@@ -8,19 +8,18 @@
 import SwiftUI
 import PhotosUI
 import AlertToast
-import NetworkImage
 
 struct AddProductView: View {
-    var storeId:String = ""
+    var storeId:String = UserInformation.shared.user?.storeId ?? ""
     
     @State var images:[PhotosPickerItem] = [PhotosPickerItem]()
     
     @StateObject private var viewModel:AddProductViewModel
     @Environment(\.presentationMode) private var presentationMode
 
-    init(storeId: String) {
-        self.storeId = storeId
-        _viewModel = StateObject(wrappedValue: AddProductViewModel(storeId: storeId))
+    init(storeId: String = "") {
+        self.storeId = UserInformation.shared.user?.storeId ?? ""
+        _viewModel = StateObject(wrappedValue: AddProductViewModel(storeId: UserInformation.shared.user?.storeId ?? ""))
     }
     
     var body: some View {
@@ -297,7 +296,7 @@ struct ImageView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             Group {
-                if image != nil {
+                if let image = image {
                     Image(uiImage: image)
                         .centerCropped()
                         .onTapGesture {
@@ -341,14 +340,11 @@ struct ImageViewNetwork: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            NetworkImage(url: URL(string: image)) { image in
-              image.centerCropped()
-            } placeholder: {
-              ProgressView()
-            }
-            .frame(width: 100, height: 100)
-            .background(RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.gray, lineWidth: 1))
+            CachedImageView(imageUrl: image, scaleType: .centerCrop)
+                .frame(width: 100, height: 100)
+                .background(RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.gray, lineWidth: 1))
+            
             .onTapGesture {
                 if onImageClick != nil {onImageClick!()}
             }

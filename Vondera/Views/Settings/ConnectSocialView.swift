@@ -46,7 +46,7 @@ struct ConnectSocialView: View {
                     
                     Button(myUser.connectedToFB() ? "Connected" : "Connect") {
                         Task {
-                            facebook()
+                            //facebook()
                         }
                     }
                     .disabled(myUser.connectedToFB())
@@ -66,20 +66,6 @@ struct ConnectSocialView: View {
                 try? await UsersDao().update(id: id, hash: ["googleId" : cred.id])
                 user.user?.googleId = cred.id
                 UserInformation.shared.updateUser()
-            }
-        }
-    }
-    
-    func facebook()  {
-        if let id = user.user?.id {
-            FBAuthHelper().getCreds { cred in
-                Task {
-                    if await AuthManger().connectToCred(cred: cred.cred) {
-                        try? await UsersDao().update(id: id, hash: ["facebookId" : cred.id])
-                        user.user?.facebookId = cred.id
-                        UserInformation.shared.updateUser()
-                    }
-                }
             }
         }
     }

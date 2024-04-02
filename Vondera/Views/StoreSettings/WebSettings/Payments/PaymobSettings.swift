@@ -52,7 +52,6 @@ struct PaymobSettings: View {
                     
                     Button {
                         CopyingData().copyToClipboard(callback)
-                        msg = "Copied to clipboard"
                     } label: {
                         Image(systemName: "doc.on.doc.fill")
                             .font(.body)
@@ -84,6 +83,10 @@ struct PaymobSettings: View {
                 Button("Connect") {
                     connect()
                 }
+                
+                Link(destination: URL(string: "https://www.youtube.com/watch?v=ZOyYvzrMYAM&pp=ygUHVm9uZGVyYQ%3D%3D")!) {
+                    Text("Help")
+                }
             }
         }
         
@@ -107,6 +110,9 @@ struct PaymobSettings: View {
             
             if active {
                 data["paymentOptions.paytabs.selected"] = false
+                data["paymentOptions.vPay.selected"] = false
+                data["paymentOptions.kashier.selected"] = false
+                data["paymentOptions.myFatoorah.selected"] = false
             }
             
             if let storeId = user.user?.storeId {

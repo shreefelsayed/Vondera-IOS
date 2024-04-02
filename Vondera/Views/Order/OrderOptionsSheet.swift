@@ -56,7 +56,6 @@ struct OrderOptionsSheet: View {
                     Label("Copy Order Details", systemImage: "doc.on.clipboard")
                         .onTapGesture {
                             CopyingData().copyToClipboard(order.toString())
-                            uiMessage = "Order Data copied to clipboard"
                         }
                     
                     if let images = order.listAttachments, !images.isEmpty {

@@ -15,7 +15,7 @@ struct CustomTopTabBar: View {
         ScrollView(.horizontal ,showsIndicators: false) {
             HStack(spacing: 20) {
                 ForEach(titles.indices, id: \.self) { index in
-                    TabBarButton(text: titles[index], isSelected: .constant(tabIndex == index))
+                    TabBarButton(text: titles[index], isLast: titles.count - 1 == index, isSelected: .constant(tabIndex == index))
                         .onTapGesture { onButtonTapped(index: index) }
                 }
             }
@@ -31,14 +31,16 @@ struct CustomTopTabBar: View {
 
 struct TabBarButton: View {
     let text: LocalizedStringKey
+    let isLast:Bool
     @Binding var isSelected: Bool
+    
     var body: some View {
         Text(text)
             .foregroundStyle(isSelected ? Color.accentColor : .black)
             .fontWeight(isSelected ? .heavy : .regular)
-            .font(.custom("Avenir", size: 16))
             .padding(.bottom,10)
             .border(width: isSelected ? 2 : 0, edges: [.bottom], color: .accentColor)
+            .padding(.trailing, isLast ? 12 : 0)
     }
 }
 

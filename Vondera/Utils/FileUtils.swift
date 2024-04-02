@@ -17,7 +17,7 @@ class FileUtils {
                 if let window =  UIApplication.shared.keyWindowPresentedController {
                     window.present(activityViewController, animated: true, completion: nil)
                 } else {
-                    print("Couldn't view the share button")
+                    print("Couldn't view the share button, you need to try later")
                 }
             }
             

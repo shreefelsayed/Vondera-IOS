@@ -6,114 +6,96 @@
 //
 
 import SwiftUI
-import NetworkImage
 import PhotosUI
 import AlertToast
 
 struct UserHomeHeader: View {
     @ObservedObject var user = UserInformation.shared
-    @State private var picker:PhotosPickerItem?
     @State private var msg:LocalizedStringKey?
+    @State private var showSheet = false
     
     var body: some View {
         VStack(alignment: .leading) {
-            if let myUser = user.user {
+            if let myUser = user.user, let link = myUser.store?.getStoreDomain() {
                 HStack(alignment: .center) {
-                    PhotosPicker(selection: $picker) {
-                        ImagePlaceHolder(url: myUser.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 100)
-                    }
+                    ImagePlaceHolder(url: myUser.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60)
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Hello again! 👋")
+                        Text("Hi !")
                             .font(.title3)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.white)
                         
                         Text(myUser.name)
                             .font(.title2)
+                            .foregroundColor(.white)
                             .bold()
-                        
-                        Label(myUser.getAccountTypeString(), systemImage: "bolt")
-                            .font(.body)
-                    }
-                }
-                
-                HStack {
-                    if myUser.canAccessAdmin, let store = myUser.store {
-                        NavigationLink {
-                            Dashboard(store: store)
-                        } label: {
-                            Label("Dashboard", systemImage: "list.dash.header.rectangle")
-                        }
-                        .buttonStyle(.plain)
-                        .padding()
-                        .foregroundColor(.accentColor)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(12)
                     }
                     
-                    if (myUser.store?.websiteEnabled ?? true) {
-                        WebsiteLink(user: myUser)
-                    }
+                    Spacer()
+                    
+                    Image(systemName: "qrcode")
+                        .font(.title)
+                        .bold()
+                        .foregroundStyle(.white)
+                        .onTapGesture {
+                            showSheet.toggle()
+                        }
                 }
+                
+                //MARK : LINK
+                HStack {
+                    Image(.icCopy)
+                        .onTapGesture {
+                            CopyingData().copyToClipboard(link)
+                        }
+                        .padding(.horizontal, 4)
+                    
+                    Divider()
+                    
+                    Spacer()
+                    
+                    Link(link, destination: URL(string: link)!)
+                    
+                    Spacer()
+                    
+                    Divider()
+                    
+                    Image(.icShare)
+                        .onTapGesture {
+                            shareLink()
+                        }
+                        .padding(.horizontal, 4)
+                }
+                .padding(8)
+                .background(
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color.white)
+                )
+                
             }
         }
-        .onChange(of: picker, perform: { _ in
-            Task {
-                if let data = try? await picker?.loadTransferable(type: Data.self) {
-                    if let uiImage = UIImage(data: data), let id = UserInformation.shared.user?.id {
-                        FirebaseStorageUploader().updateUserImage(image: uiImage, uId: id) { success in
-                            self.msg = "You image updated"
-                            self.picker = nil
-                        }
-                    }
-                }
+        .padding(12)
+        .background(
+           RoundedRectangle(cornerRadius: 12)
+            .fill(Color.accentColor)
+        )
+        .sheet(isPresented: $showSheet, content: {
+            if let user = user.user {
+                QRCodeSheet(myUser: user)
+                    .presentationDetents([.medium])
             }
         })
         .toast(isPresenting: Binding(value: $msg), alert: {
             AlertToast(displayMode: .banner(.pop), type: .regular, title: msg?.toString())
         })
     }
-}
-
-struct WebsiteLink : View {
-    var user:UserData
-    @State private var showSheet = false
     
-    var body: some View {
-        HStack {
-            if let url = user.store?.storeLinkURL() {
-                ShareLink(item: url) {
-                    Image(systemName: "square.and.arrow.up.fill")
-                        .font(.title2)
-                }
-                
-                Spacer()
-                
-                Link(destination: url) {
-                    Text("\(user.store?.name ?? "")'s website")
-                        .lineLimit(1)
-                        .font(.caption)
-                }
-                
-                Spacer()
-            }
-            
-            Button {
-                showSheet.toggle()
-            } label: {
-                Image(systemName: "qrcode.viewfinder")
-                    .font(.title2)
+    func shareLink() {
+        if let link = user.user?.store?.getStoreDomain(), let appURL = URL(string: link) {
+                let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+                UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
             }
         }
-        .padding()
-        .foregroundColor(.accentColor)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(12)
-        .sheet(isPresented: $showSheet, content: {
-            QRCodeSheet(myUser: user)
-                .presentationDetents([.medium])
-        })
-    }
 }
 
 struct QRCodeSheet : View {
@@ -125,8 +107,12 @@ struct QRCodeSheet : View {
                 .font(.title3)
                 .bold()
             
-            if let link = myUser.store?.linkQrCodeData() {
-                Image(uiImage: UIImage(data: link))
+            // MARK : Sharing Button
+            
+            
+            // MARK : QR CODE
+            if let qrData = myUser.store?.linkQrCodeData() {
+                Image(uiImage: UIImage(data: qrData)!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 150, height: 150)
@@ -134,7 +120,17 @@ struct QRCodeSheet : View {
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(12)
             }
+            
+            
+            Divider()
+            
+            // MARK : TEXT
+            Text("Scan the qrcode, or share it to visit your website")
+                .multilineTextAlignment(.center)
+            
+            
         }
+        .padding()
     }
 }
 

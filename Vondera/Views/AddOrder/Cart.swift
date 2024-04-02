@@ -91,8 +91,8 @@ struct Cart: View {
     var body: some View {
         VStack {
             List {
-                ForEach($viewModel.list, id: \.self) { item in
-                    CartAdapter(orderProduct: item)
+                ForEach($viewModel.list, id: \.savedItemId) { item in
+                    CartCard(orderProduct: item)
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
                                 Task {
@@ -102,12 +102,11 @@ struct Cart: View {
                                 Image(systemName: "trash.fill")
                             }
                         }
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
+                        .id(item.wrappedValue.savedItemId)
                 }
             }
             .listStyle(.plain)
-            .padding()
+            
             
             
             // MARK : Pricing
@@ -115,25 +114,14 @@ struct Cart: View {
                 VStack(alignment: .center) {
                     VStack (alignment: .leading) {
                         HStack {
-                            Text("Total Items")
+                            Text("Total (\(viewModel.totalItems)) items")
                             
                             Spacer()
                             
-                            Text("\(viewModel.totalItems) Pieces")
+                            Text("EGP \(viewModel.totalPrice)")
                         }
-                        
-                        Divider()
-                        
-                        HStack {
-                            Text("Total Products price")
-                            
-                            Spacer()
-                            
-                            Text("\(viewModel.totalPrice) LE")
-                        }
-                        
+                                                
                         if myUser != nil && !(myUser!.store!.onlyOnline ?? false) {
-                            
                             Toggle("This order require shipping", isOn: $shipping)
                         }
                         
@@ -154,13 +142,13 @@ struct Cart: View {
                         
                         
                     }
-                    .padding()
                     .ignoresSafeArea()
-                    .background(Color.background)
                 }
             }
             
         }
+        .padding()
+        .background(Color.background)
         .onAppear {
             Task {
                 self.myUser = UserInformation.shared.getUser()
@@ -171,7 +159,7 @@ struct Cart: View {
             if viewModel.isLoading {
                 ProgressView()
             } else if viewModel.list.isEmpty {
-                EmptyMessageView(msg: "No items are in the cart")
+                EmptyMessageWithResource(imageResource: .emptyCart, msg: "You haven't added any products to your cart yet !")
             }
         })
         .toolbar{
@@ -187,7 +175,7 @@ struct Cart: View {
                 }
             }
         }
-        .navigationTitle("Cart 🛒")
+        .navigationTitle("Cart")
     }
 }
 

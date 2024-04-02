@@ -24,7 +24,7 @@ extension PlanItemData {
             
             PlanItemData(imageName: "receipt_free", title: "Print QR Receipts", desc: "Print a receipt with a QR code for your orders for free", id: 1),
             
-            PlanItemData(imageName: "product_report", title: "Product Report", desc: "Tired of caculating the products of all of (need to be fullfiled) orders ? easy we have got you", id: 2),
+            PlanItemData(imageName: "product_report", title: "Product Report", desc: "Tired of caculating the products of all of (need to be fulfilled) orders ? easy we have got you", id: 2),
             
             
             // QUOTE ITEMS

@@ -2,9 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<string>NO</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat.ttf</string>
+		<string>Montserrat-Medium.ttf</string>
 	</array>
 	<key>FacebookAppID</key>
 	<string>666265371768600</string>

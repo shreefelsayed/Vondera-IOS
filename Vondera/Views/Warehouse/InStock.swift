@@ -18,25 +18,30 @@ struct InStock: View {
     
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
-            List {
-                ForEach($viewModel.items) { product in
-                    NavigationLink(destination: ProductDetails(product: product, onDelete: { item in
-                        if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
-                            viewModel.items.remove(at: index)
-                        }
-                    })) {
+            ScrollView {
+                LazyVStack(alignment: .leading) {
+                    ForEach($viewModel.items) { product in
                         WarehouseCard(prod: product)
-                    }
-                    .buttonStyle(.plain)
-                    
-                    if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
-                        HStack {
-                            Spacer()
-                            ProgressView()
-                            Spacer()
-                        }
-                        .onAppear {
-                            loadItem()
+                            .background(
+                                NavigationLink("", destination: {
+                                    ProductDetails(product: product, onDelete: { item in
+                                        if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
+                                            viewModel.items.remove(at: index)
+                                        }
+                                    })
+                                })
+                            )
+                        .buttonStyle(.plain)
+                        
+                        if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
+                            }
+                            .onAppear {
+                                loadItem()
+                            }
                         }
                     }
                 }
@@ -45,7 +50,6 @@ struct InStock: View {
             .refreshable {
                 await refreshData()
             }
-            .listStyle(.plain)
             .overlay {
                 if viewModel.isLoading && viewModel.items.isEmpty {
                     ProgressView()

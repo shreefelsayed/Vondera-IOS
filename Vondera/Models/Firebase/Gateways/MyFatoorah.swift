@@ -7,9 +7,7 @@
 
 import Foundation
 
-class Paymob : Codable {
-    var iframe:String? = ""
-    var integrationId:String? = ""
+class MyFatoorah : Codable {
     var apiKey:String? = ""
     var selected:Bool? = false
     var connected:Bool? = false

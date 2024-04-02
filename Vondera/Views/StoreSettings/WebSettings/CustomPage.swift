@@ -40,7 +40,13 @@ struct CustomPage: View {
             if isLoading {
                 ProgressView()
             } else if !isLoading && items.isEmpty {
-                EmptyMessageView(systemName: "book", msg: "No custom pages were added to your website")
+                EmptyMessageViewWithButton(systemName: "book", msg: "No custom pages were added to your website") {
+                    Button("Add your first page") {
+                        addItem.toggle()
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(saving)
+                }
             }
         }
         .toolbar {
@@ -310,7 +316,7 @@ struct CustomPageItem: View {
                 Text("\(page.title)")
                     .font(.headline)
                 
-                Text("@\(page.id)")
+                Text("/\(page.id)")
                     .font(.body)
                     .foregroundStyle(.secondary)
             }
@@ -318,9 +324,8 @@ struct CustomPageItem: View {
             Spacer()
             
             Button {
-                if let mId = UserInformation.shared.user?.store?.merchantId {
-                    msg = "Link Copied to clipboard"
-                    CopyingData().copyToClipboard(page.getLink(mId: mId).absoluteString)
+                if let link = UserInformation.shared.user?.store?.getStoreDomain() {
+                    CopyingData().copyToClipboard(page.getLink(baseLink: link).absoluteString)
                 }
             } label: {
                 Image(systemName: "doc.on.doc.fill")

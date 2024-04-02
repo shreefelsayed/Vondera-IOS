@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 
 struct NotificationModel: Codable, Identifiable, Equatable {
     var id = ""
@@ -35,5 +36,61 @@ struct NotificationModel: Codable, Identifiable, Equatable {
         return lhs.id == rhs.id
     }
     
+    func getDestination() -> AnyView? {
+        return NotificationModelMethods.getDestination(type: type, objectId: objectId)
+    }
     
+    func getImage() -> ImageResource {
+            switch type {
+            case "announce":
+                return .btnAnnounce
+            case "warehouse":
+                return .btnWarehouse
+            case "order":
+                return .btnOrders
+            case "deletedOrder":
+                return .btnDelete
+            case "payout":
+                return .btnVpay
+            case "vpay":
+                return .btnVpay
+            case "newComplaint":
+                return .btnComplaints
+            case "plan":
+                return .btnWarning
+            case "website":
+                return .btnWebsite
+            case "reports":
+                return .btnReports
+            case "review":
+                return .btnReview
+            default:
+                return .btnNotification
+            }
+        }
+}
+
+class NotificationModelMethods {
+    class func getDestination(type:String, objectId:String) -> AnyView? {
+        switch type {
+        case "warehouse":
+            return AnyView(WarehouseView(storeId: UserInformation.shared.user?.storeId ?? ""))
+        case "order":
+            return AnyView(OrderDetailLoading(id: objectId))
+        case "deletedOrder":
+            return AnyView(OrderDetailLoading(id: objectId))
+        case "review":
+            return AnyView(ProductLoadingScreen(id: objectId))
+        case "payout":
+            return AnyView(VPayScreen(selectedTab: 2))
+        case "vpay":
+            return AnyView(VPayScreen(selectedTab: 1))
+        case "plan":
+            return AnyView(SubscribtionsView())
+        case "reports":
+            return AnyView(StoreReport(storeId: UserInformation.shared.user?.storeId ?? ""))
+        default:
+            return nil
+        }
+    }
 }

@@ -12,7 +12,7 @@ import Combine
 
 
 class ChangePasswordViewModel : ObservableObject {
-    var user:UserData
+    var user:UserData?
     var usersDao = UsersDao()
     var isSaving = false
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
@@ -28,8 +28,8 @@ class ChangePasswordViewModel : ObservableObject {
     @Published var pass2 = ""
     @Published var oldPass = ""
 
-    init(user:UserData) {
-        self.user = user
+    init() {
+        self.user = UserInformation.shared.user
     }
     
     func check() -> Bool {
@@ -51,7 +51,7 @@ class ChangePasswordViewModel : ObservableObject {
             return false
         }
         
-        guard oldPass == user.pass else {
+        guard oldPass == (user?.pass ?? "") else {
             self.isSaving = false
             showTosat(msg: "Old password isn't correct")
             return false
@@ -66,21 +66,24 @@ class ChangePasswordViewModel : ObservableObject {
         }
                 
         do {
-            // --> Update the database
-            let saved = try await AuthManger().changePassword(newPass: pass1, user: user)
-            guard saved else {
-                showTosat(msg: "Error happened")
-                return
+            if var user = user {
+                // --> Update the database
+                let saved = try await AuthManger().changePassword(newPass: pass1, user: user)
+                guard saved else {
+                    showTosat(msg: "Error happened")
+                    return
+                }
+                
+                try await usersDao.update(id: user.id, hash: ["pass": pass1])
+                user.pass = pass1
+                UserInformation.shared.updateUser(user)
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.showTosat(msg: "Password Changed")
+                    self.shouldDismissView = true
+                }
             }
             
-            try await usersDao.update(id: user.id, hash: ["pass": pass1])
-            user.pass = pass1
-            UserInformation.shared.updateUser(user)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.showTosat(msg: "Password Changed")
-                self.shouldDismissView = true
-            }
             
         } catch {
             showTosat(msg: error.localizedDescription)

@@ -18,6 +18,12 @@ struct Courier: Codable, Identifiable, Equatable {
     var withCourier:Int? = 0
     var visible: Bool = true
     var listPrices: [CourierPrice] = [CourierPrice]()
+    var imageUrl:String? = ""
+    var courierHandler:String? = ""
+    var sendDataToCompany:Bool? = false
+    var autoUpdateOrderStatue:Bool? = false
+    var updateCourierFee:Bool? = false
+    var apiData:[String: String]? = [:]
     
     init(id:String, name:String, phone:String, storeId:String) {
         self.id = id

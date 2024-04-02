@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct FullScreenImageView: View {
     let imageURLs: [String]
@@ -33,28 +32,24 @@ struct NetworkImageView: View {
                 GeometryReader { geometry in
                     ScrollView(.init()) {
                         VStack {
-                            NetworkImage(url: URL(string: imageUrls[index])) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .scaleEffect(scale)
-                                    .offset(offset)
-                                    .gesture(
-                                        MagnificationGesture()
-                                            .onChanged { scaleValue in
-                                                scale = scaleValue.magnitude
-                                            }
-                                    )
-                                    .gesture(
-                                        DragGesture()
-                                            .onChanged { dragValue in
-                                                offset.width = dragValue.translation.width
-                                                offset.height = dragValue.translation.height
-                                            }
-                                    )
-                            }
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                            .id(imageUrls[index])
+                            CachedImageView(imageUrl: imageUrls[index], scaleType: .scaleFit)
+                                .scaleEffect(scale)
+                                .offset(offset)
+                                .gesture(
+                                    MagnificationGesture()
+                                        .onChanged { scaleValue in
+                                            scale = scaleValue.magnitude
+                                        }
+                                )
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged { dragValue in
+                                            offset.width = dragValue.translation.width
+                                            offset.height = dragValue.translation.height
+                                        }
+                                )
+                                .frame(width: geometry.size.width, height: geometry.size.height)
+                                .id(imageUrls[index])
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }

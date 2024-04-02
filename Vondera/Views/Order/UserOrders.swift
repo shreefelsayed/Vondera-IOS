@@ -6,70 +6,64 @@
 //
 
 import SwiftUI
-import SkeletonUI
 
 struct UserOrders: View {
-    var id:String
-    var storeId:String
-    @StateObject var viewModel:UserOrdersViewModel
-    
-    init(id: String, storeId: String) {
-        self.id = id
-        self.storeId = storeId
-        _viewModel = StateObject(wrappedValue: UserOrdersViewModel(id: id, storeId: storeId))
-    }
+    @StateObject var viewModel = UserOrdersViewModel()
     
     var body: some View {
         List {
-            ForEach($viewModel.items) { order in
-                OrderCard(order: order)
+            SkeltonManager(isLoading: !viewModel.intialDataLoaded, count: 12, skeltonView: OrderCardSkelton())
+            
+            ForEach($viewModel.items.indices, id: \.self) { index in
                 
-                if viewModel.canLoadMore && viewModel.items.last?.id == order.id {
+                OrderCard(order: $viewModel.items[index])
+                
+                if viewModel.canLoadMore && viewModel.items.last?.id == viewModel.items[index].id && viewModel.intialDataLoaded {
                     HStack {
                         Spacer()
                         ProgressView()
                         Spacer()
                     }
                     .onAppear {
-                        loadItem()
+                        Task {
+                            await getData()
+                        }
                     }
+                    .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
             }
         }
-        .toolbar {
-            if let user = UserInformation.shared.user {
-                NavigationLink {
-                    EmployeeReports(employee: user)
-                } label: {
-                   Image(systemName: "filemenu.and.selection")
-                }
+        .scrollIndicators(.hidden)
+        .listStyle(.plain)
+        .padding()
+        .background(Color.background)
+        .overlay {
+            if viewModel.intialDataLoaded && viewModel.items.isEmpty {
+                EmptyMessageView(msg: "You haven't added any orders yet !")
             }
         }
         .refreshable {
             await refreshData()
         }
-        .listStyle(.plain)
-        .overlay {
-            if !viewModel.isLoading && viewModel.items.isEmpty {
-                EmptyMessageView(msg: "You haven't added any orders yet !")
+        .navigationTitle("My Orders")
+        .toolbar {
+            if let user = UserInformation.shared.user {
+                NavigationLink {
+                    EmployeeReports(employee: user)
+                } label: {
+                    Image(.btnReports)
+                }
             }
         }
-        .navigationTitle("Your Orders 📦")
     }
     
     func refreshData() async {
-        await viewModel.refreshData()
+        viewModel.refreshData()
     }
-    func loadItem() {
-        Task {
-            await viewModel.getData()
-        }
-    }
-}
-
-struct UserOrders_Previews: PreviewProvider {
-    static var previews: some View {
-        UserOrders(id: "", storeId: "")
+    
+    func getData() async {
+        await viewModel.getData()
     }
 }
-

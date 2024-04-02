@@ -26,8 +26,14 @@ class CategoryDao {
         
     }
     
+    func getId() -> String {
+        return collection.document().documentID;
+    }
+    
     func add(category: inout Category) async throws {
-        category.id = collection.document().documentID
+        if category.id.isBlank {
+            category.id = collection.document().documentID
+        }
         try await collection.document(category.id).setData(category.asDicitionry())
     }
     

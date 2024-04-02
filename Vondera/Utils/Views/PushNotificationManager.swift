@@ -6,7 +6,6 @@ import FirebaseMessaging
 import FirebaseAuth
 import FirebaseFirestore
 import Siren
-import FacebookCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     let gcmMessageIDKey = "gcm.message_id"
@@ -15,77 +14,65 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         window?.makeKeyAndVisible()
         
-        // UPdate checker
-        let siren = Siren.shared
-        siren.rulesManager = RulesManager(majorUpdateRules: .critical,
-                                          minorUpdateRules: .annoying,
-                                          patchUpdateRules: .default,
-                                          revisionUpdateRules: .relaxed)
-        siren.wail()
+        // FCM Notifications
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
+        
+        application.registerForRemoteNotifications()
         
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
         
-        // Initialize Facebook SDK
-        FBSDKCoreKit.ApplicationDelegate.shared.application(
-            application,
-            didFinishLaunchingWithOptions: launchOptions
-        )
-        
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-        } else {
-            let settings: UIUserNotificationSettings =
-            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        
-        application.registerForRemoteNotifications()
+        // UPdate checker
+        let siren = Siren.shared
+        siren.rulesManager = RulesManager(majorUpdateRules: .critical, minorUpdateRules: .annoying, patchUpdateRules: .default, revisionUpdateRules: .relaxed)
+        siren.wail()
         return true
     }
     
+    
+    // MARK : When we recieve a new notification this triggers
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         if let _ = Auth.auth().currentUser {
             if let messageID = userInfo[gcmMessageIDKey] {
                 print("Message ID: \(messageID)")
             }
+            
+            Messaging.messaging().appDidReceiveMessage(userInfo)
             completionHandler(UIBackgroundFetchResult.newData)
-        } else {
-            completionHandler(UIBackgroundFetchResult.noData)
         }
     }
 }
 
 extension AppDelegate: MessagingDelegate {
+    // --> Mark when a FCM token updates
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        
-        let deviceToken:[String: String] = ["token": fcmToken ?? ""]
-        print("Device token: ", deviceToken) // This token can be used for testing notifications on FCM
+        let deviceToken:[String: String] = ["device_token": fcmToken ?? ""]
+        if let user = UserInformation.shared.user {
+            Task {
+                try? await UsersDao().update(id: user.id, hash: deviceToken)
+            }
+        }
     }
 }
 
 @available(iOS 10, *)
 extension AppDelegate : UNUserNotificationCenterDelegate {
-    
     // Receive displayed notifications for iOS 10 devices.
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         let userInfo = notification.request.content.userInfo
         
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
-        
-        print(userInfo)
         
         // Change this to your preferred presentation option
         completionHandler([[.banner, .badge, .sound]])
@@ -99,16 +86,30 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
         
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID from userNotificationCenter didReceive: \(messageID)")
         }
         
-        print(userInfo)
+        // --> Here we get the notification from userInfo
+        guard let objectId = userInfo["objectId"] as! String?, let notificationType = userInfo["type"] as! String? else {
+            print("Couldn't find prams")
+            return
+        }
+        
+        
+        guard let view = NotificationModelMethods.getDestination(type: notificationType, objectId: objectId) else {
+            print("Not Clickable")
+            return
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // <- here!!
+            print("Notification Clicked")
+            DynamicNavigation.shared.navigate(to: view)
+         }
+        
         
         completionHandler()
     }

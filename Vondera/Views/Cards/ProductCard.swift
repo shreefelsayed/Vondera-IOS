@@ -6,77 +6,139 @@
 //
 
 import SwiftUI
-import NetworkImage
 
+struct ProductCardSkelton : View {
+    var body: some View {
+        VStack (alignment: .leading, spacing: 0) {
+            SkeletonCellView(isDarkColor: true)
+                .frame(height: 200)
+            
+            VStack {
+                SkeletonCellView(isDarkColor: true)
+                    .frame(height: 15)
+                
+                SkeletonCellView(isDarkColor: false)
+                    .frame(height: 15)
+                
+                SkeletonCellView(isDarkColor: false)
+                    .frame(height: 15)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 6)
+        }
+    }
+}
 struct ProductCard: View {
     @Binding var product:StoreProduct
-    @Environment(\.colorScheme) var colorScheme
+    var onBuyAction:(() -> ())?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack(alignment: .topLeading) {
-                NetworkImage(url: URL(string: product.defualtPhoto() )) { image in
-                    image.centerCropped()
-                } placeholder: {
-                    ZStack(alignment: .center) {
-                        Color.gray
-                        ProgressView()
+                // Image
+                CachedImageView(imageUrl: product.defualtPhoto(), scaleType: .centerCrop)
+                    .id(product.defualtPhoto())
+
+                // Product Image Info
+                HStack {
+                    // MARK : Quantity
+                    if let stocked = product.alwaysStocked, stocked {
+                        Text("\(product.quantity)")
+                            .foregroundStyle(.white)
+                            .padding(6)
+                            .background(product.quantity > 0 ? Color.black : .red)
+                            .cornerRadius(6)
+                            .frame(alignment: .topLeading)
                     }
                     
-                } fallback: {
-                    Color.gray
+                    Spacer()
+                    
+                    // MARK : Hidden
+                    if let visible = product.visible, !visible {
+                        Image(systemName: "eye.slash")
+                            .bold()
+                            .foregroundStyle(.black)
+                            .frame(alignment: .topTrailing)
+                            .padding(4)
+                    }
                 }
-                .id(product.id)
-                .background(Color.white)
-                .shadow(radius: 15)
-                .cornerRadius(15)
-                .frame(height: 200)
                 
-                if !(product.alwaysStocked ?? false) {
-                    Text(product.quantity > 0 ? "\(product.quantity)" : "Out of stock")
-                        .foregroundStyle(.white)
-                        .padding(6)
-                        .background(product.quantity > 0 ? Color.accentColor : .red)
-                        .cornerRadius(6)
+                // MARK : OUT OF STOCK
+                if !(product.alwaysStocked ?? false) && product.quantity <= 0 {
+                    HStack {
+                        Text("Out of stock")
+                            .foregroundStyle(.red)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: .infinity)
+                    .background(Color.gray.opacity(0.2))
                 }
             }
+            .background(Color.white)
+            .frame(height: 200)
             
             
             VStack(alignment: .leading) {
-                Text(product.name.uppercased())
+                Text(product.name.capitalizeFirstLetter())
                     .font(.body)
                     .lineLimit(1)
                     .bold()
                 
-                Text(product.categoryName)
+                Text(product.categoryName ?? "")
                     .font(.caption)
                     .lineLimit(1)
                     .foregroundColor(.secondary)
                 
                 HStack {
-                    if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
-                        Text("\(Int(crossedPrice)) LE")
-                            .font(.body)
-                            .strikethrough()
-                    }
-                    
                     Text("\(Int(product.price)) LE")
                         .font(.headline)
                         .multilineTextAlignment(.center)
                         .bold()
+                    
+                    if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
+                        Text("\(Int(crossedPrice)) LE")
+                            .font(.body)
+                            .foregroundStyle(.red)
+                            .strikethrough()
+                    }
+                }
+                
+                if let onBuyAction = onBuyAction {
+                    Button("Add to cart") {
+                        onBuyAction()
+                    }
+                    .foregroundColor(.white)
+                    .padding(.vertical, 6)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        Color.black
+                    )
+                    .cornerRadius(8)
                 }
             }
-            .padding(12)
+            .padding(.top, 12)
+            .padding(.bottom, 6)
+            .padding(.horizontal, 6)
         }
-        .background(colorScheme == .dark ? .white.opacity(0.1) : .black.opacity(0.03))
-        .cornerRadius(15)
-        .padding(6)
-        
+        .background(Color.white)
+        .cornerRadius(6)
     }
 }
 
-struct ProductCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductCard(product: .constant(StoreProduct.example()))
+#Preview {
+    List {
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+            ProductCard(product: .constant(StoreProduct.example()))
+            ProductCard(product: .constant(StoreProduct.example()))
+        }
+        .listStyle(.plain)
+        
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+            ProductCardSkelton()
+            ProductCardSkelton()
+        }
+        .listStyle(.plain)
     }
+    .listStyle(.plain)
+    .background(Color.background)
 }

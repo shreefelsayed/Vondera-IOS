@@ -18,7 +18,7 @@ struct ReportCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack (alignment: .center, spacing: 12) {
-                if iconName != nil {
+                if let iconName = iconName {
                     Image(iconName)
                         .resizable()
                         .frame(width: 28, height: 28)

@@ -10,9 +10,6 @@ import Combine
 import SwiftUI
 
 class AddExpansesViewModel : ObservableObject {
-    var storeId:String
-    var myUser:UserData?
-    var expansesDao:ExpansesDao
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     @Published var newItem:Expense?
 
@@ -29,15 +26,7 @@ class AddExpansesViewModel : ObservableObject {
     @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
     
-    
-    init(storeId:String) {
-        self.storeId = storeId
-        expansesDao = ExpansesDao(storeId: storeId)
-        
-        Task {
-            myUser = UserInformation.shared.getUser()
-        }
-    }
+
     
     func save() async {
         guard price > 0 else {
@@ -50,6 +39,9 @@ class AddExpansesViewModel : ObservableObject {
             return
         }
         
+        guard let user = UserInformation.shared.user else {
+                    return
+                }
         
         DispatchQueue.main.async {
             self.isSaving = true
@@ -57,8 +49,8 @@ class AddExpansesViewModel : ObservableObject {
         
         do {
             // --> Update the database
-            var expanses = Expense(amount: price, description: desc, madeBy: myUser?.id ?? "")
-            try await expansesDao.create(expanses: &expanses)
+            var expanses = Expense(amount: price, description: desc, madeBy: user.id)
+            try await ExpansesDao(storeId: user.storeId).create(expanses: &expanses)
             
             DispatchQueue.main.async { [expanses] in
                 //self.showTosat(msg: "Expanse Added")

@@ -19,12 +19,10 @@ class ReadyViewModel : ObservableObject {
     
     init() {
         Task {
-            guard let myUser = UserInformation.shared.getUser() else {
-                return
+            if let storeId = UserInformation.shared.user?.storeId {
+                ordersDao = OrdersDao(storeId: storeId)
+                await getData()
             }
-            
-            ordersDao = OrdersDao(storeId: myUser.storeId)
-            await getData()
         }
     }
     

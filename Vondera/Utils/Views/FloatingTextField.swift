@@ -18,7 +18,10 @@ struct FloatingTextField: View {
     var keyboard:UIKeyboardType = .default
     var isNumric = false
     var number: Binding<Int>?
+    var enableNegative = false
     var isDiabled = false
+    @State private var isFocused = false
+    
 
 
     var body: some View {
@@ -35,7 +38,7 @@ struct FloatingTextField: View {
             
             HStack {
                 if secure {
-                    HybridTextField(text: text, titleKey: title)
+                    HybridTextField(text: text, isFocused: $isFocused, titleKey: title)
                 } else {
                     if multiLine {
                         TextEditor(text: text)
@@ -47,14 +50,18 @@ struct FloatingTextField: View {
                             //.textInputAutocapitalization(autoCapitalize)
                     } else {
                         if isNumric && number != nil {
-                            TextField(title, value: number!, formatter: NumberFormatter())
-                                .keyboardType(.numberPad)
-                                .disabled(isDiabled)
+                            TextField(title, value: number!, formatter: NumberFormatter(), onEditingChanged: { focus in
+                                isFocused = focus
+                            })
+                            .keyboardType(enableNegative ? .asciiCapableNumberPad : .numberPad)
+                            .disabled(isDiabled)
                         } else {
-                            TextField(title, text: text)
-                                .keyboardType(keyboard)
-                                .textInputAutocapitalization(autoCapitalize)
-                                .disabled(isDiabled)
+                            TextField(title, text: text, onEditingChanged: { focus in
+                                isFocused = focus
+                            })
+                            .keyboardType(keyboard)
+                            .textInputAutocapitalization(autoCapitalize)
+                            .disabled(isDiabled)
                         }
                     }
                 }
@@ -67,7 +74,7 @@ struct FloatingTextField: View {
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 10) // Adjust the corner radius as needed
-                    .stroke(Color.gray.opacity(0.1), lineWidth: 1)
+                    .stroke(!isFocused ? Color.gray.opacity(0.1) : Color.accentColor, lineWidth: 1)
             )
             
             if caption != nil {
@@ -80,8 +87,6 @@ struct FloatingTextField: View {
             }
             
         }
-        
-        .animation(.default)
     }
 }
 

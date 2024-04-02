@@ -6,60 +6,39 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct ProductOrderCard: View {
     var orderProduct:OrderProductObject
     var body: some View {
         
-        VStack {
-            HStack(alignment: .top) {
-                ZStack {
-                    NetworkImage(url: URL(string: orderProduct.image)) { image in
-                        image.resizable().scaledToFill()
-                    } placeholder: {
-                        ProgressView()
-                    } fallback: {
-                        Color.gray
-                    }
-                    .background(Color.white)
-                    .frame(width: 120, height: 100)
-                    .id(orderProduct.image)
+        HStack(alignment: .center) {
+            CachedImageView(imageUrl: orderProduct.image, scaleType: .centerCrop)
+            .frame(width: 120, height: 100)
+            .id(orderProduct.image)
+            
+            VStack(alignment: .leading, spacing: 6) {
+                Text(orderProduct.name)
+                    .font(.headline.bold())
+                
+                Text(orderProduct.getVarientsString())
+                    .font(.subheadline)
+                
+                HStack {
+                    Spacer()
                     
-                    
-                }.overlay(alignment: .bottom) {
-                    HStack {
-                        Rectangle()
-                            .foregroundColor(.accentColor)
-                    }
-                    .frame(height: 20)
-                    
-                    Text("\(Int(orderProduct.price)) x \(orderProduct.quantity)")
-                        .foregroundColor(.white)
-                        .font(.caption)
+                    Text("EGP \(Int(orderProduct.price)).00 x \(orderProduct.quantity)")
+                        .foregroundColor(.accentColor)
+                        .font(.body)
                         .bold()
                 }
-                .cornerRadius(20)
-               
-                
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(orderProduct.name.uppercased())
-                        .font(.title3.bold())
-                    
-                    Text(orderProduct.getVarientsString())
-                        .font(.subheadline)
-                    
-                }
-                
-                Spacer()
             }
-            Divider()
+            .padding(.horizontal, 6)
         }
+        .cardView(padding: 6)
     }
 }
 
-struct ProductOrderCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductOrderCard(orderProduct: OrderProductObject.example())
-    }
+#Preview {
+    ProductOrderCard(orderProduct: OrderProductObject.example())
+    
 }

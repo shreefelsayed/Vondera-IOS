@@ -22,12 +22,10 @@ class ProductPhotosViewModel : ObservableObject {
     }
     
     var canAdd:Bool {
-        return (listPhotos.count + selectedPhotos.count) < 6
+        return listPhotos.count < 6
     }
     
-    @Published var listPhotos = [String]()
-    @Published var selectedPhotos: [UIImage] = []
-
+    @Published var listPhotos = [ImagePickerWithUrL]()
     @Published var isSaving = false
     @Published var isLoading = false
 
@@ -45,22 +43,6 @@ class ProductPhotosViewModel : ObservableObject {
         }
     }
     
-    
-    func removePhoto(image: String) {
-        if let index = listPhotos.firstIndex(of: image) {
-            listPhotos.remove(at: index)
-        }
-    }
-    
-    func removePhoto(image: UIImage) {
-        if let index = selectedPhotos.firstIndex(of: image) {
-            selectedPhotos.remove(at: index)
-        }
-    }
-    
-    func clearSelectedPhotos() {
-        selectedPhotos.removeAll()
-    }
         
     
     func getData() async {
@@ -71,7 +53,7 @@ class ProductPhotosViewModel : ObservableObject {
         if let product = try? await productsDao.getProduct(id: product.id) {
             DispatchQueue.main.async {
                 self.product = product
-                self.listPhotos = product.listPhotos
+                self.listPhotos = product.listPhotos.convertImageUrlsToItems()
                 self.isLoading = false
             }
         } else {
@@ -87,34 +69,31 @@ class ProductPhotosViewModel : ObservableObject {
             self.isSaving = true
         }
         
-        
-        if let storeId = myUser?.storeId {
-            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "stores/\(storeId)/products/\(product.id)") { imageURLs, error in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        self.isSaving = false
-                        self.showTosat(msg: error.localizedDescription)
-                    }
-                } else if let imageURLs = imageURLs {
-                    self.saveProduct(uris: imageURLs)
-                }
-            }
+        if listPhotos.getItemsToUpload().isEmpty {
+            saveProduct()
+            return
         }
         
-    }
-    
-    func saveProduct(uris:[URL]?)  {
-        Task {
-            do {
-                // --> Update the database
-                var finalList = [String]()
-                finalList.append(contentsOf: listPhotos)
-                
-                if uris != nil {
-                    finalList.append(contentsOf: uris!.map { $0.absoluteString })
+        
+        if let storeId = myUser?.storeId {
+            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/products/\(product.id)") { [self] urls, error in
+                if let error = error {
+                    isSaving = false
+                    showTosat(msg: error.localizedDescription)
+                } else if let urls = urls {
+                    listPhotos = listPhotos.mapUrlsToLinks(urls: urls)
+                    saveProduct()
                 }
                 
-                let map:[String:Any] = ["listPhotos": finalList]
+                
+            }
+        }
+    }
+    
+    func saveProduct()  {
+        Task {
+            do {
+                let map:[String:Any] = ["listPhotos": listPhotos.getLinks()]
                 try await productsDao.update(id: product.id, hashMap: map)
                 
                 DispatchQueue.main.async {
@@ -133,8 +112,7 @@ class ProductPhotosViewModel : ObservableObject {
     
     
     func update() async {
-        let totalSize = (listPhotos.count + selectedPhotos.count)
-        guard totalSize > 0 else {
+        guard listPhotos.count > 0 else {
             showTosat(msg: "The product must have at least one photo")
             return
         }

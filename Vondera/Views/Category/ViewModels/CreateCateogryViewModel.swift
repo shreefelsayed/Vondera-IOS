@@ -52,10 +52,10 @@ class CreateCategoryViewModel : ObservableObject {
         
         self.isSaving = true
         
+        let id = categoryDao.getId()
         
         // --> Upload the new Image
-        let ref = Storage.storage().reference().child("stores").child(storeId)
-        FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,name: name ,ref: ref) { url, error in
+        FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,ref: "stores/\(storeId)/categories/\(id).jpeg") { url, error in
             if let error = error {
                 DispatchQueue.main.async {
                     self.isSaving = false
@@ -64,20 +64,19 @@ class CreateCategoryViewModel : ObservableObject {
             } else if let url = url {
                 Task {
                     print("New logo uploaded")
-                    await self.addCategory(url: url)
+                    await self.addCategory(url: url, id: id)
                 }
                 
             }
         }
     }
     
-    func addCategory(url:URL) async {
+    func addCategory(url:URL, id:String) async {
         do {
             print("store id \(storeId)")
             let myUser = UserInformation.shared.getUser()
-            var created = Category(id: "",name: name, url: url.absoluteString, sortValue: myUser?.store!.categoriesCount ?? 0)
+            var created = Category(id: id,name: name, url: url.absoluteString, sortValue: myUser?.store!.categoriesCount ?? 0)
             created.desc = desc
-            
             try await categoryDao.add(category: &created)
             
             // --> Saving Local

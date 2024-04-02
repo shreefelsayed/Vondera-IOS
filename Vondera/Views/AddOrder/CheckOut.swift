@@ -38,7 +38,7 @@ class CheckOutViewModel: ObservableObject {
     
     @Published var gov = "" {
         didSet {
-            if let listAreas = myUser?.store?.listAreas {
+            if let listAreas = myUser?.store?.listAreas, shipping {
                 let item = listAreas.first { $0.govName == gov }
                 DispatchQueue.main.async {
                     self.shippingFees = item?.price ?? 0
@@ -96,8 +96,7 @@ class CheckOutViewModel: ObservableObject {
     
     func genrateId() async {
         let id:String = "\(generateRandomNumber())"
-        let isExist = try! await ordersDao.isExist(id: id)
-        if isExist {
+        if let isExist = try? await ordersDao.isExist(id: id), isExist {
             await genrateId()
             return
         }
@@ -106,7 +105,7 @@ class CheckOutViewModel: ObservableObject {
     }
     
     var cod: Int {
-        return totalPrice + shippingFees - discount
+        return totalPrice + (shipping ? shippingFees : 0) - discount
     }
     
     var totalPrice : Int {
@@ -128,8 +127,8 @@ class CheckOutViewModel: ObservableObject {
             if let client = client {
                 DispatchQueue.main.async {
                     self.name = client.name
-                    self.address = client.address ?? ""
-                    self.gov = client.gov ?? ""
+                    self.address = self.shipping ? client.address ?? "" : ""
+                    self.gov = self.shipping ? client.gov ?? "" : ""
                 }
             }
         } catch {
@@ -168,7 +167,7 @@ class CheckOutViewModel: ObservableObject {
     }
     
     func addToFirestore(attachment:[String] = [String]()) async {
-        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: discount, clientShippingFees:(shipping ? shippingFees : 0))
+        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: Double(discount), clientShippingFees:(shipping ? shippingFees : 0))
         
         order.listAttachments = attachment
         order.listProducts = listItems
@@ -263,11 +262,11 @@ struct CheckOut: View {
         ScrollView (showsIndicators: false) {
             VStack(alignment: .leading, spacing: 12) {
                 // MARK : Market Places
-                if viewModel.myUser?.store?.listMarkets != nil {
+                if let markets = viewModel.myUser?.store?.listMarkets, !markets.isEmpty  {
                     ScrollView(.horizontal) {
                         HStack {
-                            ForEach(MarketsManager().getEnabledMarkets(storeMarkets: viewModel.myUser!.store!.listMarkets!)) { market in
-                                MarketHeaderCard(marketId: market.id, turnedOff: viewModel.marketPlaceId != market.id)
+                            ForEach(MarketsManager().getEnabledMarkets(storeMarkets: markets)) { market in
+                                MarketHeaderCard(marketId: market.id, withText: true, turnedOff: viewModel.marketPlaceId != market.id)
                                     .onTapGesture {
                                         withAnimation {
                                             viewModel.marketPlaceId = market.id
@@ -458,7 +457,11 @@ struct CheckOut: View {
         .navigationDestination(isPresented: $viewModel.openPlan) {
             AppPlans(selectedSlide: 3)
         }
-        
+        .task {
+            if let firstItem = UserInformation.shared.user?.store?.listAreas?.first {
+                viewModel.gov = firstItem.govName
+            }
+        }
     }
 }
 

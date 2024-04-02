@@ -57,7 +57,7 @@ extension Array where Element == [String:[String]] {
                 options.append(arrayValue)
             }
         }
-
+        
         
         return options
     }
@@ -96,10 +96,10 @@ extension Array where Element == Order {
         for order in self {
             for orderProductObject in order.listProducts! {
                 if let index = finalList.firstIndex(where: { $0.isEqual(orderProductObject) }) {
-                                finalList[index].quantity += orderProductObject.quantity
-                            } else {
-                                finalList.append(orderProductObject)
-                            }
+                    finalList[index].quantity += orderProductObject.quantity
+                } else {
+                    finalList.append(orderProductObject)
+                }
             }
         }
         
@@ -119,7 +119,7 @@ extension Array where Element == Order {
         }
         return nil
     }
-
+    
     
     func totalNetProfit() -> Int {
         let valid = self.getValidOrders()
@@ -137,7 +137,7 @@ extension Array where Element == Order {
         var amout = 0
         
         valid.forEach { order in
-            amout += (order.commission ?? 0)
+            amout += Int(order.commission ?? 0)
         }
         
         return amout
@@ -204,7 +204,7 @@ extension Array where Element == Order {
         var total = 0
         
         for item in items {
-            total += item.commission ?? 0
+            total += Int(item.commission ?? 0)
         }
         
         return total

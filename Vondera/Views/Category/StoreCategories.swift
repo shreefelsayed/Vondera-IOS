@@ -23,14 +23,16 @@ struct StoreCategories: View {
     var body: some View {
         List {
             ForEach($viewModel.items) { item in
-                CategoryLinear(category: item)
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    Button {
-                        self.editCategory = item.wrappedValue
-                    } label: {
-                        Image(systemName: "pencil")
+                if item.wrappedValue.filter(searchText: viewModel.searchText) {
+                    CategoryLinear(category: item)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button {
+                            self.editCategory = item.wrappedValue
+                        } label: {
+                            Image(systemName: "pencil")
+                        }
+                        .tint(.blue)
                     }
-                    .tint(.blue)
                 }
             }
             .onMove { indexSet, index in
@@ -40,6 +42,7 @@ struct StoreCategories: View {
                 }
             }
         }
+        .searchable(text: $viewModel.searchText, prompt: "Search \(viewModel.items.count) Categories")
         .refreshable {
             await viewModel.getData()
         }
@@ -51,8 +54,11 @@ struct StoreCategories: View {
                     NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
                         onItemAdded(newValue)
                     })) {
-                        Image(systemName: "plus")
+                        Image(.icAdd)
                     }
+                    .buttonStyle(.plain)
+                    .font(.title)
+                    .bold()
                 }
             }
         }
@@ -67,7 +73,18 @@ struct StoreCategories: View {
         })
         .overlay(alignment: .center, content: {
             if !viewModel.loading && viewModel.items.count == 0 {
-                EmptyMessageView(msg: "No categories were added to your store yet !")
+                EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No categories were added to your store yet !") {
+                    VStack {
+                        if UserInformation.shared.user?.canAccessAdmin ?? false {
+                            NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
+                                onItemAdded(newValue)
+                            })) {
+                                Text("Create new Category")
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                    }
+                }
             } else if viewModel.loading {
                 ProgressView()
             }

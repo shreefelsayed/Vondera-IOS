@@ -8,13 +8,9 @@
 import SwiftUI
 import AlertToast
 
-struct ChangeUsername: View {
+struct CustomDomain: View {
     
-    @State var userName = ""
-    @State var validName = false
-    @State var validatingName = false
-    
-    @State var showDialog = false
+    @State var domain = ""
     @ObservedObject var user = UserInformation.shared
     @State var saving = false
     @State var msg:LocalizedStringKey?
@@ -22,109 +18,197 @@ struct ChangeUsername: View {
     
     var body: some View {
         List {
-            HStack {
-                FloatingTextField(title: "Username", text: $userName, caption: "This will be your link, it should be english, no spaces, uniquie, no numbers", required: true, autoCapitalize: .never)
-                    .onChange(of: userName, perform: { value in
-                        validateUserName()
-                    })
+            Section("Your custom domain") {
+                FloatingTextField(title: "Custom Domain", text: $domain, caption: "This is your custom domain ex (vondera.app)", required: true, autoCapitalize: .never)
+            }
+           
+            Section("Domain info") {
+                Text("Add this to your custom DNS Record in your domain")
                 
-                if validatingName {
-                    ProgressView()
-                } else if validName {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(Color.green)
+                HStack {
+                    Text("Name")
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Text("@")
+                }
+                
+                HStack {
+                    Text("Type")
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Text("A")
+                }
+                
+                HStack {
+                    Text("Value")
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Text("76.76.21.21")
+                }
+                
+                HStack {
+                    Text("TTL")
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Text("600 Seconds")
                 }
             }
             
         }
+        .listStyle(.plain)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Update") {
-                    if validName {
-                        promotDialog()
-                    }
+                    handleUpdateClicked()
                 }
-                .disabled(saving || !validName)
+                .disabled(saving)
             }
         }
         .willProgress(saving: saving)
         .navigationBarBackButtonHidden(saving)
         .task {
-            if let mId = user.user?.store?.merchantId {
-                userName = mId
+            if let customDomain = user.user?.store?.customDomain {
+                domain = customDomain
             }
         }
         .toast(isPresenting: Binding(value: $msg)) {
             AlertToast(displayMode: .banner(.pop), type: .regular, title: msg?.toString())
         }
-        .confirmationDialog("WARNING", isPresented: $showDialog, titleVisibility: .visible, actions: {
-            Button("Change Username") {
-                update()
-            }
-            
-            Button("Later", role: .cancel) {
-                
-            }
-        }, message: {
-            Text("Chaning your username will cause in changing your website link, are you sure you want to do this")
-        })
-        .navigationTitle("Change Username")
+        .navigationTitle("Custom Domain")
     }
     
-    func promotDialog() {
-        guard validName, userName.count > 2 else {
-            msg = "Enter a valid username"
+    func handleUpdateClicked() {
+        guard check() else {
             return
         }
         
-        self.showDialog = true
+        if domain.isBlank {
+            removeDomain()
+        } else {
+            connectDomain()
+        }
     }
     
-    func update() {
+    func check() -> Bool {
+        if domain.isBlank {
+            return true
+        }
+        
+        if !getDomain().isBlank && getDomain().contains(".") {
+            return true
+        }
+        
+        return false
+    }
+    
+    func getDomain() -> String {
+        return domain.lowercased().replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "https://", with: "")
+            .replacingOccurrences(of: "http://", with: "")
+            .replacingOccurrences(of: "/", with: "")
+    }
+    
+    func handleRemoveResult(_ resultData:[String: Any]) {
+        if let error = resultData["error"] as? String  {
+            msg = error.localize()
+            saving = false
+            return
+        }
+        
+        let serverMessage = resultData["msg"] as? String
+        let success = resultData["success"] as? Bool
+        
+        if let success = success, success {
+            UserInformation.shared.user?.store?.customDomain = ""
+            presentationMode.wrappedValue.dismiss()
+            msg = "Domain Disconnected"
+        } else {
+            msg = (serverMessage ?? "").localize()
+        }
+        
+        saving = false
+    }
+    
+    func handleConnectResult(_ resultData:[String: Any]) {
+        if let error = resultData["error"] as? String  {
+            msg = error.localize()
+            saving = false
+            return
+        }
+        
+        let serverMessage = resultData["msg"] as? String
+        let success = resultData["success"] as? Bool
+        
+        if let success = success, success {
+            UserInformation.shared.user?.store?.customDomain = getDomain()
+            presentationMode.wrappedValue.dismiss()
+            msg = "Domain Connected"
+        } else {
+            msg = (serverMessage ?? "").localize()
+        }
+        
+        saving = false
+    }
+    
+    func removeDomain() {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        let data = ["storeId": storeId]
+        saving = true
         Task {
-            if let id = UserInformation.shared.user?.storeId {
-                saving = true
-                let data = [
-                    "merchantId" : userName.lowercased().replacingOccurrences(of: " ", with: ""),
-                ]
-                
-                if let _ = try? await StoresDao().update(id: id, hashMap: data) {
-                    // Call the firebase function
-                    
-                    // Call the firebase function
-                    let data:[String:Any] = ["old" : user.user?.store?.merchantId ?? "", "new" : userName.lowercased().replacingOccurrences(of: " ", with: "")]
-                    
-                    _ = try await FirebaseFunctionCaller().callFunction(functionName: "sheets-userNameUpdated", data: data)
-                    
-                    DispatchQueue.main.async { [self] in
-                        UserInformation.shared.user?.store?.merchantId = userName.lowercased().replacingOccurrences(of: " ", with: "")
-                        presentationMode.wrappedValue.dismiss()
-                        msg = "Updated"
-                    }
-                } else {
-                    msg = "Error Happened"
+            if let result = try? await FirebaseFunctionCaller().callFunction(functionName: "domain-deleteDomainFromProject", data: data) {
+                guard let resultData = result.data as? [String: Any] else {
+                    saving = false
+                    return
                 }
                 
+                DispatchQueue.main.async {
+                    handleConnectResult(resultData)
+                }
+            } else {
+                msg = "Error Happened"
                 saving = false
+                return
             }
         }
     }
     
-    func validateUserName() {
-        validName = false
-        validatingName = true
+    func connectDomain() {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        let data = ["domain" : getDomain(), "storeId": storeId]
+        saving = true
         
         Task {
-            if let valid = try? await StoresDao().validId(id: userName) {
-                DispatchQueue.main.async {
-                    self.validName = valid
-                    self.validatingName = false
+            if let result = try? await FirebaseFunctionCaller().callFunction(functionName: "domain-addDomainToHosting", data: data) {
+                guard let resultData = result.data as? [String: Any] else {
+                    saving = false
+                    return
                 }
+                DispatchQueue.main.async {
+                    handleConnectResult(resultData)
+                }
+            } else {
+                msg = "Error happened"
+                saving = false
+                return
             }
         }
     }
 }
 
 #Preview {
-    ChangeUsername()
+    CustomDomain()
 }

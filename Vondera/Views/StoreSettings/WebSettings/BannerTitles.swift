@@ -8,118 +8,124 @@
 import SwiftUI
 import AlertToast
 import PhotosUI
-import NetworkImage
 
-struct WebsiteCover: View {
-    @State var listPhotos = [ImagePickerWithUrL]()
-    @State var images = [PhotosPickerItem]()
+struct NewBannerView : View {
+    @State private var text = ""
+    @Binding var isPresenting:Bool
+    var onAdded: ((String) -> ())
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            FloatingTextField(title: "Banner Text", text: $text, caption: "This will be shown on the top of your site")
+            
+            
+            ButtonLarge(label: "Add") {
+                if text.isBlank {
+                    return
+                }
+                
+                
+                onAdded(text)
+                isPresenting.toggle()
+            }
+        }
+        .padding()
+    }
+}
 
-    @ObservedObject var user = UserInformation.shared
-    @State var saving = false
-    @State var msg:String?
+struct BannerTitles: View {
+    @State private var titles = [String]()
+    @ObservedObject private var user = UserInformation.shared
+    @State private var msg:String?
+    @State private var showAddDialog = false
+    @State private var selectedItem:String?
     @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         List {
-            ForEach(listPhotos, id: \.id) { item in
-                if let index = listPhotos.firstIndex(where: { image in image.id == item.id }) {
-                    ImageRow(pathOrLink: item, title: "Cover", index: index)
+            ForEach(titles, id: \.self) { item in
+                HStack {
+                    Text(item)
+                        .font(.body)
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Image(systemName: "arrow.up.arrow.down")
+                        .font(.body)
+                        .opacity(0.5)
+                }
+                .onTapGesture {
+                    selectedItem = item
                 }
             }
             .onDelete { indexSet in
                 if let index = indexSet.first {
-                    // --> Remove it from picker
-                    if let image = listPhotos[index].image {
-                        images.remove(at: listPhotos[index].index)
-                    }
-                    
-                    // --> Remove it from list
-                    listPhotos.remove(at: index)
-                }
-                
-            }
-            .onMove { indexSet, index in
-                listPhotos.move(fromOffsets: indexSet, toOffset: index)
-            }
-            
-            if(listPhotos.count < 6) {
-                PhotosPicker(selection: $images, maxSelectionCount: (6 - listPhotos.count), matching: .images) {
-                    Label("Add a new picture", systemImage: "plus")
-                }
-                .onChange(of: images) { newValue in
-                    Task {
-                        let photos = await newValue.addToListPhotos(list: listPhotos)
-                        DispatchQueue.main.async {
-                            self.listPhotos = photos
-                        }
-                    }
-                }
-            }
-        }
-        .listRowSeparator(.hidden)
-        .listStyle(.plain)
-        .willProgress(saving: saving)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Update") {
+                    titles.remove(at: index)
                     update()
                 }
-                .disabled(saving)
+            }
+            .onMove { indexSet, index in
+                titles.move(fromOffsets: indexSet, toOffset: index)
+                update()
             }
         }
-        .navigationBarBackButtonHidden(saving)
-        .task {
-            if let siteData = user.user?.store?.siteData {
-                self.listPhotos = siteData.listCover?.convertImageUrlsToItems() ?? []
+        .listStyle(.plain)
+        .overlay(alignment: .center) {
+            if titles.isEmpty {
+                EmptyMessageViewWithButton(systemName: "list.dash.header.rectangle", msg: "No text banners are added to your website") {
+                
+                    Button("Add your first banner") {
+                        showAddDialog.toggle()
+                    }
+                }
             }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Add") {
+                    showAddDialog.toggle()
+                }
+            }
+        }
+        .sheet(isPresented: $showAddDialog, content: {
+            NewBannerView(isPresenting: $showAddDialog) { newItem in
+                titles.append(newItem)
+                msg = "New banner added"
+                update()
+            }
+            .presentationDetents([.fraction(0.25)])
+        })
+        .task {
+            getData()
         }
         .toast(isPresenting: Binding(value: $msg)) {
             AlertToast(displayMode: .banner(.pop), type: .regular, title: msg)
         }
-        .navigationTitle("Cover photos")
+        .navigationTitle("Banners")
     }
     
-    func update() {
-        if let storeId = user.user?.storeId {
-            saving = true
-            
-            guard !listPhotos.isEmpty else {
-                updateURL()
-                return
-            }
-            
-            
-            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
-                if let error = error {
-                    self.saving = false
-                    self.msg = error.localizedDescription
-                } else if let urls = imageURLs {
-                    self.listPhotos = self.listPhotos.mapUrlsToLinks(urls: urls)
-                    self.updateURL()
-                }
-            }
+    func getData() {
+        if let items = user.user?.store?.siteData?.listBanners {
+            self.titles = items
         }
     }
     
-    func updateURL() {
+    func update() {
         Task {
             if let id = UserInformation.shared.user?.storeId {
                 let data = [
-                    "siteData.listCover" : listPhotos.getLinks(),
+                    "siteData.listBanners" : titles,
                 ]
                 
                 if let _ = try? await StoresDao().update(id: id, hashMap: data) {
                     DispatchQueue.main.async { [self] in
-                        UserInformation.shared.user?.store?.siteData?.listCover = listPhotos.getLinks()
+                        UserInformation.shared.user?.store?.siteData?.listBanners = titles
                         UserInformation.shared.updateUser()
-                        presentationMode.wrappedValue.dismiss()
-                        msg = "Updated"
                     }
                 } else {
                     msg = "Error Happened"
                 }
-                
-                saving = false
             }
         }
     }

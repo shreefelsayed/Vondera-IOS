@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NetworkImage
 
 struct SwitchAccountView: View {
     @Binding var show:Bool

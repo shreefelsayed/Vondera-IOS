@@ -9,8 +9,6 @@ import SwiftUI
 import AlertToast
 import LoadingButton
 
-
-
 struct StoreOptions: View {
     var store:Store
     @ObservedObject var viewModel:StoreOptionsViewModel

@@ -68,7 +68,7 @@ struct HomeReports: View {
         VStack(alignment: .leading) {
             // MARK : HEADER
             HStack {
-                Text("Overview")
+                Text("Summery")
                     .font(.title2)
                     .bold()
                 

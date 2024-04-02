@@ -7,16 +7,10 @@
 
 import SwiftUI
 import AlertToast
-import FirebaseAuth
-import GoogleSignIn
-import FacebookLogin
-import OmenTextField
-import CocoaTextField
-import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
-    @ObservedObject var appleAuth = AppleSignInHelper()
+    //@ObservedObject var appleAuth = AppleSignInHelper()
     
     @State var creatingAccount = false
     @State var forgetPassword = false
@@ -41,63 +35,6 @@ struct LoginView: View {
             
             Spacer().frame(height: 24)
             
-            //MARK : Login/Create account Methods
-            /*VStack {
-                HStack {
-                    RoundedImageButton(assetName: "apple-logo", assetSize: 25)
-                        .onTapGesture {
-                            appleAuth.startSignInWithAppleFlow()
-                        }
-                    
-                    Spacer()
-                    
-                    RoundedImageButton(assetName: "google", assetSize: 25)
-                    .onTapGesture {
-                        Task {
-                            if let provider = await GSignInHelper().signIn() {
-                                let loggedIn = await viewModel.googleSignIn(cred: provider.cred, id: provider.id)
-                                if !loggedIn {
-                                    print("Will Create Account")
-                                    authInfo = provider
-                                    creatingAccount = true
-                                }
-                            }
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    RoundedImageButton(assetName: "facebook", assetSize: 25)
-                        .onTapGesture {
-                            FBAuthHelper().getCreds(onCompleted: { authProvider in
-                                Task {
-                                    let loggedIn = await viewModel.fbSignIn(cred:authProvider.cred, id: authProvider.id)
-                                    if !loggedIn {
-                                        print("Will Create Account")
-                                        authInfo = authProvider
-                                        creatingAccount = true
-                                    }
-                                }
-                            })
-                        }
-                }
-                .frame(height: 40)
-                
-                
-                // Login Form
-                HStack {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.5))
-                        .frame(height: 2)
-                    
-                    Text("Or")
-                    
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.5))
-                        .frame(height: 2)
-                }
-            }*/
-            
             VStack(spacing: 22) {
                 FloatingTextField(title: "Email address", text: $viewModel.email, required: nil ,autoCapitalize: .never, keyboard: .emailAddress)
                 
@@ -107,7 +44,7 @@ struct LoginView: View {
                 
                 HStack {
                     Text("Forget Password ?")
-                        .underline()
+                        .foregroundStyle(Color.accentColor)
                         .onTapGesture {
                             forgetPassword = true
                         }
@@ -115,11 +52,6 @@ struct LoginView: View {
                 }
                 
                 
-                if count > 0 {
-                    Button("Or Login to saved account") {
-                        showSavedItems = true
-                    }
-                }
             }
             
             Spacer().frame(height: 14)
@@ -136,8 +68,19 @@ struct LoginView: View {
                     }
                 
             }
-                        
+                               
+            
+            
             Spacer()
+            
+            if count > 0 {
+                Button("Or Login to saved account") {
+                    showSavedItems = true
+                }
+                .bold()
+                .padding(.vertical, 8)
+            }
+            
             
             VStack(alignment: .center) {
                 Text("By signing in, you agree to our ")
@@ -169,7 +112,7 @@ struct LoginView: View {
             
         }
         .padding()
-        .onReceive(appleAuth.authPublisher, perform: { authProvider in
+        /*.onReceive(appleAuth.authPublisher, perform: { authProvider in
             Task {
                 let loggedIn = await viewModel.appleSignIn(cred: authProvider.cred, id: authProvider.id)
                 if !loggedIn {
@@ -178,7 +121,7 @@ struct LoginView: View {
                     creatingAccount = true
                 }
             }
-        })
+        })*/
         .navigationDestination(isPresented: $creatingAccount) {
             CreateAccountView(authInfo: authInfo)
         }

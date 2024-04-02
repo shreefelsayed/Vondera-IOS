@@ -9,22 +9,16 @@ import SwiftUI
 import AlertToast
 
 struct NewEmployee: View {
-    var storeId:String
-    @ObservedObject var viewModel:NewEmployeeViewModel
+    @ObservedObject var viewModel = NewEmployeeViewModel()
     @Environment(\.presentationMode) private var presentationMode
-    
-    init(storeId: String) {
-        self.storeId = storeId
-        self.viewModel = NewEmployeeViewModel(storeId: storeId)
-    }
     
     var body: some View {
         List {
             Section("User Info") {
-                FloatingTextField(title: "Name", text: $viewModel.name, caption: "The name of the emloyee you want to add", required: true, autoCapitalize: .words)
+                FloatingTextField(title: "Name", text: $viewModel.name, caption: "The name of the member you want to add", required: true, autoCapitalize: .words)
 
                 
-                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "Use the whatsapp number of the employee", required: true, keyboard: .phonePad)
+                FloatingTextField(title: "Phone Number", text: $viewModel.phone, caption: "Use the whatsapp number of the member", required: true, keyboard: .phonePad)
             }
             
             Section("Auth Credntials") {
@@ -55,17 +49,13 @@ struct NewEmployee: View {
                 }
             }
         }
-        .navigationTitle("Create Employee")
+        .listStyle(.plain)
+        .navigationTitle("Create team member")
         .willProgress(saving: viewModel.isSaving)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
             }
-        }
-        .toast(isPresenting: Binding(value: $viewModel.msg)){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: viewModel.msg?.toString())
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -80,7 +70,7 @@ struct NewEmployee: View {
     
     var desc:String {
         if viewModel.selectedAccountType == AccountType.admin {
-            return "Admin account has access to the dashboard, add employees and couriers and the statics or reports"
+            return "Admin account has access to the dashboard, add members and couriers and the statics or reports"
         } else if viewModel.selectedAccountType == AccountType.employee {
             return "Employee account can add orders and make actions on the orders, can assign orders to couriers too"
         } else {
@@ -88,10 +78,3 @@ struct NewEmployee: View {
         }
     }
 }
-
-#Preview {
-    NavigationStack {
-        NewEmployee(storeId: Store.Qotoofs())
-    }
-}
-

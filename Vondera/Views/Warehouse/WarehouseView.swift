@@ -9,7 +9,7 @@ import SwiftUI
 import SlidingTabView
 
 struct WarehouseView: View {
-    var storeId: String
+    var storeId: String = UserInformation.shared.user?.storeId ?? ""
     @State private var selectedTab = 0
     @State private var inStockView: InStock
     @State private var almostOutView: AlmostOut
@@ -38,8 +38,10 @@ struct WarehouseView: View {
             }
             Spacer()
         }
-        .navigationTitle("Warehouse")
+       
         .padding()
+        .background(Color.background)
+        .navigationTitle("Warehouse")
     }
 }
 

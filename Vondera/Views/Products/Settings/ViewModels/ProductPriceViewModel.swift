@@ -20,9 +20,9 @@ class ProductPriceViewModel : ObservableObject {
     }
     
     
-    @Published var price = 0
-    @Published var cost = 0
-    @Published var crossed = 0
+    @Published var price:Int = 0
+    @Published var cost:Int = 0
+    @Published var crossed:Int = 0
 
     @Published var isSaving = false
     @Published var isLoading = false
@@ -48,8 +48,8 @@ class ProductPriceViewModel : ObservableObject {
             if let product = try await productsDao.getProduct(id: product.id) {
                 DispatchQueue.main.async {
                     self.product = product
-                    self.cost = Int(product.buyingPrice)
-                    self.price = Int(product.price)
+                    self.cost = product.buyingPrice
+                    self.price = product.price
                     self.crossed = Int(product.crossedPrice ?? 0)
                 }
             }
@@ -61,6 +61,7 @@ class ProductPriceViewModel : ObservableObject {
             self.isLoading = false
         }
     }
+    
     
     func check() -> Bool{
         guard price != 0 else {

@@ -12,8 +12,13 @@ struct SiteData : Codable {
     var sendEmailToCustomer:Bool? = true
     var prePaidProducts:Bool? = true
     var whatsappButton:Bool? = true
+    var lastPiece:Bool? = true
+    var askForAddress:Bool? = true
+    var reviewsEnabled:Bool? = true
     var themeId:Int? = 1
+    var fontId:Int? = 1
     var listCover:[String]? = [String]()
+    var listBanners:[String]? = [String]()
     var primaryColor:String? = "#673ab7"
     var secondaryColor:String? = "#FAFAFA"
 }

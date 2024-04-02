@@ -6,172 +6,255 @@
 //
 
 import SwiftUI
-import NetworkImage
 import AlertToast
 
 struct SettingsFragment: View {
-    @ObservedObject var myUser = UserInformation.shared
+    private let appLink = "https://apps.apple.com/eg/app/vondera/id6459148256"
+    @ObservedObject private var myUser = UserInformation.shared
     
-    @State var showContactDialog = false
-    var customerServiceNumber = "01551542514"
+    @State private var showContactDialog = false
+    private var customerServiceNumber = "01551542514"
     
-    @State var showSavedItems = false
-    @State var count = 0
-    @State var msg:String?
+    @State private var editingProfile = false
+    @State private var collapsed = true
+    
+    @State private var msg:String?
+    
+    @State private var showSavedItems = false
+    @State private var count = 0
     
     var body: some View {
         VStack(alignment: .leading) {
-            if let myUser = myUser.user {
-                VStack {
-                    StoreToolbar()
-                        .padding()
-                    
-                    List {
-                        // MARK : Header
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .top) {
+            if let myUser = myUser.getUser() {
+                List {
+                    // MARK : Header
+                    VStack(alignment: .leading) {
+                        VStack(alignment: .leading)  {
+                            HStack(alignment: .center) {
                                 ImagePlaceHolder(url: myUser.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60)
-                                .overlay(alignment: .bottomTrailing, content: {
-                                    ImagePlaceHolder(url: myUser.store?.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis: 30)
-                                })
                                 
                                 VStack(alignment: .leading) {
                                     Text(myUser.name)
                                         .font(.title3)
+                                        .foregroundStyle(.white)
                                         .bold()
                                     
+                                    
                                     Text("\(myUser.getAccountTypeString().toString()) at \(myUser.store?.name ?? "")")
-                                        .font(.headline)
-                                        .foregroundColor(.secondary)
+                                        .font(.caption)
+                                        .lineLimit(1)
+                                        .foregroundColor(.white)
                                     
                                     Text("@\(myUser.store?.merchantId ?? "")")
-                                        .font(.headline)
-                                        .foregroundColor(.secondary)
+                                        .font(.body)
+                                        .foregroundColor(.white)
                                         .onTapGesture {
-                                            msg = "Copied to clipboard"
                                             CopyingData().copyToClipboard(myUser.store?.merchantId ?? "")
                                         }
                                 }
                                 .padding(.horizontal, 12)
                                 
                                 Spacer()
-                            }
-                            
-                            if myUser.accountType == "Owner", let store = myUser.store {
-                                PlanCard(store: store)
-                            }
-                        }
-                        
-                        if myUser.accountType == "Owner" {
-                            Section("Store Settings") {
-                                NavigationLink("Subscriptions", destination: SubscribtionsView())
-                                    .bold()
                                 
-                                NavigationLink("Store Info", destination: StoreInfoView(store: myUser.store!))
-                                    .bold()
-                                
-                                
-                                if let amount = myUser.store?.agelWallet, amount > 500 {
-                                    NavigationLink {
-                                        AgelWallet()
-                                    } label: {
-                                        HStack {
-                                            Text("Agel Wallet")
-                                            Spacer()
-                                            Text("EGP \(myUser.store?.agelWallet ?? 0)")
-                                        }
-                                        .bold()
+                                Image(.icEditProfile)
+                                    .onTapGesture {
+                                        editingProfile.toggle()
                                     }
-                                }
+                            }
+                            
+                            HStack {
+                                Text("Current Plan")
+                                    .foregroundStyle(.white)
                                 
-
+                                Spacer()
                                 
-                                /*NavigationLink("Reffer Program", destination: RefferView(user:viewModel.user!))
-                                    .bold()*/
+                                Text("\(myUser.store?.subscribedPlan?.planName ?? "")")
+                                    .foregroundStyle(.white)
+                                
+                                Image(systemName: collapsed ? "chevron.down" :  "chevron.up")
+                                    .foregroundStyle(.white)
+                            }
+                            .onTapGesture {
+                                collapsed.toggle()
                             }
                         }
+                        .padding()
+                        .background(
+                            Color.accentColor
+                        )
                         
-                        Section("Account Settings") {
-                            NavigationLink("Edit my info", destination: EditInfoView(user: myUser))
-                                .bold()
-                            
-                            NavigationLink("Change Password", destination: ChangePasswordView(user: myUser))
-                                .bold()
-                            
-                            NavigationLink("Change Phone", destination: ChangePhoneView())
-                                .bold()
-                            
-                            NavigationLink("Connect to social media", destination: ConnectSocialView())
-                                .bold()
-                        }
                         
-                        Section("App Settings") {
-                            NavigationLink("Notification Settings", destination: NotificationsSettingsView())
-                                .bold()
-                            
-                            NavigationLink("App Language", destination: AppLanguage())
-                                .bold()
-                            
-                            NavigationLink("About app", destination: AboutAppView())
-                                .bold()
-                        
-                            
-                            Button("Contact customer service") {
-                               showContactDialog.toggle()
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .bold()
-                            
-                            Button("Privacy Policy") {
-                                let url = "https://www.vondera.app/privacy-policy"
-                                if let Url = URL(string: url) {
-                                    UIApplication.shared.open(Url)
-                                }
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .bold()
-                            
-                            Button("Terms & Conditions") {
-                                let url = "https://www.vondera.app/terms-conditions"
-                                if let Url = URL(string: url) {
-                                    UIApplication.shared.open(Url)
-                                }
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .bold()
-                        }
-                        
-                        Section ("Login Settings") {
-                            // SWITCH accounts button
-                            if count > 0 {
-                                Button("Switch Account") {
-                                    withAnimation {
-                                        showSavedItems.toggle()
-                                    }
-                                }
-                                .foregroundStyle(Color.accentColor)
-                            }
-                            
-                            Button(role: .destructive) {
-                                Task {
-                                    await AuthManger().logOut()
-                                }
-                            } label: {
-                                Text("Log Out")
-                            }                            
+                        if myUser.accountType == "Owner", let store = myUser.store, !collapsed {
+                            PlanCard(store: store)
+                                .padding()
                         }
                     }
-                    .backgroundStyle(.secondary)
-                    .listStyle(.plain)
+                    .listRowInsets(EdgeInsets())
+                    
+                    // MARK : STORE SETTINGS
+                    if myUser.accountType == "Owner", let store = myUser.store {
+                        Section("Store Settings") {
+                            NavigationLink(destination: SubscribtionsView()) {
+                                Label(
+                                    title: { Text("Subscriptions and payments") },
+                                    icon: { Image(.btnSubscribtions) }
+                                )
+                            }
+                            .bold()
+                            
+                            NavigationLink(destination: StoreInformation()) {
+                                Label(
+                                    title: { Text("Store Information") },
+                                    icon: { Image(.btnStoreInfo) }
+                                )
+                            }
+                            .bold()
+                            
+                            NavigationLink(destination: StoreSettingsView(store: store)) {
+                                Label(
+                                    title: { Text("Store Settings") },
+                                    icon: { Image(.btnSettings) }
+                                )
+                            }
+                            .bold()
+
+                            NavigationLink(destination: WebsiteSettings()) {
+                                Label(
+                                    title: { Text("Website Settings") },
+                                    icon: { Image(.btnWebsite) }
+                                )
+                            }
+                            .bold()
+
+                            NavigationLink(destination: VPayScreen()) {
+                                Label(
+                                    title: { Text("VPay Wallet") },
+                                    icon: { Image(.btnVpay) }
+                                )
+                            }
+                            .bold()
+
+                             
+                        }
+                    }
+                    
+                    // MARKV: APP SETTINGS
+                    Section("App Settings") {
+                        NavigationLink {
+                            NotificationsSettingsView()
+                        } label: {
+                            Label {
+                                Text("Notification Settings")
+                            } icon: {
+                                Image(.btnNotification)
+                            }
+
+                        }.bold()
+                        
+                        NavigationLink {
+                            AppLanguage()
+                        } label: {
+                            Label {
+                                Text("Change App Language")
+                            } icon: {
+                                Image(.btnLanguage)
+                            }
+
+                        }.bold()
+                        
+                        NavigationLink {
+                            AboutAppView()
+                        } label: {
+                            Label {
+                                Text("About app")
+                            } icon: {
+                                Image(.btnAbout)
+                            }
+
+                        }.bold()
+                        
+                        NavigationLink {
+                            PrivacyCenter()
+                        } label: {
+                            Label {
+                                Text("Privacy Center")
+                            } icon: {
+                                Image(.btnPrivacyCenter)
+                            }
+
+                        }.bold()
+                        
+
+                            
+                        Label {
+                            Text("Contact Support")
+                        } icon: {
+                            Image(.btnSupport)
+                        }
+                        .bold()
+                        .onTapGesture {
+                            showContactDialog.toggle()
+                        }
+                        
+                        Link(destination: URL(string: appLink)!, label: {
+                            Label {
+                                Text("Rate our app")
+                            } icon: {
+                                Image(.btnReview)
+                            }
+                        })
+                        .buttonStyle(.plain)
+                        
+    
+                        .bold()
+
+                        
+                        Label {
+                            Text("Share the app")
+                        } icon: {
+                            Image(.btnShare)
+                        }
+                        .bold()
+                        .onTapGesture {
+                            shareApp()
+                        }
+                    }
+                    
+                    // MARK : Logining Settings
+                    Section () {
+                        // SWITCH accounts button
+                        if count > 0 {
+                            Label {
+                                Text("Switch Account")
+                            } icon: {
+                                Image(.btnSwitch)
+                            }
+                            .onTapGesture {
+                                withAnimation {
+                                    showSavedItems.toggle()
+                                }
+                            }
+                        }
+                        
+                        Label {
+                            Text("Log Out")
+                        } icon: {
+                            Image(.btnLogout)
+                        }
+                        .onTapGesture {
+                            Task {
+                                await AuthManger().logOut()
+                            }
+                        }
+                    }
                 }
+                .backgroundStyle(.secondary)
             } else {
                 ProgressView()
             }
         }
         .refreshable {
-            if let user = try? await UsersDao().getUserWithStore(userId: myUser.user?.id ?? "") {
-                UserInformation.shared.updateUser(user)
-            }
+            await refreshData()
         }
         .task {
             count = SavedAccountManager().getAllUsers().count
@@ -182,14 +265,32 @@ struct SettingsFragment: View {
         .sheet(isPresented: $showSavedItems, content: {
             SwitchAccountView(show: $showSavedItems)
         })
+        .navigationDestination(isPresented: $editingProfile, destination: {
+            EditInfoView()
+        })
         .toast(isPresenting: Binding(value: $msg), alert: {
             AlertToast(displayMode: .banner(.pop), type: .regular, title: msg)
         })
         .navigationTitle("Settings")
         
     }
+    
+    func refreshData() async {
+        if let user = try? await UsersDao().getUserWithStore(userId: myUser.user?.id ?? "") {
+            UserInformation.shared.updateUser(user)
+        }
+    }
+    
+    func shareApp() {
+            if let appURL = URL(string: appLink) {
+                let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+                UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+            }
+        }
 }
 
 #Preview {
-    SettingsFragment()
+    NavigationStack {
+        SettingsFragment()
+    }
 }

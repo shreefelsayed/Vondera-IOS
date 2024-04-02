@@ -9,17 +9,10 @@ import SwiftUI
 import AlertToast
 
 struct AddExpanse: View {
-    private var storeId:String
-    private var onAdded:((Expense) -> ())
+    var onAdded:((Expense) -> ())
 
-    @ObservedObject var viewModel:AddExpansesViewModel
+    @ObservedObject var viewModel = AddExpansesViewModel()
     @Environment(\.presentationMode) private var presentationMode
-    
-    init(storeId: String, onAdded: @escaping ((Expense) -> ())) {
-        self.storeId = storeId
-        self.onAdded = onAdded
-        self.viewModel = AddExpansesViewModel(storeId: storeId)
-    }
     
     var body: some View {
         List {
@@ -58,7 +51,7 @@ struct AddExpanse: View {
 
 #Preview {
     NavigationView {
-        AddExpanse(storeId: Store.Qotoofs()) { newValue in
+        AddExpanse { item in
             
         }
     }

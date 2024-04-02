@@ -61,7 +61,6 @@ class MarketPlaceOrdersVM : ObservableObject {
     }
 }
 
-//TODO
 struct MarketPlaceOrders: View {
     var marketPlaceId:String
     @ObservedObject var viewModel:MarketPlaceOrdersVM

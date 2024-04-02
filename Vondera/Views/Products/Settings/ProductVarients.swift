@@ -89,10 +89,12 @@ struct OptionsView : View {
     @State private var newOption: String = ""
     
     var body: some View {
-        ForEach(items.indices, id: \.self) { index in
-            FloatingTextField(title: "Option \(index + 1)", text: $items[index], required: nil, autoCapitalize: .words, isDiabled: true)
-                .listRowSeparator(.hidden)
-                .listRowSpacing(6)
+        ForEach($items, id: \.self) { item in
+            if let index = items.firstIndex(of: item.wrappedValue) {
+                FloatingTextField(title: "Option \(index + 1)", text: item, required: nil, autoCapitalize: .words, isDiabled: false)
+                    .listRowSeparator(.hidden)
+                    .listRowSpacing(6)
+            }
         }
         .onMove { indexSet, index in
             withAnimation {
@@ -121,15 +123,9 @@ struct OptionsView : View {
             .disabled(newOption.isBlank)
             .padding(.horizontal, 6)
         }
-        .onChange(of: items) { newValue in
-            items = items.filter{ !$0.isBlank }
-        }
     }
 }
 
-
-struct ProductVarients_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductVarients(product: StoreProduct.example())
-    }
+#Preview {
+    ProductVarients(product: StoreProduct.example())
 }

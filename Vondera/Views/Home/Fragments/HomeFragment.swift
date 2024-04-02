@@ -1,5 +1,4 @@
 import SwiftUI
-import NetworkImage
 import LineChartView
 import FirebaseFirestore
 
@@ -9,7 +8,7 @@ struct StoreToolbar : View {
     
     var body: some View {
         HStack {
-            if let myUser = user.user {
+            if let myUser = user.getUser() {
                 if myUser.canAccessAdmin {
                     NavigationLink(destination: Dashboard(store: myUser.store!)) {
                         IconAndName(myUser: myUser)
@@ -23,6 +22,13 @@ struct StoreToolbar : View {
                 
                 NavigationLink(destination: NotificationsView()) {
                     Image(systemName: notificationCount > 0 ? "bell.badge" :"bell")
+                        .font(.callout)
+                        .foregroundStyle(Color.accentColor)
+                        .padding(4)
+                        .background(
+                            Circle()
+                                .fill(Color.accentColor.opacity(0.2))
+                        )
                 }
             }
         }
@@ -46,11 +52,28 @@ struct HomeFragment: View {
     
     var body: some View {
         VStack {
-            if let myUser = myUser.user {
-                StoreToolbar()
-                
+            // MARK : TOOLBAR
+            StoreToolbar()
+            
+            if let myUser = myUser.getUser() {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
+                        if let warning = myUser.store?.planWarning() {
+                            HStack {
+                                Spacer()
+                                
+                                Text(warning)
+                                    .bold()
+                                    .foregroundStyle(.red)
+                                    .multilineTextAlignment(.center)
+                                
+                                Spacer()
+                            }
+                            .padding()
+                            .background(.red.opacity(0.2))
+                            .cornerRadius(8)
+                        }
+                        
                         // MARK : USER HEADER
                         UserHomeHeader()
                         
@@ -62,20 +85,17 @@ struct HomeFragment: View {
                                 StoreStepsView()
                             }
                             
-                            // MARK : Orders count
-                            if myUser.store?.ordersCountObj != nil {
-                                StoreOrdersCount()
-                            }
-                            
                             // MARK : Tip Of the day
-                            if viewModel.tip != nil {
-                                TipCard(tip: viewModel.tip!)
+                            if let tip = viewModel.tip {
+                                TipCard(tip: tip)
                             }
                             
+                            // MARK : Statics Cards
                             if !viewModel.storeStatics.isEmpty && myUser.canAccessAdmin {
                                 HomeReports(reportsDays: $viewModel.staticsDays, reports: viewModel.storeStatics)
                             }
  
+                            // MARK : TOP SELLING AREAS
                             if viewModel.topAreas.count > 0 && myUser.canAccessAdmin {
                                 TopSellingAreas(list: viewModel.topAreas)
                             }
@@ -86,7 +106,8 @@ struct HomeFragment: View {
                 .isHidden(viewModel.isLoading)
             }
         }
-        .padding()
+        .padding(.horizontal, 12)
+        .padding(.vertical, 14)
         .overlay(alignment: .center) {
             ProgressView().isHidden(!viewModel.isLoading)
         }
@@ -97,5 +118,5 @@ struct HomeFragment: View {
 }
 
 #Preview {
-    HomeFragment()
+    StoreToolbar()
 }

@@ -1,5 +1,6 @@
 import Foundation
 import FirebaseFirestoreSwift
+import SwiftUI
 
 class Store: Codable {
     @DocumentID var id:String?
@@ -21,6 +22,7 @@ class Store: Codable {
     var instaLink: String? = ""
     var tiktokLink: String? = ""
     var website: String? = ""
+    var customDomain:String? = ""
     
  
     var onlineStore: Bool? = true
@@ -36,6 +38,7 @@ class Store: Codable {
     var cantOpenPackage: Bool? = false
     var chatEnabled: Bool? = true
     var sellerName:Bool? = false
+    var printSerial:Bool? = false
     
     var customMessage: String? = ""
 
@@ -44,6 +47,7 @@ class Store: Codable {
     var ios:Bool? = true
     
     var wallet: Int? = 0 // Cashback wallet
+    var vPayWallet:Double? = 0.0
     var ordersCount: Int? = 0
     var couriersCount: Int? = 0
     var clientsCount: Int? = 0
@@ -64,7 +68,13 @@ class Store: Codable {
     var subscribedPlan: SubscribedPlan?
     var ordersCountObj: OrdersCount? = OrdersCount()
     var paymentOptions: PaymentsOptions? = PaymentsOptions()
-
+    var emailService:EmailService? = EmailService()
+    
+    
+    // --> Pixels
+    var gtm:String? = ""
+    var fbPixel:String? = ""
+    
     init() {
     }
     
@@ -85,20 +95,64 @@ class Store: Codable {
         if subscribedPlan == nil {return true}
         if subscribedPlan!.expired {return true}
         return subscribedPlan!.currentOrders >= subscribedPlan!.maxOrders
+    }
         
+    func getVonderaLink() -> String {
+        return "https://" + merchantId + ".vondera.shop/"
     }
     
-    func storeLink() -> String {
-        return "https://vondera.store/\(merchantId)"
-    }
-    
-    func storeLinkURL() -> URL {
-        return URL(string: storeLink()) ?? URL(string: "https://vondera.app")!
+    func getStoreDomain() -> String {
+        if let domain = customDomain, !domain.isBlank {
+            return "https://" + domain
+        }
+        
+        return getVonderaLink()
     }
     
     func linkQrCodeData() -> Data? {
-        return storeLink().qrCodeData
+        return getStoreDomain().qrCodeData
     }
+    
+    func planWarning() -> LocalizedStringKey? {
+        // Get the subscribed plan
+        guard let subscribedPlan = subscribedPlan else {
+            return nil
+        }
+
+        // If plan is free
+        if subscribedPlan.planId == "Ngub3Hv7wLNp9SJjTY3z" {
+            return "You're using the free plan"
+        }
+
+        // Get the current date
+        let currentDate = Date()
+
+        // Calculate the difference in days between the expiration date and the current date
+        let differenceInSeconds = subscribedPlan.expireDate.timeIntervalSince(currentDate)
+        let daysLeft = Int(differenceInSeconds / (60 * 60 * 24))
+
+        // If the expiration date is within 3 days, return the number of days left
+        if daysLeft <= 3 {
+            return "Your subscribtion will expire in \(daysLeft) days"
+        }
+
+        // Calculate remaining orders
+        let remainingOrders = subscribedPlan.maxOrders - subscribedPlan.currentOrders
+
+        // If remaining orders are less than 10% of the maximum orders
+        if remainingOrders < Int(Double(subscribedPlan.maxOrders) * 0.1) {
+            return "You've \(remainingOrders) orders left in your plan"
+        }
+
+        return nil
+    }
+}
+
+struct EmailService: Codable {
+    var email:String?
+    var password:String?
+    var service:String?
+    var useDefaultMail:Bool? = true
 }
 
 extension Store {

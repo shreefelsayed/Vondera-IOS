@@ -33,9 +33,6 @@ enum AccountType: String {
 }
 
 class NewEmployeeViewModel : ObservableObject {
-    var storeId:String
-    var myUser:UserData?
-    var usersDao:UsersDao
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
     
     private var shouldDismissView = false {
@@ -51,18 +48,8 @@ class NewEmployeeViewModel : ObservableObject {
     @Published var selectedAccountType = AccountType.sales
     @Published var perc:Int = 0
     
-    @Published var msg:LocalizedStringKey?
     @Published var isSaving = false
     
-    
-    init(storeId:String) {
-        self.storeId = storeId
-        usersDao = UsersDao()
-        
-        Task {
-            myUser = UserInformation.shared.getUser()
-        }
-    }
     
     private func check() -> Bool {
         guard email.isValidEmail else {
@@ -104,24 +91,20 @@ class NewEmployeeViewModel : ObservableObject {
             self.isSaving = true
         }
         
+        guard let user = UserInformation.shared.user else {
+            return
+        }
+        
         do {
-            //let firebaseOptions = createFirebaseOptions()
-            //FirebaseCore.FirebaseApp.configure(name: "Vonderaa", options: firebaseOptions)
-            
-            //var mAuth2 = Auth.auth(app: FirebaseApp.app(name: "Vonderaa")!)
-            
             let fbUser = try await Auth.auth().createUser(withEmail: email, password: pass)
             
             // --> Update the database
-            var userData = UserData(id: fbUser.user.uid, name: name, email: email, phone: phone, addedBy: myUser?.id ?? "", accountType: selectedAccountType.rawValue, pass: pass)
+            var userData = UserData(id: fbUser.user.uid, name: name, email: email, phone: phone, addedBy: user.id, accountType: selectedAccountType.rawValue, pass: pass)
             
-            userData.storeId = storeId
+            userData.storeId = user.storeId
             userData.percentage = Double(perc / 100)
             
-            
-            try await Auth.auth().signIn(withEmail: myUser!.email, password: myUser!.pass)
-            
-            try await usersDao.addUser(user: userData)
+            try await UsersDao().addUser(user: userData)
             
             // --> Saving Local
             if let myUser = UserInformation.shared.getUser() {
@@ -158,7 +141,7 @@ class NewEmployeeViewModel : ObservableObject {
     
     
     func showTosat(msg: LocalizedStringKey) {
-        self.msg = msg
+        ToastManager.shared.showToast(msg: msg)
     }
 }
 

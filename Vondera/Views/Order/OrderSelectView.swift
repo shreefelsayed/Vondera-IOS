@@ -44,7 +44,7 @@ struct OrderSelectView: View {
             List {
                 ForEach($list.indices, id: \.self) { index in
                     if list[index].filter(searchText: searchText) {
-                        OrderSelect(order: $list[index], checked: Binding(items: $checkedItems, currentItem: list[index]))
+                        OrderSelectCard(order: $list[index], checked: Binding(items: $checkedItems, currentItem: list[index]))
                             .buttonStyle(.plain)
                     }
                 }

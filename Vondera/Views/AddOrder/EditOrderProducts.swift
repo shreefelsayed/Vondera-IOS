@@ -65,7 +65,7 @@ struct EditOrderProducts: View {
             List {
                 Section {
                     ForEach($viewModel.items.indices, id: \.self) { index in
-                        CartAdapter(orderProduct: $viewModel.items[index])
+                        CartCard(orderProduct: $viewModel.items[index])
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
                     }
@@ -166,10 +166,9 @@ struct AddItemsToOrder : View {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
                     ForEach($items.indices, id: \.self) { index in
                         if $items[index].wrappedValue.filter(searchText) {
-                            ProductBuyingCard(product: $items[index]) {
+                            ProductCard(product: $items[index]) {
                                 self.selectedProduct = items[index]
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }

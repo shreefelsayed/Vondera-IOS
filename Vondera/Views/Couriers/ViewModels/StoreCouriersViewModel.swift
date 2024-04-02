@@ -8,18 +8,11 @@
 import Foundation
 
 class StoreCouriersViewModel : ObservableObject {
-    private var storeId:String
-    private var couriersDao:CouriersDao
-    
     @Published var couriers = [Courier]()
     @Published var searchText = ""
-    @Published var errorMsg = ""
     @Published var isLoading = false
     
-    init(storeId:String) {
-        self.storeId = storeId
-        self.couriersDao = CouriersDao(storeId: storeId)
-        
+    init() {
         Task {
             await getCouriers()
         }
@@ -27,7 +20,6 @@ class StoreCouriersViewModel : ObservableObject {
     
     var filteredItems: [Courier] {
         guard !searchText.isEmpty else { return couriers }
-        
         return couriers.filter { courier in
             courier.filter(searchText)
         }
@@ -35,18 +27,20 @@ class StoreCouriersViewModel : ObservableObject {
     
     
     func getCouriers() async {
-        self.isLoading = true
-        
-        do {
-            couriers = try await couriersDao.getByStatue()
-        } catch {
-            showError(msg: error.localizedDescription)
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
         }
         
-        self.isLoading = false
-    }
-    
-    private func showError(msg:String) {
-        self.errorMsg = msg
+        DispatchQueue.main.async {
+            self.couriers.removeAll()
+            self.isLoading = true
+        }
+        
+        if let result = try? await CouriersDao(storeId: storeId).getByStatue() {
+            DispatchQueue.main.async {
+                self.couriers = result
+                self.isLoading = false
+            }
+        }
     }
 }

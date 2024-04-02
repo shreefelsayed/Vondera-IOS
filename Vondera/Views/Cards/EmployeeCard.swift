@@ -6,7 +6,24 @@
 //
 
 import SwiftUI
-import NetworkImage
+
+struct EmployeeCardSkelton: View {
+    var body: some View {
+        HStack(alignment: .center) {
+            SkeletonCellView(isDarkColor: true)
+            .frame(width: 60, height: 60)
+            .cornerRadius(60)
+            
+            VStack(alignment:.leading) {
+                SkeletonCellView(isDarkColor: true)
+                    .frame(height: 15)
+                
+                SkeletonCellView(isDarkColor: false)
+                    .frame(height: 15)
+            }
+        }
+    }
+}
 
 struct EmployeeCard: View {
     var user:UserData
@@ -17,16 +34,14 @@ struct EmployeeCard: View {
     var body: some View {
         NavigationLink(destination: EmployeeProfile(user: user)) {
             HStack(alignment: .center) {
-                ImagePlaceHolder(url: user.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60, iconOverly: nil)
+                CachcedCircleView(imageUrl: user.userURL, scaleType: .centerCrop, placeHolder: defaultEmployeeImage)
+                    .frame(width: 60, height: 60)
                 
                 VStack(alignment:.leading) {
                     Text(user.name)
                         .bold()
                     
                     Text(user.stringAccountType())
-                    
-                    Text("Orders \(user.ordersCount ?? 0)")
-                        .font(.caption)
                 }
             }
         }
@@ -46,8 +61,12 @@ struct EmployeeCard: View {
     }
 }
 
-struct EmployeeCard_Previews: PreviewProvider {
-    static var previews: some View {
-        EmployeeCard(user: UserData.example())
+#Preview {
+    NavigationStack {
+        List {
+            EmployeeCard(user: UserData.example())
+            
+            EmployeeCardSkelton()
+        }
     }
 }

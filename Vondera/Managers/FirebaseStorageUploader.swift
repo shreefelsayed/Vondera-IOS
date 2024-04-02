@@ -13,7 +13,7 @@ import UIKit
 class FirebaseStorageUploader {
     
     func updateUserImage(image:UIImage, uId:String, completion : @escaping (Bool) -> Void) {
-        oneImageUpload(image: image,name: uId , ref: Storage.storage().reference().child("users")) { url, error in
+        oneImageUpload(image: image, ref: "users/\(uId).jpeg") { url, error in
             if let url = url {
                 Task {
                     try? await UsersDao().update(id: uId, hash: ["userURL": url.absoluteString])
@@ -29,11 +29,10 @@ class FirebaseStorageUploader {
         }
     }
     
-    func oneImageUpload(image:UIImage,name:String = "image" ,ref:StorageReference, completion : @escaping (URL?, Error?) -> Void) {
+    func oneImageUpload(image:UIImage,ref:String, completion : @escaping (URL?, Error?) -> Void) {
         print("Uploading started")
-        let filename = "\(name).jpeg" // Unique filename for each image
-        let imageRef = ref.child(filename)
-
+        let imageRef = Storage.storage().reference().child(ref)
+        
         image.compress(image: image) { compress in
             if let compress = compress, let data = compress.jpegData(compressionQuality: 1) {
                 imageRef.putData(data, metadata: nil) { metadata, error in

@@ -88,7 +88,6 @@ struct RefferView: View {
     
     func copyId() {
         CopyingData().copyToClipboard(user.id)
-        msg = "Reffer code copied to clipboard"
         showToast.toggle()
     }
 }

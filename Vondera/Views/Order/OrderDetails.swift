@@ -6,429 +6,121 @@
 //
 
 import SwiftUI
-import MapKit
-import AlertToast
-import StepProgressView
 
-struct OrderDetails: View {
+struct StatueButton : View {
     @Binding var order:Order
+    @State var selecting:String = ""
     
-    @State var isLoading = false
-    @State var comment = ""
-    
-    @State var myUser = UserInformation.shared.user
-    
-    @State private var snapshotImage: UIImage?
-    
-    // SHEETs
-    @State var courier:Courier?
-    @State var assignDialog = false
     @State var failedScreen = false
+    @State var deliverScreen = false
+    @State var courierScreen = false
+    @State var selectedCourier:Courier?
     
-    // CONTACT CLIENT
-    @State var contactSheet = false
-    @State var showOptions = false
+    @State var deleteWarning = false
+    @State var resetWarning = false
     
-    // CONTACT INFO
-    @State var contactUser:UserData?
-    @State var orderCourier:Courier?
-    @State private var sheetHeight: CGFloat = .zero
-    @State var msg:String?
-    
-    
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 20) {
+        VStack {
+            Picker(selection: $selecting) {
+                ForEach(OrderStatues.allCases, id: \.rawValue) { statue in
+                    Text("\(statue.rawValue)")
+                        .tag(statue)
                     
-                    // MARK : ORDER HEADER
-                    VStack(alignment: .leading) {
-                        
-                        // MARKET PLACE
-                        HStack(alignment: .center) {
-                            if order.marketPlaceId != nil && !order.marketPlaceId!.isBlank {
-                                MarketHeaderCard(marketId: order.marketPlaceId!, withText: false)
-                            }
-                            
-                            Text("Order Details")
-                                .font(.title3)
-                                .bold()
-                            
-                            Spacer()
-                            
-                            Text("#\(order.id)")
-                                .bold()
-                                .foregroundStyle(Color.accentColor)
-                        }
-                        
-                        Divider()
-                        
-                        // STATUE
-                        HStack(alignment: .center) {
-                            Text("Order Statue")
-                                .font(.title3)
-                                .bold()
-                            
-                            Spacer()
-                            
-                            Text(order.statue != "Out For Delivery" ? order.getStatueLocalized() : "With \(order.courierName ?? "")")
-                                .bold()
-                        }
-                        
-                        if let images = order.listAttachments, images.count > 0 {
-                            Divider()
-                            
-                            HStack {
-                                Label("Attachments", systemImage: "paperclip")
-                                
-                                Spacer()
-                                
-                                HStack(alignment: .center, spacing : 18) {
-                                    NavigationLink {
-                                        FullScreenImageView(imageURLs: images, currentIndex: 0)
-                                    } label: {
-                                        Image(systemName: "eye.circle.fill")
-                                    }
-
-                                    Button {
-                                        DownloadManager().saveImagesToDevice(imageURLs: images.map({ URL(string: $0)! }))
-                                        msg = "Downloading started"
-                                    } label: {
-                                        Image(systemName: "square.and.arrow.down.fill")
-                                    }
-                                    
-                                    Button {
-                                        CopyingData().copyToClipboard(images)
-                                        msg = "Copied to clipboard"
-                                    } label: {
-                                        Image(systemName: "doc.on.clipboard")
-                                    }
-                                }
-                                .font(.headline)
-                                .bold()
-                            }
-                        }
-                    }
-                    
-                    // NET PROFIT
-                    if (myUser?.canAccessAdmin ?? false) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Margin")
-                                    .bold()
-                                
-                                Text("\(order.getMargin())%")
-                            }
-                            .padding(24)
-                            .background(.secondary.opacity(0.2))
-                            .cornerRadius(12)
-                            
-                            VStack(alignment: .leading) {
-                                Text("Profit")
-                                    .bold()
-                                
-                                Text("EGP \(order.netProfitFinal)")
-                            }
-                            .padding(24)
-                            .background(.secondary.opacity(0.2))
-                            .cornerRadius(12)
-                        }
-                    }
-                    
-                    // MARK : SHIPPING OPTIONS
-                    if (order.requireDelivery ?? true) {
-                        VStack(alignment: .leading) {
-                            Text("Shipping info")
-                                .font(.title2)
-                                .bold()
-                            
-                            Spacer().frame(height: 8)
-                            
-                            HStack(alignment: .center) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(order.name)
-                                    Text("\(order.gov), \(order.address)")
-                                    Text(order.gov)
-                                    Text(order.phone)
-                                }
-                                
-                                Spacer()
-                                
-                                if let image = snapshotImage {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .cornerRadius(12)
-                                        .frame(width: 140, height: 100)
-                                        .onTapGesture {
-                                            openLocation()
-                                        }
-                                }
-                                
-                            }
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            
-                            Spacer().frame(height: 4)
-                            
-                            
-                            
-                            if !(order.notes?.isBlank ?? true) {
-                                Text(order.notes ?? "")
-                                    .foregroundStyle(.red)
-                                    .bold()
-                            }
-                        }
-                    }
-                    
-                    if (order.statue == "Out For Delivery" && !(order.courierId?.isBlank ?? true)) {
-                        HStack {
-                            Label(order.courierName ?? "", systemImage: "shippingbox.circle")
-                                .bold()
-                            
-                            Spacer()
-                            
-                            if let storeId = order.storeId, let courierId = order.courierId {
-                                Button {
-                                    Task {
-                                        if let courier = try? await CouriersDao(storeId: storeId)
-                                            .getCourier(id: courierId) {
-                                            orderCourier = courier
-                                        }
-                                    }
-                                } label: {
-                                    Image(systemName: "phone.fill")
-                                        .foregroundStyle(Color.accentColor)
-                                }
-                                .sheet(item: $orderCourier) { orderCourier in
-                                    ContactDialog(phone: orderCourier.phone , toggle: Binding(value: $orderCourier))
-                                }
-                            }
-                            
-                        }
-                        .font(.body)
-                    }
-                    
-                    // MARK : CONTACT BUTTON
-                    HStack {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundStyle(Color.accentColor)
-                        
-                        Text("Contact Client")
-                    }
-                    .onTapGesture {
-                        contactSheet.toggle()
-                    }
-                    
-                    
-                    // MARK : ORDER SUMMERY
-                    VStack(alignment: .leading) {
-                        Text("Order Summery")
-                            .font(.title2)
-                            .bold()
-                        
-                        Spacer().frame(height: 8)
-                        
-                        HStack {
-                            Text("Products prices")
-                            Spacer()
-                            Text("+\(order.totalPrice) LE")
-                        }
-                        
-                        if (order.requireDelivery ?? true) {
-                            
-                            HStack {
-                                Text("Shipping Fees")
-                                Spacer()
-                                Text("+\(order.clientShippingFees) LE")
-                                    .foregroundColor(.yellow)
-                            }
-                        }
-                        
-                        if order.discount ?? 0 > 0 {
-                            HStack {
-                                Text("Discount")
-                                Spacer()
-                                Text("-\(order.discount ?? 0) LE")
-                                    .foregroundColor(.red)
-                            }
-                            
-                            
-                        }
-                        
-                        Divider()
-                        
-                        HStack {
-                            Text("COD")
-                            Spacer()
-                            Text("\(order.COD) LE")
-                                .foregroundColor(.green)
-                        }
-                        
-                    }
-                    .bold()
-                    
-                    
-                    //MARK : ORDER PRODUCTS
-                    VStack (alignment: .leading){
-                        Text("Products Details")
-                            .font(.title2)
-                            .bold()
-                        
-                        Spacer().frame(height: 8)
-                        
-                        ForEach(order.listProducts!, id: \.self) { product in
-                            ProductOrderCard(orderProduct: product)
-                        }
-                    }
-                    
-                    // MARK : Updates View
-                    if order.listUpdates != nil {
-                        VStack (alignment: .leading){
-                            Text("Updates")
-                                .font(.title2)
-                                .bold()
-                            
-                            Spacer().frame(height: 8)
-                            
-                            ForEach(order.listUpdates!.reversed(), id: \.self) { update in
-                                UpdateCard(update: update)
-                                    .listRowSeparator(.hidden)
-                                    .swipeActions(allowsFullSwipe: false){
-                                        Button {
-                                            Task {
-                                                let result = try await UsersDao().getUser(uId: update.uId)
-                                                if result.exists {
-                                                    contactUser = result.item
-                                                }
-                                            }
-                                            
-                                        } label: {
-                                            Image(systemName: "message.circle.fill")
-                                        }
-                                        .tint(.green)
-                                    }
-                                    .buttonStyle(.plain)
-                            }
-                            
-                            
-                            // MARK : Add New Comment
-                            HStack {
-                                FloatingTextField(title: "Add Comment", text: $comment, required: nil)
-                                    .padding(4)
-                                
-                                Button {
-                                    withAnimation {
-                                        addComment()
-                                    }
-                                } label: {
-                                    Image(systemName: "paperplane")
-                                        .font(.title3)
-                                        .foregroundStyle(Color.accentColor)
-                                }
-                            }
-                            .padding()
-                            .background(.secondary.opacity(0.1))
-                            .cornerRadius(10)
-                            
-                            
-                            
-                        }
-                        
-                        
-                        Spacer().frame(height: 20)
-                    }
                 }
+            } label: {
+                Text(order.getStatueLocalized())
             }
-            
-            // MARK : BUTTONS
-            if let _ = myUser {
-                buttons.background(Color.background)
-            }
+            .accentColor(getStatueColor())
+            .foregroundStyle(getStatueColor())
         }
-        .padding()
-        .refreshable {
-            await getOrderData()
+        
+        .padding(.vertical, 2)
+        .padding(.horizontal, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 6)
+                .fill(getStatueColor().opacity(0.2))
+        )
+        .task {
+            self.selecting = order.statue
         }
-        .onAppear {
-            generateMapSnapshot(latLang: order.latLang)
+        .sheet(isPresented: $courierScreen) {
+            CourierPicker(selectedOption: $selectedCourier)
         }
-        .overlay(alignment: .center) {
-            if isLoading {
-                ProgressView()
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    if let mId = myUser?.store?.merchantId, !mId.isBlank {
-                        if let siteEnabled = myUser?.store?.websiteEnabled, siteEnabled == true {
-                            ShareLink(item: order.getLink(mId: mId)) {
-                                Label("Copy Order Link", systemImage: "square.and.arrow.up")
-                            }
-                            
-                            Link(destination: order.getLink(mId: mId)) {
-                                Label("Visit", systemImage: "link")
-                            }
-                        }
-                        
-                        Button {
-                            showOptions.toggle()
-                        } label: {
-                            Label("Options", systemImage: "gearshape")
-                        }
-                    }
-                } label: {
-                    Image(systemName: "ellipsis.circle.fill")
-                }
-            }
-        }
-        .sheet(isPresented: $showOptions, content: {
-            OrderOptionsSheet(order: $order, isPreseneted: $showOptions)
-        })
-        .sheet(isPresented: $contactSheet, content: {
-            ContactDialog(phone: order.phone , toggle: $contactSheet)
-        })
-        .sheet(isPresented: $assignDialog) {
-            CourierPicker(selectedOption: $courier)
-        }
-        .sheet(item: $contactUser, content: { user in
-            ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))
-        })
         .sheet(isPresented: $failedScreen, content: {
             NavigationStack {
                 OrderFailed(order: $order)
             }
         })
-        .toast(isPresenting: Binding(value: $msg)){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: msg)
-        }
-        .onChange(of: courier) { newValue in
-            if let option = newValue {
-                assign(option)
+        .confirmationDialog("Reset order", isPresented: $resetWarning, actions: {
+            Button("Later", role: .cancel) {
+                self.selecting = order.statue
             }
+            
+            Button("Reset", role: .destructive) {
+                reset()
+            }
+        }, message: {
+            Text("This will reset your order statue to pending, are you sure you want to reset the order ?")
+        })
+        .confirmationDialog("Delete order", isPresented: $deleteWarning, actions: {
+            Button("Later", role: .cancel) {
+                self.selecting = order.statue
+            }
+            
+            Button("Delete", role: .destructive) {
+                delete()
+            }
+        }, message: {
+            Text("This will delete the order, but you can restore it later.")
+        })
+        .onChange(of: selecting) { _ in
+            guard selecting != order.statue else {
+                return
+            }
+            
+            // --> Then we make the action
+            makeActionOnNewStatue(selecting)
         }
-        .navigationTitle("#\(order.id)")
+        .onChange(of: courierScreen) { newValue in
+            guard !courierScreen else {
+                return
+            }
+            
+            guard let selectedCourier = selectedCourier else {
+                self.selecting = order.statue
+                return
+            }
+            
+            assign(selectedCourier)
+            self.selectedCourier = nil
+        }
     }
     
-    func getOrderData() async {
-        do {
-            if let storeId = order.storeId, !storeId.isBlank {
-                let orderData = try await OrdersDao(storeId: storeId).getOrder(id: order.id)
-                DispatchQueue.main.async {
-                    if !orderData.exists {
-                        self.showTosat("Order doesn't exist")
-                        return
-                    }
-                    self.order = orderData.item
-                }
-            }
-        } catch {
-            showTosat(error.localizedDescription)
+    private func makeActionOnNewStatue(_ statue:String) {
+        switch OrderStatues(rawValue: statue) {
+        case .pending:
+            resetWarning.toggle()
+            break
+        case .confirmed:
+            confirm()
+            break
+        case .assembled:
+            ready()
+            break
+        case .withCourier:
+            courierScreen.toggle()
+            break
+        case .delivered:
+            deliver()
+            break
+        case .failed:
+            failedScreen.toggle()
+            break
+        case .deleted:
+            deleteWarning.toggle()
+            break
+        case .none:
+            break
         }
     }
     
@@ -438,6 +130,18 @@ struct OrderDetails: View {
             DispatchQueue.main.async { [order] in
                 self.order = order
                 self.showTosat("Order Confirmed")
+            }
+        }
+    }
+    
+    func delete() {
+        Task {
+            let order = await OrderManager().orderDelete(order:&order)
+            if order.success {
+                DispatchQueue.main.async { [order] in
+                    self.order = order.result
+                    self.showTosat("Order Is ready for Shipping")
+                }
             }
         }
     }
@@ -481,7 +185,6 @@ struct OrderDetails: View {
     
     func failed() {
         Task {
-            
             let order = await OrderManager().orderFailed(order:&order)
             DispatchQueue.main.async { [order] in
                 self.order = order
@@ -489,6 +192,499 @@ struct OrderDetails: View {
             }
         }
     }
+    
+    private func showTosat(_ msg: LocalizedStringKey) {
+        DispatchQueue.main.async {
+            ToastManager.shared.showToast(msg: msg)
+        }
+    }
+    
+    private func getStatueColor() -> Color {
+        switch OrderStatues(rawValue: order.statue) {
+        case .pending:
+            return Color.yellow
+        case .assembled:
+            return Color.yellow
+        case .withCourier:
+            return Color.yellow
+        case .confirmed:
+            return Color.green
+        case .delivered:
+            return Color.green
+        case .failed:
+            return Color.red
+        case .deleted:
+            return Color.red
+        case .none:
+            return Color.black
+        }
+    }
+}
+
+struct OrderDetailLoading : View {
+    var id:String
+    @State var order:Order = Order.example()
+    @State var isLoading = false
+    
+    var body: some View {
+        ZStack {
+            if !isLoading {
+                OrderDetails(order: $order)
+            } else {
+                ProgressView()
+            }
+        }
+        
+        .task {
+            await getOrderData()
+        }
+    }
+    
+    private func getOrderData() async {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        self.isLoading = true
+        do {
+            let result = try await OrdersDao(storeId: storeId).getOrder(id: id)
+            if result.exists {
+                self.order = result.item
+                self.isLoading = false
+            }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+        }
+    }
+}
+
+struct OrderDetails: View {
+    @Binding var order:Order
+    @State var orderCourier:Courier?
+
+    @State var isLoading = false
+    @State var comment = ""
+    
+    @State var myUser = UserInformation.shared.user
+    
+    @State private var snapshotImage: UIImage?
+    
+    // SHEETs
+    @State var assignDialog = false
+    @State var failedScreen = false
+    
+    // CONTACT CLIENT
+    @State var contactSheet = false
+    @State var showOptions = false
+    
+    // CONTACT INFO
+    @State var contactUser:String?
+    @State private var sheetHeight: CGFloat = .zero
+    
+    
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 20) {
+                
+                // MARK : ORDER HEADER
+                VStack(alignment: .leading) {
+                    
+                    // MARKET PLACE
+                    HStack(alignment: .center) {
+                        if order.marketPlaceId != nil && !order.marketPlaceId!.isBlank {
+                            MarketHeaderCard(marketId: order.marketPlaceId!, withText: false)
+                        }
+                        
+                        Text("at \(order.date.toString())")
+                            .font(.callout)
+                        
+                        // TODO : Statue Spinner
+                        
+                        Spacer()
+                        
+                        StatueButton(order: $order)
+                    }
+                    
+                    // Stepper
+                    if order.statue != "Deleted" {
+                        StatueSteps(currentStep: order.getCurrentStep(), steps: order.getOrderSteps())
+                    }
+                }
+                
+                //MARK : ORDER PRODUCTS
+                if let products = order.listProducts {
+                    ForEach(products, id: \.self) { product in
+                        NavigationLink {
+                            ProductLoadingScreen(id: product.productId)
+                        } label: {
+                            ProductOrderCard(orderProduct: product)
+
+                        }
+                        .buttonStyle(.plain)
+
+                
+                    }
+                }
+                
+                // MARK : ORDER SUMMERY
+                VStack(alignment: .leading) {
+                    Text("Order Summery")
+                        .font(.title2)
+                        .bold()
+                    
+                    Spacer().frame(height: 8)
+                    
+                    // MARK : Product Price
+                    HStack {
+                        Text("Products prices")
+                        Spacer()
+                        Text("\(Int(order.totalPrice)) LE")
+                            .bold()
+                    }
+                    
+                    // MARK : Shipping Fees
+                    if (order.requireDelivery ?? true) {
+                        HStack {
+                            Text("Shipping Fees")
+                            Spacer()
+                            Text("\(Int(order.clientShippingFees)) LE")
+                                .foregroundColor(.yellow)
+                                .bold()
+                        }
+                    }
+                    
+                    // MARK : Discount
+                    if order.discount ?? 0 > 0 {
+                        HStack {
+                            Text("Discount")
+                            Spacer()
+                            Text("\(Int(order.discount ?? 0)) LE")
+                                .foregroundColor(.red)
+                                .bold()
+                        }
+                    }
+                              
+                    // MARK : Deposit
+                    if (order.deposit ?? 0) > 0 {
+                        HStack {
+                            Text("Deposit")
+                            Spacer()
+                            Text("\(Int(order.deposit ?? 0)) LE")
+                                .foregroundColor(.green)
+                                .bold()
+                        }
+                    }
+                    
+                    // MARK : COD
+                    HStack {
+                        Text("COD")
+                        Spacer()
+                        Text("\(order.COD) LE")
+                            .foregroundColor(.green)
+                            .bold()
+                    }
+                    
+                }
+                .cardView()
+                
+                // MARK :  Customer Info
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Customer Info")
+                            .font(.title2)
+                            .bold()
+                        
+                        Spacer().frame(height: 8)
+                        
+                        Text(order.name)
+                            .bold()
+                        
+                        Label {
+                            Text(order.phone)
+                        } icon: {
+                            Image(.icCall)
+                        }
+
+                        if let email = order.email, !email.isBlank {
+                            Label {
+                                Text(email)
+                                    .underline()
+                                
+                            } icon: {
+                                Image(.icEmail)
+                            }
+                            .onTapGesture {
+                                // TODO : Mark open the mail app
+                            }
+                        }
+                        
+                        if (order.requireDelivery ?? true) {
+                            Label {
+                                Text("\(order.gov) - \(order.address)")
+                            } icon: {
+                                Image(.icLocation)
+                            }
+                        }
+                        
+                        Spacer().frame(height: 4)
+                        
+                        if !(order.notes?.isBlank ?? true) {
+                            Text(order.notes ?? "")
+                                .foregroundStyle(.red)
+                                .bold()
+                        }
+                        
+                        // MARK : CONTACT BUTTON
+                        Label {
+                            Text("Contact Customer")
+                        } icon: {
+                            Image(.icContact)
+                        }
+                        .padding(6)
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(8)
+                        .padding(.top, 8)
+                        .onTapGesture {
+                            contactSheet.toggle()
+                        }
+                    }
+                    Spacer()
+                }
+                .cardView()
+                
+                // MARK : Payment Info
+                VStack(alignment: .leading) {
+                    Text("Payment Info")
+                        .font(.title2)
+                        .bold()
+                        .padding(.bottom, 12)
+                    
+                    HStack {
+                        Text("Payment Statue")
+                        
+                        Spacer()
+                        
+                        Text(order.getPaymentStatue)
+                            .font(.caption)
+                            .foregroundStyle(order.getPaymentStatueColor)
+                            .padding(.vertical, 2)
+                            .padding(.horizontal, 4)
+                            .background(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .fill(order.getPaymentStatueColor.opacity(0.2))
+                            )
+                    }
+                    
+                    HStack {
+                        Text("Gateway")
+                        
+                        Spacer()
+                        
+                        Text("\(order.payment?.gateway ?? "COD")")
+                    }
+                    
+                    HStack {
+                        Text("Payment Method")
+                        
+                        Spacer()
+                        
+                        Text("\(order.payment?.paymentMethod ?? "COD")")
+                    }
+                    
+                    if let trans = order.payment?.transId, !trans.isBlank {
+                        HStack {
+                            Text("Payment Transaction")
+                            
+                            Spacer()
+                            
+                            Text(trans)
+                        }
+                    }
+                }
+                .cardView()
+                
+                // MARK : Courier Info
+                if let courier = orderCourier {
+                    VStack(alignment: .leading) {
+                        Text("Courier")
+                            .font(.title2)
+                            .bold()
+                        
+                        HStack {
+                            CachcedCircleView(imageUrl: courier.imageUrl ?? "", scaleType: .centerCrop, placeHolder: defaultCourier)
+                                .frame(width: 45, height: 45)
+                            
+                            Text(courier.name)
+                                .bold()
+                            
+                            Spacer()
+                            
+                            Button {
+                                contactUser = courier.phone
+                            } label: {
+                                Image(systemName: "phone.fill")
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                            
+                        }
+                        
+                        if let serialNumber = order.courierInfo?.receiptId, !serialNumber.isBlank {
+                            
+                            Text("Provider serial no . \(serialNumber)")
+                        }
+                    }
+                    .cardView()
+                }
+                
+                // MARK : Attachments
+                if let images = order.listAttachments, images.count > 0 {
+                    HStack {
+                        Label("Attachments", systemImage: "paperclip")
+                        
+                        Spacer()
+                        
+                        HStack(alignment: .center, spacing : 18) {
+                            NavigationLink {
+                                FullScreenImageView(imageURLs: images, currentIndex: 0)
+                            } label: {
+                                Image(systemName: "eye.circle.fill")
+                            }
+                            
+                            Button {
+                                DownloadManager().saveImagesToDevice(imageURLs: images.map({ URL(string: $0)! }))
+                                self.showTosat("Downloading started")
+                            } label: {
+                                Image(systemName: "square.and.arrow.down.fill")
+                            }
+                            
+                            Button {
+                                CopyingData().copyToClipboard(images)
+                            } label: {
+                                Image(systemName: "doc.on.clipboard")
+                            }
+                        }
+                        .font(.headline)
+                        .bold()
+                    }
+                }
+                
+                // MARK : Updates View
+                if let updates =  order.listUpdates, !updates.isEmpty {
+                    VStack (alignment: .leading){
+                        Text("Order Updates")
+                            .font(.title2)
+                            .bold()
+                        
+                        Spacer().frame(height: 8)
+                        
+                        ForEach(updates.reversed(), id: \.self) { update in
+                            UpdateCard(update: update)
+                        }
+                    }
+                }
+                
+                // MARK : Add New Comment
+                HStack {
+                    FloatingTextField(title: "Add Comment", text: $comment, required: nil)
+                        .padding(4)
+                        .background(.secondary.opacity(0.1))
+                        .cornerRadius(10)
+                    
+                    Button {
+                        withAnimation {
+                            addComment()
+                        }
+                    } label: {
+                        Image(systemName: "paperplane")
+                            .font(.title3)
+                            .foregroundStyle(Color.accentColor)
+                    }
+                }
+                
+                Spacer().frame(height: 20)
+            }
+        }
+        .padding()
+        .background(Color.background)
+        .refreshable {
+            await getOrderData()
+        }
+        .overlay(alignment: .center) {
+            if isLoading {
+                ProgressView()
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    if let link = myUser?.store?.getStoreDomain() {
+                        if let siteEnabled = myUser?.store?.websiteEnabled, siteEnabled == true {
+                            ShareLink(item: order.getLink(baseLink: link)) {
+                                Label("Copy Order Link", systemImage: "square.and.arrow.up")
+                            }
+                            
+                            Link(destination: order.getLink(baseLink: link)) {
+                                Label("Visit", systemImage: "link")
+                            }
+                        }
+                        
+                        Button {
+                            showOptions.toggle()
+                        } label: {
+                            Label("Options", systemImage: "gearshape")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
+                }
+            }
+        }
+        .task {
+            await getCoureirData()
+        }
+        .sheet(isPresented: $showOptions, content: {
+            OrderOptionsSheet(order: $order, isPreseneted: $showOptions)
+        })
+        .sheet(isPresented: $contactSheet, content: {
+            ContactDialog(phone: order.phone , toggle: $contactSheet)
+        })
+        .navigationTitle("Order #\(order.id)")
+    }
+    
+    func getCoureirData() async {
+        guard let courierId = order.courierId, !courierId.isBlank, let storeId = UserInformation.shared.user?.storeId else {
+            print("Something iw wrong")
+            return
+        }
+        
+        print("Getting data")
+        
+        do {
+            let result = try await CouriersDao(storeId: storeId).getCourier(id: courierId)
+            self.orderCourier = result
+            print("Updated Courier")
+        } catch {
+            print("Courier error \(error)")
+        }
+    }
+    
+    func getOrderData() async {
+        do {
+            if let storeId = order.storeId, !storeId.isBlank {
+                let orderData = try await OrdersDao(storeId: storeId).getOrder(id: order.id)
+                DispatchQueue.main.async {
+                    if !orderData.exists {
+                        self.showTosat("Order doesn't exist")
+                        return
+                    }
+                    self.order = orderData.item
+                }
+            }
+        } catch {
+            showTosat(error.localizedDescription.localize())
+        }
+    }
+
     
     func addComment() {
         Task {
@@ -501,106 +697,106 @@ struct OrderDetails: View {
             }
         }
     }
-        
-    func showTosat(_ msg: String) {
+    
+    func showTosat(_ msg: LocalizedStringKey) {
         DispatchQueue.main.async {
-            self.msg = msg
-        }
-    }
-    
-    var buttons: some View {
-        VStack (alignment: .leading, spacing: 6){
-            HStack(spacing: 6) {
-                if showConfirm {
-                    ButtonLarge(label: "Confirm") {
-                        confirm()
-                    }
-                }
-                
-                if showAssembleButton {
-                    ButtonLarge(label: "Ready to ship") {
-                        ready()
-                    }
-                }
-                
-                if showAssign {
-                    ButtonLarge(label: "Assign to Courier") {
-                        assignDialog.toggle()
-                    }
-                }
-            }
-            
-            HStack(spacing: 6) {
-                if showDeliverButton {
-                    ButtonLarge(label: "Delivered", background: .green) {
-                        deliver()
-                    }
-                }
-                
-                if showFailed {
-                    ButtonLarge(label: "Return Order", background: .gray) {
-                        failedScreen.toggle()
-                        //failed()
-                    }
-                    
-                }
-                
-            }
-            
-            HStack(spacing: 6) {
-                if showResetButton {
-                    ButtonLarge(label: "Reset Order", background: .red) {
-                        reset()
-                    }
-                }
-            }
-        }
-    }
-    
-    var showAssign:Bool {myUser!.accountType == "Marketing" ? false : order.statue == "Assembled"}
-    
-    var showConfirm:Bool { order.statue == "Pending" }
-    
-    var showAssembleButton: Bool { myUser!.accountType == "Marketing" ? false : order.statue == "Confirmed" }
-    
-    var showDeliverButton: Bool { myUser!.accountType == "Marketing" ? false : order.statue == "Assembled" || order.statue == "Out For Delivery" }
-    
-    var showFailed: Bool { myUser!.accountType == "Marketing" ? false : (order.requireDelivery ?? true) && order.statue == "Out For Delivery" }
-    
-    var showResetButton:Bool {
-        if order.statue == "Pending" { return false }
-        
-        if myUser!.accountType == "Owner" || myUser!.accountType == "Store Admin" {
-            return true
-        }
-        
-        if (myUser?.store?.canWorkersReset ?? false) && myUser!.accountType == "Worker" {
-            return true
-        }
-        
-        return false
-    }
-    
-    func openLocation() {
-        if let location = order.latLang  {
-            let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: location, addressDictionary:nil))
-            mapItem.name = "\(order.name) - #\(order.id)"
-            mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
-        }
-    }
-    
-    func generateMapSnapshot(latLang: CLLocationCoordinate2D?) {
-        if latLang == nil { return }
-        
-        let options = MKMapSnapshotter.Options()
-        options.region = MKCoordinateRegion(center: latLang!, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-        options.size = CGSize(width: 140, height: 100) // Adjust the size as needed
-        
-        let snapshotter = MKMapSnapshotter(options: options)
-        snapshotter.start { snapshot, error in
-            if let snapshotImage = snapshot?.image {
-                self.snapshotImage = snapshotImage
-            }
+            ToastManager.shared.showToast(msg: msg)
         }
     }
 }
+
+#Preview {
+    StatueSteps()
+    /*NavigationStack {
+        OrderDetails(order: .constant(Order.example()))
+    }*/
+}
+
+struct StatueSteps: View {
+    var currentStep: Int = 1
+    var steps = ["Pending", "Confirmed", "Ready", "With Courier", "Delivered"]
+
+    var lineColor: Color = .accentColor
+    var doneColor: Color = .accentColor
+    var nextColor: Color = .gray
+    var currentColor: Color = .accentColor
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                ForEach(steps.indices, id: \.self) { index in
+                    HStack(spacing: 0) {
+                        VStack(spacing: 0) {
+                            if index < currentStep {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(stepColor(steps[index]))
+                            } else {
+                                Text("\(index + 1)")
+                                    .foregroundColor(stepColor(steps[index]))
+                                    .font(.caption)
+                                    .padding(5)
+                                    .background(Circle()
+                                        .stroke(nextColor, lineWidth: 2))
+                            }
+                        }
+                        if index != steps.count - 1 {
+                            Line(lineColor: stepColor(steps[index]), width: lineWidthForIndex(index))
+                        }
+                    }
+                    
+                }
+            }
+            
+            HStack(spacing: 0) {
+                ForEach(steps, id: \.self) { step in
+                    Text(step)
+                        .font(.subheadline)
+                        .foregroundColor(stepColor(step))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: true, vertical: true)
+                    
+                    if let last = steps.last, last != step {
+                        Spacer()
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    // Calculate dynamic line width based on the number of steps
+    private func lineWidthForIndex(_ index: Int) -> CGFloat {
+        let stepWidth = UIScreen.main.bounds.width / CGFloat(steps.count)
+        return stepWidth - 20 // Adjust as needed
+    }
+    
+    private func stepColor(_ step: String) -> Color {
+        if let lastStep = steps.last, lastStep == "Failed", step == lastStep {
+            return .red
+        }
+        if let stepIndex = steps.firstIndex(of: step) {
+            if stepIndex < currentStep {
+                return doneColor
+            } else if stepIndex == currentStep {
+                return currentColor
+            } else if stepIndex > currentStep {
+                return nextColor
+            } else {
+                return .secondary
+            }
+        }
+        return .secondary
+    }
+}
+
+struct Line: View {
+    var lineColor: Color = .accentColor
+    var width: CGFloat
+    
+    var body: some View {
+        Rectangle()
+            .fill(lineColor)
+            .frame(width: width, height: 2) // Use dynamic width
+    }
+}
+

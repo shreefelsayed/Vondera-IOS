@@ -23,14 +23,16 @@ class InStockViewModel: ObservableObject {
         self.productsDao = ProductsDao(storeId: storeId)
         
         Task {
-            await getData()
+            await refreshData()
         }
     }
     
     func refreshData() async {
-        self.canLoadMore = true
-        self.lastSnapshot = nil
-        self.items.removeAll()
+        DispatchQueue.main.async {
+            self.canLoadMore = true
+            self.lastSnapshot = nil
+            self.items.removeAll()
+        }
         await getData()
     }
     
@@ -39,17 +41,19 @@ class InStockViewModel: ObservableObject {
             return
         }
         
+        self.isLoading = true
         do {
-            isLoading = true
-            
             let result = try await productsDao.getInStock(lastSnapShot: lastSnapshot)
-            
-            lastSnapshot = result.1
-            items.append(contentsOf: result.0)
-            self.canLoadMore = !result.0.isEmpty
-            isLoading = false
+            DispatchQueue.main.async {
+                self.lastSnapshot = result.1
+                self.items.append(contentsOf: result.0)
+                self.canLoadMore = !result.0.isEmpty
+                self.isLoading = false
+            }
         } catch {
-            isLoading = false
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
+        
+        self.isLoading = false
     }
 }

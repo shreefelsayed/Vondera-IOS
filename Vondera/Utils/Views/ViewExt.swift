@@ -8,6 +8,11 @@
 import SwiftUI
 import SwiftUIGenericDialog
 
+let defaultEmployeeImage = UIImage(resource: .defaultPhoto)
+let defaultCategoryImage = UIImage(resource: .defaultCategory)
+let defaultCourier = UIImage(resource: .defaultCourier)
+let defaultStoreImage = UIImage(resource: .appIcon)
+
 extension UIImage {
     func compress(h:CGFloat = 1024, w:CGFloat = 1024) -> Data? {
         var compression: CGFloat = 1.0
@@ -28,7 +33,7 @@ extension UIImage {
         return imageData
     }
     
-    func compress(image: UIImage, maxByte: Int = 250000, completion: @escaping (UIImage?) -> ()) {
+    func compress(image: UIImage, maxByte: Int = 550000, completion: @escaping (UIImage?) -> ()) {
             DispatchQueue.global(qos: .userInitiated).async {
                 guard let currentImageSize = image.jpegData(compressionQuality: 1.0)?.count else {
                     return completion(nil)
@@ -57,7 +62,6 @@ extension UIImage {
                 completion(iterationImage)
             }
         }
-
         func getPercentageToDecreaseTo(forDataCount dataCount: Int) -> CGFloat {
             switch dataCount {
             case 0..<5000000: return 0.03
@@ -91,22 +95,135 @@ extension Image {
 
 // Disable the view and show a progress dialog
 extension View {
-    func willProgress(saving: Bool, handleBackButton:Bool = true) -> some View {
-        
+    func navigationCardView<Destination: View>(destination: Destination) -> some View {
+        self
+        .padding(8)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white)
+        )
+        .background(
+            NavigationLink("", destination: destination)
+        )
+        .buttonStyle(.plain)
+        .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
+    }
+    
+    func cardView(padding:Int = 12) -> some View {
+        self
+            .padding(EdgeInsets(top: CGFloat(padding), leading: CGFloat(padding), bottom: CGFloat(padding), trailing: CGFloat(padding)))
+            .background(Color.white)
+            .cornerRadius(12)
+            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+    }
+    
+    /// Show this while the user is saving something
+    func willProgress(saving: Bool, handleBackButton:Bool = true, msg:String = "Loading ...") -> some View {
         ZStack {
-            if handleBackButton {
-                self
-                .navigationBarBackButtonHidden(saving)
-            } else {
-                self
-            }
+            self
+                .navigationBarBackButtonHidden(handleBackButton && saving)
+                .blur(radius: saving ? 2 : 0)
             
             if saving {
-                NonDismiss()
-                    .edgesIgnoringSafeArea(.all)
+                ZStack {
+                    Color.black.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    
+                    HStack {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .padding(.trailing, 12)
+                        
+                        Text(msg)
+                        
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .padding()
+                }
+                
+                .ignoresSafeArea()
             }
         }
         .disabled(saving)
+    }
+    
+    /// Show this will user is loading content to the screen
+    func willLoad(loading:Bool) -> some View {
+        ZStack {
+            self
+            
+            if loading {
+                ZStack {
+                    Color.background
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding(.trailing, 12)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                
+                .ignoresSafeArea()
+            }
+        }
+        .disabled(loading)
+    }
+    
+    /// Empty message view that switches between a message view and search text
+    func withEmptySearchView(searchText:String, resultCount:Int) -> some View {
+        self
+            .overlay {
+                if !searchText.isBlank && resultCount == 0 {
+                    SearchEmptyView(searchText: searchText)
+                        .frame(maxWidth: .infinity)
+                        .frame(maxHeight: .infinity)
+                        .ignoresSafeArea()
+                        .background(Color.background)
+                }
+            }
+    }
+    
+    /// Empty view with a button
+    func withEmptyViewButton(image: ImageResource? = nil, text: LocalizedStringKey, buttonText: LocalizedStringKey, count: Int, loading: Bool, onAction: @escaping () -> ()) -> some View {
+        self.overlay {
+            if !loading && count == 0 {
+                EmptyMessageResourceWithButton(imageResource: image, msg: text) {
+                    Button(action: {
+                        onAction()
+                    }) {
+                        Text(buttonText)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .frame(maxHeight: .infinity)
+                .ignoresSafeArea()
+                .background(Color.background)
+            }
+        }
+    }
+    
+    /// This will display an empty message over the page
+    func withEmptyView(image:ImageResource? = nil, text:LocalizedStringKey, count:Int, loading:Bool) -> some View {
+        self
+            .overlay {
+                if !loading && count == 0 {
+                    EmptyMessageWithResource(imageResource: image, msg: text)
+                        .frame(maxWidth: .infinity)
+                        .frame(maxHeight: .infinity)
+                        .ignoresSafeArea()
+                        .background(Color.background)
+                }
+            }
     }
     
     func eraseToAnyView() -> AnyView {

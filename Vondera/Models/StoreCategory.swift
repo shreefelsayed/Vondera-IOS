@@ -6,17 +6,17 @@
 //
 
 import Foundation
-struct StoreCategory: Codable, Equatable, Hashable {
+import SwiftUI
+
+struct StoreCategory {
     var id:Int = 0
     var drawableId = "category"
-    var nameEn = ""
-    var nameAr = ""
+    var name:LocalizedStringKey = ""
     
-    init(id: Int, drawableId: String = "category", nameEn: String = "", nameAr: String = "") {
+    init(id: Int, drawableId: String = "category", name: LocalizedStringKey = "") {
         self.id = id
         self.drawableId = drawableId
-        self.nameEn = nameEn
-        self.nameAr = nameAr
+        self.name = name
     }
     
     
@@ -24,6 +24,6 @@ struct StoreCategory: Codable, Equatable, Hashable {
 
 extension StoreCategory {
     static func example() -> StoreCategory {
-        return StoreCategory(id: 0, drawableId: "category1", nameEn: "Fashion", nameAr: "الموضه")
+        return CategoryManager().getAll()[0]
     }
 }

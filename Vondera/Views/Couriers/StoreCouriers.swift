@@ -8,51 +8,53 @@
 import SwiftUI
 
 struct StoreCouriers: View {
-    var storeId:String
-    @StateObject var viewModel:StoreCouriersViewModel
-    
-    init(storeId: String) {
-        self.storeId = storeId
-        _viewModel = StateObject(wrappedValue: StoreCouriersViewModel(storeId: storeId))
-    }
-    
+    @StateObject private var viewModel = StoreCouriersViewModel()
+    @State private var showAdd = false
     var body: some View {
         List {
-            ForEach(viewModel.filteredItems) { item in
-                CourierCardWithNavigation(courier: item)
-                    .padding(.vertical)
-                    .listRowInsets(EdgeInsets())
-            }
+            SkeltonManager(isLoading: viewModel.isLoading, count: 6, skeltonView: CourierCardSkelton())
+            
+            Section {
+                ForEach(viewModel.filteredItems) { item in
+                    CourierCardWithNavigation(courier: item)
+                }
+            }            
         }
         .refreshable {
             await viewModel.getCouriers()
         }
-        .listStyle(.plain)
         .searchable(text: $viewModel.searchText, prompt: "Search \($viewModel.couriers.count) Couriers")
-        .navigationTitle("Couriers 🛵")
-        .toolbar{
-            if UserInformation.shared.user?.canAccessAdmin ?? false {
+        .withEmptyViewButton(image: .btnShipping, text: "You haven't added any couriers yet", buttonText: "Add Courier", count: viewModel.couriers.count, loading: viewModel.isLoading, onAction: {
+            showAdd.toggle()
+        })
+        .withEmptySearchView(searchText: viewModel.searchText, resultCount: viewModel.filteredItems.count)
+        .toolbar {
+            if let user = UserInformation.shared.user, user.canAccessAdmin {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink("Add", destination: NewCourier(storeId: storeId, currentList: $viewModel.couriers))
+                    HStack {
+                        NavigationLink {
+                           BannedEmployees()
+                        } label: {
+                            Image(.btnBan)
+                        }
+                        
+                        Button {
+                            showAdd.toggle()
+                        } label: {
+                            Image(systemName: "plus.app")
+                        }
+                        
+                    }
+                    .buttonStyle(.plain)
+                    .font(.title2)
+                    .bold()
                 }
             }
         }
-        .overlay(alignment: .center) {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if viewModel.couriers.isEmpty {
-                EmptyMessageView(systemName: "bicycle.circle", msg: "You haven't added any couriers yet")
-            }
-        }
+        .navigationDestination(isPresented: $showAdd, destination: {
+            NewCourier(currentList: $viewModel.couriers)
+        })
+        .navigationTitle("Couriers")
         
-    }
-}
-
-struct StoreCouriers_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            StoreCouriers(storeId: Store.Qotoofs())
-        }
-
     }
 }
