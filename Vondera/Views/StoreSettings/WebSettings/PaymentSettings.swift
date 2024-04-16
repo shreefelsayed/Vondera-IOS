@@ -10,7 +10,8 @@ import SwiftUI
 struct PaymentSettings: View {
     @StateObject var user = UserInformation.shared
     @State var cod = true
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         List {
             Toggle("Cash on Delivery", isOn: $cod)

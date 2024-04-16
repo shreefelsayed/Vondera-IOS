@@ -302,12 +302,15 @@ struct ProductDetails: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    if let link =  myUser?.store?.getStoreDomain(), (product.visible ?? true) {
-                        ShareLink(item: product.getProductLink(baseLink: link)) {
-                            Label("Share Product", systemImage: "square.and.arrow.up")
-                        }
+                    if let link = product.getProductLink() {
+                        Button(action: {
+                            CopyingData().copyToClipboard(link.absoluteString)
+                        }, label: {
+                            Label("Copy Product Link", systemImage: "doc.on.clipboard")
+                        })
                         
-                        Link(destination: product.getProductLink(baseLink: link)) {
+                        
+                        Link(destination: link) {
                             Label("Visit Product", systemImage: "link")
                         }
                     }

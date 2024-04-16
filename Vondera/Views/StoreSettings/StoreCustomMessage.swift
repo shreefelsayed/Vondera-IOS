@@ -50,8 +50,8 @@ struct StoreCustomMessage: View {
         }
         .task {
             updateUI()
-            
         }
+        .withPaywall(accessKey: .customReceipt, presentation: presentationMode)
     }
     
     func updateUI() {

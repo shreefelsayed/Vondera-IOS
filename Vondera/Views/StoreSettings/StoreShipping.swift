@@ -49,12 +49,9 @@ struct StoreShipping: View {
                         
 
                     Text(item.govName)
+                        .lineLimit(1)
                         .frame(maxWidth: .infinity)
-                        .frame(maxHeight:  .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(.gray, lineWidth: 1)
-                        )
+                        //.frame(maxHeight:  .infinity)
                         .padding(.vertical, 6)
                     
                     let selectedItem = viewModel.list.first(where: { $0 == item })
@@ -71,10 +68,6 @@ struct StoreShipping: View {
                         place.govName == item.govName
                     }))
                     .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(.gray, lineWidth: 1)
-                    )
                 }
             }
         }

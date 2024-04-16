@@ -43,8 +43,6 @@ struct CachedImageView: View {
                 Image(uiImage: image)
                     .centerCropped()
                     .id(imageUrl)
-                    
-                    
             } else if scaleType == .scaleFit {
                 Image(uiImage: image)
                     .resizable()

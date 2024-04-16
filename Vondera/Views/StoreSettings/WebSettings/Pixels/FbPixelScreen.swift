@@ -43,6 +43,8 @@ struct FbPixelScreen: View {
             .disabled(isSaving || isLoading)
         }
         .navigationTitle("Facebook Pixel")
+        .withPaywall(accessKey: .pixels, presentation: presentationMode)
+
     }
     
     private func update() async {

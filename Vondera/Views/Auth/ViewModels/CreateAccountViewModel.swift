@@ -23,7 +23,7 @@ class CreateAccountViewModel: ObservableObject {
     @Published var refferCode = ""
     
     
-    @Published var selectedCateogry:Int? = 7
+    @Published var selectedCateogry:Int = 7
     @Published var selectedMarkets:[String] = []
 
     @Published var address = ""
@@ -116,7 +116,7 @@ class CreateAccountViewModel: ObservableObject {
             }
             
             // --> Create Store Object
-            let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, subscribedPlan: SubscribedPlan(), ownerId: "")
+            let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, ownerId: "")
             
             store.almostOut = 5
             store.merchantId = userName.replacingOccurrences(of: " ", with: "").lowercased()

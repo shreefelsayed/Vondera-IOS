@@ -42,6 +42,8 @@ struct GTMScreen: View {
             .disabled(isSaving || isLoading)
         }
         .navigationTitle("Google tag manager")
+        .withPaywall(accessKey: .pixels, presentation: presentationMode)
+
     }
     
     private func update() async {

@@ -34,41 +34,41 @@ extension UIImage {
     }
     
     func compress(image: UIImage, maxByte: Int = 550000, completion: @escaping (UIImage?) -> ()) {
-            DispatchQueue.global(qos: .userInitiated).async {
-                guard let currentImageSize = image.jpegData(compressionQuality: 1.0)?.count else {
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let currentImageSize = image.jpegData(compressionQuality: 1.0)?.count else {
+                return completion(nil)
+            }
+            
+            var iterationImage: UIImage? = image
+            var iterationImageSize = currentImageSize
+            var iterationCompression: CGFloat = 1.0
+            
+            while iterationImageSize > maxByte && iterationCompression > 0.01 {
+                let percentageDecrease = self.getPercentageToDecreaseTo(forDataCount: iterationImageSize)
+                
+                let canvasSize = CGSize(width: image.size.width * iterationCompression,
+                                        height: image.size.height * iterationCompression)
+                UIGraphicsBeginImageContextWithOptions(canvasSize, false, image.scale)
+                defer { UIGraphicsEndImageContext() }
+                image.draw(in: CGRect(origin: .zero, size: canvasSize))
+                iterationImage = UIGraphicsGetImageFromCurrentImageContext()
+                
+                guard let newImageSize = iterationImage?.jpegData(compressionQuality: 1.0)?.count else {
                     return completion(nil)
                 }
-            
-                var iterationImage: UIImage? = image
-                var iterationImageSize = currentImageSize
-                var iterationCompression: CGFloat = 1.0
-            
-                while iterationImageSize > maxByte && iterationCompression > 0.01 {
-                    let percentageDecrease = self.getPercentageToDecreaseTo(forDataCount: iterationImageSize)
-                
-                    let canvasSize = CGSize(width: image.size.width * iterationCompression,
-                                            height: image.size.height * iterationCompression)
-                    UIGraphicsBeginImageContextWithOptions(canvasSize, false, image.scale)
-                    defer { UIGraphicsEndImageContext() }
-                    image.draw(in: CGRect(origin: .zero, size: canvasSize))
-                    iterationImage = UIGraphicsGetImageFromCurrentImageContext()
-                
-                    guard let newImageSize = iterationImage?.jpegData(compressionQuality: 1.0)?.count else {
-                        return completion(nil)
-                    }
-                    iterationImageSize = newImageSize
-                    iterationCompression -= percentageDecrease
-                }
-                completion(iterationImage)
+                iterationImageSize = newImageSize
+                iterationCompression -= percentageDecrease
             }
+            completion(iterationImage)
         }
-        func getPercentageToDecreaseTo(forDataCount dataCount: Int) -> CGFloat {
-            switch dataCount {
-            case 0..<5000000: return 0.03
-            case 5000000..<10000000: return 0.1
-            default: return 0.2
-            }
+    }
+    func getPercentageToDecreaseTo(forDataCount dataCount: Int) -> CGFloat {
+        switch dataCount {
+        case 0..<5000000: return 0.03
+        case 5000000..<10000000: return 0.1
+        default: return 0.2
         }
+    }
 }
 
 extension Image {
@@ -97,18 +97,18 @@ extension Image {
 extension View {
     func navigationCardView<Destination: View>(destination: Destination) -> some View {
         self
-        .padding(8)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white)
-        )
-        .background(
-            NavigationLink("", destination: destination)
-        )
-        .buttonStyle(.plain)
-        .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.clear)
+            .padding(8)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.white)
+            )
+            .background(
+                NavigationLink("", destination: destination)
+            )
+            .buttonStyle(.plain)
+            .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
     }
     
     func cardView(padding:Int = 12) -> some View {
@@ -193,6 +193,68 @@ extension View {
             }
     }
     
+    func withPaywall(accessKey:FeatureKeys, presentation:Binding<PresentationMode>) -> some View {
+        return self
+            .fullScreenCover(isPresented: .constant(!accessKey.canAccess())) {
+                VStack(spacing: 24) {
+                    // Close Button
+                    HStack {
+                        Spacer()
+                        
+                        Image(systemName: "xmark")
+                            .foregroundColor(.white)
+                            .padding(6)
+                            .background(Color.gray)
+                            .clipShape(Circle())
+                            .onTapGesture {
+                                presentation.wrappedValue.dismiss()
+                            }
+                    }
+                    
+                    Spacer()
+                    // IMAGE
+                    Image(accessKey.getDrawable())
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 180)
+                        .padding(46)
+                        
+                    Spacer()
+                    
+                    // Title
+                    Text(accessKey.getTitle())
+                        .multilineTextAlignment(.center)
+                        .font(.title)
+                        .bold()
+                        .foregroundStyle(.white)
+                    
+                    
+                    Text(accessKey.getDesc())
+                        .multilineTextAlignment(.center)
+                        .font(.headline)
+                        .foregroundStyle(.white.opacity(0.7))
+                    
+                    Spacer()
+                    
+                    Button {
+                        DynamicNavigation.shared.navigate(to: AnyView(AppPlans()))
+                    } label: {
+                        Text("Upgrade your plan")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.black)
+                        .padding()
+                        .background(.white)
+                        .cornerRadius(32)
+                        .padding()
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding()
+                .background(Color.black.ignoresSafeArea())
+            }
+    }
+    
     /// Empty view with a button
     func withEmptyViewButton(image: ImageResource? = nil, text: LocalizedStringKey, buttonText: LocalizedStringKey, count: Int, loading: Bool, onAction: @escaping () -> ()) -> some View {
         self.overlay {
@@ -227,7 +289,7 @@ extension View {
     }
     
     func eraseToAnyView() -> AnyView {
-           return AnyView(self)
+        return AnyView(self)
     }
 }
 
@@ -247,7 +309,7 @@ extension View {
     @ViewBuilder func isHidden(_ isHidden: Bool) -> some View {
         if isHidden {
             self
-            .hidden()
+                .hidden()
         } else {
             self
         }
@@ -324,7 +386,7 @@ extension Color {
         default:
             (a, r, g, b) = (1, 1, 1, 0)
         }
-
+        
         self.init(
             .sRGB,
             red: Double(r) / 255,

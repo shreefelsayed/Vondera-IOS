@@ -58,7 +58,7 @@ final class AnalyticsManager {
             Analytics.setUserID(user.id)
             Analytics.setUserProperty(user.store?.name, forName: "store_name")
             Analytics.setUserProperty(user.accountType, forName: "type")
-            Analytics.setUserProperty(user.store?.subscribedPlan?.planName ?? "", forName: "plan")
+            Analytics.setUserProperty(user.store?.storePlanInfo?.name ?? "", forName: "plan")
         }
     }
     

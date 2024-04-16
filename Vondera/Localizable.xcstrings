@@ -61,6 +61,22 @@
         }
       }
     },
+    "(%@ at EGP %lld/mo. Save %lld%%)" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(%1$@ بسعر %2$lld شهريًا بالجنيه المصري. وفر %3$lld%)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "(%1$@ at EGP %2$lld/mo. Save %3$lld%%)"
+          }
+        }
+      }
+    },
     "(%lld Reviews)" : {
       "localizations" : {
         "ar" : {
@@ -174,6 +190,7 @@
       }
     },
     "%@ Image (%lld)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -345,16 +362,6 @@
         }
       }
     },
-    "%lld LE / Monthly" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld جنيه / شهري"
-          }
-        }
-      }
-    },
     "%lld Markets" : {
       "localizations" : {
         "ar" : {
@@ -467,6 +474,16 @@
         }
       }
     },
+    "%lld Sales Channels" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld بوابه دفع"
+          }
+        }
+      }
+    },
     "%lld seconds ago" : {
       "localizations" : {
         "ar" : {
@@ -569,6 +586,17 @@
         }
       }
     },
+    "%lld)%%" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld)٪٪"
+          }
+        }
+      }
+    },
     "%lld%%" : {
       "localizations" : {
         "ar" : {
@@ -639,6 +667,16 @@
         }
       }
     },
+    "1 Month" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شهر واحد"
+          }
+        }
+      }
+    },
     "1 month ago" : {
       "localizations" : {
         "ar" : {
@@ -655,6 +693,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "منذ عام"
+          }
+        }
+      }
+    },
+    "3 Months" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "٣ شهور"
           }
         }
       }
@@ -699,6 +747,16 @@
         }
       }
     },
+    "Abandon Carts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سله التسوق المهمله"
+          }
+        }
+      }
+    },
     "About app" : {
       "localizations" : {
         "ar" : {
@@ -715,36 +773,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الصلاحيات"
-          }
-        }
-      }
-    },
-    "Access apis" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الوصول للنقط الربط بالسيرفر"
-          }
-        }
-      }
-    },
-    "Access our api and end-points and webhooks" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ربط عن طريق الAPI خالص ب فونديرا، و التوصيل بمتجر شوبيفاي"
-          }
-        }
-      }
-    },
-    "Access your shoppers data, and export it to excel file" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "يمكنك الوصول لبيانات المتسوقين، و استخراجها في ملف اكسيل"
           }
         }
       }
@@ -879,6 +907,16 @@
         }
       }
     },
+    "Add Custom HTML Pages" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف صفحات ويب مخصصه"
+          }
+        }
+      }
+    },
     "Add item" : {
       "localizations" : {
         "ar" : {
@@ -895,6 +933,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "اضف تعليق جديد"
+          }
+        }
+      }
+    },
+    "Add Payment gateways" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف بوابات الدفع"
           }
         }
       }
@@ -969,16 +1017,6 @@
         }
       }
     },
-    "Add unlimited products number for free" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "قم باضافه عدد لا نهائي من المنتجات مجانا"
-          }
-        }
-      }
-    },
     "Add your categories" : {
       "localizations" : {
         "ar" : {
@@ -1039,6 +1077,16 @@
         }
       }
     },
+    "Add your own payment gateway to your website." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف بوابات الدفع الخاصه بك الي موقعك"
+          }
+        }
+      }
+    },
     "Add your store logo" : {
       "localizations" : {
         "ar" : {
@@ -1065,6 +1113,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تم الاضافه للسله"
+          }
+        }
+      }
+    },
+    "Adding expanses can help you track your net profit." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تساعدك اضافه مصروفاتك علي معرفه صافي ربحك بشكل ادق"
           }
         }
       }
@@ -1195,12 +1253,32 @@
         }
       }
     },
+    "Amount can't be more than the order cod" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يمكن للمبلغ ان يتعدي سعر الاوردر"
+          }
+        }
+      }
+    },
     "Amount to add" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "الكميه التي سيتم اضافتها"
+          }
+        }
+      }
+    },
+    "Annual plan free domain for one year" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نطاق مجاني للخطة السنوية لمدة عام واحد"
           }
         }
       }
@@ -1495,12 +1573,32 @@
         }
       }
     },
+    "Auto send whatsapp messages" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال رسائل واتس اب"
+          }
+        }
+      }
+    },
     "Auto Update my order statue" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "تحديث الحاله تلقائيا"
+          }
+        }
+      }
+    },
+    "Automatic send whatsapp messages, notifying the user about their order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إرسال رسائل الواتس اب بشكل تلقائي لإعلام المستخدم بطلبه"
           }
         }
       }
@@ -1575,6 +1673,16 @@
         }
       }
     },
+    "Be Able to set your currency, and customize your site language and supported countries." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كن قادرًا على ضبط عملتك وتخصيص لغة موقعك والبلدان المدعومة."
+          }
+        }
+      }
+    },
     "Beauty and Cosmetics" : {
       "localizations" : {
         "ar" : {
@@ -1601,6 +1709,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ابني متجرك الالكتروني"
+          }
+        }
+      }
+    },
+    "Build your website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابني موقعك الالكتروني"
           }
         }
       }
@@ -1975,16 +2093,6 @@
         }
       }
     },
-    "Choose your package" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اختار الباقه المناسبه لك"
-          }
-        }
-      }
-    },
     "Clear" : {
       "localizations" : {
         "ar" : {
@@ -2065,6 +2173,36 @@
         }
       }
     },
+    "Collect %lld EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحصيل %lld جنيه"
+          }
+        }
+      }
+    },
+    "Collect Money" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استلام النقود"
+          }
+        }
+      }
+    },
+    "Collect Payment" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استلام النقود"
+          }
+        }
+      }
+    },
     "Comment added" : {
       "localizations" : {
         "ar" : {
@@ -2135,12 +2273,22 @@
         }
       }
     },
-    "Connect to your webhooks, or to your shopify store using our api end points" : {
+    "Connect your pixel trackers, Google TAG manager, Facebook Pixel, Tiktok Pixel, to keep track of your website conversion." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بتوصيل الwebhooks الخاصه بك و متجر شوبيفاي"
+            "value" : "قم بتوصيل أجهزة تتبع البكسل، ومدير Google TAG، وFacebook Pixel، وTiktok Pixel، لتتبع تحويل موقع الويب الخاص بك."
+          }
+        }
+      }
+    },
+    "Connect your store to pixels" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توصيل متجرك بخدمات البيكسل"
           }
         }
       }
@@ -2231,6 +2379,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "نسخ لينك الطلب"
+          }
+        }
+      }
+    },
+    "Copy Product Link" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ رابط المنتج"
           }
         }
       }
@@ -2375,6 +2533,26 @@
         }
       }
     },
+    "Create dynamic HTML pages in your website." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انشئ صفحات ويب مخصصه علي موقعك"
+          }
+        }
+      }
+    },
+    "Create mail campaigns" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حملات بريديه"
+          }
+        }
+      }
+    },
     "Create new Category" : {
       "localizations" : {
         "ar" : {
@@ -2405,6 +2583,16 @@
         }
       }
     },
+    "Create Promo codes" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انشاء اكواد خصم"
+          }
+        }
+      }
+    },
     "Create team member" : {
       "localizations" : {
         "ar" : {
@@ -2421,6 +2609,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "قم بأضافه طلبك الاول"
+          }
+        }
+      }
+    },
+    "Create your own customized discount codes, so your customer can get discounts." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انشاء اكواد الخصم الخاصه بك، حتي يتمكن عملائك من استخدامها"
           }
         }
       }
@@ -2525,6 +2723,16 @@
         }
       }
     },
+    "Custom HTML Pages" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صفحات ويب مخصصه"
+          }
+        }
+      }
+    },
     "Custom message" : {
       "localizations" : {
         "ar" : {
@@ -2551,16 +2759,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "صفحات مخصصه"
-          }
-        }
-      }
-    },
-    "Custom Receipt Message" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نص مخصص علي الفاتوره"
           }
         }
       }
@@ -2605,6 +2803,16 @@
         }
       }
     },
+    "Customers can create accounts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكن للعملاء انشاء حسابات علي موقعك"
+          }
+        }
+      }
+    },
     "Customers can prepaid out of stock products" : {
       "localizations" : {
         "ar" : {
@@ -2615,22 +2823,22 @@
         }
       }
     },
-    "Customize a text to be printed on any of your receipts" : {
+    "Customize your receipt" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بتخصيص رساله سيتم طباعتها علي كل الفواتير"
+            "value" : "تعديل فاتورتك"
           }
         }
       }
     },
-    "Customize receipt" : {
+    "Customize your receipt by adding options to it, you can get summarize sheet with the required products, or a sheet with each city orders and more." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعديل علي الفاتوره"
+            "value" : "قم بتخصيص إيصالك عن طريق إضافة خيارات إليه، يمكنك الحصول على ورقة ملخصة بالمنتجات المطلوبة، أو ورقة بكل طلبات المدينة والمزيد."
           }
         }
       }
@@ -2945,6 +3153,26 @@
         }
       }
     },
+    "Do you have a promo code ?" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل لديك كود خصم ؟"
+          }
+        }
+      }
+    },
+    "Domain" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النطاق"
+          }
+        }
+      }
+    },
     "Domain Connected" : {
       "localizations" : {
         "ar" : {
@@ -3035,6 +3263,26 @@
         }
       }
     },
+    "Done" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم"
+          }
+        }
+      }
+    },
+    "Downgrade to %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنزيل الي %@"
+          }
+        }
+      }
+    },
     "Download %lld attachments" : {
       "localizations" : {
         "ar" : {
@@ -3061,16 +3309,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تم بدء التحميل"
-          }
-        }
-      }
-    },
-    "Ecommerce Website" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "موقع الكتروني مخصص"
           }
         }
       }
@@ -3191,6 +3429,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld جنيه"
+          }
+        }
+      }
+    },
+    "EGP %lld / %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جم %1$lld / %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "EGP %1$lld / %2$@"
           }
         }
       }
@@ -3371,6 +3625,26 @@
         }
       }
     },
+    "Enable website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل الموقع الالكتروني"
+          }
+        }
+      }
+    },
+    "Enable your customers to add reviews to your products." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمكين عملائك من إضافة تعليقات لمنتجاتك."
+          }
+        }
+      }
+    },
     "Enabling this will not track your items in the warehouse" : {
       "localizations" : {
         "ar" : {
@@ -3471,6 +3745,16 @@
         }
       }
     },
+    "Enter the amount you want to collect from the customer, the order will be updated once the customer pays" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل المبلغ الذي تريد تحصيله من العميل، وسيتم تحديث الطلب بمجرد قيام العميل بالدفع"
+          }
+        }
+      }
+    },
     "Error happened" : {
       "localizations" : {
         "ar" : {
@@ -3487,16 +3771,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "حصل خطأ ما"
-          }
-        }
-      }
-    },
-    "Every package has orders quote, select the most suitable one for you" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "كل باقه لديها سعه الطلبات الخاصه بها، اختر الباقه المناسبه لحجم عملك"
           }
         }
       }
@@ -3547,16 +3821,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تم حذف المصروف"
-          }
-        }
-      }
-    },
-    "Expanses records" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تسجيل المصروفات"
           }
         }
       }
@@ -3937,12 +4201,52 @@
         }
       }
     },
+    "Get a free one year domain, and connect it to your store." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "احصل على نطاق مجاني لمدة عام واحد، واربطه بمتجرك."
+          }
+        }
+      }
+    },
+    "Get Product Reviews" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك استلام مراجعات للمنتجات"
+          }
+        }
+      }
+    },
     "Gifts and Novelties" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "الهدايا"
+          }
+        }
+      }
+    },
+    "Global Website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع عالمي"
+          }
+        }
+      }
+    },
+    "Global website / Multi languages" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع دولي / متعدد اللغات"
           }
         }
       }
@@ -4137,6 +4441,9 @@
         }
       }
     },
+    "Image (%lld)" : {
+
+    },
     "Import from shopify" : {
       "localizations" : {
         "ar" : {
@@ -4217,6 +4524,26 @@
         }
       }
     },
+    "Integrate with shipping companies" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربط مع شركات الشحن"
+          }
+        }
+      }
+    },
+    "Integrate with shipping companies, and always be up to date with the latest orders updates." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الربط مع شركات الشحن، والبقاء على اطلاع دائم بآخر تحديثات الطلبات."
+          }
+        }
+      }
+    },
     "Integration Id" : {
       "localizations" : {
         "ar" : {
@@ -4283,6 +4610,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "كاشير"
+          }
+        }
+      }
+    },
+    "Keep track of your customers by letting them sign in to your store, and track their mails and carts easily" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تتبع عملائك من خلال السماح لهم بتسجيل الدخول إلى متجرك، وتتبع رسائل البريد الإلكتروني وعربات التسوق الخاصة بهم بسهولة"
           }
         }
       }
@@ -4377,12 +4714,32 @@
         }
       }
     },
+    "Let your customers create accounts" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمكين عملائك من عمل حساب علي الموقع"
+          }
+        }
+      }
+    },
     "Link" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "لينك"
+          }
+        }
+      }
+    },
+    "Link Copied to clipboard" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم نسخ الرابط"
           }
         }
       }
@@ -4443,6 +4800,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "عدد المنتج قبل الانتهاء"
+          }
+        }
+      }
+    },
+    "Mail Campaigns" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الحملات البريدية"
           }
         }
       }
@@ -5203,6 +5570,16 @@
         }
       }
     },
+    "One Year" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سنه واحده"
+          }
+        }
+      }
+    },
     "Online Employees" : {
       "localizations" : {
         "ar" : {
@@ -5285,6 +5662,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "او تسجيل لحساب مسجل مسبقا"
+          }
+        }
+      }
+    },
+    "Order # %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلب # %@"
           }
         }
       }
@@ -5601,6 +5988,16 @@
         }
       }
     },
+    "Order wasn't found" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم ايجاد الطلب"
+          }
+        }
+      }
+    },
     "Orders" : {
       "localizations" : {
         "ar" : {
@@ -5637,16 +6034,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ربح الطلبات"
-          }
-        }
-      }
-    },
-    "Orders Quote" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "باقه الطلبات"
           }
         }
       }
@@ -5817,6 +6204,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الدفع"
+          }
+        }
+      }
+    },
+    "Payment Gateways" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بوابات الدفع"
           }
         }
       }
@@ -6061,6 +6458,16 @@
         }
       }
     },
+    "Pixels and conversions" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البيكسل و الكونفيرجن"
+          }
+        }
+      }
+    },
     "Places where you sell the most" : {
       "localizations" : {
         "ar" : {
@@ -6281,26 +6688,6 @@
         }
       }
     },
-    "Print a receipt with a QR code for your orders for free" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اطبع فواتير مجانيه لطلباتك برمز الاستجابه السريع"
-          }
-        }
-      }
-    },
-    "Print QR Receipts" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "طباعه فواتير برمز كيو ار كود"
-          }
-        }
-      }
-    },
     "Print Receipt" : {
       "localizations" : {
         "ar" : {
@@ -6381,16 +6768,6 @@
         }
       }
     },
-    "Product Describtion" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "وصف المنتج"
-          }
-        }
-      }
-    },
     "Product Description" : {
       "localizations" : {
         "ar" : {
@@ -6451,12 +6828,12 @@
         }
       }
     },
-    "Product Report" : {
+    "Product Reviews" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تقرير المنتجات"
+            "value" : "مراجعات المنتجات"
           }
         }
       }
@@ -6731,16 +7108,6 @@
         }
       }
     },
-    "Record your expanses for more accurate net profit and reports" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تتبع مصاريفك لحساب صافي ربحك بشكل دقيق"
-          }
-        }
-      }
-    },
     "Refer Code" : {
       "localizations" : {
         "ar" : {
@@ -6757,17 +7124,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "برنامج الدعوات"
-          }
-        }
-      }
-    },
-    "Renew Now" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تجديد الان"
           }
         }
       }
@@ -7152,12 +7508,32 @@
         }
       }
     },
+    "Select your plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختار باقتك"
+          }
+        }
+      }
+    },
     "Selling Commission" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "عموله البيع"
+          }
+        }
+      }
+    },
+    "Send abandon carts emails" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال ايميلات بالمشتريات المتروكه"
           }
         }
       }
@@ -7178,6 +7554,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ارسال ميل للعميل بعد الطلب"
+          }
+        }
+      }
+    },
+    "Send emails to your customers in bulk." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال ايميلات لجميع عملائك"
+          }
+        }
+      }
+    },
+    "Send mail to customers notifying them about their abandon carts." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أرسل بريدًا إلى العملاء لإعلامهم بعربات التخلي الخاصة بهم."
           }
         }
       }
@@ -7282,22 +7678,22 @@
         }
       }
     },
-    "Share Product" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مشاركه المنتج"
-          }
-        }
-      }
-    },
     "Share the app" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "مشاركة التطبيق"
+          }
+        }
+      }
+    },
+    "Shipping companies integration" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربط مع شركات الشحن"
           }
         }
       }
@@ -7368,26 +7764,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "شوبيفاي"
-          }
-        }
-      }
-    },
-    "Shoppers" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "المتسوقين"
-          }
-        }
-      }
-    },
-    "Shoppers data" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "بيانات العملاء"
           }
         }
       }
@@ -7582,6 +7958,9 @@
         }
       }
     },
+    "Store id is empty" : {
+
+    },
     "Store info" : {
       "localizations" : {
         "ar" : {
@@ -7712,6 +8091,16 @@
         }
       }
     },
+    "Successfully Subscribed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الإشتراك بنجاح !"
+          }
+        }
+      }
+    },
     "Summery" : {
       "localizations" : {
         "ar" : {
@@ -7738,16 +8127,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "افراد الفريق"
-          }
-        }
-      }
-    },
-    "Team space" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مساحه لفريق العمل"
           }
         }
       }
@@ -8292,12 +8671,25 @@
         }
       }
     },
+    "This marks the product as a sale" : {
+
+    },
     "This Month" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "هذا الشهر"
+          }
+        }
+      }
+    },
+    "This order is hidden" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا الطلب مخفي حاليا"
           }
         }
       }
@@ -8502,16 +8894,6 @@
         }
       }
     },
-    "Tired of caculating the products of all of (need to be fulfilled) orders ? easy we have got you" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "هل سئمت من حساب منتجات جميع الطلبات (المطلوب تنفيذها)؟ سنسهل الموضوع عليك"
-          }
-        }
-      }
-    },
     "Title" : {
       "localizations" : {
         "ar" : {
@@ -8662,12 +9044,12 @@
         }
       }
     },
-    "Track your inventory and export excel reports for your stock cost" : {
+    "Track your expanses" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بتتبع المنتجات بالمخزن و استخراج تقارير المخزن و قيمه البضاعه الموجوده به"
+            "value" : "تابع مصروغاتك"
           }
         }
       }
@@ -8782,16 +9164,6 @@
         }
       }
     },
-    "Unlock Vondera's Unique ecommerce website, with a lot of settings included and a unqiue link for your store" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "قم باستعمال موقعك المخصص لك، مع الكثير من الاعدادات التي يمكنك تخصيصها به"
-          }
-        }
-      }
-    },
     "Unselect All" : {
       "localizations" : {
         "ar" : {
@@ -8822,6 +9194,16 @@
         }
       }
     },
+    "Update subscribtion duration" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث مده الاشتراك"
+          }
+        }
+      }
+    },
     "Updated" : {
       "localizations" : {
         "ar" : {
@@ -8833,7 +9215,24 @@
       }
     },
     "Upgrade / Change Plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث / تغيير باقتك"
+          }
+        }
+      }
+    },
+    "Upgrade to %@" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترقيه الي %@"
+          }
+        }
+      }
     },
     "Upgrade your plan" : {
       "localizations" : {
@@ -9035,16 +9434,6 @@
         }
       }
     },
-    "Vonder's ecommerce website" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "موقع الكتروني مخصص لمتجرك"
-          }
-        }
-      }
-    },
     "Vondera" : {
       "localizations" : {
         "ar" : {
@@ -9095,32 +9484,12 @@
         }
       }
     },
-    "Warehouse & Stock Report" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "المخزن و تقارير المنتجات"
-          }
-        }
-      }
-    },
     "Warehouse Quantity" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "كميه المخزن"
-          }
-        }
-      }
-    },
-    "Warehouse Reports" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تقرير المخزن"
           }
         }
       }
@@ -9245,6 +9614,16 @@
         }
       }
     },
+    "Whatsapp" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "واتس اب"
+          }
+        }
+      }
+    },
     "With Courier" : {
       "localizations" : {
         "ar" : {
@@ -9325,12 +9704,12 @@
         }
       }
     },
-    "You can add your team to collebrate with you, choose a plan suitable for your team size" : {
+    "You have %lld orders, renew your plan to unlock them" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يمكنك اضافه الفريق الخاص بك الي متجرك، قم باختيار الباقه التي تناسب حجم فريقك"
+            "value" : "قمت بإضافه %lld طلب، جدد باقتك لمعرفه طلباتك"
           }
         }
       }
@@ -9361,6 +9740,76 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "لا يوجد اي طلبات تم تأكيدها مع عملائك"
+          }
+        }
+      }
+    },
+    "You have reached order limit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قمت بالوصول لعدد الطلبات الخاصه بباقتك"
+          }
+        }
+      }
+    },
+    "You have reached sales channels limit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الوصول لاكثر عدد قنوات بيع ممكن لخطتك"
+          }
+        }
+      }
+    },
+    "You have reached team members limit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الوصول لاكثر عدد في افراد فريقك"
+          }
+        }
+      }
+    },
+    "You have reached your plan's max orders limit, all new orders will be hidden until you subscribe." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد وصلت إلى الحد الأقصى لعدد الطلبات في خطتك، وسيتم إخفاء جميع الطلبات الجديدة حتى تقوم بالاشتراك."
+          }
+        }
+      }
+    },
+    "You have reached your sales channels limit, upgrade to be able to toggle new sales channels." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع الويب الخاص بك نشط، ولكن جميع طلباته مخفية، قم بترقية خطتك لدعم طلبات موقع الويب."
+          }
+        }
+      }
+    },
+    "You have reached your team members limit, upgrade your plan so you can add more members." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد وصلت إلى الحد الأقصى لعدد أعضاء فريقك، قم بترقية خطتك حتى تتمكن من إضافة المزيد من الأعضاء."
+          }
+        }
+      }
+    },
+    "You have successfully subscribed to the plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الاشتراك في الباقه بنجاح"
           }
         }
       }
@@ -9605,12 +10054,22 @@
         }
       }
     },
-    "Your subscribtion will expire in %lld days" : {
+    "Your subscription will expire in %lld days" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اشتراكك سوف ينتهي بعد %lld يوم"
+            "value" : "سينتهي اشتراكك بعد %lld يوم"
+          }
+        }
+      }
+    },
+    "Your website is active, but all it's orders are hidden, upgrade your plan to support the website orders." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موقع الويب الخاص بك نشط، ولكن جميع طلباته مخفية، قم بترقية خطتك لدعم طلبات موقع الويب."
           }
         }
       }

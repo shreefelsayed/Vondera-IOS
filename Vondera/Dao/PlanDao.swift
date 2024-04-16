@@ -10,23 +10,11 @@ import FirebaseFirestoreSwift
 import FirebaseFirestore
 
 class PlanDao {
-    var collection:CollectionReference = Firestore.firestore().collection("plans")
+    var collection:CollectionReference = Firestore.firestore().collection("appPlans")
     
-    func getPaid() async throws -> [Plan] {
-        let docs = try await collection
-            .order(by: "price", descending: false)
-            .whereField("price", isGreaterThan: 0)
-            .getDocuments()
-        
-        return convertToList(snapShot: docs)
-    }
-    
-    
-    func convertToList(snapShot:QuerySnapshot) -> [Plan] {
-        let arr = snapShot.documents.compactMap{doc -> Plan? in
-            return try! doc.data(as: Plan.self)
-        }
-        
-        return arr
+    func getPaid() async throws -> [PlanInfo] {
+        return try await collection
+            .whereField("id", isNotEqualTo: "free")
+            .getDocuments(as: PlanInfo.self)
     }
 }

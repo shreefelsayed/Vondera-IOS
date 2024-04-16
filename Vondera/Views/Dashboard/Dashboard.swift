@@ -18,8 +18,7 @@ struct Dashboard: View {
                 }
 
                 NavigationLink {
-                    (store.subscribedPlan?.accessClient ?? false) ?
-                    AnyView(CustomersScreen()) : AnyView(AppPlans(selectedSlide: 6))
+                    CustomersScreen()
                 } label: {
                     Label {
                         Text("Customers")
@@ -51,8 +50,7 @@ struct Dashboard: View {
                 }
                 
                 NavigationLink {
-                    (store.subscribedPlan?.accessExpanses ?? false) ?
-                    AnyView(StoreExpanses()) : AnyView(AppPlans(selectedSlide: 8))
+                    StoreExpanses()
                 } label: {
                     Label {
                         Text("Expanses")

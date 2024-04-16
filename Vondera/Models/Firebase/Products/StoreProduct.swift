@@ -19,6 +19,8 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var alwaysStocked: Bool? = false
     var storeId: String = ""
     var listPhotos: [String] = []
+    var listOptamized: [String]? = []
+    
     var listOrder: [ProductOrderObject]? = []
     var categoryId: String? = ""
     var categoryName: String? = ""
@@ -80,12 +82,18 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     }
     
     
-    func getProductLink(baseLink:String) -> URL {
-        return URL(string: "\(baseLink)/product/\(id)")!
+    func getProductLink() -> URL? {
+        if let link = UserInformation.shared.user?.store?.getStoreDomain(), (visible ?? true), let siteEnabled = UserInformation.shared.user?.store?.websiteEnabled, siteEnabled {
+            if let url = URL(string: "\(link)/product/\(id)") {
+                return url
+            }
+        }
+        
+        return nil
     }
     
     func defualtPhoto() -> String {
-        self.listPhotos[0]
+        return  listOptamized?.first ?? listPhotos.first ?? ""
     }
     
     

@@ -12,7 +12,7 @@ struct SubscribtionsView: View {
     
     var body: some View {
         ScrollView {
-            if let plan = UserInformation.shared.user?.store?.subscribedPlan {
+            if let plan = UserInformation.shared.user?.store?.storePlanInfo {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(alignment: .center) {
                         Text("Current plan")
@@ -21,7 +21,7 @@ struct SubscribtionsView: View {
                         
                         Spacer()
                         
-                        Text("\(plan.planName)")
+                        Text("\(plan.name)")
                     }
                     
                     if plan.isFreePlan() {

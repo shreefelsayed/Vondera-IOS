@@ -57,6 +57,7 @@ class Store: Codable {
     var agelWallet: Int? = 0
     var almostOut:Int? = 0
     var categoryNo:Int? = 0
+    var hiddenOrders:Int? = 0
     
     var listMarkets:[StoreMarketPlace]? = MarketsManager().getDefaultMarkets()
     var listAreas: [CourierPrice]? = GovsUtil().getStoreDefault()
@@ -65,7 +66,7 @@ class Store: Codable {
     var siteData:SiteData? = SiteData()
     var whatsappPojo: WhatsappPojo? = WhatsappPojo()
     var shopify: ShopifyPojo? = ShopifyPojo()
-    var subscribedPlan: SubscribedPlan?
+    var storePlanInfo: StorePlanInfo?
     var ordersCountObj: OrdersCount? = OrdersCount()
     var paymentOptions: PaymentsOptions? = PaymentsOptions()
     var emailService:EmailService? = EmailService()
@@ -78,12 +79,11 @@ class Store: Codable {
     init() {
     }
     
-    init(name: String, address: String, governorate: String, phone: String, subscribedPlan: SubscribedPlan, ownerId: String) {
+    init(name: String, address: String, governorate: String, phone: String, ownerId: String) {
         self.name = name
         self.address = address
         self.governorate = governorate
         self.phone = phone
-        self.subscribedPlan = subscribedPlan
         self.ownerId = ownerId
     }
     
@@ -92,9 +92,9 @@ class Store: Codable {
     }
     
     func QuoteExceeded() -> Bool {
-        if subscribedPlan == nil {return true}
-        if subscribedPlan!.expired {return true}
-        return subscribedPlan!.currentOrders >= subscribedPlan!.maxOrders
+        if storePlanInfo == nil {return true}
+        if storePlanInfo!.expired {return true}
+        return storePlanInfo!.planFeatures.currentOrders >= storePlanInfo!.planFeatures.maxOrders
     }
         
     func getVonderaLink() -> String {
@@ -115,12 +115,12 @@ class Store: Codable {
     
     func planWarning() -> LocalizedStringKey? {
         // Get the subscribed plan
-        guard let subscribedPlan = subscribedPlan else {
+        guard let storePlanInfo = storePlanInfo else {
             return nil
         }
 
         // If plan is free
-        if subscribedPlan.planId == "Ngub3Hv7wLNp9SJjTY3z" {
+        if storePlanInfo.planId == "free" {
             return "You're using the free plan"
         }
 
@@ -128,19 +128,19 @@ class Store: Codable {
         let currentDate = Date()
 
         // Calculate the difference in days between the expiration date and the current date
-        let differenceInSeconds = subscribedPlan.expireDate.timeIntervalSince(currentDate)
+        let differenceInSeconds = storePlanInfo.expireDate.toDate().timeIntervalSince(currentDate)
         let daysLeft = Int(differenceInSeconds / (60 * 60 * 24))
 
         // If the expiration date is within 3 days, return the number of days left
         if daysLeft <= 3 {
-            return "Your subscribtion will expire in \(daysLeft) days"
+            return "Your subscription will expire in \(daysLeft) days"
         }
 
         // Calculate remaining orders
-        let remainingOrders = subscribedPlan.maxOrders - subscribedPlan.currentOrders
+        let remainingOrders = storePlanInfo.planFeatures.maxOrders - storePlanInfo.planFeatures.currentOrders
 
         // If remaining orders are less than 10% of the maximum orders
-        if remainingOrders < Int(Double(subscribedPlan.maxOrders) * 0.1) {
+        if remainingOrders < Int(Double(storePlanInfo.planFeatures.maxOrders) * 0.1) {
             return "You've \(remainingOrders) orders left in your plan"
         }
 
@@ -162,7 +162,7 @@ extension Store {
     
     
     static func example() -> Store {
-        let store = Store(name: "Adore", address: "14 El Nozha St", governorate: "Cairo", phone: "01114077125", subscribedPlan: SubscribedPlan.example(), ownerId: "")
+        let store = Store(name: "Adore", address: "14 El Nozha St", governorate: "Cairo", phone: "01114077125", ownerId: "")
         store.id = ""
         store.agelWallet = 72000
         store.merchantId = "58392032"

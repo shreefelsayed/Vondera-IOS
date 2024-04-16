@@ -96,6 +96,8 @@ struct CustomPage: View {
             
         }
         .navigationTitle("Custom Pages")
+        .withPaywall(accessKey: .customPages, presentation: presentationMode)
+
     }
     
     

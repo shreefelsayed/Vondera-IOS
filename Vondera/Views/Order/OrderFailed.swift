@@ -94,33 +94,48 @@ struct OrderFailed: View {
     }
     
     func update() {
-        isSaving = true
-        
         Task {
+            if (order.storeId ?? "").isEmpty {
+                order.storeId = UserInformation.shared.user?.storeId ?? ""
+            }
+            
+            guard let storeId = order.storeId, !storeId.isEmpty else {
+                ToastManager.shared.showToast(msg: "Store id is empty")
+                return
+            }
+            
+            self.isSaving = true
+            
             let data = [
                 "statue" : "Failed",
                 "clientShippingFees": clientShippingFees,
                 "courierShippingFees": courierShippingFees,
                 "part" : partialReturn,
+                "storeId": storeId,
                 "dateDelivered": Date(),
                 "listProducts": try items.map { try Firestore.Encoder().encode($0) }
             ]
             
-            if let storeId = order.storeId {
-                if let _ = try? await OrdersDao(storeId: storeId).update(id:order.id, hashMap: data) {
-                    
-                    DispatchQueue.main.async { [self] in
-                        order.statue = "Failed"
-                        order.clientShippingFees = clientShippingFees
-                        order.courierShippingFees = courierShippingFees
-                        order.part = partialReturn
-                        order.dateDelivered = Date().toFirestoreTimestamp()
-                        order.listProducts = items
-                        presentationMode.wrappedValue.dismiss()
-                    }
+            do {
+                try await OrdersDao(storeId: storeId).update(id:order.id, hashMap: data)
+                DispatchQueue.main.async { [self] in
+                    order.statue = "Failed"
+                    order.storeId = storeId
+                    order.clientShippingFees = clientShippingFees
+                    order.courierShippingFees = courierShippingFees
+                    order.part = partialReturn
+                    order.dateDelivered = Date().toFirestoreTimestamp()
+                    order.listProducts = items
+                    presentationMode.wrappedValue.dismiss()
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
                     
                 }
             }
+            
+            self.isSaving = false
         }
     }
 }

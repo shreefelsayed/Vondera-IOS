@@ -10,7 +10,7 @@
     "_applicationInternalID" : "6459148256",
     "_developerTeamID" : "7U37S34SQ4",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 718014394.31106997,
+    "_lastSynchronizedDate" : 734340750.25901198,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -20,7 +20,10 @@
         "name" : "Load Products"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 1,
+          "type" : "purchase"
+        },
         "enabled" : false,
         "name" : "Purchase"
       },
@@ -30,7 +33,10 @@
         "name" : "Verification"
       },
       {
-        "current" : null,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
         "enabled" : false,
         "name" : "App Store Sync"
       },
@@ -62,6 +68,253 @@
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "21473228",
+      "localizations" : [
+
+      ],
+      "name" : "New Plans",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "14.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6483761052",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the Plus plan for 1 month",
+              "displayName" : "Plus - 1 MO",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "plus.month",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Plus - 1 MO",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6483760916",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the Plus plan for 3 months",
+              "displayName" : "Plus - 3 MO",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "plus.quartar",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "Plus - 3 MO",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "129.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6483760898",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the Plus plan for 1 year",
+              "displayName" : "Plus - 1 Year",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "plus.year",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Plus - Year",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+            {
+              "displayPrice" : "5.99",
+              "eligibility" : [
+                "new",
+                "expired",
+                "existing"
+              ],
+              "internalID" : "FD2309BD",
+              "isStackable" : true,
+              "numberOfPeriods" : 1,
+              "paymentMode" : "payUpFront",
+              "referenceName" : "20% Off",
+              "subscriptionPeriod" : "P1M"
+            }
+          ],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6483761035",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the Pro plan for 1 month",
+              "displayName" : "Pro - 1 MO",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro.month",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro - 1 MO",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "49.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6483768532",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the Pro plan for 3 months",
+              "displayName" : "Pro - 3 Months",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro.quartar",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "Pro - 3 MO",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "179.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6483783324",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the Pro plan for 1 year",
+              "displayName" : "Pro - Year",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "pro.year",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Pro - Year",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "8.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6483760624",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the starter plan for 1 month",
+              "displayName" : "Start - 1 MO",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "starter.month",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Starter - 1 MO",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "22.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6483760855",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the starter plan for 3 month",
+              "displayName" : "Starter - 3 MO",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "starter.quartar",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "Starter - 3 MO",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "79.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6483760837",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Subscribe in the starter plan for 1 year",
+              "displayName" : "Starter - 1 Year",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "starter.year",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Starter - Year",
+          "subscriptionGroupID" : "21473228",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    },
     {
       "id" : "21395345",
       "localizations" : [
@@ -101,7 +354,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "8.99",
+          "displayPrice" : "9.99",
           "familyShareable" : false,
           "groupNumber" : 2,
           "internalID" : "6468559193",
@@ -124,7 +377,20 @@
 
           ],
           "codeOffers" : [
-
+            {
+              "displayPrice" : "2.99",
+              "eligibility" : [
+                "expired",
+                "existing",
+                "new"
+              ],
+              "internalID" : "FCA0C4F9",
+              "isStackable" : false,
+              "numberOfPeriods" : 1,
+              "paymentMode" : "payUpFront",
+              "referenceName" : "RAMDAN30",
+              "subscriptionPeriod" : "P1M"
+            }
           ],
           "displayPrice" : "3.99",
           "familyShareable" : false,

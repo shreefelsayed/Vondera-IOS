@@ -73,6 +73,7 @@ struct ProviderIntegrationView: View {
                 .disabled(saving || loading)
             }
         }
+        .withPaywall(accessKey: .couriers, presentation: presentationMode)
     }
     
     func update() {

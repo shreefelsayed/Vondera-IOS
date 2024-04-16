@@ -74,6 +74,24 @@ struct OrdersFragment: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 
+                if let hiddenCount = UserInformation.shared.user?.store?.hiddenOrders, hiddenCount > 0 {
+                    HStack {
+                        Spacer()
+                        
+                        Text("You have \(hiddenCount) orders, renew your plan to unlock them")
+                            .bold()
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .multilineTextAlignment(.center)
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    .background(.red.opacity(0.2))
+                    .cornerRadius(8)
+                    .padding()
+                }
+                
                 List {
                     // MARK : 3 Cards with counters
                     Section {

@@ -41,6 +41,7 @@ class AddProductViewModel : ObservableObject {
     @Published var alwaysStocked = false
     @Published var sellingPrice = "0"
     @Published var cost = "0"
+    @Published var crossed = "0"
     @Published var quantity = "0"
     @Published var isSaving = false
     
@@ -242,6 +243,7 @@ class AddProductViewModel : ObservableObject {
         self.selectedTemplate = product
         self.desc = product.desc ?? ""
         self.cost = "\(Int(product.buyingPrice))"
+        self.crossed = "\(Int(product.crossedPrice ?? 0))"
         self.sellingPrice = "\(Int(product.price))"
         self.alwaysStocked = product.alwaysStocked ?? false
         self.quantity = "\(product.quantity)"
@@ -260,6 +262,7 @@ class AddProductViewModel : ObservableObject {
             
             product.desc = desc
             product.storeId = storeId
+            product.crossedPrice = Double(crossed) ?? 0
             product.listPhotos = uris.map { $0.absoluteString }
             product.hashVarients = listVarient()
             product.alwaysStocked = alwaysStocked

@@ -8,82 +8,208 @@
 import SwiftUI
 import AlertToast
 
-struct PlanItemData: Identifiable {
-    var imageName:String
-    var title:LocalizedStringKey
-    var desc:LocalizedStringKey
-    var id = 0
-}
 
-
-extension PlanItemData {
-    static func getPlanItems() -> [PlanItemData] {
-        return [
-            // FREE ITEMS
-            PlanItemData(imageName: "products", title: "Unlimited Products", desc: "Add unlimited products number for free", id: 0),
+struct AppPlans: View {
+    @ObservedObject var myUser = UserInformation.shared
+    @StateObject var storeVM = StoreKitManager()
+    
+    @State var selectedPlan = 0
+    @State var selectedSlide = 0
+    
+    @State private var currentPlanId = ""
+    @State private var plans:[PlanInfo] = []
+    @State private var isLoading = false
+    
+    @State private var showPickDurationDialog = false
+    
+    var body: some View {
+        VStack(alignment: .center) {
+            if !plans.isEmpty && !currentPlanId.isEmpty {
+                PlansFeatureSlider(currentIndex: $selectedSlide)
+                    .padding(.top, 24)
+                
+                HStack {
+                    Text("Select your plan")
+                        .font(.title2)
+                        .bold()
+                    
+                    Spacer()
+                }
+                
+                CustomTopTabBar(tabIndex: $selectedPlan, titles: plans.map({ plan in
+                    return plan.name.localize()
+                }))
+                
+                PlanInfoView(plan: plans[selectedPlan])
+                    .padding(.vertical)
+                
+                Spacer()
+                
+                Button {
+                    showPickDurationDialog.toggle()
+                } label: {
+                    Text(plans[selectedPlan].getButtonTitle())
+                        .bold()
+                }
+                .frame(maxWidth: .infinity)
+                .bold()
+                .foregroundStyle(.white)
+                .padding()
+                .background(.black)
+                .cornerRadius(32)
+                .padding()
+            }
+        }
+        .toast(isPresenting: Binding(value: $storeVM.msg), alert: {
+            AlertToast(displayMode: .banner(.slide), type: .regular, title: storeVM.msg)
+        })
+        .padding(.horizontal)
+        .overlay(alignment: .center) {
+            if isLoading {
+                ProgressView()
+            }
+        }
+        .task {
+            AnalyticsManager.shared.openedPlansInfo()
+            currentPlanId = UserInformation.shared.user?.store?.storePlanInfo?.planId ?? ""
+            getData()
+        }
+        .sheet(isPresented: $showPickDurationDialog, content: {
+            if !plans.isEmpty {
+                let pickerPlan = plans[selectedPlan]
+                DurationSheet(isPresenting: $showPickDurationDialog, plan: pickerPlan) { subPlanId in
+                    subscribe(pickerPlan.id, subPlanId)
+                }
+                .presentationDetents([.medium])
+            }
+        })
+        .willProgress(saving: storeVM.isBuying)
+        .navigationTitle("Plans")
+    }
+    
+    func subscribe(_ planId:String, _ subPlanId:String) {
+        Task {
+            do {
+                AnalyticsManager.shared.paymentAttemp()
+                try await storeVM.purchase(planId: planId, subPlanId: subPlanId)
+            } catch {
+                print("Error happened")
+            }
+        }
+    }
+    
+    func getData() {
+        Task {
+            do {
+                let items = try await PlanDao().getPaid()
+                DispatchQueue.main.async {
+                    self.currentPlanId = UserInformation.shared.user?.store?.storePlanInfo?.planId ?? "free"
+                    self.plans = items.sorted(by: {$0.getBasePrice() < $1.getBasePrice()})
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
             
-            PlanItemData(imageName: "receipt_free", title: "Print QR Receipts", desc: "Print a receipt with a QR code for your orders for free", id: 1),
-            
-            PlanItemData(imageName: "product_report", title: "Product Report", desc: "Tired of caculating the products of all of (need to be fulfilled) orders ? easy we have got you", id: 2),
-            
-            
-            // QUOTE ITEMS
-            PlanItemData(imageName: "order", title: "Orders Quote", desc: "Every package has orders quote, select the most suitable one for you", id: 3),
-            PlanItemData(imageName: "employees", title: "Team space", desc: "You can add your team to collebrate with you, choose a plan suitable for your team size", id: 4),
-            
-            // PACKAGE PREMMISSIONS : 1
-            PlanItemData(imageName: "e-website", title: "Ecommerce Website", desc: "Unlock Vondera's Unique ecommerce website, with a lot of settings included and a unqiue link for your store", id: 5),
-            PlanItemData(imageName: "shopper", title: "Shoppers", desc: "Access your shoppers data, and export it to excel file", id: 6),
-            
-            // PACKAGE PREMMISSIONS : 2
-            PlanItemData(imageName: "warehouse", title: "Warehouse Reports", desc: "Track your inventory and export excel reports for your stock cost", id: 7),
-            
-            PlanItemData(imageName: "expansion", title: "Expanses", desc: "Record your expanses for more accurate net profit and reports", id: 8),
-            
-            // PACKAGE PREMMISSIONS : 3
-            PlanItemData(imageName: "receipts", title: "Custom Receipt Message", desc: "Customize a text to be printed on any of your receipts", id: 9),
-            
-            PlanItemData(imageName: "api", title: "Access apis", desc: "Connect to your webhooks, or to your shopify store using our api end points", id: 10),
-        ]
+        }
     }
 }
 
+struct OnPaymentSuccess : View {
+    @Environment(\.presentationMode) private var presentationMode
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Spacer()
+            
+            Image(.imgSubscribed)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 140)
+            
+            Text("Successfully Subscribed")
+                .font(.title)
+                .bold()
+                .foregroundStyle(Color.accentColor)
+            
+            Text("You have successfully subscribed to the plan")
+                .font(.headline)
+                .foregroundStyle(.secondary)
+                .bold()
+                .multilineTextAlignment(.center)
+            
+            ButtonLarge(label: "Done") {
+                presentationMode.wrappedValue.dismiss()
+            }
+            
+            Spacer()
+        }
+        .padding()
+    }
+    
+    func refreshData() async {
+        guard let id = UserInformation.shared.user?.id else {
+            return
+        }
+        
+        guard let user = await reloadUser() else {
+            print("Couldn't get user with \(id)")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            UserInformation.shared.updateUser(user)
+        }
+        
+    }
+    
+    func reloadUser() async -> UserData? {
+        guard let id = UserInformation.shared.user?.id else {
+            return nil
+        }
+        
+        return try? await UsersDao().getUserWithStore(userId: id)
+    }
+}
+
+
+// MARK : Features Slider
 struct PlansFeatureSlider : View {
-    var items:[PlanItemData]
     @Binding var currentIndex:Int
     
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
             TabView(selection: $currentIndex) {
-                ForEach(items.indices, id: \.self) { index in
-                    PlanItemView(imageName: items[index].imageName, title: items[index].title, desc: items[index].desc)
+                ForEach(FeatureKeys.allCases.indices, id: \.self) { index in
+                    let feature = FeatureKeys.allCases[index]
+                    PlanItemView(imageName: feature.getDrawable(), title: feature.getTitle(), desc: feature.getDesc())
                         .tag(index)
                         .padding(.horizontal, 12)
                 }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .frame(height: 300)
+            .frame(height: 180)
             
-            PageIndicatorView(currentIndex: $currentIndex, pageCount: items.count)
+            PageIndicatorView(currentIndex: $currentIndex, pageCount: FeatureKeys.allCases.count)
                 .padding(.bottom, 8)
         }
     }
 }
 
+// MARK : Feature View
 struct PlanItemView: View {
-    var imageName:String
+    var imageName:ImageResource
     var title:LocalizedStringKey
     var desc:LocalizedStringKey
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
             Spacer()
             
             VStack {
                 Image(imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 120)
+                    .frame(height: 80)
                 
                 
                 Text(title)
@@ -99,148 +225,102 @@ struct PlanItemView: View {
             }
             
             Spacer()
-        }
-        .padding(12)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(12)
-        
-    }
-}
-
-struct PlanInfoView : View {
-    var plan:Plan
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(plan.features.filter({ $0.available })) { feature in
-                HStack {
-                    Label(feature.name, systemImage: "checkmark")
-                        .font(.body)
-                        .bold()
-                    
-                    Spacer()
-                }
-            }
-        }
-    }
-}
-
-struct AppPlans: View {
-    @ObservedObject var myUser = UserInformation.shared
-    @State var currentPlanId = ""
-    
-    @State var selectedPlan = 0
-    @State var selectedSlide = 0
-    
-    @StateObject var storeVM = StoreVM()
-    
-    @State var plans:[Plan] = []
-    
-    var body: some View {
-        VStack(alignment: .center) {
-            if !plans.isEmpty && !currentPlanId.isEmpty {
-                PlansFeatureSlider(items: PlanItemData.getPlanItems(), currentIndex: $selectedSlide)
-                
-                HStack {
-                    Text("Choose your package")
-                        .bold()
-                    
-                    Spacer()
-                }
-                
-                CustomTopTabBar(tabIndex: $selectedPlan, titles: plans.map({ plan in
-                    return LocalizationService.shared.currentLanguage == .english_us ? plan.planName.localize() : plan.planNameAr.localize()
-                }))
-                
-                PlanInfoView(plan: plans[selectedPlan])
-                    .padding(.vertical)
-                
-                Spacer()
-                
-                Button {
-                    subscribe(plans[selectedPlan].id)
-                } label: {
-                    Label(plans[selectedPlan].id == currentPlanId ? "Current plan" : "\(plans[selectedPlan].price) LE / Monthly", systemImage: "apple.logo")
-                }
-                .frame(maxWidth: .infinity)
-                .bold()
-                .foregroundStyle(plans[selectedPlan].id == currentPlanId ? .black : .white)
-                .disabled(plans[selectedPlan].id == currentPlanId)
-                .padding()
-                .background(plans[selectedPlan].id == currentPlanId ? .white : .black)
-                .cornerRadius(32)
-                .padding()
-            } else {
-                ProgressView()
-            }
-        }
-        .toast(isPresenting: Binding(value: $storeVM.msg), alert: {
-            AlertToast(displayMode: .banner(.slide), type: .regular, title: storeVM.msg)
-        })
-        .padding(.horizontal)
-        .task {
-            AnalyticsManager.shared.openedPlansInfo()
-            currentPlanId = UserInformation.shared.user?.store?.subscribedPlan?.planId ?? ""
-            getData()
-        }
-        .willProgress(saving: storeVM.isBuying)
-        .navigationTitle("Plans")
-    }
-    
-    func subscribe(_ planId:String) {
-        Task {
-            do {
-                AnalyticsManager.shared.paymentAttemp()
-                let result = try await storeVM.purchase(planId: planId)
-                if result {
-                    await refreshData()
-                }
-            } catch {
-                print("Error happened")
-            }
-        }
-    }
-    
-    func getData() {
-        Task {
-            do {
-                let items = try await PlanDao().getPaid()
-                await refreshData()
-                DispatchQueue.main.async {
-                    self.plans = items
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
             
         }
-    }
-    
-    func refreshData() async {
-        guard let id = myUser.user?.id else {
-            return
-        }
+        .padding()
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(12)
+        .padding()
         
-        guard let user = await reloadUser() else {
-            print("Couldn't get user with \(id)")
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.currentPlanId = user.store?.subscribedPlan?.planId ?? ""
-            UserInformation.shared.updateUser(user)
-        }
-        
-    }
-    
-    func reloadUser() async -> UserData? {
-        // id
-        guard let id = myUser.user?.id else {
-            return nil
-        }
-        
-        return try? await UsersDao().getUserWithStore(userId: id)
     }
 }
 
+// MARK : Plan Small Features
+struct PlanInfoView : View {
+    var plan:PlanInfo
+    
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(plan.features.filter({ $0.available })) { feature in
+                    HStack {
+                        Label(feature.name, systemImage: "checkmark")
+                            .font(.body)
+                            .bold()
+                        
+                        Spacer()
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+
+// MARK : The Duration Picker Sheet
+struct DurationSheet :View {
+    @Binding var isPresenting:Bool
+    var plan:PlanInfo
+    var onPicked:((String) -> ())
+    
+    @State private var showCodeDialog = false
+    var body: some View {
+        VStack(alignment: .center, spacing: 12) {
+            Text(plan.getButtonTitle())
+                .font(.title)
+                .bold()
+                .padding()
+            
+            Spacer()
+            
+            ForEach(plan.planInfoPrices) { varient in
+                VStack(alignment: .center, spacing: 6) {
+                    Button(action: {
+                        onPicked(varient.id)
+                        isPresenting = false
+                    }, label: {
+                        Label( "EGP \(varient.price) / \(varient.getDurationDisplay().toString())", systemImage: "apple.logo")
+                    })
+                    .frame(maxWidth: .infinity)
+                    .bold()
+                    .foregroundStyle(.white)
+                    .padding()
+                    .background(.black)
+                    .cornerRadius(32)
+                    
+                    if varient.id != "month" {
+                        Text("(\(varient.getDurationDisplay().toString()) at EGP \(varient.monthPrice())/mo. Save \(varient.getSaving(basePrice: plan.getBasePrice()))%)")
+                            .foregroundStyle(.secondary)
+                            .font(.caption)
+                    }
+                }
+            }
+            
+            Spacer()
+            
+            Text("Do you have a promo code ?")
+                .font(.headline)
+                .bold()
+                .onTapGesture {
+                    showCodeDialog = true
+                }
+        }
+        .padding()
+        .offerCodeRedemption(isPresented: $showCodeDialog) { result in
+            switch result {
+            case .success(let trx):
+                print("***********Offer code redemption successful. \(trx)")
+                isPresenting = false
+            case .failure(let error):
+                print("Offer code redemption failed: \(error.localizedDescription)")
+            }
+        }
+    }
+}
+
+
+#Preview {
+    AppPlans()
+}
 

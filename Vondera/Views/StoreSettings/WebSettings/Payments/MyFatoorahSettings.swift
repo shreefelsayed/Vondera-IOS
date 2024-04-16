@@ -85,6 +85,8 @@ struct MyFatoorahSettings: View {
                 
             }
         }
+        .withPaywall(accessKey: .payments, presentation: presentationMode)
+
         
     }
     

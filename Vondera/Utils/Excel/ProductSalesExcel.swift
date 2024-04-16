@@ -16,7 +16,7 @@ class ProductSalesExcel {
     
     init(name: String = "Product Sales", listOrders: [Order]) {
         self.name = name
-        self.listOrders = listOrders
+        self.listOrders = listOrders.filter({$0.isHidden == false})
         sheet = book.NewSheet(name)
     }
     

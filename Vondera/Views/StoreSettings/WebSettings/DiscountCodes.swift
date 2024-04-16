@@ -95,6 +95,7 @@ struct DiscountCodes: View {
             }
             
         }
+        .withPaywall(accessKey: .discounts, presentation: presentationMode)
         .navigationTitle("Discount Codes")
     }
     

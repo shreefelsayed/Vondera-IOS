@@ -63,6 +63,7 @@ struct ProductVisibilty: View {
         if let product = try? await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
             DispatchQueue.main.async {
                 self.product = product
+                self.toogle = product.visible ?? true
                 self.isLoading = false
             }
         }

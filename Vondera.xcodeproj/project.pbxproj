@@ -91,6 +91,7 @@
 		B32206032AE8BB7700B2C27C /* ExpansesExcel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32206022AE8BB7700B2C27C /* ExpansesExcel.swift */; };
 		B3275F432A53D86100F4F935 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3275F422A53D86100F4F935 /* DownloadManager.swift */; };
 		B3275F452A53DFFC00F4F935 /* CourierPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3275F442A53DFFB00F4F935 /* CourierPicker.swift */; };
+		B32FB4982BC505EF004D61B7 /* PlanInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32FB4972BC505EF004D61B7 /* PlanInfo.swift */; };
 		B334038A2A47068A008CB1D8 /* CutomerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33403892A47068A008CB1D8 /* CutomerProfile.swift */; };
 		B334038C2A470698008CB1D8 /* ClientOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B334038B2A470698008CB1D8 /* ClientOrdersViewModel.swift */; };
 		B33403922A4710F1008CB1D8 /* TPPDF in Frameworks */ = {isa = PBXBuildFile; productRef = B33403912A4710F1008CB1D8 /* TPPDF */; };
@@ -276,7 +277,6 @@
 		B3A7C8D52A285E3F00D6C1D2 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8D42A285E3F00D6C1D2 /* Store.swift */; };
 		B3A7C8D72A285F7600D6C1D2 /* CourierPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8D62A285F7600D6C1D2 /* CourierPrice.swift */; };
 		B3A7C8D92A285FB400D6C1D2 /* OrdersCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8D82A285FB400D6C1D2 /* OrdersCount.swift */; };
-		B3A7C8DB2A285FF800D6C1D2 /* SubscribedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8DA2A285FF800D6C1D2 /* SubscribedPlan.swift */; };
 		B3A7C8DD2A28600100D6C1D2 /* ShopifyPojo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8DC2A28600100D6C1D2 /* ShopifyPojo.swift */; };
 		B3A7C8DF2A28600800D6C1D2 /* WhatsappPojo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8DE2A28600800D6C1D2 /* WhatsappPojo.swift */; };
 		B3A7C8E22A286F0E00D6C1D2 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B3A7C8E12A286F0E00D6C1D2 /* GoogleSignIn */; };
@@ -327,6 +327,7 @@
 		B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */; };
 		B3D8E52E2A9FF99D00DC5049 /* AppPlans.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */; };
 		B3D8E5302A9FFA2200DC5049 /* PlanDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */; };
+		B3DC4A642BBF6F16009A17C7 /* CollectOrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */; };
 		B3DFDC0E2A4498F000037858 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */; };
 		B3DFDC102A44A01500037858 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0F2A44A01500037858 /* AddProductView.swift */; };
 		B3DFDC122A44A08900037858 /* AddProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC112A44A08900037858 /* AddProductViewModel.swift */; };
@@ -350,7 +351,7 @@
 		B3E776C92B1844D500BA7076 /* ImportShopify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E776C82B1844D500BA7076 /* ImportShopify.swift */; };
 		B3E776CC2B1844F900BA7076 /* ImportShopifyIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E776CB2B1844F900BA7076 /* ImportShopifyIntro.swift */; };
 		B3EAFA0E2BB466F0007EC6DA /* DynamicNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */; };
-		B3EBA5C82ACBE59E00AFDC69 /* StoreVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EBA5C72ACBE59E00AFDC69 /* StoreVM.swift */; };
+		B3EBA5C82ACBE59E00AFDC69 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EBA5C72ACBE59E00AFDC69 /* StoreKitManager.swift */; };
 		B3EBA5CA2ACBE84B00AFDC69 /* FirebaseFunctionCaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EBA5C92ACBE84B00AFDC69 /* FirebaseFunctionCaller.swift */; };
 		B3EBA5CC2ACC07A000AFDC69 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3EBA5CB2ACC07A000AFDC69 /* StoreKit.framework */; };
 		B3EF61582A434ADE007930ED /* UserOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61572A434ADE007930ED /* UserOrders.swift */; };
@@ -359,7 +360,6 @@
 		B3EF615E2A43AA93007930ED /* CouriersDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF615D2A43AA93007930ED /* CouriersDao.swift */; };
 		B3EF61602A43AE40007930ED /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF615F2A43AE40007930ED /* Client.swift */; };
 		B3EF61622A43AEE0007930ED /* Expanses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61612A43AEE0007930ED /* Expanses.swift */; };
-		B3EF61642A43AF50007930ED /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61632A43AF50007930ED /* Plan.swift */; };
 		B3EF61662A43AFD5007930ED /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61652A43AFD5007930ED /* Category.swift */; };
 		B3EF616E2A43DBC9007930ED /* SwipeCell in Frameworks */ = {isa = PBXBuildFile; productRef = B3EF616D2A43DBC9007930ED /* SwipeCell */; };
 		B3EF61742A43E9E6007930ED /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = B3EF61732A43E9E6007930ED /* SlidingTabView */; };
@@ -484,6 +484,7 @@
 		B32206022AE8BB7700B2C27C /* ExpansesExcel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansesExcel.swift; sourceTree = "<group>"; };
 		B3275F422A53D86100F4F935 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		B3275F442A53DFFB00F4F935 /* CourierPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierPicker.swift; sourceTree = "<group>"; };
+		B32FB4972BC505EF004D61B7 /* PlanInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanInfo.swift; sourceTree = "<group>"; };
 		B33403892A47068A008CB1D8 /* CutomerProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutomerProfile.swift; sourceTree = "<group>"; };
 		B334038B2A470698008CB1D8 /* ClientOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientOrdersViewModel.swift; sourceTree = "<group>"; };
 		B33403982A473DFE008CB1D8 /* SlideNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideNetworkView.swift; sourceTree = "<group>"; };
@@ -654,7 +655,6 @@
 		B3A7C8D42A285E3F00D6C1D2 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		B3A7C8D62A285F7600D6C1D2 /* CourierPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierPrice.swift; sourceTree = "<group>"; };
 		B3A7C8D82A285FB400D6C1D2 /* OrdersCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersCount.swift; sourceTree = "<group>"; };
-		B3A7C8DA2A285FF800D6C1D2 /* SubscribedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedPlan.swift; sourceTree = "<group>"; };
 		B3A7C8DC2A28600100D6C1D2 /* ShopifyPojo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopifyPojo.swift; sourceTree = "<group>"; };
 		B3A7C8DE2A28600800D6C1D2 /* WhatsappPojo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsappPojo.swift; sourceTree = "<group>"; };
 		B3A7C8EA2A28707F00D6C1D2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -700,6 +700,7 @@
 		B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreHelper.swift; sourceTree = "<group>"; };
 		B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPlans.swift; sourceTree = "<group>"; };
 		B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDao.swift; sourceTree = "<group>"; };
+		B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectOrderPayment.swift; sourceTree = "<group>"; };
 		B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		B3DFDC0F2A44A01500037858 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
 		B3DFDC112A44A08900037858 /* AddProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewModel.swift; sourceTree = "<group>"; };
@@ -722,7 +723,7 @@
 		B3E776CB2B1844F900BA7076 /* ImportShopifyIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportShopifyIntro.swift; sourceTree = "<group>"; };
 		B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNavigation.swift; sourceTree = "<group>"; };
 		B3EBA5C62ACBDDF400AFDC69 /* Vondera.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Vondera.storekit; sourceTree = "<group>"; };
-		B3EBA5C72ACBE59E00AFDC69 /* StoreVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreVM.swift; sourceTree = "<group>"; };
+		B3EBA5C72ACBE59E00AFDC69 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		B3EBA5C92ACBE84B00AFDC69 /* FirebaseFunctionCaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionCaller.swift; sourceTree = "<group>"; };
 		B3EBA5CB2ACC07A000AFDC69 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B3EF61572A434ADE007930ED /* UserOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOrders.swift; sourceTree = "<group>"; };
@@ -731,7 +732,6 @@
 		B3EF615D2A43AA93007930ED /* CouriersDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouriersDao.swift; sourceTree = "<group>"; };
 		B3EF615F2A43AE40007930ED /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		B3EF61612A43AEE0007930ED /* Expanses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expanses.swift; sourceTree = "<group>"; };
-		B3EF61632A43AF50007930ED /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		B3EF61652A43AFD5007930ED /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B3EF61782A43F7FD007930ED /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 		B3EF617A2A43FB93007930ED /* StoreProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProducts.swift; sourceTree = "<group>"; };
@@ -967,6 +967,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		B32FB4992BC551C1004D61B7 /* Plans */ = {
+			isa = PBXGroup;
+			children = (
+				B32FB4972BC505EF004D61B7 /* PlanInfo.swift */,
+			);
+			path = Plans;
+			sourceTree = "<group>";
+		};
 		B334038D2A470D20008CB1D8 /* PDFs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1109,7 +1117,7 @@
 				B314F4E52A4E8FDE009856E3 /* OrderManager.swift */,
 				B3F0F3E22AC4C96B000AFB0C /* CategoryManager.swift */,
 				B3F0F3ED2AC614E1000AFB0C /* MarketsManager.swift */,
-				B3EBA5C72ACBE59E00AFDC69 /* StoreVM.swift */,
+				B3EBA5C72ACBE59E00AFDC69 /* StoreKitManager.swift */,
 				B35A430C2ADEAD2C0027C29B /* SavedAccountManager.swift */,
 				B3A1DB8A2AE2B6E00094C100 /* UserInformation.swift */,
 				B370458B2AE80F2200360726 /* AnalyticsManager.swift */,
@@ -1240,6 +1248,7 @@
 				B33D80E32B15503200A679FF /* OrderFailed.swift */,
 				B383457E2BA5EBB800FCCB02 /* OrderCustomPaginationScreen.swift */,
 				B38345802BA5F2B200FCCB02 /* NewAllOrders.swift */,
+				B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1454,6 +1463,7 @@
 		B3A7C8C82A285C3700D6C1D2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B32FB4992BC551C1004D61B7 /* Plans */,
 				B3F0F3E82AC613E5000AFB0C /* Firebase */,
 				B314F4DB2A4DE825009856E3 /* SavedItem.swift */,
 				B3F0F3E42AC4C995000AFB0C /* StoreCategory.swift */,
@@ -1727,10 +1737,8 @@
 				B36923BB2A41D00400709112 /* GovStatics.swift */,
 				B3A7C8D22A285E3900D6C1D2 /* NotiSettingPojo.swift */,
 				B3A7C8D82A285FB400D6C1D2 /* OrdersCount.swift */,
-				B3EF61632A43AF50007930ED /* Plan.swift */,
 				B3A7C8DC2A28600100D6C1D2 /* ShopifyPojo.swift */,
 				B3A7C8D42A285E3F00D6C1D2 /* Store.swift */,
-				B3A7C8DA2A285FF800D6C1D2 /* SubscribedPlan.swift */,
 				B36923B72A41CE6D00709112 /* Tip.swift */,
 				B3A7C8D02A285DAF00D6C1D2 /* UserData.swift */,
 				B3F0F3E92AC61417000AFB0C /* StoreMarketPlace.swift */,
@@ -1944,6 +1952,7 @@
 				B3C30F4B2A9F0EE20086B3FE /* ColorsUtil.swift in Sources */,
 				B33970B92A462FB200E44FA2 /* ClientsDao.swift in Sources */,
 				B33DBD2C2A4A4436008BBB69 /* EditExpanse.swift in Sources */,
+				B3DC4A642BBF6F16009A17C7 /* CollectOrderPayment.swift in Sources */,
 				B314F4DC2A4DE825009856E3 /* SavedItem.swift in Sources */,
 				B39FAA052A4CE0DB004773AA /* NewEmployeeViewModel.swift in Sources */,
 				B32205FF2AE8AD5C00B2C27C /* CourierReports.swift in Sources */,
@@ -1964,7 +1973,6 @@
 				B3C149802BA37CFF0071642C /* StoreOrderSettings.swift in Sources */,
 				B33DBD312A4A5272008BBB69 /* NewEmployee.swift in Sources */,
 				B32206012AE8BAD800B2C27C /* ExpansesReport.swift in Sources */,
-				B3EF61642A43AF50007930ED /* Plan.swift in Sources */,
 				B33DBD262A4A432A008BBB69 /* ExpansesCard.swift in Sources */,
 				B33DBCF92A48FE36008BBB69 /* OutOfStockViewModel.swift in Sources */,
 				B30115CD2A56F11000A7F701 /* StoreShipping.swift in Sources */,
@@ -2109,7 +2117,7 @@
 				B33970B42A462D1500E44FA2 /* ClientCard.swift in Sources */,
 				B30CF0AB2A51F7F100245955 /* ProductPrice.swift in Sources */,
 				B33970B22A46263600E44FA2 /* EmployeeProfileViewModel.swift in Sources */,
-				B3EBA5C82ACBE59E00AFDC69 /* StoreVM.swift in Sources */,
+				B3EBA5C82ACBE59E00AFDC69 /* StoreKitManager.swift in Sources */,
 				B3A7C8D52A285E3F00D6C1D2 /* Store.swift in Sources */,
 				B30316A52AC63AAC002134A2 /* StoreMarketPlacesSheet.swift in Sources */,
 				B3A7C8D12A285DAF00D6C1D2 /* UserData.swift in Sources */,
@@ -2157,6 +2165,7 @@
 				B390EB6A2A489DC60058D06B /* FirebaseStorageUploader.swift in Sources */,
 				B33DBCF72A48FDEB008BBB69 /* OutOfStock.swift in Sources */,
 				B36923BA2A41CEB900709112 /* TipDao.swift in Sources */,
+				B32FB4982BC505EF004D61B7 /* PlanInfo.swift in Sources */,
 				B30CF0C62A5291CF00245955 /* CourierEditViewModel.swift in Sources */,
 				B30CF0B62A51FBC300245955 /* ProductPriceViewModel.swift in Sources */,
 				B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */,
@@ -2164,7 +2173,6 @@
 				B32206032AE8BB7700B2C27C /* ExpansesExcel.swift in Sources */,
 				B36D8C612A40878C00A8C555 /* ReadyOrdersFragment.swift in Sources */,
 				B33970AB2A461F8700E44FA2 /* EmployeeCard.swift in Sources */,
-				B3A7C8DB2A285FF800D6C1D2 /* SubscribedPlan.swift in Sources */,
 				B30115CF2A56F13300A7F701 /* StoreShippingViewModel.swift in Sources */,
 				B390EB642A4861130058D06B /* StoreSocial.swift in Sources */,
 				B3191D782B43BA9C00E7CA9B /* MyFatoorahSettings.swift in Sources */,
@@ -2409,7 +2417,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 57;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2430,7 +2438,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.3.2;
+				MARKETING_VERSION = 4.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2452,7 +2460,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2472,7 +2480,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.3.2;
+				MARKETING_VERSION = 4.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

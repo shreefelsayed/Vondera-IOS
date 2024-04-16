@@ -71,6 +71,7 @@ struct Order: Codable, Identifiable, Equatable {
     var requireDelivery: Bool? = true
     var shopify: Bool? = false
     var email:String? = ""
+    var hidden:Bool? = false
     
     var payment:OrderPayment? = OrderPayment()
     var courierInfo:CourierInfo?
@@ -259,6 +260,11 @@ struct Order: Codable, Identifiable, Equatable {
         }
     }
     
+    var isHidden: Bool {
+        guard let hidden = hidden else { return false }
+        return true
+    }
+    
     var getPaymentStatueColor: Color {
         if isOrderHadMoney {
             return .green
@@ -355,9 +361,27 @@ struct Order: Codable, Identifiable, Equatable {
         return ("Not Paid", Color.red)
     }
     
-    func getLink(baseLink:String) -> URL {
-        let link = "\(baseLink)/order-summary/\(id)"
-        return URL(string: link)!
+    func canCollectMoney() -> Bool {
+        if isFinished() { return false }
+        return COD > 0
+    }
+    
+    func isFinished() -> Bool {
+        if statue == "Delivered" || statue == "Failed" || statue == "Deleted" {
+            return true
+        }
+        
+        return false
+    }
+    
+    func getLink() -> URL? {
+        if let link = UserInformation.shared.user?.store?.getStoreDomain(), let siteEnabled =  UserInformation.shared.user?.store?.websiteEnabled, siteEnabled == true {
+            if let url = URL(string: "\(link)/order-summary/\(id)") {
+                return url
+            }
+        }
+        
+        return nil
     }
     
     func canEditProducts(accountType: String) -> Bool {
@@ -456,6 +480,9 @@ extension Order {
         str = str + "Products. \(self.productsInfo) \n"
         if(self.deposit != nil && self.deposit! > 0) {str = str + "Deposit. \(self.deposit ?? 0) \n"}
         str = str + "COD. \(self.COD) LE"
+        if let link = getLink() {
+            str = str + "Link : \(link.absoluteString)"
+        }
         
         
         return str

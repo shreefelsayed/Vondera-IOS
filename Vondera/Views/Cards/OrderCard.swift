@@ -143,36 +143,46 @@ struct OrderCard: View {
                 }
             }
             .padding(.leading, 6)
-            
         }
         .navigationCardView(destination: OrderDetails(order: $order))
+        .blur(radius: order.hidden ?? false ? 8 : 0)
+        .overlay(alignment: .center) {
+            if order.hidden ?? false {
+                Text("This order is hidden")
+            }
+        }
         .swipeActions(edge:.trailing, allowsFullSwipe: false) {
-            if allowSelect != nil {
-                Button {
-                    allowSelect!()
-                } label: {
-                    Image(systemName: "checkmark.circle.fill")
+            if !(order.hidden ?? false) {
+                if allowSelect != nil {
+                    Button {
+                        allowSelect!()
+                    } label: {
+                        Image(systemName: "checkmark.circle.fill")
+                    }
+                    .tint(.blue)
                 }
-                .tint(.blue)
+                
+                Button {
+                    options = true
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
+                }
+                .tint(Color.accentColor)
             }
-            
-            Button {
-                options = true
-            } label: {
-                Image(systemName: "ellipsis.circle.fill")
-            }
-            .tint(Color.accentColor)
         }
         .swipeActions(edge: .leading, allowsFullSwipe: false) {
-            Button {
-                contact = true
-            } label: {
-                Image(systemName: "ellipsis.message.fill")
+            if !(order.hidden ?? false) {
+                Button {
+                    contact = true
+                } label: {
+                    Image(systemName: "ellipsis.message.fill")
+                }
+                .tint(.green)
             }
-            .tint(.green)
         }
         .sheet(isPresented: $contact) {
             ContactDialog(phone: order.phone, toggle:$contact)
+            
         }
         .sheet(isPresented: $options) {
             OrderOptionsSheet(order: $order, isPreseneted: $options)

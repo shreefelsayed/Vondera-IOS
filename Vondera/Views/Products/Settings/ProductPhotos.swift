@@ -19,11 +19,11 @@ struct ImageRow: View {
             Group {
                 if let link = pathOrLink.link  {
                     CachedImageView(imageUrl: link, scaleType: .centerCrop)
-                    .id(pathOrLink.id)
+                    .id(link)
                 } else if let image = pathOrLink.image {
                     Image(uiImage: image)
                         .resizable()
-                        .id(pathOrLink.id)
+                        .id(image)
                 }
             }
             .aspectRatio(contentMode: .fit)
@@ -33,8 +33,9 @@ struct ImageRow: View {
             .tag(pathOrLink.id)
             
             
-            Text("\(title) Image (\((index + 1)))")
+            Text("Image (\((index + 1)))")
             
+            Spacer()
             
             Image(systemName: "arrow.up.arrow.down")
                 .opacity(0.5)

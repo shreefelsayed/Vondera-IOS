@@ -89,7 +89,8 @@ struct PaymobSettings: View {
                 }
             }
         }
-        
+        .withPaywall(accessKey: .payments, presentation: presentationMode)
+
     }
     
     func connect() {

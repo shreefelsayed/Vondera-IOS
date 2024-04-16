@@ -34,8 +34,8 @@ struct WarehouseCard: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            CachedImageView(imageUrl: prod.listPhotos[0] , scaleType: .centerCrop)
-            .id(prod.listPhotos[0])
+            CachedImageView(imageUrl: prod.defualtPhoto() , scaleType: .centerCrop)
+            .id(prod.defualtPhoto())
             .frame(width: 80, height: 100)
             .clipped()
         

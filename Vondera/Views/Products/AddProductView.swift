@@ -33,7 +33,6 @@ struct AddProductView: View {
         }
         .padding()
         .navigationTitle("New Product")
-        .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action : {
             withAnimation {
                 viewModel.showPrevPage()
@@ -42,6 +41,7 @@ struct AddProductView: View {
             Image(systemName: "arrow.left")
         })
         .willProgress(saving: viewModel.isSaving, handleBackButton: false)
+        .navigationBarBackButtonHidden(true)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
                 self.presentationMode.wrappedValue.dismiss()
@@ -153,7 +153,7 @@ struct AddProductView: View {
             VStack(alignment: .leading, spacing: 24) {
                 FloatingTextField(title: "Product Name", text:  $viewModel.name, caption: "This is the name of the product, which will appear on the website and the app", required: true, autoCapitalize: .words)
                 
-                FloatingTextField(title: "Product Describtion", text:  $viewModel.desc, caption: "Your product describtion will be visible for users in your website and in the app", required: false, multiLine: true, autoCapitalize: .sentences)
+                FloatingTextField(title: "Product Description", text:  $viewModel.desc, caption: "Your product describtion will be visible for users in your website and in the app", required: false, multiLine: true, autoCapitalize: .sentences)
                
                 // MARK : Pick up photos
                 
@@ -228,6 +228,8 @@ struct AddProductView: View {
             FloatingTextField(title: "Product Price", text:  $viewModel.sellingPrice, caption: "This is how much you are selling your product for", required: true, keyboard: .numberPad)
             
             FloatingTextField(title: "Product Cost", text:  $viewModel.cost, caption: "This is how much your product costs you", required: true, keyboard: .numberPad)
+            
+            FloatingTextField(title: "Crossed Price", text:  $viewModel.crossed, caption: "This marks the product as a sale", required: false, keyboard: .numberPad)
         }
     }
     

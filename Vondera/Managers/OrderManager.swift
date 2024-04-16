@@ -56,6 +56,10 @@ class OrderManager {
             return order
         }
         
+        if (order.storeId ?? "").isEmpty {
+            order.storeId = UserInformation.shared.user?.storeId ?? ""
+        }
+        
         guard let storeId = order.storeId, !storeId.isBlank else {
             return order
         }
@@ -66,6 +70,7 @@ class OrderManager {
         var hash:[String:Any] = [:]
         hash["statue"] = "Out For Delivery"
         hash["courierId"] = courier.id
+        hash["storeId"] = storeId
         hash["courierName"] = courier.name
         hash["courierShippingFees"] = fees
         hash["dateShipping"] = Timestamp(date: Date())
@@ -94,17 +99,21 @@ class OrderManager {
     }
     
     func orderFailed(order: inout Order) async -> Order {
-        
         return order
     }
     
     func resetOrder(order: inout Order) async -> Order {
+        if (order.storeId ?? "").isEmpty {
+            order.storeId = UserInformation.shared.user?.storeId ?? ""
+        }
+        
         guard let storeId = order.storeId, !storeId.isBlank else {
             return order
         }
         let ordersDao = OrdersDao(storeId: storeId)
         var hashMap = [String: Any]()
         hashMap["statue"] = "Pending"
+        hashMap["storeId"] = storeId
         hashMap["courierId"] = ""
         hashMap["courierName"] = ""
         hashMap["courierShippingFees"] = 0
@@ -147,6 +156,10 @@ class OrderManager {
             return (order, false)
         }
         
+        if (order.storeId ?? "").isEmpty {
+            order.storeId = UserInformation.shared.user?.storeId ?? ""
+        }
+        
         guard let storeId = order.storeId, !storeId.isBlank else {
             return (order, false)
         }
@@ -154,6 +167,7 @@ class OrderManager {
         let ordersDao = OrdersDao(storeId: storeId)
         var hash:[String:Any] = [:]
         hash["statue"] = "Deleted"
+        hash["storeId"] = storeId
         hash["dateDelivered"] = nil
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
@@ -181,12 +195,18 @@ class OrderManager {
     
     
     func orderDelivered(order: inout Order) async -> Order {
+        if (order.storeId ?? "").isEmpty {
+            order.storeId = UserInformation.shared.user?.storeId ?? ""
+        }
+        
         guard let storeId = order.storeId, !storeId.isBlank else {
             return order
         }
+        
         let ordersDao = OrdersDao(storeId: storeId)
         var hash:[String:Any] = [:]
         hash["statue"] = "Delivered"
+        hash["storeId"] = storeId
         hash["dateDelivered"] = Timestamp(date: Date())
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
@@ -210,6 +230,10 @@ class OrderManager {
     }
     
     func assambleOrder(order: inout Order) async -> Order {
+        if (order.storeId ?? "").isEmpty {
+            order.storeId = UserInformation.shared.user?.storeId ?? ""
+        }
+        
         guard let storeId = order.storeId, !storeId.isBlank else {
             return order
         }
@@ -219,6 +243,7 @@ class OrderManager {
         hash["statue"] = "Assembled"
         hash["dateAssembled"] = Timestamp(date: Date())
         hash["courierId"] = ""
+        hash["storeId"] = storeId
         hash["dateDelivered"] = nil
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
@@ -244,6 +269,10 @@ class OrderManager {
     }
     
     func confirmOrder(order: inout Order) async -> Order {
+        if (order.storeId ?? "").isEmpty {
+            order.storeId = UserInformation.shared.user?.storeId ?? ""
+        }
+        
         guard let storeId = order.storeId, !storeId.isBlank else {
             return order
         }
@@ -254,6 +283,7 @@ class OrderManager {
         hash["dateConfirmed"] = Timestamp(date: Date())
         hash["courierId"] = ""
         hash["dateDelivered"] = nil
+        hash["storeId"] = storeId
         
         try! await ordersDao.update(id: order.id, hashMap: hash)
         order = await addComment(order: &order, msg: "", code: CONFIRM_CODE)
@@ -314,11 +344,11 @@ class OrderManager {
         if var myUser = UserInformation.shared.user {
             myUser.ordersCount! += 1
             myUser.store?.ordersCount! += 1
-            myUser.store?.subscribedPlan?.currentOrders += 1
+            myUser.store?.storePlanInfo?.planFeatures.currentOrders += 1
             myUser.store?.ordersCountObj?.Pending! += 1
             
-            if (myUser.store?.subscribedPlan?.currentOrders ?? 0) >= (myUser.store?.subscribedPlan?.maxOrders ?? 0) {
-                myUser.store?.subscribedPlan?.expired = true
+            if (myUser.store?.storePlanInfo?.planFeatures.currentOrders ?? 0) >= (myUser.store?.storePlanInfo?.planFeatures.maxOrders ?? 0) {
+                myUser.store?.storePlanInfo?.expired = true
             }
             
             UserInformation.shared.updateUser(myUser)

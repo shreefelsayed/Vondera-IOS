@@ -68,7 +68,7 @@ struct SettingsFragment: View {
                                 
                                 Spacer()
                                 
-                                Text("\(myUser.store?.subscribedPlan?.planName ?? "")")
+                                Text("\(myUser.store?.storePlanInfo?.name ?? "")")
                                     .foregroundStyle(.white)
                                 
                                 Image(systemName: collapsed ? "chevron.down" :  "chevron.up")

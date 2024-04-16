@@ -16,8 +16,7 @@ struct StoreSettingsView: View {
                 }
                 
                 NavigationLink {
-                    (store.subscribedPlan?.accessCustomMessage ?? false) ?
-                    AnyView(StoreCustomMessage()): AnyView(AppPlans(selectedSlide: 9))
+                    StoreCustomMessage()
                 } label: {
                         Label(
                             title: { Text("Receipt Options") },

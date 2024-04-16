@@ -45,6 +45,7 @@ struct Paytab: View {
             }
         }
         .willProgress(saving: saving)
+        
         .navigationTitle("Paytabs")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -57,6 +58,8 @@ struct Paytab: View {
                 }
             }
         }
+        .withPaywall(accessKey: .payments, presentation: presentationMode)
+
     }
     
     func connect() {

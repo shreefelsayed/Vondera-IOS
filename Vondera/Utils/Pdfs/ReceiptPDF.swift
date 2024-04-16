@@ -18,7 +18,7 @@ class ReciptPDF {
     let a5PageSize = CGSize(width: 420.9, height: 595.2)
 
     init(orderList: [Order]) {
-        self.orderList = orderList
+        self.orderList = orderList.filter({$0.isHidden == false})
     }
     
     func render() async -> URL? {
@@ -82,20 +82,6 @@ struct PDFViewerUsingUrl: UIViewRepresentable {
         } else {
             print("Error: Unable to open PDF.")
         }
-    }
-}
-
-struct Rceipts:View {
-    var orders:[Order]
-    var myUser: UserData?
-    
-    var body: some View {
-        VStack(alignment: .center) {
-            ForEach(orders) { order in
-                PDFReceipt(order: order)
-            }
-        }
-        .frame(maxWidth: .infinity) // Set the VStack width to the maximum available width
     }
 }
 
@@ -232,7 +218,7 @@ struct PDFReceipt: View {
                     }
                     
                     // Message
-                    if let msg = store.customMessage, !msg.isBlank, (store.subscribedPlan?.accessCustomMessage ?? false) {
+                    if let msg = store.customMessage, !msg.isBlank {
                         VStack(alignment: .center) {
                             Text(msg)
                                 .font(.caption)

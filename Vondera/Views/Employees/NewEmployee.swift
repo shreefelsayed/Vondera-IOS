@@ -66,6 +66,7 @@ struct NewEmployee: View {
                 }
             }
         }
+        .withPaywall(accessKey: .members, presentation: presentationMode)
     }
     
     var desc:String {

@@ -272,6 +272,7 @@ struct OrderDetails: View {
     // SHEETs
     @State var assignDialog = false
     @State var failedScreen = false
+    @State var collectMoney = false
     
     // CONTACT CLIENT
     @State var contactSheet = false
@@ -281,6 +282,8 @@ struct OrderDetails: View {
     @State var contactUser:String?
     @State private var sheetHeight: CGFloat = .zero
     
+    @Environment(\.presentationMode) private var presentationMode
+
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -384,6 +387,15 @@ struct OrderDetails: View {
                             .bold()
                     }
                     
+                    // MARK : Collect Payment Button
+                    if order.canCollectMoney() {
+                        ButtonLarge(label: "Collect Money") {
+                            collectMoney = true
+                        }
+                        .navigationDestination(isPresented: $collectMoney) {
+                            CollectOrderPayment(orderId: order.id)
+                        }
+                    }
                 }
                 .cardView()
                 
@@ -617,15 +629,15 @@ struct OrderDetails: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
-                    if let link = myUser?.store?.getStoreDomain() {
-                        if let siteEnabled = myUser?.store?.websiteEnabled, siteEnabled == true {
-                            ShareLink(item: order.getLink(baseLink: link)) {
-                                Label("Copy Order Link", systemImage: "square.and.arrow.up")
-                            }
-                            
-                            Link(destination: order.getLink(baseLink: link)) {
-                                Label("Visit", systemImage: "link")
-                            }
+                    if let link = order.getLink() {
+                        Button(action: {
+                            CopyingData().copyToClipboard(link.absoluteString)
+                        }, label: {
+                            Label("Copy Order Link", systemImage: "doc.on.clipboard")
+                        })
+                        
+                        Link(destination: link) {
+                            Label("Visit", systemImage: "link")
                         }
                         
                         Button {
@@ -649,10 +661,11 @@ struct OrderDetails: View {
             ContactDialog(phone: order.phone , toggle: $contactSheet)
         })
         .navigationTitle("Order #\(order.id)")
+        .withPaywall(accessKey: .maxOrders(order.hidden ?? false), presentation: presentationMode)
     }
     
     func getCoureirData() async {
-        guard let courierId = order.courierId, !courierId.isBlank, let storeId = UserInformation.shared.user?.storeId else {
+        guard let courierId = order.courierId, !courierId.isBlank, let storeId = order.storeId, !storeId.isBlank else {
             print("Something iw wrong")
             return
         }

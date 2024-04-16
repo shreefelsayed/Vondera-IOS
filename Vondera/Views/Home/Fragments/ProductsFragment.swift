@@ -152,10 +152,8 @@ struct ProductsFragment: View {
                                 
                                 
                                 NavigationLink {
-                                    (user.store?.subscribedPlan?.accessStockReport ?? false) ?
-                                    AnyView(WarehouseView(storeId: user.storeId)) : AnyView(AppPlans(selectedSlide: 7))
+                                    WarehouseView(storeId: user.storeId)
                                 } label: {
-                                    
                                     Label(
                                         title: { Text("Warehouse").bold() },
                                         icon: { Image(.btnWarehouse) }

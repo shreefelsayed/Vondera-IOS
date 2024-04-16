@@ -53,7 +53,7 @@ struct CreateAccountView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .navigationBarBackButtonHidden(true)
+        
         .toolbar {
             if !viewModel.isSaving && !viewModel.isCreated {
                 ToolbarItem(placement: .topBarLeading) {
@@ -77,7 +77,8 @@ struct CreateAccountView: View {
             }
         }
         .navigationTitle("Create New Store")
-        .willProgress(saving: viewModel.isSaving, handleBackButton: false)
+        .willProgress(saving: viewModel.isSaving)
+        .navigationBarBackButtonHidden(true)
     }
     
     //MARK : This decide which page to return
@@ -203,15 +204,15 @@ struct CreateAccountView: View {
 
 struct PickCategory: View {
     @Binding var sheetVisible:Bool
-    @Binding var selected:Int?
+    @Binding var selected:Int
     var body: some View {
         VStack {
-            /*List(CategoryManager().getAll(), id: \.self) { category in
+            List(CategoryManager().getAll(), id: \.id) { category in
                 StoreCategoryLinearCard(storeCategory: category, selected: $selected, onClicked: {
                     sheetVisible.toggle()
                 })
             }
-            .listStyle(.plain)*/
+            .listStyle(.plain)
         }
         .navigationTitle("Choose your category")
     }

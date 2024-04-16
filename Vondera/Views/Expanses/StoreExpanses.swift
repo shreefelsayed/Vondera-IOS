@@ -12,6 +12,7 @@ import AlertToast
 struct StoreExpanses: View {
     @State var selectedExpanse:Expense?
     @State var addExpanses = false
+    @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var viewModel = StoreExpansesViewModel()
     
     var body: some View {
@@ -105,6 +106,8 @@ struct StoreExpanses: View {
         }
         .background(Color.background)
         .navigationTitle("Expanses 💳")
+        .withPaywall(accessKey: .expanses, presentation: presentationMode)
+
     }
     
     func refreshData() async {
