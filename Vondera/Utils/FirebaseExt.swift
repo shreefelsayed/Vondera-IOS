@@ -34,10 +34,17 @@ extension Query {
     
     func getDocumentWithLastSnapshot<T>(as type: T.Type) async throws -> (items: [T], lastDocument: DocumentSnapshot?) where T : Decodable {
         
+        var items = [T]()
         let snapshot = try await self.getDocuments()
-        let items =  try snapshot.documents.map({ document in
-            try document.data(as: T.self)
-        })
+        
+        for document in snapshot.documents {
+            do {
+                items.append(try document.data(as: T.self))
+            } catch {
+                print("Error at \(document.reference.path) with \(error)")
+            }
+        }
+
         
         return(items,snapshot.documents.last)
     }

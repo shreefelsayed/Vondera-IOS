@@ -41,7 +41,7 @@ struct ExpansesCard: View {
                 
                 // MARK : DATA
                 VStack(alignment: .leading) {
-                    Text("\(expanse.amount) EGP")
+                    Text("\(expanse.amount.toString()) EGP")
                         .font(.body)
                         .bold()
                     

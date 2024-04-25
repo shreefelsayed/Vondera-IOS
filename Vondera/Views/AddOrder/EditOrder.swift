@@ -30,8 +30,8 @@ struct EditOrder: View {
     @State private var gov = ""
     @State private var address = ""
     @State private var notes = ""
-    @State private var clientShippingFees = 0
-    @State private var discount = 0
+    @State private var clientShippingFees = 0.0
+    @State private var discount = 0.0
     @State private var paid = false
 
     init(order: Binding<Order>, isPreseneted:Binding<Bool>) {
@@ -147,14 +147,14 @@ struct EditOrder: View {
                         HStack {
                             Text("Products prices")
                             Spacer()
-                            Text("+\(order.totalPrice) LE")
+                            Text("+\(order.totalPrice.toString()) LE")
                         }
                         
                         if (order.requireDelivery ?? true) {
                             HStack {
                                 Text("Shipping Fees")
                                 Spacer()
-                                Text("+\(clientShippingFees) LE").foregroundColor(.yellow)
+                                Text("+\(clientShippingFees.toString()) LE").foregroundColor(.yellow)
                                 
                             }
                         }
@@ -163,13 +163,13 @@ struct EditOrder: View {
                         HStack {
                             Text("Discount")
                             Spacer()
-                            Text("-\(discount) LE").foregroundColor(.red)
+                            Text("-\(discount.toString()) LE").foregroundColor(.red)
                         }
                         
                         HStack {
                             Text("COD")
                             Spacer()
-                            Text("\((order.totalPrice + clientShippingFees - discount)) LE").foregroundColor(.green)
+                            Text("\((order.totalPrice + clientShippingFees - discount).toString()) LE").foregroundColor(.green)
                         }
                     }
                     .bold()
@@ -223,7 +223,7 @@ struct EditOrder: View {
         address = order.address
         notes = order.notes ?? ""
         clientShippingFees = order.clientShippingFees
-        discount = Int(order.discount ?? 0)
+        discount = (order.discount ?? 0)
         paid = order.paid ?? false
     }
     

@@ -319,6 +319,9 @@
 		B3D067C32BA1E48600EB7A06 /* LoadingUserDataScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067C22BA1E48600EB7A06 /* LoadingUserDataScreen.swift */; };
 		B3D067C82BA228E400EB7A06 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067C72BA228E400EB7A06 /* ToastManager.swift */; };
 		B3D150532A7AB98E003AB8B8 /* ReceiptPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */; };
+		B3D567DB2BD18B4200BB4047 /* VarientsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */; };
+		B3D567DF2BD275DE00BB4047 /* AlwaysStockedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */; };
+		B3D567E12BD275EB00BB4047 /* AlwaysStocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567E02BD275EA00BB4047 /* AlwaysStocked.swift */; };
 		B3D8E5172A9FB94100DC5049 /* Pods_Vondera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */; };
 		B3D8E51B2A9FBB8600DC5049 /* ReportCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51A2A9FBB8600DC5049 /* ReportCard.swift */; };
 		B3D8E51D2A9FBD3E00DC5049 /* StoreReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51C2A9FBD3E00DC5049 /* StoreReport.swift */; };
@@ -692,6 +695,9 @@
 		B3D067C22BA1E48600EB7A06 /* LoadingUserDataScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingUserDataScreen.swift; sourceTree = "<group>"; };
 		B3D067C72BA228E400EB7A06 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptPDF.swift; sourceTree = "<group>"; };
+		B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VarientsSettings.swift; sourceTree = "<group>"; };
+		B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysStockedViewModel.swift; sourceTree = "<group>"; };
+		B3D567E02BD275EA00BB4047 /* AlwaysStocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysStocked.swift; sourceTree = "<group>"; };
 		B3D8E5142A9F3ACB00DC5049 /* VonderaRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VonderaRelease.entitlements; sourceTree = "<group>"; };
 		B3D8E51A2A9FBB8600DC5049 /* ReportCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCard.swift; sourceTree = "<group>"; };
 		B3D8E51C2A9FBD3E00DC5049 /* StoreReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreReport.swift; sourceTree = "<group>"; };
@@ -848,6 +854,7 @@
 				B30CF0AC2A51F7FB00245955 /* ProductPhotos.swift */,
 				B30CF0AE2A51F80700245955 /* ProductStock.swift */,
 				B30CF0B02A51F81300245955 /* ProductVisibilty.swift */,
+				B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -989,6 +996,7 @@
 				B334039B2A47434F008CB1D8 /* WarehouseView.swift */,
 				B33DBCF42A48FDE9008BBB69 /* AlmostOut.swift */,
 				B33DBCF62A48FDEB008BBB69 /* OutOfStock.swift */,
+				B3D567E02BD275EA00BB4047 /* AlwaysStocked.swift */,
 				B33DBCEF2A48F2E2008BBB69 /* InStock.swift */,
 			);
 			path = Warehouse;
@@ -1072,6 +1080,7 @@
 			children = (
 				B33DBCFA2A48FE38008BBB69 /* AlmostOutViewModel.swift */,
 				B33DBCF82A48FE36008BBB69 /* OutOfStockViewModel.swift */,
+				B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */,
 				B33DBCF22A48F3C9008BBB69 /* InStockViewModel.swift */,
 			);
 			path = ViewModel;
@@ -1992,6 +2001,7 @@
 				B31664312B1B82BB001C8C6A /* ReportsDialog.swift in Sources */,
 				B36923B42A41C92000709112 /* HomeFragmentViewModel.swift in Sources */,
 				B3A7C8D92A285FB400D6C1D2 /* OrdersCount.swift in Sources */,
+				B3D567DB2BD18B4200BB4047 /* VarientsSettings.swift in Sources */,
 				B3EF61662A43AFD5007930ED /* Category.swift in Sources */,
 				B37769E82B66B67700E5AC1E /* CustomDomain.swift in Sources */,
 				B36923C82A41E67D00709112 /* StoreOrdersCount.swift in Sources */,
@@ -2153,6 +2163,7 @@
 				B3191D762B43BA8200E7CA9B /* MyFatoorah.swift in Sources */,
 				B3A7C8CB2A285D0700D6C1D2 /* LoginView.swift in Sources */,
 				B30316A72AC6567E002134A2 /* StoreCategoryUpdate.swift in Sources */,
+				B3D567DF2BD275DE00BB4047 /* AlwaysStockedViewModel.swift in Sources */,
 				B33D80E22B154E7900A679FF /* CourierFailedVM.swift in Sources */,
 				B36D8C662A408E0900A8C555 /* OrderProductObject.swift in Sources */,
 				B3899F332B9C792600C46E51 /* OrderCard.swift in Sources */,
@@ -2194,6 +2205,7 @@
 				B31AE4032A413F09003B7867 /* ConfirmedViewModel.swift in Sources */,
 				B3D8E51D2A9FBD3E00DC5049 /* StoreReport.swift in Sources */,
 				B38C0B0D2B4135E9008D247F /* VPaySettings.swift in Sources */,
+				B3D567E12BD275EB00BB4047 /* AlwaysStocked.swift in Sources */,
 				B33B506F2AECB1CE0032942D /* DiscountCodes.swift in Sources */,
 				B36923BE2A41D39200709112 /* GovStaticsDao.swift in Sources */,
 				B33B50712AECB1DB0032942D /* SiteOptions.swift in Sources */,
@@ -2417,7 +2429,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 59;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2438,7 +2450,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.4.1;
+				MARKETING_VERSION = 4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2460,7 +2472,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 59;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2480,7 +2492,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.4.1;
+				MARKETING_VERSION = 4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

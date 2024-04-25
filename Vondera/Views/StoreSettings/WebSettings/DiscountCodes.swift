@@ -115,8 +115,8 @@ struct CreaetCodeView : View {
     var item:DiscountCode?
     var callBack:((CRUD, DiscountCode) -> ())
     
-    @State private var max:Int = 0
-    @State private var discount:Int = 0
+    @State private var max:Double = 0
+    @State private var discount:Double = 0
     @State private var id = ""
     
     
@@ -202,7 +202,7 @@ struct CreaetCodeView : View {
         
         Task {
             if let storeId = user.user?.storeId, let item = item {
-                let newItem = DiscountCode(id: id.uppercased(), maxUsed: max, discount: Double(discount) / 100.0)
+                let newItem = DiscountCode(id: id.uppercased(), maxUsed: Int(max), discount: Double(discount) / 100.0)
                 
                 if await CodesDao(storeId: storeId).doesExist(id: newItem.id.uppercased()) && newItem.id.uppercased() != item.id.uppercased() {
                     DispatchQueue.main.async {
@@ -229,7 +229,7 @@ struct CreaetCodeView : View {
         saving = true
         Task {
             if let storeId = user.user?.storeId {
-                let newItem = DiscountCode(id: id.uppercased(), maxUsed: max, discount: Double(discount) / 100.0)
+                let newItem = DiscountCode(id: id.uppercased(), maxUsed: Int(max), discount: Double(discount) / 100.0)
                 
                 if await !CodesDao(storeId: storeId).doesExist(id: id.uppercased()) {
                     if let _ = try? await CodesDao(storeId: storeId).addCode(newItem) {
@@ -268,8 +268,8 @@ struct CreaetCodeView : View {
     func updateUI() {
         if let item = item {
             self.id = item.id
-            self.discount = Int(item.discount * 100)
-            self.max = item.maxUsed
+            self.discount = Double(Int(item.discount * 100))
+            self.max = Double(item.maxUsed)
         }
     }
     

@@ -88,14 +88,14 @@ class OrderManager {
         return order
     }
     
-    func getFees(_ gov:String, _ prices:[CourierPrice]) -> Int {
+    func getFees(_ gov:String, _ prices:[CourierPrice]) -> Double {
         for state in prices {
             if state.govName == gov {
                 return state.price
             }
         }
         
-        return 0
+        return 0.0
     }
     
     func orderFailed(order: inout Order) async -> Order {
@@ -332,12 +332,12 @@ class OrderManager {
     }
     
     func checkCommission(order: inout Order) async {
-        let myUser = UserInformation.shared.getUser()
-        if myUser!.accountType == "Marketing" && (myUser?.percentage ?? 0 ) > 0 {
-            order.commission = Double(Int(myUser!.percentage! / 100) * order.netProfit)
-        } else {
+        guard let myUser = UserInformation.shared.getUser(), myUser.accountType == "Marketing", let perc = myUser.percentage, perc > 0 else {
             order.percPaid = true
+            return
         }
+        
+        order.commission = (perc / 100 * order.netProfit)
     }
     
     func onNewOrderAdded(storeId:String) async {

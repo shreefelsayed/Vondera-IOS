@@ -14,7 +14,7 @@ struct CartCard: View {
         VStack {
             HStack(alignment: .center) {
                 CachedImageView(imageUrl: orderProduct.image, scaleType: .centerCrop)
-                    .frame(width: 80, height: 120)
+                    .frame(width: 80, height: 150)
                     .id(orderProduct.image)
                 
                 
@@ -47,6 +47,8 @@ struct CartCard: View {
                     }
                     
                 }
+                .padding()
+                
             }
         }
         .cardView(padding: 0)

@@ -94,9 +94,9 @@ struct StoreReport: View {
             
             if !isLoading {
                 Section("Sales & Profit") {
-                    ReportCard(title: "Total Orders", amount: items.getValidOrders().count, prefix: "Orders", desc : "Number of orders created in the time range")
+                    ReportCard(title: "Total Orders", amount: items.getValidOrders().count.double(), prefix: "Orders", desc : "Number of orders created in the time range")
                     
-                    ReportCard(title: "Products Sold", amount: items.getProductsCount(), prefix: "Products", desc : "Number of products sold")
+                    ReportCard(title: "Products Sold", amount: items.getProductsCount().double(), prefix: "Products", desc : "Number of products sold")
                     
                     ReportCard(title: "Sales", amount: items.totalSales(), prefix: "EGP", desc: "The Quantity of each product x The price of the product")
                     
@@ -108,14 +108,14 @@ struct StoreReport: View {
                     
                     ReportCard(title: "Net Profit", amount: (items.totalNetProfit() - expanses.total()), prefix: "EGP", desc: "Net profit is the orders profit - expanses")
                     
-                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
+                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage().double(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
                 }
                 
                 
                 Section("On Going Orders") {
-                    ReportCard(title: "Pending Orders", amount: (items.getByStatue(statue: "Pending").count + items.getByStatue(statue: "Confirmed").count + items.getByStatue(statue: "Assembled").count), prefix: "Orders", desc : "Those are the orders that still with you")
+                    ReportCard(title: "Pending Orders", amount: (items.getByStatue(statue: "Pending").count + items.getByStatue(statue: "Confirmed").count + items.getByStatue(statue: "Assembled").count).double(), prefix: "Orders", desc : "Those are the orders that still with you")
                     
-                    ReportCard(title: "With Courier Orders", amount: items.getByStatue(statue: "Out For Delivery").count, prefix: "Orders", desc : "Those are the orders with your couriers")
+                    ReportCard(title: "With Courier Orders", amount: items.getByStatue(statue: "Out For Delivery").count.double(), prefix: "Orders", desc : "Those are the orders with your couriers")
                     
                     ReportCard(title: "Cash With Couriers", amount: items.getByStatue(statue: "Out For Delivery").totalCODAfterCourier(), prefix: "EGP", desc: "The amount of cash that expected to receive from the coureirs (Order price - Courier Fees)")
                 }

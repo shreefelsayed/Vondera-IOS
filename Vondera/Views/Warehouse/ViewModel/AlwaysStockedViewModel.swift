@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class InStockViewModel: ObservableObject {
+class AlwaysStockedViewModel: ObservableObject {
     private var storeId:String
     private var productsDao:ProductsDao
     private var lastSnapshot:DocumentSnapshot?
@@ -41,7 +41,7 @@ class InStockViewModel: ObservableObject {
         
         self.isLoading = true
         do {
-            let result = try await productsDao.getInStock(lastSnapShot: lastSnapshot)
+            let result = try await productsDao.getAlwaysStocked(lastSnapShot: lastSnapshot)
             DispatchQueue.main.async {
                 self.lastSnapshot = result.1
                 self.items.append(contentsOf: result.0)

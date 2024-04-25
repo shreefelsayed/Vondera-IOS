@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReportCard: View {
     var title:LocalizedStringKey
-    var amount:Int
+    var amount:Double
     var prefix:LocalizedStringKey?
     var iconName:String?
     var desc:LocalizedStringKey?
@@ -30,7 +30,7 @@ struct ReportCard: View {
                 Spacer()
                 
                 Group {
-                    Text("\(amount) ") + Text(prefix ?? "".localize())
+                    Text("\(amount.toString()) ") + Text(prefix ?? "".localize())
                 }
                 .foregroundColor(nutural ? .black : amount > 0 ? Color.green : amount < 0 ? Color.red : Color.black)
                 

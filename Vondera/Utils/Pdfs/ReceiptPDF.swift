@@ -256,29 +256,32 @@ struct PDFReceipt: View {
                 .background(Color.gray.opacity(0.3))
                 
                 // Table rows
-                ForEach(order.listProducts!, id: \.self) { product in
-                    HStack(alignment: .center) {
-                        Text(product.name)
-                        
-                        Spacer()
-                        
-                        Text(product.getVarientsString())
-                           
-                        Spacer()
-                                                
-                        Text("\(product.quantity) x \(Int(product.price))")
+                if let products = order.listProducts {
+                    ForEach(products, id: \.self) { product in
+                        HStack(alignment: .center) {
+                            Text(product.name)
                             
-                        Spacer()
-                        
-                        Text("\(Int(product.quantity * product.price)) EGP")
-                        
-                    }
-                    .font(.caption2)
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 2)
+                            Spacer()
+                            
+                            Text(product.getVarientsString())
+                               
+                            Spacer()
+                                                    
+                            Text("\(product.quantity) x \(product.price)")
+                                
+                            Spacer()
+                            
+                            Text("\((product.quantity.double() * product.price).toString()) EGP")
+                            
+                        }
+                        .font(.caption2)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 2)
 
-                    Divider()
+                        Divider()
+                    }
                 }
+                
                 
                 VStack (alignment: .leading, spacing: 0) {
                     // Shipping Fees
@@ -294,7 +297,7 @@ struct PDFReceipt: View {
                         Text("-")
                             .frame(maxWidth: .infinity)
                         
-                        Text("+ \(order.clientShippingFees) EGP")
+                        Text("+ \(order.clientShippingFees.toString()) EGP")
                             .bold()
                             .frame(maxWidth: .infinity)
                     }
@@ -320,7 +323,7 @@ struct PDFReceipt: View {
                                 .font(.caption2)
                                 .frame(maxWidth: .infinity)
                             
-                            Text("- \(order.discount ?? 0) EGP")
+                            Text("- \((order.discount ?? 0).toString()) EGP")
                                 .font(.caption2)
                                 .bold()
                                 .frame(maxWidth: .infinity)
@@ -330,7 +333,7 @@ struct PDFReceipt: View {
                     }
                     
                     // DEPOSIT
-                    if(order.deposit != nil && order.deposit! > 0) {
+                    if let deposit = order.deposit, deposit > 0 {
                         HStack(alignment: .center) {
                             Text("Deposit")
                                 .font(.caption2)
@@ -346,7 +349,7 @@ struct PDFReceipt: View {
                                 .font(.caption2)
                                 .frame(maxWidth: .infinity)
                             
-                            Text("- \(Int(order.deposit!)) EGP")
+                            Text("- \(deposit.toString()) EGP")
                                 .font(.caption2)
                                 .bold()
                                 .frame(maxWidth: .infinity)
@@ -371,7 +374,7 @@ struct PDFReceipt: View {
                             .font(.caption2)
                             .frame(maxWidth: .infinity)
                         
-                        Text("\(order.amountToGet) EGP")
+                        Text("\(order.amountToGet.toString()) EGP")
                             .font(.caption2)
                             .underline(true, color: .blue)
                             .bold()

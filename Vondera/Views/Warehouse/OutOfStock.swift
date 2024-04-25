@@ -21,14 +21,12 @@ struct OutOfStock: View {
         ZStack (alignment: .bottomTrailing) {
             List {
                 ForEach($viewModel.items) { product in
-                    NavigationLink(destination: ProductDetails(product: product, onDelete: { item in
-                        if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
-                            viewModel.items.remove(at: index)
-                        }
-                    })) {
-                        WarehouseCard(prod: product)
-                    }
-                    .buttonStyle(.plain)
+                    WarehouseCard(prod: product)
+                        .navigationCardView(destination: ProductDetails(product: product, onDelete: { item in
+                            if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
+                                viewModel.items.remove(at: index)
+                            }
+                        }))
                     
                     if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
                         HStack {

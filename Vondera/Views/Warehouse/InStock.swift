@@ -18,34 +18,28 @@ struct InStock: View {
     
     var body: some View {
         ZStack (alignment: .bottomTrailing) {
-            ScrollView {
-                LazyVStack(alignment: .leading) {
-                    ForEach($viewModel.items) { product in
-                        WarehouseCard(prod: product)
-                            .background(
-                                NavigationLink("", destination: {
-                                    ProductDetails(product: product, onDelete: { item in
-                                        if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
-                                            viewModel.items.remove(at: index)
-                                        }
-                                    })
-                                })
-                            )
-                        .buttonStyle(.plain)
-                        
-                        if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
-                            HStack {
-                                Spacer()
-                                ProgressView()
-                                Spacer()
+            List {
+                ForEach($viewModel.items) { product in
+                    WarehouseCard(prod: product)
+                        .navigationCardView(destination: ProductDetails(product: product, onDelete: { item in
+                            if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
+                                viewModel.items.remove(at: index)
                             }
-                            .onAppear {
-                                loadItem()
-                            }
+                        }))
+                    
+                    if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .onAppear {
+                            loadItem()
                         }
                     }
                 }
             }
+            .listStyle(.plain)
             .scrollIndicators(.hidden)
             .refreshable {
                 await refreshData()

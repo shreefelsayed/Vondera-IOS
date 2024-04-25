@@ -27,7 +27,7 @@ class EmployeeSettingsViewModel : ObservableObject {
     @Published var email = ""
     @Published var pass = ""
     @Published var selectedAccountType = AccountType.admin
-    @Published var perc:Int = 0
+    @Published var perc:Double = 0
     @Published var active:Bool = false
     
     @Published var isSaving = false
@@ -57,7 +57,7 @@ class EmployeeSettingsViewModel : ObservableObject {
             email = editUser.email
             pass = editUser.pass
             selectedAccountType = AccountType.fromValue(editUser.accountType)!
-            perc = Int((editUser.percentage ?? 0) * 100)
+            perc = Double((editUser.percentage ?? 0) * 100)
             active = editUser.active
         } catch {
             print(error.localizedDescription)

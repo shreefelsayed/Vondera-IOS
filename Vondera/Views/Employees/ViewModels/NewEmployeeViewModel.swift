@@ -46,7 +46,7 @@ class NewEmployeeViewModel : ObservableObject {
     @Published var email = ""
     @Published var pass = ""
     @Published var selectedAccountType = AccountType.sales
-    @Published var perc:Int = 0
+    @Published var perc:Double = 0.0
     
     @Published var isSaving = false
     

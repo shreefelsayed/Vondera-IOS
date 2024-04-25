@@ -16,7 +16,7 @@ class ProductSalesExcel {
     
     init(name: String = "Product Sales", listOrders: [Order]) {
         self.name = name
-        self.listOrders = listOrders.filter({$0.isHidden == false})
+        self.listOrders = listOrders.filter({$0.isHidden == false && $0.statue != "Deleted"})
         sheet = book.NewSheet(name)
     }
     
@@ -36,8 +36,8 @@ class ProductSalesExcel {
                                  productObject.name,
                                  productObject.getVarientsString(),
                                  "\(productObject.quantity) Pieces",
-                                 "\((Int(productObject.price) * productObject.quantity)) LE",
-                                 "\((Int(productObject.buyingPrice) * productObject.quantity)) LE"]
+                                 "\((productObject.price * productObject.quantity.double()).toString()) LE",
+                                 "\((productObject.buyingPrice * productObject.quantity.double()).toString()) LE"]
             
             addRow(rowNumber: (index + 2), items: data)
         }
@@ -54,13 +54,13 @@ class ProductSalesExcel {
         let totalItems = listOrders.getFinalProductList()
         
         var count = 0
-        var sales = 0
-        var cost = 0
+        var sales = 0.0
+        var cost = 0.0
 
         totalItems.forEach { item in
             count += item.quantity
-            sales += Int(item.price * item.quantity)
-            cost += Int(item.buyingPrice * item.quantity)
+            sales += Double(item.price * Double(item.quantity))
+            cost += Double(item.buyingPrice * Double(item.quantity))
 
         }
         
@@ -68,8 +68,8 @@ class ProductSalesExcel {
             "\(totalItems.count) Products",
             "",
             "\(count) Pieces",
-            "\(sales) EGP",
-            "\(cost) EGP"]
+            "\(sales.toString()) EGP",
+            "\(cost.toString()) EGP"]
         
         addRow(rowNumber: listOrders.count + 2, items: data)
     }

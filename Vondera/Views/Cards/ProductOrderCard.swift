@@ -26,7 +26,7 @@ struct ProductOrderCard: View {
                 HStack {
                     Spacer()
                     
-                    Text("EGP \(Int(orderProduct.price)).00 x \(orderProduct.quantity)")
+                    Text("EGP \(orderProduct.price.toString()) x \(orderProduct.quantity)")
                         .foregroundColor(.accentColor)
                         .font(.body)
                         .bold()

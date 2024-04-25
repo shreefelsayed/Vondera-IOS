@@ -13,6 +13,7 @@ class WarehouseExcel {
     var list:[StoreProduct]
     let book = XWorkBook()
     var sheet:XSheet
+    var currentRow = 1
     
     init(name: String = "Warehouse Report", list: [StoreProduct]) {
         self.name = name
@@ -32,17 +33,27 @@ class WarehouseExcel {
         
         //MARK : Add Items
         for (index, item) in list.enumerated() {
-            let data:[String] = ["#\(item.id)",
-                                 item.name,
-                                 "\(item.quantity) Pieces",
-                                 "\(item.realSold) Pieces",
-                                 "\(item.quantity * Int(item.buyingPrice)) LE"]
+            if !item.hasVariants() {
+                let quantity:String = (item.alwaysStocked ?? false) ? "Always Stocked" : "\(item.quantity) Pieces"
+                let price:String = (item.alwaysStocked ?? false) ? "None" : "\((item.getQuantity().double() * item.buyingPrice).toString()) LE"
+                
+                let data = ["#\(item.id)", item.name, quantity, "\(item.realSold) Pieces", "\((item.quantity.double() * item.buyingPrice).toString()) LE"]
+                addRow(items: data)
+            } else {
+                for(variantIndex, variant) in item.getVariant().enumerated() {
+                    let quantity = (item.alwaysStocked ?? false) ? "Always Stocked" : "\(variant.quantity) Pieces"
+                    let price = (item.alwaysStocked ?? false) ? "None" : "\((variant.quantity.double() * variant.cost).toString()) LE"
+                    
+                    let data = ["#\(item.id)", "\(item.name) - \(variant.formatOptions())", quantity, "\(variant.sold) Pieces", price]
+                    
+                    addRow(items: data)
+                }
+            }
             
-            addRow(rowNumber: (index + 2), items: data)
         }
         
         addFinalRow()
-              
+        
         // MARK : Create file and save
         let fileid = book.save("\(name).xlsx")
         
@@ -55,12 +66,16 @@ class WarehouseExcel {
     func addFinalRow() {
         var quantity = 0
         var realSold = 0
-        var stock = 0
+        var cost = 0.0
         
         list.forEach { item in
-            quantity += item.quantity
+            quantity += item.getQuantity()
             realSold += item.realSold
-            stock += (item.quantity * Int(item.buyingPrice))
+            
+            // -->
+            if let stocked = item.alwaysStocked, stocked {
+                cost += item.getVariant().getCost()
+            }
         }
         
         let data:[String] = [
@@ -68,9 +83,9 @@ class WarehouseExcel {
             "",
             "\(quantity) Pieces",
             "\(realSold) Pieces",
-            "\(stock) LE"]
+            "\(cost.toString()) LE"]
         
-        addRow(rowNumber: list.count + 2, items: data)
+        addRow(items: data)
     }
     
     func createHeader(_ items:[String]) {
@@ -82,16 +97,19 @@ class WarehouseExcel {
             cell.width = 100
             cell.alignmentHorizontal = .center
         }
+        
+        currentRow += 1
     }
     
-    func addRow(rowNumber:Int, items:[String]) {
+    func addRow(items:[String]) {
         for (index, title) in items.enumerated() {
-            let cell = sheet.AddCell(XCoords(row: rowNumber, col: (index + 1)))
+            let cell = sheet.AddCell(XCoords(row: currentRow, col: (index + 1)))
             cell.Cols(txt: .black, bg: .white)
             cell.value = .text(title.uppercased(with: .autoupdatingCurrent))
             cell.Font = XFont(.TrebuchetMS, 8, true)
             cell.width = 100
             cell.alignmentHorizontal = .left
         }
+        currentRow += 1
     }
 }

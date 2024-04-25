@@ -60,23 +60,23 @@ class CartViewModel : ObservableObject {
     }
     
     func getCartItems() async {
-        if let storeId = myUser?.storeId {
-            let savedList =  CartManager().getCart()
-            list.removeAll()
-            self.isLoading = true
-            
-            
-            for item in savedList {
-                let exist = try? await ProductsDao(storeId: storeId).productExist(id: item.productId)
-                if (exist ?? false) {
-                    let prod = try! await ProductsDao(storeId: storeId).getProduct(id: item.productId)
-                    let obj = prod!.mapToOrderProduct(q:item.quantity, varient: item.hashMap, savedId: item.randomId)
-                    list.append(obj)
-                }
+        guard let storeId = UserInformation.shared.user?.storeId else { return }
+        
+        self.isLoading = true
+        list.removeAll()
+        
+        do {
+            for item in  CartManager().getCart() {
+                let product = try await ProductsDao(storeId: storeId).getProduct(id: item.productId)
+                guard let product = product else { continue }
+                let obj = product.mapToOrderProduct(q:item.quantity, varient: item.hashMap, savedId: item.randomId)
+                list.append(obj)
             }
-            
-            self.isLoading = false
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
+        
+        self.isLoading = false
         
     }
 }
@@ -175,6 +175,7 @@ struct Cart: View {
                 }
             }
         }
+        .willLoad(loading: viewModel.isLoading)
         .navigationTitle("Cart")
     }
 }

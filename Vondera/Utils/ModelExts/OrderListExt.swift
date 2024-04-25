@@ -121,9 +121,9 @@ extension Array where Element == Order {
     }
     
     
-    func totalNetProfit() -> Int {
+    func totalNetProfit() -> Double {
         let valid = self.getValidOrders()
-        var amout = 0
+        var amout = 0.0
         
         valid.forEach { order in
             amout += order.netProfit
@@ -132,46 +132,46 @@ extension Array where Element == Order {
         return amout
     }
     
-    func totalCommission() -> Int {
+    func totalCommission() -> Double {
         let valid = self.getValidOrders()
-        var amout = 0
+        var amout = 0.0
         
         valid.forEach { order in
-            amout += Int(order.commission ?? 0)
+            amout += order.commission ?? 0
         }
         
         return amout
     }
     
-    func totalCost() -> Int {
+    func totalCost() -> Double {
         
         let valid = self.getValidOrders()
-        var amout = 0
+        var amout = 0.0
         
         valid.forEach { order in
-            amout += Int(order.buyingPrice)
+            amout += order.buyingPrice
         }
         
         return amout
     }
     
-    func totalSales() -> Int {
+    func totalSales() -> Double {
         let valid = self.getValidOrders()
-        var amout = 0
+        var amout = 0.0
         
         valid.forEach { order in
-            amout += Int(order.getSellingPrice())
+            amout += order.getSellingPrice()
         }
         
         return amout
     }
     
-    func totalCODAfterCourier() -> Int {
+    func totalCODAfterCourier() -> Double {
         let valid = self.getValidOrders()
-        var amout = 0
+        var amout = 0.0
         
         valid.forEach { order in
-            amout += Int(order.CODAfterCourier)
+            amout += order.CODAfterCourier
         }
         
         return amout
@@ -188,9 +188,9 @@ extension Array where Element == Order {
         return amout
     }
     
-    func shippingFees() -> Int {
+    func shippingFees() -> Double {
         let valid = self.getValidOrders()
-        var amout = 0
+        var amout = 0.0
         
         valid.forEach { order in
             amout += (order.courierShippingFees ?? 0)
@@ -199,12 +199,12 @@ extension Array where Element == Order {
         return amout
     }
     
-    func getSellingCommission() -> Int {
+    func getSellingCommission() -> Double {
         let items = getValidOrders()
-        var total = 0
+        var total = 0.0
         
         for item in items {
-            total += Int(item.commission ?? 0)
+            total += item.commission ?? 0
         }
         
         return total

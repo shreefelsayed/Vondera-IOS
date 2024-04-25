@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductSettings: View {
-    @State var product : StoreProduct
+    @Binding var product : StoreProduct
     var onDeleted:((StoreProduct)->())
 
     @State private var delete = false
@@ -17,26 +17,31 @@ struct ProductSettings: View {
     var body: some View {
         List {
             NavigationLink("Product info") {
-                ProductInfoView(product:$product)
+               ProductInfoView(product: $product)
             }
             
             NavigationLink("Variants") {
-                ProductVarients(product:product)
+                ProductVarients(product:$product)
             }
             
+            if(!product.getVariant().isEmpty) {
+                NavigationLink("Variants Customizations") {
+                    VarientsSettings(product: $product)
+                }
+            }
             
             
             NavigationLink("Price and cost") {
-                ProductPrice(product:product)
+                ProductPrice(product:$product)
             }
             
             NavigationLink("Product photos") {
-                ProductPhotos(product:product)
+                ProductPhotos(product:$product)
             }
             
             if !(product.alwaysStocked ?? false) {
                 NavigationLink("Add to stock") {
-                    ProductStock(product:product)
+                    ProductQuantityScreen(product:$product)
                 }
             }
 
@@ -56,8 +61,11 @@ struct ProductSettings: View {
             Button("Later", role: .cancel) {
             }
         })
+        
         .navigationTitle(product.name)
     }
+    
+    
     
     func deleteProduct() {
         Task {

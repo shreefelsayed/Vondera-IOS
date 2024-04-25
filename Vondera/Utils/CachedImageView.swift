@@ -1,12 +1,4 @@
-//
-//  CachedImageView.swift
-//  Vondera
-//
-//  Created by Shreif El Sayed on 19/03/2024.
-//
-
 import Foundation
-
 import SwiftUI
 
 enum ScaleType {
@@ -14,7 +6,7 @@ enum ScaleType {
 }
 
 struct CachcedCircleView: View {
-    let imageUrl: String
+    var imageUrl: String
     var scaleType:ScaleType = .centerCrop
     var placeHolder:UIImage? = nil
     
@@ -30,7 +22,7 @@ struct CachcedCircleView: View {
 }
 
 struct CachedImageView: View {
-    let imageUrl: String
+    var imageUrl: String
     var scaleType:ScaleType = .centerCrop
     var placeHolder:UIImage? = nil
     
@@ -38,7 +30,7 @@ struct CachedImageView: View {
     @State private var image: UIImage? = nil
     
     var body: some View {
-        if let image = image {
+        if let image = image, !imageUrl.isBlank {
             if scaleType == .centerCrop {
                 Image(uiImage: image)
                     .centerCropped()

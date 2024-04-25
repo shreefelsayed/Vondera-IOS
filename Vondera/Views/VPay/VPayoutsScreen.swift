@@ -132,7 +132,7 @@ struct PayoutRequest: View {
     
     @State private var msg:String?
     @State private var method = "Instapay"
-    @State private var amount = 0
+    @State private var amount = 0.0
     @State private var identifier = ""
     
     @State private var showConfirmation = false

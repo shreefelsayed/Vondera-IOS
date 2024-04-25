@@ -12,12 +12,12 @@ import FirebaseFirestoreSwift
 struct Expense: Codable, Identifiable, Equatable, Hashable {
     var id: String = ""
     var date:Timestamp = Timestamp(date: Date())
-    var amount: Int = 0
+    var amount: Double = 0.0
     var description: String = ""
     var madeBy: String = ""
     var name: String = ""
     
-    init(amount: Int, description: String, madeBy: String) {
+    init(amount: Double, description: String, madeBy: String) {
         self.amount = amount
         self.description = description
         self.madeBy = madeBy

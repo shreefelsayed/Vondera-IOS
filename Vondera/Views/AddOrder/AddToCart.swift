@@ -82,8 +82,10 @@ struct AddToCart: View {
         }
         .sheet(item: self.$selectedProduct) { prod in
             ProductBuyingSheet(product: .constant(prod), onAddedToCard: { product, options in
-                CartManager().addItem(product: product, options: options)
-                viewModel.getCart()
+                if let variant = prod.getVariantInfo(options) {
+                    CartManager().addItem(product: product, options: variant)
+                    viewModel.getCart()
+                }
             })
         }
         .searchable(text: $viewModel.searchText, prompt: Text("Search \(viewModel.products.count) Products"))

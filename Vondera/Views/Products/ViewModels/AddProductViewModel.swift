@@ -21,7 +21,7 @@ class AddProductViewModel : ObservableObject {
     
     @Published var recentProducts = [StoreProduct]()
     @Published var selectedTemplate:StoreProduct?
-
+    
     
     @Published var selectedCategory:Category? {
         didSet {
@@ -32,12 +32,12 @@ class AddProductViewModel : ObservableObject {
     }
     
     @Published var isSheetPresented = false
-
+    
     @Published var selectedPhotos: [UIImage] = []
     
     @Published var name = ""
     @Published var desc = ""
-
+    
     @Published var alwaysStocked = false
     @Published var sellingPrice = "0"
     @Published var cost = "0"
@@ -48,6 +48,9 @@ class AddProductViewModel : ObservableObject {
     @Published var listVarients = [[String:[String]]]()
     @Published var listTitles = [String]()
     @Published var listOptions = [[String]]()
+    
+    @Published var templateVariantDetails = [VariantsDetails]()
+    
     var myUser = UserInformation.shared.getUser()
     
     @Published var msg:String?
@@ -64,7 +67,7 @@ class AddProductViewModel : ObservableObject {
         self.categorysDao = CategoryDao(storeId: storeId)
         self.productsDao = ProductsDao(storeId: storeId)
         self.myUser = UserInformation.shared.getUser()
-
+        
         Task {
             await createProductId()
             await getStoreCategories()
@@ -78,7 +81,7 @@ class AddProductViewModel : ObservableObject {
         listOptions.remove(at: i)
         listVarients.remove(at: i)
     }
-
+    
     func canAddVarient() -> Bool {
         if listVarients.isEmpty { return true }
         if listTitles.last!.isEmpty || listOptions.last!.isEmpty {
@@ -247,6 +250,7 @@ class AddProductViewModel : ObservableObject {
         self.sellingPrice = "\(Int(product.price))"
         self.alwaysStocked = product.alwaysStocked ?? false
         self.quantity = "\(product.quantity)"
+        self.templateVariantDetails = product.getVariant()
         
         self.listVarients = product.hashVarients ?? []
         self.listTitles = product.hashVarients?.getTitles() ?? []
@@ -255,19 +259,28 @@ class AddProductViewModel : ObservableObject {
         self.msg = "Product data filled"
     }
     
-    func saveProduct(uris: [URL]) {
+    func saveProduct(uris: [String]) {
         Task {
             // MARK : Create a product Object
-            var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Int(sellingPrice) ?? 0, buyingPrice: Int(cost) ?? 0)
+            var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
             
             product.desc = desc
             product.storeId = storeId
             product.crossedPrice = Double(crossed) ?? 0
-            product.listPhotos = uris.map { $0.absoluteString }
+            product.listPhotos = uris
             product.hashVarients = listVarient()
             product.alwaysStocked = alwaysStocked
             product.categoryId = selectedCategory?.id ?? ""
             product.categoryName = selectedCategory?.name ?? ""
+            
+            product.variantsDetails = listVarient().isEmpty ? [] : templateVariantDetails.map { detail in
+                var modifiedDetail = detail // Create a copy of the detail
+                modifiedDetail.image = ""
+                modifiedDetail.optimizedImage = ""
+                modifiedDetail.cost = Double(cost) ?? 0
+                modifiedDetail.price = Double(sellingPrice) ?? 0
+                return modifiedDetail
+            }
             
             // MARK : Save the product to database
             do {

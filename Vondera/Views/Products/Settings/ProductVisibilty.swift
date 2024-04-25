@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AlertToast
 
 struct ProductVisibilty: View {
     @State var product:StoreProduct
@@ -17,7 +16,6 @@ struct ProductVisibilty: View {
     
     @State private var isSaving = false
     @State private var isLoading = false
-    @State private var msg:String?
 
     
     var body: some View {
@@ -29,13 +27,9 @@ struct ProductVisibilty: View {
                     .font(.caption)
             }
         }
-        .isHidden(isLoading)
-        .overlay {
-            ProgressView()
-                .isHidden(!isLoading)
-        }
+        .willLoad(loading: isLoading)
+        .willProgress(saving: isSaving)
         .navigationTitle("Product Visibility")
-        .navigationBarBackButtonHidden(isSaving)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
@@ -43,48 +37,59 @@ struct ProductVisibilty: View {
                         await update()
                     }
                 }
-                .disabled(isSaving)
+                .disabled(isSaving || isLoading)
             }
         }
         .task {
-            await updateData()
-            updateUI()
-        }
-        .willProgress(saving: isSaving)
-        .toast(isPresenting: Binding(value: $msg)){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: msg)
+            await getData()
         }
     }
     
-    func updateData() async {
+    func getData() async {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
         self.isLoading = true
-        if let product = try? await ProductsDao(storeId: product.storeId).getProduct(id: product.id) {
-            DispatchQueue.main.async {
-                self.product = product
-                self.toogle = product.visible ?? true
-                self.isLoading = false
+        
+        do {
+            let product = try await ProductsDao(storeId: storeId).getProduct(id: product.id)
+            if let product = product {
+                DispatchQueue.main.async {
+                    self.product = product
+                    self.toogle = product.visible ?? true
+                    self.isLoading = false
+                }
             }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
     }
-    
-    func updateUI() {
-        toogle = product.visible ?? true
-    }
-    
+
     func update() async {
-        isSaving = true
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        self.isSaving = true
         
         // --> Update the database
         let map:[String:Any] = ["visible": toogle]
-        try? await ProductsDao(storeId: product.storeId).update(id: product.id, hashMap: map)
         
-        DispatchQueue.main.async {
-            self.msg = "Store Name Changed"
-            self.isSaving = false
-            self.presentationMode.wrappedValue.dismiss()
+        do {
+            try await ProductsDao(storeId: product.storeId).update(id: product.id, hashMap: map)
+            DispatchQueue.main.async {
+                self.product.visible = toogle
+                self.isSaving = false
+                
+                ToastManager.shared.showToast(msg: "Product Updated", toastType: .success)
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
+        
+        self.isSaving = false
     }
 }
 

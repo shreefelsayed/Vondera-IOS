@@ -30,7 +30,7 @@ class ExpansesExcel {
         //MARK : Add Items
         for (index, expanse) in items.enumerated() {
             let data:[String] = ["#\(index + 1)",
-                                 "\(expanse.amount) LE",
+                                 "\(expanse.amount.toString()) LE",
                                  expanse.description,
                                  "\(expanse.date.toDate().formatted())"]
             
@@ -48,7 +48,7 @@ class ExpansesExcel {
     }
     
     func addFinalRow() {
-        var amount = 0
+        var amount = 0.0
         
         items.forEach { item in
             amount += item.amount
@@ -56,7 +56,7 @@ class ExpansesExcel {
         
         let data:[String] = [
             "\(items.count) Transaction",
-            "\(amount) LE",
+            "\(amount.toString()) LE",
             "",
             ""]
         

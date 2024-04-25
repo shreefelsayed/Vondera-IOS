@@ -55,6 +55,7 @@ extension AppDelegate: MessagingDelegate {
     // --> Mark when a FCM token updates
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         let deviceToken:[String: String] = ["device_token": fcmToken ?? ""]
+        print("FCM Token \(fcmToken)")
         if let user = UserInformation.shared.user {
             Task {
                 try? await UsersDao().update(id: user.id, hash: deviceToken)

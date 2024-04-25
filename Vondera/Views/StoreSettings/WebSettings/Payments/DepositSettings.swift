@@ -9,7 +9,7 @@ import SwiftUI
 import AlertToast
 
 struct DepositSettings: View {
-    @State private var depositAmount = 0
+    @State private var depositAmount:Double = 0
     @State private var active = false
     
     @State private var msg:String?

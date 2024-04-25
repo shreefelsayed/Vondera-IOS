@@ -59,10 +59,25 @@ class ProductsDao {
             .getDocuments(as: StoreProduct.self)
     }
     
+    func getAlwaysStocked(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
+        var query:Query = collection
+            .order(by: "name", descending: true)
+            .whereField("alwaysStocked", isEqualTo: true)
+            .limit(to: pageSize)
+        
+        if lastSnapShot != nil {
+            query = query.start(afterDocument: lastSnapShot!)
+        }
+                
+        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
+        return (data.items, data.lastDocument)
+    }
+    
     func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
         var query:Query = collection
             .order(by: "quantity", descending: true)
             .whereField("quantity", isGreaterThan: 0)
+            .whereField("alwaysStocked", isNotEqualTo: true)
             .limit(to: pageSize)
         
         if lastSnapShot != nil {
@@ -77,6 +92,7 @@ class ProductsDao {
         try await collection
             .order(by: "quantity", descending: false)
             .whereField("quantity", isLessThanOrEqualTo: 0)
+            .whereField("alwaysStocked", isNotEqualTo: true)
             .getDocuments(as: StoreProduct.self)
     }
     
@@ -84,6 +100,7 @@ class ProductsDao {
         var query:Query = collection
             .order(by: "quantity", descending: false)
             .whereField("quantity", isLessThanOrEqualTo: 0)
+            .whereField("alwaysStocked", isNotEqualTo: true)
            
         
         if lastSnapShot != nil {
@@ -100,6 +117,7 @@ class ProductsDao {
         return try await collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
+            .whereField("alwaysStocked", isNotEqualTo: true)
             .order(by: "quantity", descending: true)
             .getDocuments(as: StoreProduct.self)
     }
@@ -108,6 +126,7 @@ class ProductsDao {
         var query:Query = collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
+            .whereField("alwaysStocked", isNotEqualTo: true)
             .order(by: "quantity", descending: true)
            
         

@@ -49,15 +49,15 @@ struct EmployeeReports: View {
             
             if !isLoading {
                 Section("Sales & Profit") {
-                    ReportCard(title: "Total Orders", amount: items.getValidOrders().count, prefix: "Orders", desc : "Number of orders created in the time range")
+                    ReportCard(title: "Total Orders", amount: items.getValidOrders().count.double(), prefix: "Orders", desc : "Number of orders created in the time range")
                     
-                    ReportCard(title: "Products Sold", amount: items.getProductsCount(), prefix: "Products", desc : "Number of products sold")
+                    ReportCard(title: "Products Sold", amount: items.getProductsCount().double(), prefix: "Products", desc : "Number of products sold")
                     
                     ReportCard(title: "Sales", amount: items.totalSales(), prefix: "EGP", desc: "The Quantity of each product x The price of the product")
                     
                     ReportCard(title: "Total Cost", amount: (-items.totalCost()), prefix: "EGP", desc: "The Quantity of each product x The cost of the product")
 
-                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
+                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage().double(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
                     
                     if employee.accountType == "Marketing" {
                         ReportCard(title: "Selling Commission", amount: items.getSellingCommission(), prefix: "EGP", desc: "order profit * (\((employee.percentage ?? 0) * 100) / 100) \n * Note that if you changed the employee commission it takes effect for the new orders", nutural: true)

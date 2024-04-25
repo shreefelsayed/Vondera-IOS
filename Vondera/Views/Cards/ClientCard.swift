@@ -89,7 +89,7 @@ struct ClientCard: View {
                             .resizable()
                             .frame(width: 32, height: 32)
                                             
-                        Text("\(Int(total)).0 EGP")
+                        Text("\(total.toString()) EGP")
                     }
                 }
             }

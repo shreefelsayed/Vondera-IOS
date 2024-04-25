@@ -49,8 +49,8 @@ struct Order: Codable, Identifiable, Equatable {
     var marketPlaceId: String? = ""
     
     var discount: Double? = 0
-    var clientShippingFees: Int = 0
-    var courierShippingFees: Int? = 0
+    var clientShippingFees: Double = 0
+    var courierShippingFees: Double? = 0
     var commission: Double? = 0
     var salesTotal:Double? = 0
     
@@ -78,7 +78,7 @@ struct Order: Codable, Identifiable, Equatable {
     
     //init() {}
     
-    init(id: String, name: String, address: String, phone: String, gov: String, notes: String, discount: Double?, clientShippingFees: Int) {
+    init(id: String, name: String, address: String, phone: String, gov: String, notes: String, discount: Double?, clientShippingFees: Double) {
         self.id = id
         self.name = name
         self.address = address
@@ -153,7 +153,7 @@ struct Order: Codable, Identifiable, Equatable {
         }
     }
     
-    var netProfitFinal: Int {
+    var netProfitFinal: Double {
         if statue == "Failed" && (part != nil) && part == false {
             return netProfit
         } else if statue == "Failed" && !(part ?? false) {
@@ -163,69 +163,69 @@ struct Order: Codable, Identifiable, Equatable {
         }
     }
     
-    var netProfit: Int {
-        return Int(COD  - (courierShippingFees ?? 0) - finalCommission - buyingPrice)
+    var netProfit: Double {
+        return COD  - (courierShippingFees ?? 0) - finalCommission - buyingPrice
     }
     
-    var CODAfterCourier: Int {
+    var CODAfterCourier: Double {
         if statue == "Failed" {
             return 0 - (courierShippingFees ?? 0)
         }
         
-        return Int(COD - (courierShippingFees ?? 0))
+        return COD - (courierShippingFees ?? 0)
     }
     
-    var finalCommission: Int {
+    var finalCommission: Double {
         if statue != "Failed" {
-            return Int(commission ?? 0)
+            return commission ?? 0
         } else {
             return 0
         }
     }
     
-    var finalSelling: Int {
+    var finalSelling: Double {
         if statue == "Delivered" {
-            return Int(COD - (courierShippingFees ?? 0) - finalCommission)
+            return COD - (courierShippingFees ?? 0) - finalCommission
         } else {
             return COD
         }
     }
     
-    var totalPrice: Int {
+    var totalPrice: Double {
         if listProducts == nil {return 0}
         
-        var total: Int = 0
+        var total: Double = 0
         for product in listProducts! {
-            total += Int(product.price) * product.quantity
+            total += product.price * product.quantity.double()
         }
         return total
     }
     
-    var buyingPrice: Int {
+    var buyingPrice: Double {
         if statue == "Failed" && !(part ?? false) {
             return 0
         }
         
-        var total: Int = 0
+        var total: Double = 0
             
         if let listProducts = listProducts {
             for product in listProducts {
-                total += Int(product.buyingPrice) * product.quantity
+                total += product.buyingPrice * product.quantity.double()
             }
         }
         return total
     }
     
-    var COD: Int {
-        return totalPrice - Int(discount ?? 0) + clientShippingFees - Int(deposit ?? 0)
+    var COD: Double {
+        return totalPrice - (discount ?? 0) + clientShippingFees - (deposit ?? 0)
     }
     
-    var orderPrice: Int {
-        return totalPrice - Int(discount ?? 0) + clientShippingFees
+    var orderPrice: Double {
+        return totalPrice - (discount ?? 0) + clientShippingFees
     }
     
-    var amountToGet:Int {
-        return COD - Int(deposit ?? 0)
+    var amountToGet:Double {
+        return COD - (deposit ?? 0)
     }
     
     var quantity: Int {
@@ -249,9 +249,9 @@ struct Order: Codable, Identifiable, Equatable {
     var getPaymentStatue : LocalizedStringKey {
         if isOrderHadMoney {
             return "Paid"
-        } else if Int(deposit ?? 0) >= orderPrice && Int(deposit ?? 0) != 0{
+        } else if (deposit ?? 0) >= orderPrice && (deposit ?? 0) != 0{
             return "Prepaid"
-        } else if Int(deposit ?? 0) > 0 {
+        } else if (deposit ?? 0) > 0 {
             return "Deposit"
         } else if orderPrice == 0 {
             return "Free"
@@ -262,15 +262,15 @@ struct Order: Codable, Identifiable, Equatable {
     
     var isHidden: Bool {
         guard let hidden = hidden else { return false }
-        return true
+        return hidden
     }
     
     var getPaymentStatueColor: Color {
         if isOrderHadMoney {
             return .green
-        } else if Int(deposit ?? 0) >= orderPrice && Int(deposit ?? 0) != 0{
+        } else if (deposit ?? 0) >= orderPrice && (deposit ?? 0) != 0{
             return .yellow
-        } else if Int(deposit ?? 0) > 0 {
+        } else if (deposit ?? 0) > 0 {
             return .orange
         } else if orderPrice == 0 {
             return .blue
@@ -323,14 +323,14 @@ struct Order: Codable, Identifiable, Equatable {
             return 0
         }
         
-        var totalMoney: Int = 0
+        var totalMoney: Double = 0
         if let listProducts = listProducts {
             listProducts.forEach { product in
-                totalMoney += product.price * product.quantity
+                totalMoney += product.price * Double(product.quantity)
             }
         }
         
-        return Double(totalMoney - Int((discount ?? 0)))
+        return Double(totalMoney - (discount ?? 0))
     }
     
     

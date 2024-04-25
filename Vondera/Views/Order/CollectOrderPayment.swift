@@ -10,8 +10,8 @@ import SwiftUI
 struct CollectOrderPayment: View {
     let orderId:String
     
-    @State private var amount = 0
-    @State private var cod = 0
+    @State private var amount = 0.0
+    @State private var cod = 0.0
     @State private var isSaving = false
     @State private var isLoading = false
     @Environment(\.presentationMode) private var presentationMode

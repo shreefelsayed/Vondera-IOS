@@ -12,8 +12,8 @@ struct OrderFailed: View {
     @Binding var order: Order
     @State private var isSaving = false
     
-    @State private var clientShippingFees = 0
-    @State private var courierShippingFees = 0
+    @State private var clientShippingFees:Double = 0
+    @State private var courierShippingFees:Double = 0
     @State private var partialReturn = false
     
     @State private var items:[OrderProductObject] = []
@@ -64,7 +64,8 @@ struct OrderFailed: View {
                     
                     Spacer()
                     
-                    Text(partialReturn ? "\(clientShippingFees - courierShippingFees - Int(order.discount ?? 0) + items.getTotalPrice()) LE" : "\((clientShippingFees - courierShippingFees)) LE")
+                    //TODO
+                    /*Text(partialReturn ? "\(clientShippingFees - courierShippingFees - (order.discount ?? 0) + items.getTotalPrice()) LE" : "\((clientShippingFees - courierShippingFees)) LE")*/
                 }
             }
             .padding()

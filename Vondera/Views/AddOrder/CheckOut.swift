@@ -16,8 +16,8 @@ class CheckOutViewModel: ObservableObject {
     @Published var otherPhone = ""
     @Published var address = ""
     @Published var notes = ""
-    @Published var shippingFees = 0
-    @Published var discount = 0
+    @Published var shippingFees:Double = 0.0
+    @Published var discount = 0.0
     @Published var paid = false
     @Published var marketPlaceId = ""
     
@@ -104,14 +104,14 @@ class CheckOutViewModel: ObservableObject {
         self.id = id
     }
     
-    var cod: Int {
+    var cod: Double {
         return totalPrice + (shipping ? shippingFees : 0) - discount
     }
     
-    var totalPrice : Int {
-        var price = 0
+    var totalPrice : Double {
+        var price = 0.0
         for item in listItems {
-            price += (Int(item.price) * item.quantity)
+            price += (item.price * item.quantity.double())
         }
         
         return price
@@ -155,10 +155,9 @@ class CheckOutViewModel: ObservableObject {
                         }
                         return
                     } else if let urls = urls {
-                        let links = urls.map({ $0.absoluteString })
                         
                         Task {
-                            await self.addToFirestore(attachment:links)
+                            await self.addToFirestore(attachment:urls)
                         }
                     }
                 }
@@ -167,7 +166,7 @@ class CheckOutViewModel: ObservableObject {
     }
     
     func addToFirestore(attachment:[String] = [String]()) async {
-        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: Double(discount), clientShippingFees:(shipping ? shippingFees : 0))
+        var order = Order(id: id, name: name, address: (shipping ? address : ""), phone: phone, gov: (shipping ? gov : ""), notes: notes, discount: discount, clientShippingFees:(shipping ? shippingFees : 0.0))
         
         order.listAttachments = attachment
         order.listProducts = listItems
@@ -396,14 +395,14 @@ struct CheckOut: View {
                     HStack {
                         Text("Products price")
                         Spacer()
-                        Text("+\(viewModel.totalPrice) LE")
+                        Text("+\(viewModel.totalPrice.toString()) LE")
                     }
                     
                     if shipping {
                         HStack {
                             Text("Shipping Fees")
                             Spacer()
-                            Text("+\(viewModel.shippingFees) LE").foregroundColor(.yellow)
+                            Text("+\(viewModel.shippingFees.toString()) LE").foregroundColor(.yellow)
                                 
                         }
                     }
@@ -412,13 +411,13 @@ struct CheckOut: View {
                     HStack {
                         Text("Discount")
                         Spacer()
-                        Text("-\(viewModel.discount) LE").foregroundColor(.red)
+                        Text("-\(viewModel.discount.toString()) LE").foregroundColor(.red)
                     }
                     
                     HStack {
                         Text("COD")
                         Spacer()
-                        Text("\(viewModel.cod) LE").foregroundColor(.green)
+                        Text("\(viewModel.cod.toString()) LE").foregroundColor(.green)
                     }
                 }
                 .bold()

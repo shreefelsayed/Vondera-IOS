@@ -9,8 +9,8 @@ import Foundation
 
 // MARK : Extenstions on lists
 extension Array where Element == Expense {
-    func total() -> Int {
-        var amout = 0
+    func total() -> Double {
+        var amout = 0.0
         self.forEach { item in
             amout += item.amount
         }

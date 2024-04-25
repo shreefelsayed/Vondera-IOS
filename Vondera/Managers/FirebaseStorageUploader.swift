@@ -59,9 +59,9 @@ class FirebaseStorageUploader {
         }
     }
     
-    func uploadImagesToFirebaseStorage(images: [UIImage], storageRef: String, completion: @escaping ([URL]?, Error?) -> Void){
+    func uploadImagesToFirebaseStorage(images: [UIImage?], storageRef: String, completion: @escaping ([String]?, Error?) -> Void){
         
-        var imageURLs: [URL] = []
+        var imageURLs: [String] = []
         let ref = Storage.storage().reference().child(storageRef)
         
         for (index, image) in images.enumerated() {
@@ -69,6 +69,11 @@ class FirebaseStorageUploader {
 
             let filename = "\(index) - \(generateRandomNumber()).jpeg" // Unique filename for each image
             let imageRef = ref.child(filename)
+            
+            guard let image = image else {
+                imageURLs.append("")
+                continue
+            }
 
             image.compress(image: image) { compress in
                 if let compress = compress, let data = compress.jpegData(compressionQuality: 1) {
@@ -85,7 +90,7 @@ class FirebaseStorageUploader {
                             }
 
                             if let downloadURL = url {
-                                imageURLs.append(downloadURL)
+                                imageURLs.append(downloadURL.absoluteString)
                             }
 
                             // Check if all images have been uploaded and URLs retrieved

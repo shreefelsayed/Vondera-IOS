@@ -20,7 +20,7 @@ class AddExpansesViewModel : ObservableObject {
         }
     }
     
-    @Published var price = 0
+    @Published var price = 0.0
     @Published var desc = ""
     
     @Published var msg:LocalizedStringKey?

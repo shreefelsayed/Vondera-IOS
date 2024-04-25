@@ -8,13 +8,15 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var quantity: Int = 0
     var addedBy: String? = ""
     var collectionId: String? = ""
-    var price: Int = 0
-    var buyingPrice: Int = 0
+    var price: Double = 0
+    var buyingPrice: Double = 0
     var sold: Int? = 0
     var lastOrderDate: Timestamp?
     var createDate:Timestamp? = Timestamp(date: Date())
-    var hashVarients: [[String: [String]]]?
     
+    var hashVarients: [[String: [String]]]?
+    var variantsDetails : [VariantsDetails]? = []
+
     var visible: Bool? = true
     var alwaysStocked: Bool? = false
     var storeId: String = ""
@@ -34,12 +36,10 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var totalRating:Double? = 0;
     
     func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
+        hasher.combine(id)
     }
-    
-    init() {}
-    
-    init(name: String, id: String, quantity: Int, addedBy: String, price: Int, buyingPrice: Int) {
+        
+    init(name: String, id: String, quantity: Int, addedBy: String, price: Double, buyingPrice: Double) {
         self.name = name
         self.id = id
         self.quantity = quantity
@@ -81,7 +81,6 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
         return quantity
     }
     
-    
     func getProductLink() -> URL? {
         if let link = UserInformation.shared.user?.store?.getStoreDomain(), (visible ?? true), let siteEnabled = UserInformation.shared.user?.store?.websiteEnabled, siteEnabled {
             if let url = URL(string: "\(link)/product/\(id)") {
@@ -93,13 +92,77 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     }
     
     func defualtPhoto() -> String {
-        return  listOptamized?.first ?? listPhotos.first ?? ""
+        return listOptamized?.first ?? listPhotos.first ?? ""
     }
     
+    // MARK : This migrates all the varients
+    func getVariant() -> [VariantsDetails] {
+        var varientDetails = [VariantsDetails]()
+        
+        guard let varients = hashVarients, !varients.isEmpty else { return varientDetails }
+        let newOptions = varients.mapVariantDetails(q: 0, cost: buyingPrice, price: price)
+        
+        // --> We need to get the items from the product
+        if let currentOptions = variantsDetails {
+            for (_, option) in newOptions.enumerated() {
+                if let existOption = currentOptions.getVarientFromOption(option.options) {
+                    varientDetails.append(existOption)
+                } else {
+                    varientDetails.append(option)
+                }
+            }
+            
+        } else {
+            varientDetails = newOptions
+        }
+        
+        return varientDetails
+    }
+
+    // MARK : This gets the variant from the option
+    func getVariantInfo(_ option:[String:String]) -> VariantsDetails? {
+        if let option = getVariant().getVarientFromOption(option) {
+            return option
+        }
+        
+        return nil
+    }
+    
+    // MARK : This checks if the product has a variant
+    func hasVariants() -> Bool {
+        return !getVariant().isEmpty
+    }
+    
+    func getQuantity() -> Int {
+        if alwaysStocked ?? false {
+            return 0
+        }
+        if hasVariants() {
+            return getVariant().totalQuantity()
+        }
+        
+        return quantity
+    }
+    
+    func canAddToCart(variant:VariantsDetails?, quantity:Int? = nil) -> Bool {
+        if let variant = variant, getVariantInfo(variant.options) != nil {
+            if let quantity = quantity {
+                return variant.quantity >= quantity
+            }
+            
+            return variant.quantity > 0
+        }
+        
+        if let quantity = quantity {
+            return self.quantity >= quantity
+        }
+        
+        return self.quantity > 0
+    }
     
     static func ==(lhs: StoreProduct, rhs: StoreProduct) -> Bool {
-            return lhs.id == rhs.id
-        }
+        return lhs.id == rhs.id
+    }
 }
 
 extension StoreProduct {
@@ -115,8 +178,14 @@ extension StoreProduct {
     func mapToOrderProduct(q:Int = 1, varient:[String: String]) -> OrderProductObject {
         return mapToOrderProduct(q:q, varient: varient, savedId: CartManager.generatePIN())
     }
+    
     func mapToOrderProduct(q:Int = 1, varient:[String: String], savedId:String) -> OrderProductObject {
-        return OrderProductObject(productId: self.id, name: self.name, storeId: self.storeId, quantity: q, price: self.price, image: self.listPhotos[0], buyingPrice: self.buyingPrice, hashVaraients: varient, savedItemId: savedId, product: self)
+        let variant = self.getVariantInfo(varient)
+        var image = defualtPhoto()
+        if let variant = variant, !variant.getPhoto().isBlank {
+            image = variant.getPhoto()
+        }
+        return OrderProductObject(productId: self.id, name: self.name, storeId: self.storeId, quantity: q, price: variant?.price ?? self.price, image: image, buyingPrice: variant?.cost ?? self.buyingPrice, hashVaraients: varient, savedItemId: savedId, product: self)
     }
     
     static func listExample() -> [StoreProduct] {
@@ -140,3 +209,26 @@ extension StoreProduct {
         return prod
     }
 }
+
+struct VariantsDetails: Codable, Equatable, Hashable {
+    var options: [String: String]
+    var quantity: Int
+    var sold:Int
+    var image: String
+    var optimizedImage:String? = ""
+    var cost: Double
+    var price: Double
+    
+    func formatOptions() -> String {
+        return options.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
+    }
+    
+    func getPhoto() -> String {
+        guard let optimizedImage = optimizedImage else {
+            return image
+        }
+        
+        return optimizedImage.isBlank ? image : optimizedImage
+    }
+}
+

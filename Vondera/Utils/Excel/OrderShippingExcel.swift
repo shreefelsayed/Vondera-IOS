@@ -16,7 +16,7 @@ class OrderShippingExcel {
     
     init(name: String = "Orders", listOrders: [Order]) {
         self.name = name
-        self.listOrders = listOrders.filter({$0.isHidden == false})
+        self.listOrders = listOrders.filter({$0.isHidden == false && $0.statue != "Deleted"})
         sheet = book.NewSheet(name)
     }
     
@@ -41,7 +41,7 @@ class OrderShippingExcel {
                                  order.otherPhone ?? "",
                                  order.productsInfo,
                                  order.gov + " - " + order.address,
-                                 "\(order.COD) LE",
+                                 "\(order.COD.toString()) LE",
                                  order.statue,
                                  order.notes ?? ""]
             
@@ -57,7 +57,7 @@ class OrderShippingExcel {
     }
     
     func addFinalRow() {
-        var cod = 0
+        var cod = 0.0
         
         listOrders.forEach { order in
             cod += order.COD
@@ -69,7 +69,7 @@ class OrderShippingExcel {
             "",
             "",
             "",
-            "\(cod) LE",
+            "\(cod.toString()) LE",
             ""]
         
         addRow(rowNumber: listOrders.count + 2, items: data)

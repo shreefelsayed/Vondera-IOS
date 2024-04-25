@@ -341,7 +341,7 @@ struct OrderDetails: View {
                     HStack {
                         Text("Products prices")
                         Spacer()
-                        Text("\(Int(order.totalPrice)) LE")
+                        Text("\(order.totalPrice.toString()) LE")
                             .bold()
                     }
                     
@@ -350,29 +350,29 @@ struct OrderDetails: View {
                         HStack {
                             Text("Shipping Fees")
                             Spacer()
-                            Text("\(Int(order.clientShippingFees)) LE")
+                            Text("\(order.clientShippingFees.toString()) LE")
                                 .foregroundColor(.yellow)
                                 .bold()
                         }
                     }
                     
                     // MARK : Discount
-                    if order.discount ?? 0 > 0 {
+                    if let discount = order.discount, discount > 0 {
                         HStack {
                             Text("Discount")
                             Spacer()
-                            Text("\(Int(order.discount ?? 0)) LE")
+                            Text("\(discount.toString()) LE")
                                 .foregroundColor(.red)
                                 .bold()
                         }
                     }
                               
                     // MARK : Deposit
-                    if (order.deposit ?? 0) > 0 {
+                    if let deposit = order.deposit, deposit > 0{
                         HStack {
                             Text("Deposit")
                             Spacer()
-                            Text("\(Int(order.deposit ?? 0)) LE")
+                            Text("\(deposit.toString()) LE")
                                 .foregroundColor(.green)
                                 .bold()
                         }
@@ -382,7 +382,7 @@ struct OrderDetails: View {
                     HStack {
                         Text("COD")
                         Spacer()
-                        Text("\(order.COD) LE")
+                        Text("\(order.COD.toString()) LE")
                             .foregroundColor(.green)
                             .bold()
                     }

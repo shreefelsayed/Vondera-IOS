@@ -69,8 +69,8 @@ class CartManager {
         return nil
     }
     
-    func addItem(product:StoreProduct, options: [String:String]) {
-        let savedItem = SavedItems(randomId: CartManager.generatePIN(), productId: product.id, hashMap: options)
+    func addItem(product:StoreProduct, options: VariantsDetails) {
+        let savedItem = SavedItems(randomId: CartManager.generatePIN(), productId: product.id, hashMap: options.options)
         
         addItem(savedItems: savedItem)
     }

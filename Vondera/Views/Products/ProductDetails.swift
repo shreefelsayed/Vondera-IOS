@@ -85,13 +85,13 @@ struct ProductDetails: View {
                             .font(.title3)
                         
                         HStack {
-                            Text("\(Int(product.price)) LE")
+                            Text("\(product.price.toString()) LE")
                                 .font(.title3)
                                 .bold()
                                 .foregroundStyle(Color.accentColor)
                             
                             if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
-                                Text("\(Int(crossedPrice)) LE")
+                                Text("\(crossedPrice.toString()) LE")
                                     .font(.body)
                                     .foregroundStyle(.red)
                                     .strikethrough()
@@ -196,7 +196,7 @@ struct ProductDetails: View {
                                 
                                 Spacer()
                                 
-                                Text(product.alwaysStocked ?? false ? "Always Stokced" : "\(product.quantity) Pieces")
+                                Text(product.alwaysStocked ?? false ? "Always Stokced" : "\(product.getQuantity()) Pieces")
                                     .font(.headline)
                             }
                         }
@@ -281,23 +281,8 @@ struct ProductDetails: View {
         .task {
             await getReviews()
         }
-        .sheet(isPresented: $addToCard, content: {
-            ProductBuyingSheet(product: $product, onAddedToCard: { product, options in
-                CartManager().addItem(product: product, options: options)
-            })
-        })
         .refreshable {
             await refreshProduct()
-        }
-        .sheet(isPresented: $settings) {
-            NavigationStack {
-                ProductSettings(product: product, onDeleted: { value in
-                    if let onDelete = onDelete {
-                        onDelete(value)
-                    }
-                    self.presentationMode.wrappedValue.dismiss()
-                })
-            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -316,8 +301,13 @@ struct ProductDetails: View {
                     }
                     
                     if (myUser?.canAccessAdmin ?? false) {
-                        Button {
-                            settings.toggle()
+                        NavigationLink {
+                            ProductSettings(product: $product, onDeleted: { value in
+                                if let onDelete = onDelete {
+                                    onDelete(value)
+                                }
+                                self.presentationMode.wrappedValue.dismiss()
+                            })
                         } label: {
                             Label("Options", systemImage: "gearshape")
                         }
@@ -328,6 +318,13 @@ struct ProductDetails: View {
             }
         }
         .navigationTitle("Product info")
+        .sheet(isPresented: $addToCard, content: {
+            ProductBuyingSheet(product: $product, onAddedToCard: { product, options in
+                if let variant = product.getVariantInfo(options) {
+                    CartManager().addItem(product: product, options: variant)
+                }
+            })
+        })
     }
     
     func removeReview(index:Int) {
@@ -365,7 +362,6 @@ struct ProductDetails: View {
     
     private func getReviews() async {
         guard let storeId = UserInformation.shared.user?.storeId, !isLoading, hasMore else {
-            print("Something is null")
             return
         }
         

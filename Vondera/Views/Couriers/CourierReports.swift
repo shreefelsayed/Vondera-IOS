@@ -51,9 +51,9 @@ struct CourierReports: View {
             
             if !isLoading {
                 Section("Orders") {
-                    ReportCard(title: "Orders shipped", amount: items.getValidOrders().count, prefix: "Orders", desc : "Number of orders assigned to courier in the time range")
+                    ReportCard(title: "Orders shipped", amount: items.getValidOrders().count.double(), prefix: "Orders", desc : "Number of orders assigned to courier in the time range")
                     
-                    ReportCard(title: "Products Shipped", amount: items.getProductsCount(), prefix: "Products", desc : "Number of products sold")
+                    ReportCard(title: "Products Shipped", amount: items.getProductsCount().double(), prefix: "Products", desc : "Number of products sold")
                     
                     ReportCard(title: "Total Fees", amount: items.shippingFees(), prefix: "EGP", desc : "The courier fees for all orders")
                     
@@ -61,7 +61,7 @@ struct CourierReports: View {
                 }
                 
                 Section("On Going Orders") {
-                    ReportCard(title: "With Courier", amount: items.getByStatue(statue: "Out For Delivery").count, prefix: "Orders", desc: "Orders still with Courier")
+                    ReportCard(title: "With Courier", amount: items.getByStatue(statue: "Out For Delivery").count.double(), prefix: "Orders", desc: "Orders still with Courier")
                     
                     ReportCard(title: "Shipping Fees", amount: items.getByStatue(statue: "Out For Delivery").shippingFees(), prefix: "EGP", desc : "The courier fees for the on going orders")
                     
@@ -69,11 +69,11 @@ struct CourierReports: View {
                 }
                 
                 Section("Finished Orders") {
-                    ReportCard(title: "Delivered", amount: items.getByStatue(statue: "Delivered").count, prefix: "Orders")
+                    ReportCard(title: "Delivered", amount: items.getByStatue(statue: "Delivered").count.double(), prefix: "Orders")
                     
-                    ReportCard(title: "Failed", amount: items.getByStatue(statue: "Failed").count, prefix: "Orders")
+                    ReportCard(title: "Failed", amount: items.getByStatue(statue: "Failed").count.double(), prefix: "Orders")
                     
-                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
+                    ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage().double(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
                     
                     ReportCard(title: "Shipping Fees", amount: items.getFinishedOrders().shippingFees(), prefix: "EGP", desc : "The courier fees for the delivered orders")
                     

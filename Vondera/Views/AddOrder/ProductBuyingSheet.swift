@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import AlertToast
 
 struct ProductBuyingSheet: View {
     @Binding var product:StoreProduct
     var onAddedToCard:((StoreProduct, [String:String]) -> ())
     
     @State private var selectedDetent = PresentationDetent.large
-    @State private var msg:LocalizedStringKey?
+    @State private var selectedVariant:VariantsDetails?
     @State private var listOption:[String] = []
     @Environment(\.dismiss) var dismiss
     
@@ -22,9 +21,25 @@ struct ProductBuyingSheet: View {
             VStack (alignment: .leading) {
                 ZStack (alignment: .bottom){
                     // MARK : Slider
-                    NavigationLink(destination: FullScreenImageView(imageURLs: product.listPhotos)) {
-                        SlideNetworkView(imageUrls: product.listPhotos)
+                    ZStack (alignment: .topLeading) {
+                        
+                        if let selectedVariant = selectedVariant, !selectedVariant.image.isBlank, selectedVariant.image != product.defualtPhoto() {
+                            CachedImageView(imageUrl: selectedVariant.image, scaleType: .centerCrop)
+                                .id(selectedVariant.image)
+                        } else {
+                            NavigationLink(destination: FullScreenImageView(imageURLs: product.listPhotos)) {
+                                SlideNetworkView(imageUrls: product.listPhotos)
+                            }
+                        }
+                        
+                        // --> Back button
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.white)
+                            .onTapGesture {
+                                dismiss()
+                            }
                     }
+                    
                     
                     // MARK : Info
                     HStack {
@@ -39,10 +54,10 @@ struct ProductBuyingSheet: View {
                                     .font(.title3)
                                     .foregroundColor(.white.opacity(0.8))
                                 
-                                
-                                Text("\(Int(product.price)) LE")
+                                Text("\(selectedVariant != nil ? selectedVariant!.price.toString() : product.price.toString()) LE")
                                     .foregroundColor(.white)
                                     .font(.headline)
+                            
                             }
                             .padding(.horizontal)
                         }
@@ -128,11 +143,24 @@ struct ProductBuyingSheet: View {
                         Spacer().frame(height: 12)
                     }
                     
-                    
-                    ButtonLarge(label: "Add to cart") {
-                        msg = "Item Added"
-                        onAddedToCard(product, getVariantsMap())
-                        dismiss()
+                    if !product.canAddToCart(variant: selectedVariant) {
+                        ButtonLarge(label: "Preorder Product", background: .red ,textColor: .white) {
+                            ToastManager.shared.showToast(msg: "Added to cart", toastType: .success)
+                            onAddedToCard(product, getVariantsMap())
+                            dismiss()
+                        }
+                        
+                        HStack {
+                            Spacer()
+                            Text("This variant is out of stock right now !")
+                            Spacer()
+                        }
+                    } else {
+                        ButtonLarge(label: "Add to cart") {
+                            ToastManager.shared.showToast(msg: "Added to cart", toastType: .success)
+                            onAddedToCard(product, getVariantsMap())
+                            dismiss()
+                        }
                     }
                     
                 }
@@ -144,10 +172,11 @@ struct ProductBuyingSheet: View {
         .onAppear {
             setDefaultOptions()
         }
-        .toast(isPresenting: Binding(value: $msg), alert: {
-            
-            AlertToast(displayMode: .banner(.pop), type: .complete(.green), title: msg?.toString())
-        })
+        .onChange(of: listOption) { newValue in
+            if let variant = product.getVariantInfo(getVariantsMap()) {
+                self.selectedVariant = variant
+            }
+        }
         .navigationTitle("Product info")
     }
     
@@ -178,7 +207,6 @@ struct ProductBuyingSheet: View {
             print("List is empty")
         }
     }
-    
     
     
     func getVarientOptions(hash:[String:[String]]) -> String {

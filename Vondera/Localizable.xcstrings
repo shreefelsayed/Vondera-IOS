@@ -31,7 +31,11 @@
         }
       }
     },
+    "- %@ EGP" : {
+
+    },
     "- %lf EGP" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -42,6 +46,7 @@
       }
     },
     "- %lld EGP" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -51,7 +56,11 @@
         }
       }
     },
+    "-%@ LE" : {
+
+    },
     "-%lld LE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -157,6 +166,9 @@
         }
       }
     },
+    "%@ " : {
+
+    },
     "%@ - %@" : {
       "localizations" : {
         "ar" : {
@@ -189,6 +201,9 @@
         }
       }
     },
+    "%@ EGP" : {
+
+    },
     "%@ Image (%lld)" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -205,6 +220,9 @@
           }
         }
       }
+    },
+    "%@ LE" : {
+
     },
     "%@ Orders" : {
       "localizations" : {
@@ -263,6 +281,7 @@
       }
     },
     "%lld " : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -534,7 +553,18 @@
         }
       }
     },
+    "%lld x %lf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld x %2$lf"
+          }
+        }
+      }
+    },
     "%lld x %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -577,6 +607,7 @@
       }
     },
     "%lld.0 EGP" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -607,7 +638,11 @@
         }
       }
     },
+    "+ %@ EGP" : {
+
+    },
     "+ %lld EGP" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -617,7 +652,11 @@
         }
       }
     },
+    "+%@ LE" : {
+
+    },
     "+%lld LE" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1232,6 +1271,9 @@
           }
         }
       }
+    },
+    "Always Stocked" : {
+
     },
     "Always Stokced" : {
       "localizations" : {
@@ -2173,7 +2215,11 @@
         }
       }
     },
+    "Collect %lf EGP" : {
+
+    },
     "Collect %lld EGP" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2392,6 +2438,9 @@
           }
         }
       }
+    },
+    "Cost" : {
+
     },
     "Courier" : {
       "localizations" : {
@@ -2643,6 +2692,9 @@
         }
       }
     },
+    "Crossed price can't be less than the selling price" : {
+
+    },
     "Current Balance" : {
       "localizations" : {
         "ar" : {
@@ -2822,6 +2874,9 @@
           }
         }
       }
+    },
+    "Customize Varients" : {
+
     },
     "Customize your receipt" : {
       "localizations" : {
@@ -3423,6 +3478,19 @@
         }
       }
     },
+    "EGP %@" : {
+
+    },
+    "EGP %@ x %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "EGP %1$@ x %2$lld"
+          }
+        }
+      }
+    },
     "EGP %lld" : {
       "localizations" : {
         "ar" : {
@@ -3450,6 +3518,7 @@
       }
     },
     "EGP %lld.00 x %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4021,6 +4090,9 @@
         }
       }
     },
+    "Fill the current variant first" : {
+
+    },
     "Fill the Employee name" : {
       "localizations" : {
         "ar" : {
@@ -4040,6 +4112,9 @@
           }
         }
       }
+    },
+    "Fill the product name" : {
+
     },
     "Fill the required data" : {
       "localizations" : {
@@ -4565,6 +4640,7 @@
       }
     },
     "Item Added" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6628,6 +6704,9 @@
         }
       }
     },
+    "Please select a cateogry" : {
+
+    },
     "Please select the new logo" : {
       "localizations" : {
         "ar" : {
@@ -6647,6 +6726,9 @@
           }
         }
       }
+    },
+    "Preorder Product" : {
+
     },
     "Prepaid" : {
       "localizations" : {
@@ -6768,6 +6850,9 @@
         }
       }
     },
+    "Product cost and price changed" : {
+
+    },
     "Product Description" : {
       "localizations" : {
         "ar" : {
@@ -6788,6 +6873,9 @@
         }
       }
     },
+    "Product Images Changed" : {
+
+    },
     "Product info" : {
       "localizations" : {
         "ar" : {
@@ -6797,6 +6885,12 @@
           }
         }
       }
+    },
+    "Product info updated" : {
+
+    },
+    "Product marked as out of stock" : {
+
     },
     "Product Name" : {
       "localizations" : {
@@ -6848,6 +6942,9 @@
         }
       }
     },
+    "Product Stock Updated" : {
+
+    },
     "Product Stocks" : {
       "localizations" : {
         "ar" : {
@@ -6867,6 +6964,12 @@
           }
         }
       }
+    },
+    "Product Updated" : {
+
+    },
+    "Product variants updated" : {
+
     },
     "Product Varients" : {
       "localizations" : {
@@ -7527,6 +7630,9 @@
           }
         }
       }
+    },
+    "Selling price can't be Zero" : {
+
     },
     "Send abandon carts emails" : {
       "localizations" : {
@@ -8331,6 +8437,9 @@
         }
       }
     },
+    "The product must have at least one photo" : {
+
+    },
     "The Quantity of each product x The cost of the product" : {
       "localizations" : {
         "ar" : {
@@ -8723,6 +8832,9 @@
           }
         }
       }
+    },
+    "This variant is out of stock right now !" : {
+
     },
     "This Week" : {
       "localizations" : {
@@ -9354,6 +9466,12 @@
         }
       }
     },
+    "Variants Customizations" : {
+
+    },
+    "Variants updated" : {
+
+    },
     "Varient" : {
       "localizations" : {
         "ar" : {
@@ -9703,6 +9821,9 @@
           }
         }
       }
+    },
+    "You can optionaly upload an image to each varient" : {
+
     },
     "You have %lld orders, renew your plan to unlock them" : {
       "localizations" : {

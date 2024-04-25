@@ -16,7 +16,7 @@ class SalesExcel {
     
     init(name: String = "Sales Report", listOrders: [Order]) {
         self.name = name
-        self.listOrders = listOrders.filter({$0.isHidden == false})
+        self.listOrders = listOrders.filter({ $0.isHidden == false && $0.statue != "Deleted" })
         sheet = book.NewSheet(name)
     }
     
@@ -38,12 +38,12 @@ class SalesExcel {
         for (index, order) in listOrders.enumerated() {
             let data:[String] = ["#\(order.id)",
                                  order.name, order.gov,
-                                 "\(order.totalPrice) LE",
-                                 "\(order.courierShippingFees ?? 0) LE",
-                                 "\(order.COD) LE",
-                                 "\(order.buyingPrice) LE",
-                                 "\(order.finalCommission) LE",
-                                 "\(order.netProfitFinal) LE",
+                                 "\(order.totalPrice.toString()) LE",
+                                 "\((order.courierShippingFees ?? 0).toString()) LE",
+                                 "\(order.COD.toString()) LE",
+                                 "\(order.buyingPrice.toString()) LE",
+                                 "\(order.finalCommission.toString()) LE",
+                                 "\(order.netProfitFinal.toString()) LE",
                                  order.statue,
                                  order.owner ?? ""]
             
@@ -62,12 +62,12 @@ class SalesExcel {
     }
     
     func addFinalRow() {
-        var totalPrice = 0
-        var courierShippingFees = 0
-        var cod = 0
-        var buyingPrice = 0
-        var finalCommission = 0
-        var netProfitFinal = 0
+        var totalPrice = 0.0
+        var courierShippingFees = 0.0
+        var cod = 0.0
+        var buyingPrice = 0.0
+        var finalCommission = 0.0
+        var netProfitFinal = 0.0
         
         listOrders.forEach { order in
             totalPrice += order.totalPrice
@@ -82,12 +82,12 @@ class SalesExcel {
             "\(listOrders.count) Orders",
             "",
             "",
-            "\(totalPrice) LE",
-            "\(courierShippingFees) LE",
-            "\(cod) LE",
-            "\(buyingPrice) LE",
-            "\(finalCommission) LE",
-            "\(netProfitFinal) LE",
+            "\(totalPrice.toString()) LE",
+            "\(courierShippingFees.toString()) LE",
+            "\(cod.toString()) LE",
+            "\(buyingPrice.toString()) LE",
+            "\(finalCommission.toString()) LE",
+            "\(netProfitFinal.toString()) LE",
             "",
             ""]
         

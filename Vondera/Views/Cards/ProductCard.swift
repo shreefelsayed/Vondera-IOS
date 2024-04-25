@@ -90,13 +90,13 @@ struct ProductCard: View {
                     .foregroundColor(.secondary)
                 
                 HStack {
-                    Text("\(Int(product.price)) LE")
+                    Text("\(product.price.toString()) LE")
                         .font(.headline)
                         .multilineTextAlignment(.center)
                         .bold()
                     
                     if let crossedPrice = product.crossedPrice, crossedPrice > 0 {
-                        Text("\(Int(crossedPrice)) LE")
+                        Text("\(crossedPrice.toString()) LE")
                             .font(.body)
                             .foregroundStyle(.red)
                             .strikethrough()

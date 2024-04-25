@@ -62,7 +62,7 @@ struct CutomerProfile: View {
                 Divider()
                 
                 HStack {
-                    if let ordersCount = client.ordersCount {
+                    if let ordersCount = client.ordersCount, ordersCount > 0 {
                         HStack {
                             Image(.btnOrders)
                                 .resizable()
@@ -74,13 +74,13 @@ struct CutomerProfile: View {
                         Spacer()
                     }
                                     
-                    if let total = client.total, !total.isNaN, !total.isInfinite {
+                    if let total = client.total, total > 0 {
                         HStack {
                             Image(.btnMoney)
                                 .resizable()
                                 .frame(width: 32, height: 32)
                                                 
-                            Text("\(Int(total)).0 EGP")
+                            Text("\(total.toString()) EGP")
                         }
                     }
                 }
@@ -100,7 +100,6 @@ struct CutomerProfile: View {
                 }
                 .listStyle(.plain)
             }
-            
         }
         .listStyle(.plain)
         .padding()

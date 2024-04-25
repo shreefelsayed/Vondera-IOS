@@ -6,26 +6,26 @@
 //
 
 import SwiftUI
-import AlertToast
 
 struct ProductPrice: View {
-    var product:StoreProduct
-    @ObservedObject var viewModel:ProductPriceViewModel
+    @Binding var product:StoreProduct
     @Environment(\.presentationMode) private var presentationMode
     
-    init(product: StoreProduct) {
-        self.product = product
-        self.viewModel = ProductPriceViewModel(product: product)
-    }
+    @State private var price:Double = 0
+    @State private var cost:Double = 0
+    @State private var crossed:Double = 0
+
+    @State private var isSaving = false
+    @State private var isLoading = false
     
     var body: some View {
         List {
             Section {
-                FloatingTextField(title: "Product Price", text: .constant(""), caption: "This is the selling price of the product which the user will be charged at", required: true, isNumric: true, number: $viewModel.price)
+                FloatingTextField(title: "Product Price", text: .constant(""), caption: "This is the selling price of the product which the user will be charged at", required: true, isNumric: true, number: $price)
                 
-                FloatingTextField(title: "Crossed Price", text: .constant(""), caption: "This is showed in your website, to compare the price this doesn't have any effect on the real price", required: false, isNumric: true, number: $viewModel.crossed)
+                FloatingTextField(title: "Crossed Price", text: .constant(""), caption: "This is showed in your website, to compare the price this doesn't have any effect on the real price", required: false, isNumric: true, number: $crossed)
                 
-                FloatingTextField(title: "Product Cost", text: .constant(""), caption: "This how much the product costs you", required: true, isNumric: true, number: $viewModel.cost)
+                FloatingTextField(title: "Product Cost", text: .constant(""), caption: "This how much the product costs you", required: true, isNumric: true, number: $cost)
             }
             
             Section {
@@ -34,7 +34,7 @@ struct ProductPrice: View {
                         Text("Margin")
                             .bold()
                         
-                        Text(viewModel.cost == 0 ? "100%" : "\((viewModel.price / viewModel.cost) * 100)%")
+                        Text(cost == 0 ? "100%" : "\(((price / cost) * 100).toString())%")
                     }
                     .padding(24)
                     .background(.secondary.opacity(0.2))
@@ -46,7 +46,7 @@ struct ProductPrice: View {
                         Text("Profit")
                             .bold()
                         
-                        Text("EGP \(viewModel.price - viewModel.cost)")
+                        Text("EGP \((price - cost).toString())")
                     }
                     .padding(24)
                     .background(.secondary.opacity(0.2))
@@ -55,41 +55,106 @@ struct ProductPrice: View {
             }
         }
         .listStyle(.plain)
-        .isHidden(viewModel.isLoading)
-        .navigationBarBackButtonHidden(viewModel.isSaving)
+        .willLoad(loading: isLoading)
+        .willProgress(saving: isSaving)
         .navigationTitle("Product Price")
-        .overlay(alignment: .center) {
-            ProgressView()
-                .isHidden(!viewModel.isLoading)
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
                     update()
                 }
-                .disabled(viewModel.isLoading || viewModel.isSaving)
+                .disabled(isLoading || isSaving)
             }
         }
-        .willProgress(saving: viewModel.isSaving)
-        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-            if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
-        .toast(isPresenting: Binding(value: $viewModel.msg)){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: viewModel.msg)
+        .willProgress(saving: isSaving)
+        .task {
+            await getData()
         }
     }
     
     func update() {
         Task {
-            await viewModel.update()
+            await update()
         }
+    }
+    
+    
+    func getData() async {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        do {
+            if let product = try await ProductsDao(storeId: storeId).getProduct(id: product.id) {
+                DispatchQueue.main.async {
+                    self.product = product
+                    self.cost = product.buyingPrice
+                    self.price = product.price
+                    self.crossed = product.crossedPrice ?? 0
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        DispatchQueue.main.async {
+            self.isLoading = false
+        }
+    }
+    
+    
+    func check() -> Bool{
+        guard price != 0 else {
+            ToastManager.shared.showToast(msg: "Selling price can't be Zero", toastType: .error)
+            return false
+        }
+        
+        if crossed > 0 && crossed < price {
+            ToastManager.shared.showToast(msg: "Crossed price can't be less than the selling price", toastType: .error)
+            return false
+        }
+        
+        return true
+    }
+    
+    func update() async {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        guard check() else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.isSaving = true
+        }
+        
+        do {
+            // --> Update the database
+            let map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
+            try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
+            
+            DispatchQueue.main.async {
+                ToastManager.shared.showToast(msg: "Product cost and price changed", toastType: .success)
+                self.product.price = price
+                self.product.buyingPrice = cost
+                self.product.crossedPrice = crossed
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+        }
+        
+        
+        DispatchQueue.main.async {
+            self.isSaving = false
+        }
+        
     }
 }
 
-#Preview {
-    ProductPrice(product: StoreProduct.example())
-}

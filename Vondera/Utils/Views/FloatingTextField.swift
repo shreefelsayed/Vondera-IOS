@@ -17,7 +17,7 @@ struct FloatingTextField: View {
     var autoCapitalize:TextInputAutocapitalization = .never
     var keyboard:UIKeyboardType = .default
     var isNumric = false
-    var number: Binding<Int>?
+    var number: Binding<Double>?
     var enableNegative = false
     var isDiabled = false
     @State private var isFocused = false

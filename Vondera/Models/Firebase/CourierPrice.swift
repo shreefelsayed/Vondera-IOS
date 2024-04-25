@@ -2,11 +2,11 @@ import Foundation
 
 struct CourierPrice: Codable, Equatable, Hashable {
     var govName: String = ""
-    var price: Int = 0
+    var price: Double = 0
     
     init() {}
     
-    init(govName: String, price: Int) {
+    init(govName: String, price: Double) {
         self.govName = govName
         self.price = price
     }

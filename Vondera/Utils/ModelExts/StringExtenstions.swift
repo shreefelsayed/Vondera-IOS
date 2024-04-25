@@ -42,6 +42,27 @@ extension LocalizedStringKey {
     }
 }
 
+extension Double {
+    func toString() -> String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 2
+        numberFormatter.minimumFractionDigits = 0
+        
+        guard let formattedString = numberFormatter.string(from: NSNumber(value: self)) else {
+            return ""
+        }
+        
+        return formattedString
+    }
+}
+
+extension Int {
+    func double() -> Double {
+        return Double(self)
+    }
+}
+
 extension String {
     func localize() -> LocalizedStringKey {
         return LocalizedStringKey(self)
@@ -208,6 +229,14 @@ extension String {
         
         return nil
     }
+    
+    var toDouble: Double {
+        return Double(self) ?? 0.0
+    }
+    
+    var toInt: Int {
+        return Int(self) ?? 0
+    }
 }
 
 extension Binding where Value == String {
@@ -318,6 +347,101 @@ extension NSAttributedString {
             print("error:", error)
             return nil
         }
+    }
+}
+
+extension Dictionary where Value: Equatable {
+    func areEqual(to otherDictionary: [Key: Value]) -> Bool {
+        // Check if both dictionaries have the same keys
+        guard Set(self.keys) == Set(otherDictionary.keys) else {
+            return false
+        }
+        
+        // Check if the values for each corresponding key are equal
+        for key in self.keys {
+            guard let selfValue = self[key] , let otherValue = otherDictionary[key] else {
+                return false
+            }
+            
+            // Check if the arrays have the same elements
+            if selfValue != otherValue {
+                return false
+            }
+        }
+        
+        // If all keys and values are equal, return true
+        return true
+    }
+}
+
+
+extension Array where Element == VariantsDetails {
+    func getVarientFromOption(_ option:[String:String]) -> VariantsDetails? {
+        for item in self {
+            if item.options.areEqual(to: option) {
+                return item
+            }
+        }
+        
+        return nil
+    }
+    
+    func totalQuantity() -> Int {
+        var total = 0
+        for item in self {
+            total += item.quantity
+        }
+        
+        return total
+    }
+    
+    func getCost() -> Double {
+        var total = 0.0
+        for item in self {
+            total += item.quantity.double() * item.cost
+        }
+        
+        return total
+    }
+    
+    func totalSold() -> Int {
+        var total = 0
+        for item in self {
+            total += item.sold
+        }
+        
+        return total
+    }
+}
+
+extension Array where Element == [String: [String]] {
+    func mapVariantDetails(q:Int, cost:Double, price:Double) -> [VariantsDetails] {
+        if self.isEmpty {
+            return []
+        }
+        
+        var details = [VariantsDetails]()
+        let variants = self
+        // Generate all possible combinations of options
+        func generateCombinations(variantOptions: [[String: [String]]], currentOptionIndex: Int, currentOptions: [String: String]) {
+            if currentOptionIndex == variantOptions.count {
+                details.append(VariantsDetails(options: currentOptions, quantity: q, sold: 0, image: "", cost: cost, price: price))
+                return
+            }
+
+            let currentOption = variantOptions[currentOptionIndex]
+            for (optionKey, optionValues) in currentOption {
+                for value in optionValues {
+                    var updatedOptions = currentOptions
+                    updatedOptions[optionKey] = value
+                    generateCombinations(variantOptions: variantOptions, currentOptionIndex: currentOptionIndex + 1, currentOptions: updatedOptions)
+                }
+            }
+        }
+        
+        generateCombinations(variantOptions: variants, currentOptionIndex: 0, currentOptions: [:])
+        
+        return details
     }
 }
 
@@ -439,7 +563,7 @@ extension Array where Element == ImagePickerWithUrL {
         return images
     }
     
-    func mapUrlsToLinks(urls : [URL]) -> [ImagePickerWithUrL] {
+    func mapUrlsToLinks(urls : [String]) -> [ImagePickerWithUrL] {
         var listPhotos = self
         let uploadedItems = listPhotos.getItemsToUpload()
         for photoIndex in listPhotos.indices {
@@ -449,7 +573,7 @@ extension Array where Element == ImagePickerWithUrL {
                 let uiImage = uploadedItems[uiImageIndex]
                 if photo.id == uiImage.id {
                     listPhotos[photoIndex].image = nil
-                    listPhotos[photoIndex].link = urls[uiImageIndex].absoluteString
+                    listPhotos[photoIndex].link = urls[uiImageIndex]
                 }
             }
         }

@@ -6,8 +6,156 @@
 //
 
 import SwiftUI
-import AlertToast
 import PhotosUI
+
+struct ProductPhotos: View {
+    @Binding var product:StoreProduct
+    @State private var images = [PhotosPickerItem]()
+    @State private var imagesWithIndexs = [(PhotosPickerItem, Int)]()
+    
+    @State private var listPhotos = [ImagePickerWithUrL]()
+    @State private var isSaving = false
+    @State private var isLoading = false
+    
+    @Environment(\.presentationMode) private var presentationMode
+    
+    
+    var body: some View {
+        List {
+            ForEach(listPhotos, id: \.id) { item in
+                if let index = listPhotos.firstIndex(where: { image in image.id == item.id }) {
+                    ImageRow(pathOrLink: item, index: index)
+                }
+            }
+            .onDelete { indexSet in
+                if let index = indexSet.first {
+                    // --> Remove it from picker
+                    if let image = listPhotos[index].image {
+                        images.remove(at: listPhotos[index].index)
+                    }
+                    
+                    // --> Remove it from list
+                    listPhotos.remove(at: index)
+                }
+                
+            }
+            .onMove { indexSet, index in
+                listPhotos.move(fromOffsets: indexSet, toOffset: index)
+            }
+            
+            if(listPhotos.count < 6) {
+                PhotosPicker(selection: $images, maxSelectionCount: (6 - listPhotos.count), matching: .images) {
+                    Label("Add a new picture", systemImage: "plus")
+                }
+                .onChange(of: images) { newValue in
+                    Task {
+                        let photos = await newValue.addToListPhotos(list: listPhotos)
+                        DispatchQueue.main.async {
+                            self.listPhotos = photos
+                        }
+                    }
+                }
+            }
+            
+            Text("At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.")
+                .font(.caption)
+        }
+        .listRowSeparator(.hidden)
+        .listStyle(.plain)
+        .willLoad(loading: isLoading)
+        .willProgress(saving: isSaving)
+        .navigationTitle("Product photos")
+        .navigationBarBackButtonHidden(isSaving)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Update") {
+                    uploadPhotos()
+                }
+                .disabled(isLoading || isSaving || product.listPhotos.isEmpty)
+            }
+        }
+        .task {
+            await getData()
+        }
+    }
+
+    func getData() async {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        self.isLoading = true
+        
+        do {
+            let product = try await ProductsDao(storeId: storeId).getProduct(id: product.id)
+            if let product = product {
+                DispatchQueue.main.async {
+                    self.product = product
+                    self.listPhotos = product.listPhotos.convertImageUrlsToItems()
+                    self.isLoading = false
+                }
+            }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+        }
+    }
+    
+    func uploadPhotos() {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        guard listPhotos.count > 0 else {
+            ToastManager.shared.showToast(msg: "The product must have at least one photo", toastType: .error)
+            return
+        }
+        
+        self.isSaving = true
+        
+        if listPhotos.getItemsToUpload().isEmpty {
+            saveProduct()
+            return
+        }
+        
+
+        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/products/\(product.id)") { [self] urls, error in
+            if let error = error {
+                isSaving = false
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+            } else if let urls = urls {
+                listPhotos = listPhotos.mapUrlsToLinks(urls: urls)
+                saveProduct()
+            }
+        }
+    }
+    
+    func saveProduct()  {
+        guard let storeId = UserInformation.shared.user?.storeId else {
+            return
+        }
+        
+        self.isSaving = true
+        
+        Task {
+            do {
+                let links = listPhotos.getLinks()
+                let map:[String:Any] = ["listPhotos": links]
+                try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
+                
+                DispatchQueue.main.async {
+                    self.product.listPhotos = links
+                    ToastManager.shared.showToast(msg: "Product Images Changed", toastType: .success)
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            } catch {
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+
+            }
+            
+            self.isSaving = false
+        }
+    }
+}
 
 struct ImageRow: View {
     var pathOrLink: ImagePickerWithUrL
@@ -49,100 +197,4 @@ struct ImagePickerWithUrL  : Identifiable{
     var image:UIImage?
     var link:String?
     var index:Int
-}
-
-struct ProductPhotos: View {
-    var product:StoreProduct
-    @State var images = [PhotosPickerItem]()
-    @State var imagesWithIndexs = [(PhotosPickerItem, Int)]()
-    
-    @ObservedObject var viewModel:ProductPhotosViewModel
-    @Environment(\.presentationMode) private var presentationMode
-    
-    init(product: StoreProduct) {
-        self.product = product
-        self.viewModel = ProductPhotosViewModel(product: product)
-    }
-    
-    var body: some View {
-        List {
-            ForEach(viewModel.listPhotos, id: \.id) { item in
-                if let index = viewModel.listPhotos.firstIndex(where: { image in image.id == item.id }) {
-                    ImageRow(pathOrLink: item, index: index)
-                }
-            }
-            .onDelete { indexSet in
-                if let index = indexSet.first {
-                    // --> Remove it from picker
-                    if let image = viewModel.listPhotos[index].image {
-                        images.remove(at: viewModel.listPhotos[index].index)
-                    }
-                    
-                    // --> Remove it from list
-                    viewModel.listPhotos.remove(at: index)
-                }
-                
-            }
-            .onMove { indexSet, index in
-                viewModel.listPhotos.move(fromOffsets: indexSet, toOffset: index)
-            }
-            
-            if(viewModel.listPhotos.count < 6) {
-                PhotosPicker(selection: $images, maxSelectionCount: (6 - viewModel.listPhotos.count), matching: .images) {
-                    Label("Add a new picture", systemImage: "plus")
-                }
-                .onChange(of: images) { newValue in
-                    Task {
-                        let photos = await newValue.addToListPhotos(list: viewModel.listPhotos)
-                        DispatchQueue.main.async {
-                            self.viewModel.listPhotos = photos
-                        }
-                    }
-                }
-            }
-            
-            Text("At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily.")
-                .font(.caption)
-        }
-        .listRowSeparator(.hidden)
-        .listStyle(.plain)
-        .navigationTitle("Product photos")
-        .navigationBarBackButtonHidden(viewModel.isSaving)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Update") {
-                    update()
-                }
-                .disabled(viewModel.isLoading || viewModel.isSaving || product.listPhotos.isEmpty)
-            }
-        }
-        .overlay(alignment: .center, content: {
-            ProgressView()
-                .isHidden(!viewModel.isLoading)
-        })
-        .willProgress(saving: viewModel.isSaving)
-        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-            if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
-        .toast(isPresenting: $viewModel.showToast){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: viewModel.msg)
-        }
-    }
-    
-    func update() {
-        Task {
-            await viewModel.update()
-        }
-    }
-    
-}
-
-struct ProductPhotos_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductPhotos(product: StoreProduct.example())
-    }
 }

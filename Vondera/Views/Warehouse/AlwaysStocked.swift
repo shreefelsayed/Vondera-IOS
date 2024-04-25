@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct AlmostOut: View {
+struct AlwaysStocked: View {
     var storeId:String
-    
-    @ObservedObject var viewModel:AlmostOutViewModel
+    @ObservedObject var viewModel:AlwaysStockedViewModel
     
     init(storeId: String) {
         self.storeId = storeId
-        self.viewModel = AlmostOutViewModel(storeId: storeId)
+        self.viewModel = AlwaysStockedViewModel(storeId: storeId)
     }
     
     var body: some View {
@@ -28,8 +27,6 @@ struct AlmostOut: View {
                             }
                         }))
                     
-                    
-                    
                     if viewModel.canLoadMore && viewModel.items.last?.id == product.id {
                         HStack {
                             Spacer()
@@ -42,11 +39,11 @@ struct AlmostOut: View {
                     }
                 }
             }
+            .listStyle(.plain)
             .scrollIndicators(.hidden)
             .refreshable {
                 await refreshData()
             }
-            .listStyle(.plain)
             .overlay {
                 if viewModel.isLoading && viewModel.items.isEmpty {
                     ProgressView()
@@ -79,5 +76,5 @@ struct AlmostOut: View {
 }
 
 #Preview {
-    AlmostOut(storeId: Store.Qotoofs())
+    InStock(storeId: Store.Qotoofs())
 }

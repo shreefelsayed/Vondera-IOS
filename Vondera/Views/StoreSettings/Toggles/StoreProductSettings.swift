@@ -14,7 +14,7 @@ struct StoreProductSettings: View {
 
     @ObservedObject private var myUser = UserInformation.shared
     
-    @State private var indec = 25
+    @State private var indec:Double = 25
     @State private var editPrice = false
     
     var body: some View {
@@ -92,7 +92,7 @@ struct StoreProductSettings: View {
         
         // --> Update the data
         if let store = myUser.getUser()?.store {
-            self.indec = store.almostOut ?? 20
+            self.indec = Double(store.almostOut ?? 20)
             self.editPrice = store.canEditPrice ?? false
         }
         
