@@ -75,6 +75,8 @@ struct VPayoutsScreen: View {
                     
                 } catch {
                     print(error.localizedDescription)
+                    CrashsManager().addLogs(error.localizedDescription, "Payouts")
+
                 }
                 
                 self.isLoading = false
@@ -251,6 +253,8 @@ struct PayoutRequest: View {
             } catch {
                 self.isSaving = false
                 self.msg = error.localizedDescription
+                CrashsManager().addLogs(error.localizedDescription, "Payout")
+
                 return
             }
         }

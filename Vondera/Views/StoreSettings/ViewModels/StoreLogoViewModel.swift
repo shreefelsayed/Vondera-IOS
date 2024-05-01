@@ -79,21 +79,19 @@ class StoreLogoViewModel : ObservableObject {
 
                     // Call the firebase function
                     let data:[String:Any] = ["mid" : myUser.store?.merchantId ?? "", "link" : url.absoluteString]
-                    
-                    
-                    _ = try await FirebaseFunctionCaller().callFunction(functionName: "sheets-logoChanged", data: data)
+                    try await FirebaseFunctionCaller().callFunction(functionName: "sheets-logoChanged", data: data)
                 }
                                 
                 DispatchQueue.main.async {
                     self.showMessage("Store Logo Changed")
-                    self.isSaving = false
                     self.shouldDismissView = true
                 }
             } catch {
-                DispatchQueue.main.async {
-                    self.isSaving = false
-                    self.showMessage(error.localizedDescription.localize())
-                }
+                CrashsManager().addLogs(error.localizedDescription, "Store Shipping")
+            }
+            
+            DispatchQueue.main.async {
+                self.isSaving = false
             }
         }
     }

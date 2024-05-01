@@ -14,6 +14,7 @@ struct ProductBuyingSheet: View {
     @State private var selectedDetent = PresentationDetent.large
     @State private var selectedVariant:VariantsDetails?
     @State private var listOption:[String] = []
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -34,10 +35,12 @@ struct ProductBuyingSheet: View {
                         
                         // --> Back button
                         Image(systemName: "chevron.left")
+                            .font(.title3.bold())
                             .foregroundColor(.white)
                             .onTapGesture {
                                 dismiss()
                             }
+                            .padding()
                     }
                     
                     
@@ -145,7 +148,6 @@ struct ProductBuyingSheet: View {
                     
                     if !product.canAddToCart(variant: selectedVariant) {
                         ButtonLarge(label: "Preorder Product", background: .red ,textColor: .white) {
-                            ToastManager.shared.showToast(msg: "Added to cart", toastType: .success)
                             onAddedToCard(product, getVariantsMap())
                             dismiss()
                         }
@@ -157,7 +159,6 @@ struct ProductBuyingSheet: View {
                         }
                     } else {
                         ButtonLarge(label: "Add to cart") {
-                            ToastManager.shared.showToast(msg: "Added to cart", toastType: .success)
                             onAddedToCard(product, getVariantsMap())
                             dismiss()
                         }

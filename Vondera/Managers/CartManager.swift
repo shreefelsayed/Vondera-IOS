@@ -69,9 +69,8 @@ class CartManager {
         return nil
     }
     
-    func addItem(product:StoreProduct, options: VariantsDetails) {
-        let savedItem = SavedItems(randomId: CartManager.generatePIN(), productId: product.id, hashMap: options.options)
-        
+    func addItem(product:StoreProduct, options: VariantsDetails?) {
+        let savedItem = SavedItems(randomId: CartManager.generatePIN(), productId: product.id, hashMap: options?.options ?? [:])
         addItem(savedItems: savedItem)
     }
     
@@ -86,6 +85,8 @@ class CartManager {
         var listItems =  getCart()
         listItems.append(savedItems)
         saveCart(listCart: listItems)
+        
+        ToastManager.shared.showToast(msg: "Added to cart", toastType: .success)
     }
     
     private func areHashmapsEqual(_ first: [String: String], _ second: [String: String]) -> Bool {

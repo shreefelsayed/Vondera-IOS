@@ -346,6 +346,7 @@
 		B3DFDC302A45337500037858 /* WrappingStack in Frameworks */ = {isa = PBXBuildFile; productRef = B3DFDC2F2A45337500037858 /* WrappingStack */; };
 		B3DFDC322A453B2300037858 /* NonDismiss.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC312A453B2300037858 /* NonDismiss.swift */; };
 		B3DFDC352A45421700037858 /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = B3DFDC342A45421700037858 /* Atomics */; };
+		B3E1B14B2BE016CC004239B0 /* CrashsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E1B14A2BE016CC004239B0 /* CrashsManager.swift */; };
 		B3E2BCA92AF14EC900A6FCFA /* Paytabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2BCA82AF14EC900A6FCFA /* Paytabs.swift */; };
 		B3E2BCAB2AF14F4400A6FCFA /* CashOnDelivery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2BCAA2AF14F4400A6FCFA /* CashOnDelivery.swift */; };
 		B3E2BCAD2AF1506100A6FCFA /* PaymentsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2BCAC2AF1506100A6FCFA /* PaymentsOptions.swift */; };
@@ -720,6 +721,7 @@
 		B3DFDC282A450B1600037858 /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
 		B3DFDC2A2A45133D00037858 /* ChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipView.swift; sourceTree = "<group>"; };
 		B3DFDC312A453B2300037858 /* NonDismiss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonDismiss.swift; sourceTree = "<group>"; };
+		B3E1B14A2BE016CC004239B0 /* CrashsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashsManager.swift; sourceTree = "<group>"; };
 		B3E2BCA82AF14EC900A6FCFA /* Paytabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paytabs.swift; sourceTree = "<group>"; };
 		B3E2BCAA2AF14F4400A6FCFA /* CashOnDelivery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashOnDelivery.swift; sourceTree = "<group>"; };
 		B3E2BCAC2AF1506100A6FCFA /* PaymentsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsOptions.swift; sourceTree = "<group>"; };
@@ -1132,6 +1134,7 @@
 				B370458B2AE80F2200360726 /* AnalyticsManager.swift */,
 				B31FAC902AED4DFD00023BE0 /* LocalizationService.swift */,
 				B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */,
+				B3E1B14A2BE016CC004239B0 /* CrashsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2046,6 +2049,7 @@
 				B31FAC912AED4DFD00023BE0 /* LocalizationService.swift in Sources */,
 				B33970AD2A46249300E44FA2 /* EmployeeProfile.swift in Sources */,
 				B3EBA5CA2ACBE84B00AFDC69 /* FirebaseFunctionCaller.swift in Sources */,
+				B3E1B14B2BE016CC004239B0 /* CrashsManager.swift in Sources */,
 				B30CF0CE2A52A6E500245955 /* OrderSelectCard.swift in Sources */,
 				B30050B02AE499E700FC561D /* MarketPlaceOrders.swift in Sources */,
 				B3A7E77A2A3F5D9B00F0CD11 /* ViewExt.swift in Sources */,
@@ -2429,7 +2433,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 61;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2450,7 +2454,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5;
+				MARKETING_VERSION = 4.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2472,7 +2476,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2492,7 +2496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5;
+				MARKETING_VERSION = 4.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

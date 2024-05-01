@@ -114,6 +114,7 @@ struct TransactionDetails: View {
                 self.isLoading = false
             }
         } catch {
+            CrashsManager().addLogs(error.localizedDescription, "Transaction Details")
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
     }

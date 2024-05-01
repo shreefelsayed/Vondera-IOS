@@ -30,7 +30,7 @@ struct ProductCardSkelton : View {
 }
 struct ProductCard: View {
     @Binding var product:StoreProduct
-    var onBuyAction:(() -> ())?
+    var showBuyButton = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -103,9 +103,9 @@ struct ProductCard: View {
                     }
                 }
                 
-                if let onBuyAction = onBuyAction {
+                if showBuyButton {
                     Button("Add to cart") {
-                        onBuyAction()
+                        
                     }
                     .foregroundColor(.white)
                     .padding(.vertical, 6)
@@ -115,6 +115,7 @@ struct ProductCard: View {
                     )
                     .cornerRadius(8)
                 }
+                
             }
             .padding(.top, 12)
             .padding(.bottom, 6)

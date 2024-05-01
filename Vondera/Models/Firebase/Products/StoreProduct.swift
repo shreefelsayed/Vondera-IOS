@@ -213,7 +213,7 @@ extension StoreProduct {
 struct VariantsDetails: Codable, Equatable, Hashable {
     var options: [String: String]
     var quantity: Int
-    var sold:Int
+    var sold:Int?
     var image: String
     var optimizedImage:String? = ""
     var cost: Double

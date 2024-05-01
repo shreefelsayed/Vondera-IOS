@@ -79,46 +79,58 @@ struct WebsiteCover: View {
     }
     
     func update() {
-        if let storeId = user.user?.storeId {
-            saving = true
-            
-            guard !listPhotos.isEmpty else {
-                updateURL()
-                return
-            }
-            
-            
-            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
-                if let error = error {
-                    self.saving = false
-                    self.msg = error.localizedDescription
-                } else if let urls = imageURLs {
-                    self.listPhotos = self.listPhotos.mapUrlsToLinks(urls: urls)
-                    self.updateURL()
-                }
+        // Make sure you have items to upload
+        guard !listPhotos.getItemsToUpload().isEmpty else {
+            updateURL()
+            return
+        }
+        
+        guard let storeId = user.user?.storeId else {
+            return
+        }
+        
+        self.saving = true
+        
+        // Upload the items
+        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
+            if let error = error {
+                self.saving = false
+                self.msg = error.localizedDescription
+            } else if let urls = imageURLs {
+                self.listPhotos = self.listPhotos.mapUrlsToLinks(urls: urls)
+                self.updateURL()
             }
         }
     }
     
     func updateURL() {
+        guard let id = UserInformation.shared.user?.storeId  else {
+            return
+        }
+        
+        self.saving = true
+        print("Saving new urls")
+        
+        let data = [
+            "siteData.listCover" : listPhotos.getLinks(),
+        ]
+        
         Task {
-            if let id = UserInformation.shared.user?.storeId {
-                let data = [
-                    "siteData.listCover" : listPhotos.getLinks(),
-                ]
-                
-                if let _ = try? await StoresDao().update(id: id, hashMap: data) {
-                    DispatchQueue.main.async { [self] in
-                        UserInformation.shared.user?.store?.siteData?.listCover = listPhotos.getLinks()
-                        UserInformation.shared.updateUser()
-                        presentationMode.wrappedValue.dismiss()
-                        msg = "Updated"
-                    }
-                } else {
-                    msg = "Error Happened"
+            do {
+                try await StoresDao().update(id: id, hashMap: data)
+                DispatchQueue.main.async {
+                    UserInformation.shared.user?.store?.siteData?.listCover = listPhotos.getLinks()
+                    UserInformation.shared.updateUser()
+                    ToastManager.shared.showToast(msg: "Covers Updated", toastType: .success)
+                    self.presentationMode.wrappedValue.dismiss()
                 }
-                
-                saving = false
+            } catch {
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+                CrashsManager().addLogs(error.localizedDescription, "Website Covers")
+            }
+            
+            DispatchQueue.main.async {
+                self.saving = false
             }
         }
     }

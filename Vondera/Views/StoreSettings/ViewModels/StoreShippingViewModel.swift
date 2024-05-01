@@ -52,6 +52,7 @@ class StoreShippingViewModel : ObservableObject {
             }
         } catch {
             print(error.localizedDescription)
+            CrashsManager().addLogs(error.localizedDescription, "Store Shipping")
         }
         
         DispatchQueue.main.async {
@@ -82,6 +83,8 @@ class StoreShippingViewModel : ObservableObject {
             }
         } catch {
             showToast(error.localizedDescription.localize())
+            CrashsManager().addLogs(error.localizedDescription, "Store Shipping")
+
         }
         
         

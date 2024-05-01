@@ -50,6 +50,8 @@ class InStockViewModel: ObservableObject {
             }
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+            CrashsManager().addLogs(error.localizedDescription, "In Stock")
+
         }
         
         self.isLoading = false

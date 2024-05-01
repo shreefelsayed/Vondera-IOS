@@ -18,6 +18,8 @@ class CartViewModel : ObservableObject {
             if let user = UserInformation.shared.getUser() {
                 self.myUser = user
             }
+            
+            await getCartItems()
         }
     }
     
@@ -63,21 +65,22 @@ class CartViewModel : ObservableObject {
         guard let storeId = UserInformation.shared.user?.storeId else { return }
         
         self.isLoading = true
+        
         list.removeAll()
         
         do {
             for item in  CartManager().getCart() {
                 let product = try await ProductsDao(storeId: storeId).getProduct(id: item.productId)
                 guard let product = product else { continue }
-                let obj = product.mapToOrderProduct(q:item.quantity, varient: item.hashMap, savedId: item.randomId)
+                let obj = product.mapToOrderProduct(q: item.quantity, varient: item.hashMap, savedId: item.randomId)
                 list.append(obj)
+                print("Added item \(obj.name) to cart")
             }
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
         
         self.isLoading = false
-        
     }
 }
 
@@ -85,7 +88,7 @@ class CartViewModel : ObservableObject {
 struct Cart: View {
     @State var myUser = UserInformation.shared.getUser()
     @State var shipping:Bool = true
-    @ObservedObject var viewModel = CartViewModel()
+    @StateObject var viewModel = CartViewModel()
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
@@ -106,8 +109,6 @@ struct Cart: View {
                 }
             }
             .listStyle(.plain)
-            
-            
             
             // MARK : Pricing
             if !viewModel.list.isEmpty {
@@ -145,23 +146,15 @@ struct Cart: View {
                     .ignoresSafeArea()
                 }
             }
-            
         }
         .padding()
         .background(Color.background)
-        .onAppear {
-            Task {
-                self.myUser = UserInformation.shared.getUser()
-                await viewModel.getCartItems()
-            }
-        }
-        .overlay(alignment: .center, content: {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if viewModel.list.isEmpty {
+        .willLoad(loading: viewModel.isLoading)
+        .overlay {
+            if viewModel.list.isEmpty && !viewModel.isLoading {
                 EmptyMessageWithResource(imageResource: .emptyCart, msg: "You haven't added any products to your cart yet !")
             }
-        })
+        }
         .toolbar{
             if !viewModel.list.isEmpty {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -175,7 +168,6 @@ struct Cart: View {
                 }
             }
         }
-        .willLoad(loading: viewModel.isLoading)
         .navigationTitle("Cart")
     }
 }

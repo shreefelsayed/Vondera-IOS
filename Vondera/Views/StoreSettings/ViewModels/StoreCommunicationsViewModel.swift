@@ -55,6 +55,7 @@ class StoreCommunicationsViewModel : ObservableObject {
             }
         } catch {
             showTosat(msg: error.localizedDescription.localize())
+            CrashsManager().addLogs(error.localizedDescription, "Store Communication")
         }
         
         

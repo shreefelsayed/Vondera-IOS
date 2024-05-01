@@ -253,6 +253,7 @@ struct OrderDetailLoading : View {
                 self.isLoading = false
             }
         } catch {
+            CrashsManager().addLogs(error.localizedDescription, "Order Details")
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
     }
@@ -677,23 +678,22 @@ struct OrderDetails: View {
             self.orderCourier = result
             print("Updated Courier")
         } catch {
+            CrashsManager().addLogs(error.localizedDescription, "Order Details")
             print("Courier error \(error)")
         }
     }
     
     func getOrderData() async {
+        guard let storeId = order.storeId, !storeId.isBlank else {
+            return
+        }
+        
         do {
-            if let storeId = order.storeId, !storeId.isBlank {
-                let orderData = try await OrdersDao(storeId: storeId).getOrder(id: order.id)
-                DispatchQueue.main.async {
-                    if !orderData.exists {
-                        self.showTosat("Order doesn't exist")
-                        return
-                    }
-                    self.order = orderData.item
-                }
-            }
+            let orderData = try await OrdersDao(storeId: storeId).getOrder(id: order.id)
+            guard orderData.exists else { return }
+            DispatchQueue.main.async { self.order = orderData.item }
         } catch {
+            CrashsManager().addLogs(error.localizedDescription, "Order Details")
             showTosat(error.localizedDescription.localize())
         }
     }
@@ -701,7 +701,6 @@ struct OrderDetails: View {
     
     func addComment() {
         Task {
-            
             let order = await OrderManager().addComment(order: &order, msg: comment, code: 0)
             DispatchQueue.main.async { [order] in
                 self.order = order

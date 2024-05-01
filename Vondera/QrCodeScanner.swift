@@ -46,6 +46,7 @@ struct QrCodeScanner: View {
                     
                     
                 } catch {
+                    CrashsManager().addLogs(error.localizedDescription, "QR Code Scanner")
                     msg = error.localizedDescription.localize()
                 }
             }

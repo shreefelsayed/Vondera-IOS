@@ -57,6 +57,7 @@ struct FilteredOrdersView: View {
                 self.isLoading = false
             }
         } catch {
+            CrashsManager().addLogs(error.localizedDescription, "Filter Orders")
             print(error.localizedDescription)
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
@@ -275,6 +276,7 @@ struct FilterScreen: View {
             self.listCouriers = couriersResult
             self.isLoading = false
         } catch {
+            CrashsManager().addLogs(error.localizedDescription, "Filter Orders")
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
     }

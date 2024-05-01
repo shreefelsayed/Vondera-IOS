@@ -76,6 +76,7 @@ struct VTrasnactionsScreen: View {
                     self.canLoadMore = !result.0.isEmpty
                     
                 } catch {
+                    CrashsManager().addLogs(error.localizedDescription, "Transctions Screen")
                     print(error.localizedDescription)
                 }
                 

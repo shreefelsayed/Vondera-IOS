@@ -50,6 +50,8 @@ class AlwaysStockedViewModel: ObservableObject {
             }
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+            CrashsManager().addLogs(error.localizedDescription, "Always Stocked")
+
         }
         
         self.isLoading = false

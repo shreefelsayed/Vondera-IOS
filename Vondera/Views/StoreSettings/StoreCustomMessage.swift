@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AlertToast
 
 struct StoreCustomMessage: View {
     @State private var customMessage = ""
@@ -15,7 +14,6 @@ struct StoreCustomMessage: View {
     @State private var seller = false
     @State private var serial = false
 
-    @State private var msg:LocalizedStringKey?
     @State private var isSaving = false
     @Environment(\.presentationMode) private var presentationMode
 
@@ -35,11 +33,6 @@ struct StoreCustomMessage: View {
         .navigationTitle("Receipt Options")
         .willProgress(saving: isSaving)
         .navigationBarBackButtonHidden(isSaving)
-        .toast(isPresenting: Binding(value: $msg)){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: msg?.toString())
-        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Save") {
@@ -79,15 +72,14 @@ struct StoreCustomMessage: View {
                     DispatchQueue.main.async {
                         UserInformation.shared.user?.store?.customMessage = customMessage
                         UserInformation.shared.updateUser()
-                        self.msg = "Updated".localize()
+                        ToastManager.shared.showToast(msg: "Updated", toastType: .success)
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 } catch {
-                    self.msg = error.localizedDescription.localize()
+                    CrashsManager().addLogs(error.localizedDescription, "Custom Message")
+                    ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
                 }
-                
             }
-            
         }
     }
 }

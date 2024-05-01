@@ -42,20 +42,23 @@ class AlmostOutViewModel: ObservableObject {
             return
         }
         
+        self.isLoading = true
+        
+        let amount = UserInformation.shared.user?.store?.almostOut ?? 20
+        
         do {
-            isLoading = true
-           
-            let store = try await storesDao.getStore(uId: storeId)
-            let result = try await productsDao.getStockLessThen(almostOut: store.almostOut ?? 20, lastSnapShot: lastSnapshot)
-            
+            let result = try await productsDao.getStockLessThen(almostOut: amount, lastSnapShot: lastSnapshot)
             DispatchQueue.main.sync {
-                lastSnapshot = result.1
-                items.append(contentsOf: result.0)
+                self.lastSnapshot = result.1
+                self.items.append(contentsOf: result.0)
                 self.canLoadMore = !result.0.isEmpty
-                isLoading = false
             }
         } catch {
-            isLoading = false
+            CrashsManager().addLogs(error.localizedDescription, "Almost Out")
+        }
+        
+        DispatchQueue.main.sync {
+            self.isLoading = false
         }
     }
 }

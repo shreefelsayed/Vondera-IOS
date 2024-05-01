@@ -148,6 +148,7 @@ struct StoreInformation: View {
             }
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+            CrashsManager().addLogs(error.localizedDescription, "Store Information")
         }
     }
     
@@ -181,6 +182,7 @@ struct StoreInformation: View {
                     }
                 } catch {
                     self.onError(error: error.localizedDescription)
+                    CrashsManager().addLogs(error.localizedDescription, "Store Information")
                 }
             }
         }

@@ -2562,6 +2562,9 @@
         }
       }
     },
+    "Covers Updated" : {
+
+    },
     "Create" : {
       "localizations" : {
         "ar" : {
@@ -5813,6 +5816,7 @@
       }
     },
     "Order doesn't exist" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

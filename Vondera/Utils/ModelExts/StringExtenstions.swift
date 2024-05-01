@@ -407,7 +407,7 @@ extension Array where Element == VariantsDetails {
     func totalSold() -> Int {
         var total = 0
         for item in self {
-            total += item.sold
+            total += item.sold ?? 0
         }
         
         return total

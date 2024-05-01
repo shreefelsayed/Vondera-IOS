@@ -136,7 +136,7 @@ struct OrderCard: View {
                     
                     Spacer()
                     
-                    Text("EGP \(order.totalPrice.toString())")
+                    Text("EGP \(order.orderPrice.toString())")
                         .font(.caption)
                         .bold()
                         .foregroundStyle(Color.accentColor)

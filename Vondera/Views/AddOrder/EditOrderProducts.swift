@@ -144,10 +144,8 @@ struct EditOrderProducts: View {
         })
         .navigationTitle("Edit Products")
         .sheet(isPresented: $addItemSheet, content: {
-            NavigationStack {
-                AddItemsToOrder { product, options in
-                    viewModel.addItem(product: product, option: options)
-                }
+            AddItemsToOrder { product, options in
+                viewModel.addItem(product: product, option: options)
             }
         })
     }
@@ -163,18 +161,22 @@ struct AddItemsToOrder : View {
     var body: some View {
         ScrollView {
             VStack {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                    ForEach($items.indices, id: \.self) { index in
-                        if $items[index].wrappedValue.filter(searchText) {
-                            ProductCard(product: $items[index]) {
-                                self.selectedProduct = items[index]
-                            }
+                // MARK : Items
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
+                    ForEach(Array($items.enumerated()), id: \.element.id) { i, product in
+                        if product.wrappedValue.filter(searchText) {
+                            ProductCard(product: product, showBuyButton: false)
+                                .id(product.id)
+                                .onTapGesture {
+                                    self.selectedProduct = $items[i].wrappedValue
+                                }
                         }
                     }
                 }
+                .padding(.horizontal, 12)
             }
         }
-        .isHidden(isLoading)
+        .willLoad(loading: isLoading)
         .overlay {
             if items.isEmpty && isLoading {
                 ProgressView()
