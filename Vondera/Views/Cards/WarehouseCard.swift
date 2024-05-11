@@ -29,7 +29,11 @@ struct WarehouseCardSkelton : View {
 }
 struct WarehouseCard: View {
     @Binding var prod:StoreProduct
-    @State var showDetails = false
+    var showVariants = false
+    
+    
+    @State private var showDetails = false
+    
     var sold = false
     
     var body: some View {
@@ -70,29 +74,45 @@ struct WarehouseCard: View {
             }
             .cardView(padding: 0)
             
-            if !sold {
-                ForEach(prod.getVariant().sorted(by: {$0.quantity > $1.quantity}), id: \.self) { varient in
+            if !sold && showVariants {
+                VStack(alignment: .leading) {
                     HStack {
-                        let image = varient.image.isBlank ? prod.defualtPhoto() : varient.image
-                        CachedImageView(imageUrl: image, scaleType: .centerCrop, placeHolder: nil)
-                            .id(image)
-                            .frame(width: 42, height: 60)
+                        Spacer()
                         
-                        VStack(alignment: .leading) {
-                            Text(varient.formatOptions())
-                                .bold()
-                            HStack {
-                                let stock = (prod.alwaysStocked ?? false) ? "Always Stocked" : "\(varient.quantity) Pieces"
-
-                                Text(stock)
-                                Spacer()
-                                
-                                Text("EGP \(varient.price.toString())")
+                        Image(systemName: showDetails ? "chevron.up" : "chevron.down")
+                            .onTapGesture {
+                                withAnimation {
+                                    showDetails.toggle()
+                                }
                             }
-                            
-                        }
                     }
-                    .padding(.leading, 24)
+                }
+                
+                if showDetails {
+                    ForEach(prod.getVariant().sorted(by: {$0.quantity > $1.quantity}), id: \.self) { varient in
+                        HStack {
+                            let image = varient.image.isBlank ? prod.defualtPhoto() : varient.image
+                            CachedImageView(imageUrl: image, scaleType: .centerCrop, placeHolder: nil)
+                                .id(image)
+                                .frame(width: 42, height: 60)
+                            
+                            VStack(alignment: .leading) {
+                                Text(varient.formatOptions())
+                                    .bold()
+                                HStack {
+                                    let stock = (prod.alwaysStocked ?? false) ? "Always Stocked" : "\(varient.quantity) Pieces"
+
+                                    Text(stock)
+                                    Spacer()
+                                    
+                                    Text("EGP \(varient.price.toString())")
+                                }
+                                
+                            }
+                        }
+                        .padding(.leading, 24)
+                    }
+
                 }
             }
         }

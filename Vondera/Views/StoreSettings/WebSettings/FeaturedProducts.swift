@@ -28,7 +28,7 @@ struct FeaturedProducts: View {
                         listProducts.remove(at: index)
                     }
                 })) {
-                    WarehouseCard(prod: product)
+                    WarehouseCard(prod: product, showVariants: false)
                 }
                 .buttonStyle(.plain)
                 

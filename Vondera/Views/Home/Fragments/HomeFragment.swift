@@ -22,13 +22,8 @@ struct StoreToolbar : View {
                 
                 NavigationLink(destination: NotificationsView()) {
                     Image(systemName: notificationCount > 0 ? "bell.badge" :"bell")
-                        .font(.callout)
-                        .foregroundStyle(Color.accentColor)
-                        .padding(4)
-                        .background(
-                            Circle()
-                                .fill(Color.accentColor.opacity(0.2))
-                        )
+                        .font(.title2)
+                        
                 }
             }
         }

@@ -320,9 +320,7 @@ struct ProductDetails: View {
         .navigationTitle("Product info")
         .sheet(isPresented: $addToCard, content: {
             ProductBuyingSheet(product: $product, onAddedToCard: { product, options in
-                if let variant = product.getVariantInfo(options) {
-                    CartManager().addItem(product: product, options: variant)
-                }
+                CartManager().addItem(product: product, options: product.getVariantInfo(options))
             })
         })
     }

@@ -271,7 +271,7 @@ struct PDFReceipt: View {
                                 
                             Spacer()
                             
-                            Text("\((product.quantity.double() * product.price).toString()) EGP")
+                            Text("\((product.quantity.double() * product.price).formatted()) EGP")
                             
                         }
                         .font(.caption2)

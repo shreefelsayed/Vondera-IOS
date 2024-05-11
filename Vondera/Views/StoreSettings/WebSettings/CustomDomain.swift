@@ -197,6 +197,7 @@ struct CustomDomain: View {
                     saving = false
                     return
                 }
+                
                 DispatchQueue.main.async {
                     handleConnectResult(resultData)
                 }

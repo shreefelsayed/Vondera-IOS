@@ -906,6 +906,9 @@
         }
       }
     },
+    "Add at least 2 options to each varient" : {
+
+    },
     "Add Attachments" : {
       "localizations" : {
         "ar" : {
@@ -3221,6 +3224,9 @@
         }
       }
     },
+    "Do you want to update the variants prices too ?" : {
+
+    },
     "Domain" : {
       "localizations" : {
         "ar" : {
@@ -3757,6 +3763,9 @@
         }
       }
     },
+    "Enter a valid cost amount" : {
+
+    },
     "Enter a valid email address" : {
       "localizations" : {
         "ar" : {
@@ -3797,6 +3806,12 @@
         }
       }
     },
+    "Enter a valid price amount" : {
+
+    },
+    "Enter a valid quantity amount" : {
+
+    },
     "Enter a valid username" : {
       "localizations" : {
         "ar" : {
@@ -3816,6 +3831,9 @@
           }
         }
       }
+    },
+    "Enter product name" : {
+
     },
     "Enter the amount you want to collect from the customer, the order will be updated once the customer pays" : {
       "localizations" : {
@@ -4043,6 +4061,9 @@
         }
       }
     },
+    "Fill all varients titles" : {
+
+    },
     "Fill from recent products" : {
       "localizations" : {
         "ar" : {
@@ -4094,6 +4115,9 @@
       }
     },
     "Fill the current variant first" : {
+
+    },
+    "Fill the current varient first" : {
 
     },
     "Fill the Employee name" : {
@@ -4672,6 +4696,9 @@
           }
         }
       }
+    },
+    "Just update price" : {
+
     },
     "Kashier" : {
       "localizations" : {
@@ -6877,6 +6904,9 @@
         }
       }
     },
+    "Product has been added" : {
+
+    },
     "Product Images Changed" : {
 
     },
@@ -7585,6 +7615,9 @@
         }
       }
     },
+    "Select one photo at least" : {
+
+    },
     "Select orders" : {
       "localizations" : {
         "ar" : {
@@ -7604,6 +7637,9 @@
           }
         }
       }
+    },
+    "Select the product category" : {
+
     },
     "Select your action" : {
       "localizations" : {
@@ -7636,6 +7672,9 @@
       }
     },
     "Selling price can't be Zero" : {
+
+    },
+    "Selling price can't be Zero LE" : {
 
     },
     "Send abandon carts emails" : {
@@ -8240,6 +8279,9 @@
           }
         }
       }
+    },
+    "Template date filled" : {
+
     },
     "TEnter how many of this product do you have right now in the warehouse" : {
       "localizations" : {
@@ -9319,6 +9361,12 @@
           }
         }
       }
+    },
+    "Update Varaints" : {
+
+    },
+    "Update Variants" : {
+
     },
     "Updated" : {
       "localizations" : {

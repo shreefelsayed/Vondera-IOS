@@ -11,7 +11,7 @@ import SwiftUI
 class OrdersFragmentViewModel: ObservableObject {
     @Published var itemsLatest = [Order]()
     @Published var itemsUpdated = [Order]()
-    @Published var isLoading = true
+    @Published var isLoading = false
     
     init() {
         Task {
@@ -20,22 +20,22 @@ class OrdersFragmentViewModel: ObservableObject {
     }
     
     func getContent() async {
-        if let storeId = UserInformation.shared.user?.storeId {
-            do {
-                let added = try await OrdersDao(storeId: storeId).getOrdersSortedBy(index: "date")
-                let updated = try await OrdersDao(storeId: storeId).getOrdersSortedBy(index: "lastUpdated")
-            
-                DispatchQueue.main.async {
-                    self.itemsLatest = added
-                    self.itemsUpdated = updated
-                    self.isLoading = false
-                    print("Data loaded")
-                }
-            } catch {
-                print("Order error \(error)")
+        guard let storeId = UserInformation.shared.user?.storeId else { return }
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        do {
+            let added = try await OrdersDao(storeId: storeId).getOrdersSortedBy(index: "date")
+            let updated = try await OrdersDao(storeId: storeId).getOrdersSortedBy(index: "lastUpdated")
+        
+            DispatchQueue.main.async {
+                self.itemsLatest = added
+                self.itemsUpdated = updated
+                self.isLoading = false
             }
-        } else {
-            print("Couldn't find a store id")
+        } catch {
+            print("Order error \(error)")
         }
     }
 }
@@ -179,26 +179,13 @@ struct OrdersFragment: View {
                 }
                 .scrollIndicators(.hidden)
                 .listRowSeparator(.hidden)
+                
+                /*if !vm.isLoading && vm.itemsLatest.isEmpty && vm.itemsUpdated.isEmpty {
+                    EmptyMessageView(systemName: "bag.badge.questionmark", msg: "Your store has no orders")
+                }*/
             }
         }
-        .isHidden(vm.isLoading)
-        .overlay {
-            ProgressView()
-                .isHidden(!vm.isLoading)
-        }
-        .overlay {
-            if !vm.isLoading && vm.itemsLatest.isEmpty && vm.itemsUpdated.isEmpty {
-                EmptyMessageViewWithButton(systemName: "bag.badge.questionmark", msg: "Your store has no orders") {
-                    NavigationLink {
-                        AddToCart()
-                    } label: {
-                        Text("Add your first order")
-                    }
-                    .buttonStyle(.bordered)
-
-                }
-            }
-        }
+        //.willLoad(loading: vm.isLoading)
         .refreshable {
             await getUser()
             await vm.getContent()

@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct ProductPrice: View {
     @Binding var product:StoreProduct
+    @State private var hasVariants = false
+    
     @Environment(\.presentationMode) private var presentationMode
+    @State private var showWarning = false
     
     @State private var price:Double = 0
     @State private var cost:Double = 0
@@ -61,53 +65,62 @@ struct ProductPrice: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
-                    update()
+                    if hasVariants {
+                        showWarning.toggle()
+                    } else {
+                        update(withVariant: false)
+                    }
                 }
                 .disabled(isLoading || isSaving)
             }
         }
         .willProgress(saving: isSaving)
         .task {
-            await getData()
+            fetchData()
         }
-    }
-    
-    func update() {
-        Task {
-            await update()
-        }
-    }
-    
-    
-    func getData() async {
-        guard let storeId = UserInformation.shared.user?.storeId else {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
-        
-        do {
-            if let product = try await ProductsDao(storeId: storeId).getProduct(id: product.id) {
-                DispatchQueue.main.async {
-                    self.product = product
-                    self.cost = product.buyingPrice
-                    self.price = product.price
-                    self.crossed = product.crossedPrice ?? 0
-                }
+        .confirmationDialog("Update Variants", isPresented: $showWarning) {
+            Button("Update Varaints") {
+                update(withVariant: true)
             }
-        } catch {
-            print(error.localizedDescription)
+            
+            Button("Just update price", role: .cancel) {
+                update(withVariant: false)
+            }
+        } message: {
+            Text("Do you want to update the variants prices too ?")
         }
+
+    }
+    
+    
+    func fetchData() {
+        guard let storeId = UserInformation.shared.user?.storeId else {return}
+        isLoading = true
         
-        DispatchQueue.main.async {
-            self.isLoading = false
+        Task {
+            do {
+                if let product = try await ProductsDao(storeId: storeId).getProduct(id: product.id) {
+                    DispatchQueue.main.async {
+                        self.product = product
+                        self.hasVariants = product.hasVariants()
+                        
+                        self.cost = product.buyingPrice
+                        self.price = product.price
+                        self.crossed = product.crossedPrice ?? 0
+                    }
+                }
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
         }
     }
     
     
-    func check() -> Bool{
+    func validate() -> Bool{
         guard price != 0 else {
             ToastManager.shared.showToast(msg: "Selling price can't be Zero", toastType: .error)
             return false
@@ -121,40 +134,54 @@ struct ProductPrice: View {
         return true
     }
     
-    func update() async {
-        guard let storeId = UserInformation.shared.user?.storeId else {
-            return
-        }
+    func update(withVariant:Bool = false) {
+        guard let storeId = UserInformation.shared.user?.storeId, validate() else { return }
+        isSaving = true
         
-        guard check() else {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.isSaving = true
-        }
-        
-        do {
-            // --> Update the database
-            let map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
-            try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
+        Task {
+            do {
+                // --> Update the database
+                var map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
+                try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
+                
+                
+                if withVariant {
+                    var variantsMap:[String:[VariantsDetails]] = ["variantsDetails" : modifiedVariants()]
+                    let encoded: [String: Any] = try! Firestore.Encoder().encode(variantsMap)
+                    try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: encoded)
+                }
+                
+                DispatchQueue.main.async {
+                    ToastManager.shared.showToast(msg: "Product cost and price changed", toastType: .success)
+                    self.product.price = price
+                    self.product.buyingPrice = cost
+                    self.product.crossedPrice = crossed
+                    
+                    if withVariant {
+                        self.product.variantsDetails = modifiedVariants()
+                    }
+                    
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            } catch {
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+            }
+            
             
             DispatchQueue.main.async {
-                ToastManager.shared.showToast(msg: "Product cost and price changed", toastType: .success)
-                self.product.price = price
-                self.product.buyingPrice = cost
-                self.product.crossedPrice = crossed
-                self.presentationMode.wrappedValue.dismiss()
+                self.isSaving = false
             }
-        } catch {
-            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
-        
-        
-        DispatchQueue.main.async {
-            self.isSaving = false
+    }
+    
+    func modifiedVariants() -> [VariantsDetails] {
+        return product.getVariant().map {
+            var item = $0
+            item.price = price
+            item.cost = cost
+            
+            return item
         }
-        
     }
 }
 

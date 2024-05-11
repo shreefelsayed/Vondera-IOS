@@ -144,9 +144,12 @@ struct EditOrderProducts: View {
         })
         .navigationTitle("Edit Products")
         .sheet(isPresented: $addItemSheet, content: {
-            AddItemsToOrder { product, options in
-                viewModel.addItem(product: product, option: options)
+            NavigationStack {
+                AddItemsToOrder { product, options in
+                    viewModel.addItem(product: product, option: options)
+                }
             }
+            
         })
     }
 }
@@ -187,21 +190,16 @@ struct AddItemsToOrder : View {
             }
         }
         .searchable(text: $searchText, prompt: Text("Search \($items.count) Products"))
-        .refreshable {
-            searchText = ""
-            await getData()
-        }
         .task {
             isLoading = true
             await getData()
         }
         .navigationTitle("Add Products")
         .sheet(item: $selectedProduct) { prod in
-            NavigationStack {
-                ProductBuyingSheet(product: .constant(prod), onAddedToCard: { product, options in
-                    onItemAdded(product, options)
-                })
-            }
+            
+            ProductBuyingSheet(product: .constant(prod), onAddedToCard: { product, options in
+                onItemAdded(product, options)
+            })
         }
     }
     

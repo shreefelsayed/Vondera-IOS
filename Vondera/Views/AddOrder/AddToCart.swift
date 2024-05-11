@@ -46,7 +46,7 @@ class AddToCartViewModel : ObservableObject {
             }
         }
     }
-    
+
     func getCart() {
         cartItems = CartManager().getCart()
     }
@@ -54,12 +54,17 @@ class AddToCartViewModel : ObservableObject {
     func selectCategory(id:String) async {
         guard let storeId = UserInformation.shared.user?.storeId else { return }
         
-        self.isLoadingCategory = true
-        self.selectedCategory = id
+        print("Getting products")
+        
+        DispatchQueue.main.async {
+            self.isLoadingCategory = true
+            self.selectedCategory = id
+        }
         
         do {
-            let newProducts = try await ProductsDao(storeId: storeId).getByCategory(id: self.selectedCategory)
-            
+            print("Selected category id \(id)")
+            let newProducts = try await ProductsDao(storeId: storeId).getByCategory(id: id)
+            print("Got \(newProducts.count)")
             DispatchQueue.main.async {
                 self.products.removeAll()
                 self.products = newProducts
@@ -69,21 +74,27 @@ class AddToCartViewModel : ObservableObject {
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             CrashsManager().addLogs(error.localizedDescription, "AddToCart")
+            print("\(error.localizedDescription)")
         }
     }
     
     func getCategories() async {
         guard let storeId = UserInformation.shared.user?.storeId else { return }
-        isLoading = true
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
         
         do {
             let category = try await CategoryDao(storeId: storeId).getAll()
             DispatchQueue.main.async {
                 self.categories = category
-                self.categories.append(Category(id: "", name: "Without", url: ""))
-                self.selectFirstCategory()
+                self.categories.append(Category(id: "", name: "Without", url: UserInformation.shared.user?.store?.logo ?? ""))
                 self.isLoading = false
+                print("Got the categories")
+                self.selectFirstCategory()
             }
+           
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             CrashsManager().addLogs(error.localizedDescription, "AddToCart")
@@ -91,10 +102,20 @@ class AddToCartViewModel : ObservableObject {
     }
     
     func selectFirstCategory() {
-        guard !categories.isEmpty else { return }
+        print("Setting first category")
+        
+        guard !categories.isEmpty else {
+            print("No first category")
+            return
+        }
+        
+        guard let firstItem = categories.first else {
+            print("No first category")
+            return
+        }
         
         Task {
-            await self.selectCategory(id: self.categories[0].id)
+            await self.selectCategory(id: firstItem.id)
         }
     }
 }
@@ -105,44 +126,7 @@ struct AddToCart: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            // MARK : Categories
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .center) {
-                    ForEach(viewModel.categories) { category in
-                        CategoryTab(category: category, onClick: {
-                            selectCategory(id: category.id)
-                        }, selected: Binding(
-                            get: { viewModel.selectedCategory == category.id },
-                            set: { isSelected in
-                                if isSelected {
-                                    viewModel.selectedCategory = category.id
-                                }
-                            }
-                        ))
-                    }
-                }
-                .padding()
-            }
-            
-            // MARK : Items
-            if viewModel.isLoadingCategory {
-                ProgressView()
-            } else {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
-                    ForEach(Array($viewModel.products.enumerated()), id: \.element.id) { i, product in
-                        if product.wrappedValue.filter(viewModel.searchText) {
-                            ProductCard(product: product, showBuyButton: false)
-                                .id(product.id)
-                                .onTapGesture {
-                                    self.selectedProduct = $viewModel.products[i].wrappedValue
-                                }
-                        }
-                    }
-                }
-                .padding(.horizontal, 12)
-            }
-            
-            
+            content()
         }
         .refreshable {
             await viewModel.selectCategory(id: viewModel.selectedCategory)
@@ -205,9 +189,45 @@ struct AddToCart: View {
         }
     }
     
-    func selectCategory(id:String) {
-        Task {
-            await viewModel.selectCategory(id: id)
+    
+    @ViewBuilder func content() -> some View {
+        LazyVStack(alignment: .leading) {
+            LazyHStack(alignment: .center) {
+                ForEach(viewModel.categories) { category in
+                    CategoryTab(category: category, onClick: {
+                        Task {
+                            await viewModel.selectCategory(id: category.id)
+                        }
+                    }, selected: Binding(
+                        get: { viewModel.selectedCategory == category.id },
+                        set: { isSelected in
+                            if isSelected {
+                                viewModel.selectedCategory = category.id
+                            }
+                        }
+                    ))
+                }
+            }
+            .padding()
+            
+            // MARK : Items
+            if viewModel.isLoadingCategory {
+                ProgressView()
+            } else {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
+                    ForEach(Array($viewModel.products.enumerated()), id: \.element.id) { i, product in
+                        if product.wrappedValue.filter(viewModel.searchText) {
+                            ProductCard(product: product, showBuyButton: false)
+                                .id(product.id)
+                                .onTapGesture {
+                                    self.selectedProduct = $viewModel.products[i].wrappedValue
+                                }
+                        }
+                    }
+                }
+                .padding(.horizontal, 12)
+            }
+            
         }
     }
 }

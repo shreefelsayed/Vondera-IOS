@@ -54,7 +54,6 @@
 		B314F4D72A4DE724009856E3 /* CheckOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4D62A4DE724009856E3 /* CheckOut.swift */; };
 		B314F4DA2A4DE766009856E3 /* CartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4D92A4DE766009856E3 /* CartManager.swift */; };
 		B314F4DC2A4DE825009856E3 /* SavedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4DB2A4DE825009856E3 /* SavedItem.swift */; };
-		B314F4E02A4DED0F009856E3 /* AddToCartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4DF2A4DED0F009856E3 /* AddToCartViewModel.swift */; };
 		B314F4E22A4DF0D4009856E3 /* ProductBuyingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4E12A4DF0D4009856E3 /* ProductBuyingSheet.swift */; };
 		B314F4E42A4E132C009856E3 /* CartCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4E32A4E132C009856E3 /* CartCard.swift */; };
 		B314F4E62A4E8FDE009856E3 /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B314F4E52A4E8FDE009856E3 /* OrderManager.swift */; };
@@ -333,7 +332,6 @@
 		B3DC4A642BBF6F16009A17C7 /* CollectOrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */; };
 		B3DFDC0E2A4498F000037858 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */; };
 		B3DFDC102A44A01500037858 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0F2A44A01500037858 /* AddProductView.swift */; };
-		B3DFDC122A44A08900037858 /* AddProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC112A44A08900037858 /* AddProductViewModel.swift */; };
 		B3DFDC162A44A5DC00037858 /* CourierSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC152A44A5DC00037858 /* CourierSettingsView.swift */; };
 		B3DFDC182A44A71F00037858 /* CourierFinishedOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC172A44A71F00037858 /* CourierFinishedOrders.swift */; };
 		B3DFDC1A2A44A7F100037858 /* CourierFinishedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC192A44A7F100037858 /* CourierFinishedViewModel.swift */; };
@@ -451,7 +449,6 @@
 		B314F4D62A4DE724009856E3 /* CheckOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOut.swift; sourceTree = "<group>"; };
 		B314F4D92A4DE766009856E3 /* CartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartManager.swift; sourceTree = "<group>"; };
 		B314F4DB2A4DE825009856E3 /* SavedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItem.swift; sourceTree = "<group>"; };
-		B314F4DF2A4DED0F009856E3 /* AddToCartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToCartViewModel.swift; sourceTree = "<group>"; };
 		B314F4E12A4DF0D4009856E3 /* ProductBuyingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductBuyingSheet.swift; sourceTree = "<group>"; };
 		B314F4E32A4E132C009856E3 /* CartCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCard.swift; sourceTree = "<group>"; };
 		B314F4E52A4E8FDE009856E3 /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
@@ -710,7 +707,6 @@
 		B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectOrderPayment.swift; sourceTree = "<group>"; };
 		B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		B3DFDC0F2A44A01500037858 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
-		B3DFDC112A44A08900037858 /* AddProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewModel.swift; sourceTree = "<group>"; };
 		B3DFDC152A44A5DC00037858 /* CourierSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierSettingsView.swift; sourceTree = "<group>"; };
 		B3DFDC172A44A71F00037858 /* CourierFinishedOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierFinishedOrders.swift; sourceTree = "<group>"; };
 		B3DFDC192A44A7F100037858 /* CourierFinishedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierFinishedViewModel.swift; sourceTree = "<group>"; };
@@ -890,7 +886,6 @@
 		B314F4D12A4DE6F9009856E3 /* AddOrder */ = {
 			isa = PBXGroup;
 			children = (
-				B314F4D82A4DE72B009856E3 /* ViewModels */,
 				B314F4D22A4DE718009856E3 /* AddToCart.swift */,
 				B314F4D42A4DE71E009856E3 /* Cart.swift */,
 				B314F4E12A4DF0D4009856E3 /* ProductBuyingSheet.swift */,
@@ -899,14 +894,6 @@
 				B3AA36882AE1BC9800AABA71 /* EditOrder.swift */,
 			);
 			path = AddOrder;
-			sourceTree = "<group>";
-		};
-		B314F4D82A4DE72B009856E3 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				B314F4DF2A4DED0F009856E3 /* AddToCartViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		B3155A6B2AE703C8006419F0 /* Notifications */ = {
@@ -1697,7 +1684,6 @@
 			isa = PBXGroup;
 			children = (
 				B3EF617D2A43FBB8007930ED /* StoreProductsViewModel.swift */,
-				B3DFDC112A44A08900037858 /* AddProductViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2023,7 +2009,6 @@
 				B33DBD2A2A4A442E008BBB69 /* AddExpanse.swift in Sources */,
 				B3EF615A2A434DE1007930ED /* UserOrderViewModel.swift in Sources */,
 				B390EB5B2A485EFE0058D06B /* StoreInformation.swift in Sources */,
-				B314F4E02A4DED0F009856E3 /* AddToCartViewModel.swift in Sources */,
 				B369187B2AE00D4700315F57 /* OrderOptionsSheet.swift in Sources */,
 				B36923C62A41E00F00709112 /* TopSellingAreas.swift in Sources */,
 				B3191D722B4368E600E7CA9B /* Kashier.swift in Sources */,
@@ -2074,7 +2059,6 @@
 				B35329E82BB5F87200893FA1 /* TransactionDetails.swift in Sources */,
 				B310E73D2BB1F50B008C7A3C /* EmailSettings.swift in Sources */,
 				B31CFA632A2853AF00CBA01C /* VonderaApp.swift in Sources */,
-				B3DFDC122A44A08900037858 /* AddProductViewModel.swift in Sources */,
 				B3D067C82BA228E400EB7A06 /* ToastManager.swift in Sources */,
 				B30115D12A5702C600A7F701 /* PlanCard.swift in Sources */,
 				B31FAC932AED4F3900023BE0 /* AppLanguage.swift in Sources */,
@@ -2433,7 +2417,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 61;
+				CURRENT_PROJECT_VERSION = 64;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2454,7 +2438,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.2;
+				MARKETING_VERSION = 4.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2476,7 +2460,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 61;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2496,7 +2480,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.2;
+				MARKETING_VERSION = 4.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
