@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import SwiftUI
+
 struct PlanInfo : Codable {
     var id:String = ""
     var name:String = ""
@@ -60,7 +61,6 @@ struct Feature: Identifiable {
     var name: LocalizedStringKey
     var available: Bool
 }
-
 
 extension PlanInfo {
     var features: [Feature] {
@@ -128,6 +128,19 @@ struct StorePlanInfo: Codable {
             return 0
         default:
             return 3
+        }
+    }
+    
+    func getColorHex() -> String {
+        switch(planId) {
+        case "starter":
+            return "#673AB7"
+        case "plus":
+            return "#FBE7E0"
+        case "pro":
+            return "#F3CAFA"
+        default:
+            return "#0A0A0A"
         }
     }
 }

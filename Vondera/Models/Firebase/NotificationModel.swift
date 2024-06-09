@@ -88,7 +88,7 @@ class NotificationModelMethods {
         case "plan":
             return AnyView(SubscribtionsView())
         case "reports":
-            return AnyView(StoreReport(storeId: UserInformation.shared.user?.storeId ?? ""))
+            return AnyView(StoreReport())
         default:
             return nil
         }

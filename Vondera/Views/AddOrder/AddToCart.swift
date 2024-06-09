@@ -192,23 +192,26 @@ struct AddToCart: View {
     
     @ViewBuilder func content() -> some View {
         LazyVStack(alignment: .leading) {
-            LazyHStack(alignment: .center) {
-                ForEach(viewModel.categories) { category in
-                    CategoryTab(category: category, onClick: {
-                        Task {
-                            await viewModel.selectCategory(id: category.id)
-                        }
-                    }, selected: Binding(
-                        get: { viewModel.selectedCategory == category.id },
-                        set: { isSelected in
-                            if isSelected {
-                                viewModel.selectedCategory = category.id
+            ScrollView(.horizontal) {
+                LazyHStack(alignment: .center) {
+                    ForEach(viewModel.categories) { category in
+                        CategoryTab(category: category, onClick: {
+                            Task {
+                                await viewModel.selectCategory(id: category.id)
                             }
-                        }
-                    ))
+                        }, selected: Binding(
+                            get: { viewModel.selectedCategory == category.id },
+                            set: { isSelected in
+                                if isSelected {
+                                    viewModel.selectedCategory = category.id
+                                }
+                            }
+                        ))
+                    }
                 }
+                .padding()
             }
-            .padding()
+            
             
             // MARK : Items
             if viewModel.isLoadingCategory {

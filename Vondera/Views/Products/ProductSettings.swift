@@ -16,7 +16,7 @@ struct ProductSettings: View {
     
     var body: some View {
         List {
-            NavigationLink("Product info") {
+            NavigationLink("Name and Collection") {
                ProductInfoView(product: $product)
             }
             
@@ -35,7 +35,7 @@ struct ProductSettings: View {
                 ProductPrice(product:$product)
             }
             
-            NavigationLink("Product photos") {
+            NavigationLink("Change photos") {
                 ProductPhotos(product:$product)
             }
             
@@ -47,6 +47,10 @@ struct ProductSettings: View {
 
             NavigationLink("Product Visibility") {
                 ProductVisibilty(product:product)
+            }
+            
+            NavigationLink("Featured") {
+                ProductFeatured(product:product)
             }
             
             Button("Delete Product", role:.destructive) {

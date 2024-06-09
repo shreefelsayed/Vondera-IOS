@@ -20,6 +20,7 @@ class CheckOutViewModel: ObservableObject {
     @Published var discount = 0.0
     @Published var paid = false
     @Published var marketPlaceId = ""
+    @Published var client:Client?
     
     @AppStorage("whatsapp") var whats = false
 
@@ -119,6 +120,7 @@ class CheckOutViewModel: ObservableObject {
     
     func searchForClient() async {
         guard phone.isPhoneNumber else {
+            self.client = nil
             return
         }
         
@@ -126,12 +128,16 @@ class CheckOutViewModel: ObservableObject {
             let client = try await clientsDao.getClient(phone: phone)
             if let client = client {
                 DispatchQueue.main.async {
+                    self.client = client
                     self.name = client.name
                     self.address = self.shipping ? client.address ?? "" : ""
                     self.gov = self.shipping ? client.gov ?? "" : ""
                 }
+            } else {
+                self.client = nil
             }
         } catch {
+            self.client = nil
             print(error.localizedDescription)
         }
     }
@@ -388,9 +394,27 @@ struct CheckOut: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("Summery")
+                    Text("Order Summery")
                         .font(.title2)
                         .bold()
+                    
+                    
+                    if let client = viewModel.client {
+                        NavigationLink {
+                            CutomerProfile(client: client)
+                        } label: {
+                            if client.isBanned ?? false {
+                                Text("This client is banned")
+                                    .font(.headline)
+                                    .foregroundStyle(.red)
+                            } else {
+                                Text("This client ordered \(client.ordersCount ?? 0) times before")
+                                    .font(.headline)
+                                    .foregroundStyle(.green)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
                     
                     HStack {
                         Text("Products price")
@@ -464,10 +488,8 @@ struct CheckOut: View {
     }
 }
 
-struct CheckOut_Previews: PreviewProvider {
-    static var previews: some View {
-        CheckOut(storeId: Store.Qotoofs(), listItems: [], shipping: true) {
-            
-        }
+#Preview {
+    CheckOut(storeId: Store.Qotoofs(), listItems: [], shipping: true) {
+        
     }
 }

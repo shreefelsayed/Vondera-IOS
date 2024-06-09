@@ -32,19 +32,19 @@ class WarehouseExcel {
                       "Current Stock Cost"])
         
         //MARK : Add Items
-        for (index, item) in list.enumerated() {
+        for (_, item) in list.enumerated() {
             if !item.hasVariants() {
                 let quantity:String = (item.alwaysStocked ?? false) ? "Always Stocked" : "\(item.quantity) Pieces"
-                let price:String = (item.alwaysStocked ?? false) ? "None" : "\((item.getQuantity().double() * item.buyingPrice).toString()) LE"
+                
                 
                 let data = ["#\(item.id)", item.name, quantity, "\(item.realSold) Pieces", "\((item.quantity.double() * item.buyingPrice).toString()) LE"]
                 addRow(items: data)
             } else {
-                for(variantIndex, variant) in item.getVariant().enumerated() {
+                for(_, variant) in item.getVariant().enumerated() {
                     let quantity = (item.alwaysStocked ?? false) ? "Always Stocked" : "\(variant.quantity) Pieces"
                     let price = (item.alwaysStocked ?? false) ? "None" : "\((variant.quantity.double() * variant.cost).toString()) LE"
                     
-                    let data = ["#\(item.id)", "\(item.name) - \(variant.formatOptions())", quantity, "\(variant.sold) Pieces", price]
+                    let data = ["#\(item.id)", "\(item.name) - \(variant.formatOptions())", quantity, "\(variant.sold ?? 0) Pieces", price]
                     
                     addRow(items: data)
                 }

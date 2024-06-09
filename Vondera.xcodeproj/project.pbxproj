@@ -124,7 +124,6 @@
 		B33B50752AECBF150032942D /* WebsiteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B50742AECBF150032942D /* WebsiteSection.swift */; };
 		B33B507A2AECD3890032942D /* PagesDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B50792AECD3890032942D /* PagesDao.swift */; };
 		B33B507C2AECD3910032942D /* CodesDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B507B2AECD3910032942D /* CodesDao.swift */; };
-		B33B507E2AECF6A00032942D /* RichTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33B507D2AECF69F0032942D /* RichTextEditor.swift */; };
 		B33D80E22B154E7900A679FF /* CourierFailedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33D80E12B154E7900A679FF /* CourierFailedVM.swift */; };
 		B33D80E42B15503200A679FF /* OrderFailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33D80E32B15503200A679FF /* OrderFailed.swift */; };
 		B33DBCEC2A48D512008BBB69 /* SwipeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33DBCEB2A48D512008BBB69 /* SwipeHelper.swift */; };
@@ -321,7 +320,6 @@
 		B3D567DB2BD18B4200BB4047 /* VarientsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */; };
 		B3D567DF2BD275DE00BB4047 /* AlwaysStockedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */; };
 		B3D567E12BD275EB00BB4047 /* AlwaysStocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567E02BD275EA00BB4047 /* AlwaysStocked.swift */; };
-		B3D8E5172A9FB94100DC5049 /* Pods_Vondera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */; };
 		B3D8E51B2A9FBB8600DC5049 /* ReportCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51A2A9FBB8600DC5049 /* ReportCard.swift */; };
 		B3D8E51D2A9FBD3E00DC5049 /* StoreReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51C2A9FBD3E00DC5049 /* StoreReport.swift */; };
 		B3D8E5202A9FBE2800DC5049 /* OrderListExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E51F2A9FBE2800DC5049 /* OrderListExt.swift */; };
@@ -329,6 +327,8 @@
 		B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */; };
 		B3D8E52E2A9FF99D00DC5049 /* AppPlans.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */; };
 		B3D8E5302A9FFA2200DC5049 /* PlanDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */; };
+		B3D9305C2C026A0B0027E6FB /* StoreComplaints.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D9305B2C026A0B0027E6FB /* StoreComplaints.swift */; };
+		B3D9305E2C026A1A0027E6FB /* StoreClosedComplaints.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D9305D2C026A1A0027E6FB /* StoreClosedComplaints.swift */; };
 		B3DC4A642BBF6F16009A17C7 /* CollectOrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */; };
 		B3DFDC0E2A4498F000037858 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */; };
 		B3DFDC102A44A01500037858 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0F2A44A01500037858 /* AddProductView.swift */; };
@@ -350,6 +350,7 @@
 		B3E2BCAD2AF1506100A6FCFA /* PaymentsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2BCAC2AF1506100A6FCFA /* PaymentsOptions.swift */; };
 		B3E2BCAF2AF151B900A6FCFA /* PaymentSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2BCAE2AF151B900A6FCFA /* PaymentSettings.swift */; };
 		B3E2BCB22AF151FB00A6FCFA /* PaytabSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2BCB12AF151FB00A6FCFA /* PaytabSettings.swift */; };
+		B3E467DF2C0BF8D50080FD3A /* ProductFeatured.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E467DE2C0BF8D50080FD3A /* ProductFeatured.swift */; };
 		B3E776C92B1844D500BA7076 /* ImportShopify.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E776C82B1844D500BA7076 /* ImportShopify.swift */; };
 		B3E776CC2B1844F900BA7076 /* ImportShopifyIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E776CB2B1844F900BA7076 /* ImportShopifyIntro.swift */; };
 		B3EAFA0E2BB466F0007EC6DA /* DynamicNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */; };
@@ -363,8 +364,6 @@
 		B3EF61602A43AE40007930ED /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF615F2A43AE40007930ED /* Client.swift */; };
 		B3EF61622A43AEE0007930ED /* Expanses.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61612A43AEE0007930ED /* Expanses.swift */; };
 		B3EF61662A43AFD5007930ED /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61652A43AFD5007930ED /* Category.swift */; };
-		B3EF616E2A43DBC9007930ED /* SwipeCell in Frameworks */ = {isa = PBXBuildFile; productRef = B3EF616D2A43DBC9007930ED /* SwipeCell */; };
-		B3EF61742A43E9E6007930ED /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = B3EF61732A43E9E6007930ED /* SlidingTabView */; };
 		B3EF61792A43F7FD007930ED /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF61782A43F7FD007930ED /* ProductCard.swift */; };
 		B3EF617B2A43FB93007930ED /* StoreProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF617A2A43FB93007930ED /* StoreProducts.swift */; };
 		B3EF617E2A43FBB8007930ED /* StoreProductsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EF617D2A43FBB8007930ED /* StoreProductsViewModel.swift */; };
@@ -406,8 +405,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		95100AE55656B3AFB552E956 /* Pods-Vondera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vondera.debug.xcconfig"; path = "Target Support Files/Pods-Vondera/Pods-Vondera.debug.xcconfig"; sourceTree = "<group>"; };
-		A9AE7048BB5B6D24BF6B99AA /* Pods-Vondera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vondera.release.xcconfig"; path = "Target Support Files/Pods-Vondera/Pods-Vondera.release.xcconfig"; sourceTree = "<group>"; };
 		B30050AF2AE499E700FC561D /* MarketPlaceOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlaceOrders.swift; sourceTree = "<group>"; };
 		B30050B12AE499F500FC561D /* MarketPlaceReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlaceReport.swift; sourceTree = "<group>"; };
 		B30115CA2A554DE600A7F701 /* StoreStepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreStepsView.swift; sourceTree = "<group>"; };
@@ -517,7 +514,6 @@
 		B33B50742AECBF150032942D /* WebsiteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteSection.swift; sourceTree = "<group>"; };
 		B33B50792AECD3890032942D /* PagesDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagesDao.swift; sourceTree = "<group>"; };
 		B33B507B2AECD3910032942D /* CodesDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodesDao.swift; sourceTree = "<group>"; };
-		B33B507D2AECF69F0032942D /* RichTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextEditor.swift; sourceTree = "<group>"; };
 		B33D80E12B154E7900A679FF /* CourierFailedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierFailedVM.swift; sourceTree = "<group>"; };
 		B33D80E32B15503200A679FF /* OrderFailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderFailed.swift; sourceTree = "<group>"; };
 		B33DBCEB2A48D512008BBB69 /* SwipeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeHelper.swift; sourceTree = "<group>"; };
@@ -704,6 +700,8 @@
 		B3D8E5272A9FE32100DC5049 /* AppStoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreHelper.swift; sourceTree = "<group>"; };
 		B3D8E52D2A9FF99D00DC5049 /* AppPlans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPlans.swift; sourceTree = "<group>"; };
 		B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDao.swift; sourceTree = "<group>"; };
+		B3D9305B2C026A0B0027E6FB /* StoreComplaints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreComplaints.swift; sourceTree = "<group>"; };
+		B3D9305D2C026A1A0027E6FB /* StoreClosedComplaints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreClosedComplaints.swift; sourceTree = "<group>"; };
 		B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectOrderPayment.swift; sourceTree = "<group>"; };
 		B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		B3DFDC0F2A44A01500037858 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
@@ -723,6 +721,7 @@
 		B3E2BCAC2AF1506100A6FCFA /* PaymentsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsOptions.swift; sourceTree = "<group>"; };
 		B3E2BCAE2AF151B900A6FCFA /* PaymentSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSettings.swift; sourceTree = "<group>"; };
 		B3E2BCB12AF151FB00A6FCFA /* PaytabSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaytabSettings.swift; sourceTree = "<group>"; };
+		B3E467DE2C0BF8D50080FD3A /* ProductFeatured.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFeatured.swift; sourceTree = "<group>"; };
 		B3E776C82B1844D500BA7076 /* ImportShopify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportShopify.swift; sourceTree = "<group>"; };
 		B3E776CB2B1844F900BA7076 /* ImportShopifyIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportShopifyIntro.swift; sourceTree = "<group>"; };
 		B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicNavigation.swift; sourceTree = "<group>"; };
@@ -761,7 +760,6 @@
 		B3F981882ACDABF100D70FAF /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		B3FACA662AA0203200EB55F6 /* EditCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategory.swift; sourceTree = "<group>"; };
 		B3FACA682AA0242000EB55F6 /* EditCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewModel.swift; sourceTree = "<group>"; };
-		D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vondera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -773,9 +771,7 @@
 				B37F5FA82BAE626D007FD672 /* Flow in Frameworks */,
 				B3F981872ACDABD100D70FAF /* Lottie in Frameworks */,
 				B3A7C8BE2A285B5600D6C1D2 /* FirebaseMessaging in Frameworks */,
-				B3D8E5172A9FB94100DC5049 /* Pods_Vondera.framework in Frameworks */,
 				B33DBD0A2A49F944008BBB69 /* SwiftUIGenericDialog in Frameworks */,
-				B3EF61742A43E9E6007930ED /* SlidingTabView in Frameworks */,
 				B3C899DA2AED03C70071706C /* RichTextKit in Frameworks */,
 				B3A7C8B62A285B5600D6C1D2 /* FirebaseFirestoreSwift in Frameworks */,
 				B3A7E7812A3F70B800F0CD11 /* AlertToast in Frameworks */,
@@ -800,7 +796,6 @@
 				B33DBD0F2A4A32DC008BBB69 /* CodeScanner in Frameworks */,
 				B3DFDC302A45337500037858 /* WrappingStack in Frameworks */,
 				B30316B42AC68948002134A2 /* LineChartView in Frameworks */,
-				B3EF616E2A43DBC9007930ED /* SwipeCell in Frameworks */,
 				B3A7C8B42A285B5600D6C1D2 /* FirebaseFirestore in Frameworks */,
 				B3A7C8E42A286F0E00D6C1D2 /* GoogleSignInSwift in Frameworks */,
 				B3A7C8B82A285B5600D6C1D2 /* FirebaseFunctions in Frameworks */,
@@ -817,20 +812,10 @@
 			isa = PBXGroup;
 			children = (
 				B3EBA5CB2ACC07A000AFDC69 /* StoreKit.framework */,
-				D059B8B2A73C8904C94E9CE1 /* Pods_Vondera.framework */,
 				B350590C2B6C79A2009AEF0A /* WidgetKit.framework */,
 				B350590E2B6C79A2009AEF0A /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		667A766DB90F2FC748528C37 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				95100AE55656B3AFB552E956 /* Pods-Vondera.debug.xcconfig */,
-				A9AE7048BB5B6D24BF6B99AA /* Pods-Vondera.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		B30050AE2AE499D400FC561D /* MarketPlaces */ = {
@@ -852,6 +837,7 @@
 				B30CF0AC2A51F7FB00245955 /* ProductPhotos.swift */,
 				B30CF0AE2A51F80700245955 /* ProductStock.swift */,
 				B30CF0B02A51F81300245955 /* ProductVisibilty.swift */,
+				B3E467DE2C0BF8D50080FD3A /* ProductFeatured.swift */,
 				B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */,
 			);
 			path = Settings;
@@ -919,7 +905,6 @@
 			children = (
 				B31CFA612A2853AF00CBA01C /* Vondera */,
 				B31CFA602A2853AF00CBA01C /* Products */,
-				667A766DB90F2FC748528C37 /* Pods */,
 				47ED78115AA0FD952AB1F0E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -1227,7 +1212,6 @@
 				B3C30F522A9F1C4B0086B3FE /* FileUtils.swift */,
 				B3F981882ACDABF100D70FAF /* LottieView.swift */,
 				B3A230172ADD769B0073B15D /* FirebaseExt.swift */,
-				B33B507D2AECF69F0032942D /* RichTextEditor.swift */,
 				B3D067C72BA228E400EB7A06 /* ToastManager.swift */,
 				B360BB812BA8FB5500E7921B /* CachedImageView.swift */,
 			);
@@ -1417,6 +1401,7 @@
 		B3A7C8C52A285C1E00D6C1D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B3D9305A2C0269FC0027E6FB /* Complaints */,
 				B3D067BB2BA1E3F000EB7A06 /* Splash */,
 				B3155A6B2AE703C8006419F0 /* Notifications */,
 				B30050AE2AE499D400FC561D /* MarketPlaces */,
@@ -1618,6 +1603,15 @@
 			path = Plans;
 			sourceTree = "<group>";
 		};
+		B3D9305A2C0269FC0027E6FB /* Complaints */ = {
+			isa = PBXGroup;
+			children = (
+				B3D9305B2C026A0B0027E6FB /* StoreComplaints.swift */,
+				B3D9305D2C026A1A0027E6FB /* StoreClosedComplaints.swift */,
+			);
+			path = Complaints;
+			sourceTree = "<group>";
+		};
 		B3DFDC1B2A44B2FD00037858 /* Employees */ = {
 			isa = PBXGroup;
 			children = (
@@ -1766,7 +1760,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B31CFA722A2853B000CBA01C /* Build configuration list for PBXNativeTarget "Vondera" */;
 			buildPhases = (
-				3AF1F242E6A12BCB1F6E12BE /* [CP] Check Pods Manifest.lock */,
 				B31CFA5B2A2853AF00CBA01C /* Sources */,
 				B31CFA5C2A2853AF00CBA01C /* Frameworks */,
 				B31CFA5D2A2853AF00CBA01C /* Resources */,
@@ -1797,8 +1790,6 @@
 				B30E2FAC2A42668700F45D7F /* ImageSlideshow/Alamofire */,
 				B30E2FAE2A42668700F45D7F /* ImageSlideshow/Kingfisher */,
 				B30E2FB02A42668700F45D7F /* ImageSlideshow/SDWebImage */,
-				B3EF616D2A43DBC9007930ED /* SwipeCell */,
-				B3EF61732A43E9E6007930ED /* SlidingTabView */,
 				B3DFDC2F2A45337500037858 /* WrappingStack */,
 				B3DFDC342A45421700037858 /* Atomics */,
 				B33403912A4710F1008CB1D8 /* TPPDF */,
@@ -1850,8 +1841,6 @@
 				B3A7C8E02A286F0E00D6C1D2 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B3A7E77F2A3F70B800F0CD11 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				B30E2FA92A42668700F45D7F /* XCRemoteSwiftPackageReference "ImageSlideshow" */,
-				B3EF616C2A43DBC9007930ED /* XCRemoteSwiftPackageReference "SwipeCell" */,
-				B3EF61722A43E9E6007930ED /* XCRemoteSwiftPackageReference "SlidingTabView" */,
 				B3DFDC2E2A45337500037858 /* XCRemoteSwiftPackageReference "swiftui-wrapping-stack" */,
 				B3DFDC332A45421700037858 /* XCRemoteSwiftPackageReference "swift-atomics" */,
 				B33403902A4710F1008CB1D8 /* XCRemoteSwiftPackageReference "TPPDF" */,
@@ -1893,28 +1882,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3AF1F242E6A12BCB1F6E12BE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Vondera-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B3AA36872AE1BBD600AABA71 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1955,6 +1922,7 @@
 				B39FAA052A4CE0DB004773AA /* NewEmployeeViewModel.swift in Sources */,
 				B32205FF2AE8AD5C00B2C27C /* CourierReports.swift in Sources */,
 				B360BB8E2BAA933E00E7921B /* BannedEmployees.swift in Sources */,
+				B3E467DF2C0BF8D50080FD3A /* ProductFeatured.swift in Sources */,
 				B33B50652AECAD430032942D /* SiteData.swift in Sources */,
 				B3C698562B8A2D4200CDBA55 /* ProviderIntegrationView.swift in Sources */,
 				B33970A52A45FB7D00E44FA2 /* StoreDeletedOrdersViewModel.swift in Sources */,
@@ -2028,7 +1996,6 @@
 				B39FAA032A4CC1EE004773AA /* NewCourierViewModel.swift in Sources */,
 				B35329EA2BB6014300893FA1 /* ReviewsDao.swift in Sources */,
 				B360BB802BA8DB9D00E7921B /* SkeltonManager.swift in Sources */,
-				B33B507E2AECF6A00032942D /* RichTextEditor.swift in Sources */,
 				B33B507C2AECD3910032942D /* CodesDao.swift in Sources */,
 				B3A7E77C2A3F5FB700F0CD11 /* CustomButton.swift in Sources */,
 				B31FAC912AED4DFD00023BE0 /* LocalizationService.swift in Sources */,
@@ -2042,6 +2009,7 @@
 				B3977F8C2A40A03200927558 /* OrderFragmentsViewModel.swift in Sources */,
 				B36923CB2A41EC8700709112 /* OrderDetails.swift in Sources */,
 				B3A7C8ED2A28708600D6C1D2 /* LoginViewModel.swift in Sources */,
+				B3D9305E2C026A1A0027E6FB /* StoreClosedComplaints.swift in Sources */,
 				B33D80E42B15503200A679FF /* OrderFailed.swift in Sources */,
 				B3F0F3EE2AC614E1000AFB0C /* MarketsManager.swift in Sources */,
 				B3A2FF9C2B1AB92300F2EAA3 /* DepositSettings.swift in Sources */,
@@ -2272,6 +2240,7 @@
 				B3155A712AE74663006419F0 /* StoreCustomMessage.swift in Sources */,
 				B316642F2B1B7D09001C8C6A /* OrderShippingExcel.swift in Sources */,
 				B31AE4082A414399003B7867 /* StoreSettingsViewModel.swift in Sources */,
+				B3D9305C2C026A0B0027E6FB /* StoreComplaints.swift in Sources */,
 				B3A7C8CF2A285D2200D6C1D2 /* ForgetPasswordView.swift in Sources */,
 				B3A7C8CD2A285D0F00D6C1D2 /* CreateAccountView.swift in Sources */,
 				B36D8C502A4078FC00A8C555 /* LocalInfo.swift in Sources */,
@@ -2410,14 +2379,14 @@
 		};
 		B31CFA732A2853B000CBA01C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95100AE55656B3AFB552E956 /* Pods-Vondera.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 66;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2438,7 +2407,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.5;
+				MARKETING_VERSION = 4.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2453,14 +2422,14 @@
 		};
 		B31CFA742A2853B000CBA01C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9AE7048BB5B6D24BF6B99AA /* Pods-Vondera.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 64;
+				CURRENT_PROJECT_VERSION = 66;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2480,7 +2449,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.5.5;
+				MARKETING_VERSION = 4.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2661,22 +2630,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		B3EF616C2A43DBC9007930ED /* XCRemoteSwiftPackageReference "SwipeCell" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/EnesKaraosman/SwipeCell";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.3;
-			};
-		};
-		B3EF61722A43E9E6007930ED /* XCRemoteSwiftPackageReference "SlidingTabView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/QuynhNguyen/SlidingTabView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		B3F981852ACDABD100D70FAF /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -2852,16 +2805,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3DFDC332A45421700037858 /* XCRemoteSwiftPackageReference "swift-atomics" */;
 			productName = Atomics;
-		};
-		B3EF616D2A43DBC9007930ED /* SwipeCell */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B3EF616C2A43DBC9007930ED /* XCRemoteSwiftPackageReference "SwipeCell" */;
-			productName = SwipeCell;
-		};
-		B3EF61732A43E9E6007930ED /* SlidingTabView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B3EF61722A43E9E6007930ED /* XCRemoteSwiftPackageReference "SlidingTabView" */;
-			productName = SlidingTabView;
 		};
 		B3F981862ACDABD100D70FAF /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

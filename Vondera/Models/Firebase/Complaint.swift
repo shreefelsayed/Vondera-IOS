@@ -9,11 +9,11 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct Complaint: Codable, Identifiable {
+struct Complaint: Codable, Identifiable, Equatable {
     var id: String = ""
     var desc: String = ""
     var by: String = ""
-    @ServerTimestamp var date: Timestamp? = Timestamp(date: Date())
+    var date: Date = Date()
     var state: String = "opened" // opened - closed
     var closedBy: String = ""
     var listPhotos: [String] = []

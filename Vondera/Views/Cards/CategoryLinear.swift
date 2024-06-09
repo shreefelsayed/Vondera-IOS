@@ -27,17 +27,24 @@ struct CategoryLinear: View {
                 
                 Spacer()
                 
+                if category.hidden ?? false {
+                    Image(systemName: "eye.slash")
+                        .padding(.trailing, 18)
+                }
+                
                 if isSelected {
                     Image(systemName: "checkmark")
                         .foregroundColor(.accentColor)
                 }
+                                
+                Image(systemName: "arrow.up.arrow.down")
+                    .opacity(0.5)
+                    .font(.body)
             }
         }
     }
 }
 
-struct CategoryLinear_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryLinear(category: .constant(Category.example()))
-    }
+#Preview {
+    CategoryLinear(category: .constant(Category.example()))
 }

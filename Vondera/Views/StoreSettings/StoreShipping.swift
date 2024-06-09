@@ -5,19 +5,85 @@
 //  Created by Shreif El Sayed on 06/07/2023.
 //
 
+import Foundation
+import Combine
+import FirebaseFirestore
 import SwiftUI
-import AlertToast
+
+class StoreShippingViewModel : ObservableObject {
+    var storeId:String
+    
+    @Published var store:Store?
+    @Published var list = [CourierPrice]()
+    @Published var isSaving = false
+    @Published var isLoading = false
+        
+    init(storeId:String) {
+        self.storeId = storeId
+            
+        Task {
+            await getData()
+        }
+    }
+    
+    func getData() async {
+        guard let storeId = UserInformation.shared.user?.storeId  else { return }
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+        }
+        
+        do {
+            let store = try await StoresDao().getStore(uId: storeId)
+            DispatchQueue.main.async {
+                self.list = store.listAreas?.uniqueElements() ?? []
+                self.isLoading = false
+            }
+        } catch {
+            print(error.localizedDescription)
+            CrashsManager().addLogs(error.localizedDescription, "Store Shipping")
+        }
+    }
+    
+    func update(completion: @escaping (() -> ())) async {
+        guard let storeId = UserInformation.shared.user?.storeId  else { return }
+
+        DispatchQueue.main.async {
+            self.isSaving = true
+        }
+        
+        do {
+            // --> Update the database
+            let map:[String:[CourierPrice]] = ["listAreas": list.uniqueElements()]
+            let encoded: [String: Any]
+            encoded = try! Firestore.Encoder().encode(map)
+            
+            try await StoresDao().update(id: storeId, hashMap: encoded)
+            
+            
+            DispatchQueue.main.async {
+                UserInformation.shared.user?.store?.listAreas = self.list.uniqueElements()
+                UserInformation.shared.updateUser()
+                
+                ToastManager.shared.showToast(msg: "Store Shipping info changed", toastType: .success)
+                self.isSaving = false
+                completion()
+            }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+            CrashsManager().addLogs(error.localizedDescription, "Store Shipping")
+            self.isSaving = false
+        }
+    }
+}
 
 struct StoreShipping: View {
-    var storeId:String
     var govManager = GovsUtil()
-    
-    @ObservedObject var viewModel:StoreShippingViewModel
+    @StateObject var viewModel:StoreShippingViewModel
     @Environment(\.presentationMode) private var presentationMode
     
     init(storeId:String) {
-        self.storeId = storeId
-        self.viewModel = StoreShippingViewModel(storeId: storeId)
+        self._viewModel = StateObject(wrappedValue: StoreShippingViewModel(storeId: storeId))
     }
     
     var body: some View {
@@ -72,11 +138,8 @@ struct StoreShipping: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle("Areas")
-        .overlay(alignment: .center, content: {
-            ProgressView()
-                .isHidden(!viewModel.isLoading)
-        })
+        .willLoad(loading: viewModel.isLoading)
+        .willProgress(saving: viewModel.isSaving)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Update") {
@@ -85,22 +148,16 @@ struct StoreShipping: View {
                 .disabled(viewModel.isLoading)
             }
         }
-        .willProgress(saving: viewModel.isSaving)
-        .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
-            if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
-            }
-        }
-        .toast(isPresenting: Binding(value: $viewModel.msg)){
-            AlertToast(displayMode: .banner(.slide),
-                       type: .regular,
-                       title: viewModel.msg?.toString())
-        }
+        .navigationTitle("Areas")
     }
     
     func update() {
         Task {
-            await viewModel.update()
+            await viewModel.update {
+                DispatchQueue.main.async {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }
         }
     }
 }

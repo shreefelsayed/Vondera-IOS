@@ -63,7 +63,7 @@ class ProductsDao {
         var query:Query = collection
             .order(by: "name", descending: true)
             .whereField("alwaysStocked", isEqualTo: true)
-            .limit(to: pageSize)
+            .limit(to: 500)
         
         if lastSnapShot != nil {
             query = query.start(afterDocument: lastSnapShot!)
@@ -74,70 +74,47 @@ class ProductsDao {
     }
     
     func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
-        var query:Query = collection
-            .order(by: "quantity", descending: true)
+        return try await collection
             .whereField("quantity", isGreaterThan: 0)
-            .whereField("alwaysStocked", isNotEqualTo: true)
-            .limit(to: pageSize)
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-                
-        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
-        return (data.items, data.lastDocument)
+            .order(by: "quantity", descending: true)
+            .startAfter(lastDocument: lastSnapShot)
+            .limit(to: 500)
+            .getDocumentWithLastSnapshot(as: StoreProduct.self)
     }
     
     func getOutOfStock() async throws -> [StoreProduct] {
         try await collection
             .order(by: "quantity", descending: false)
             .whereField("quantity", isLessThanOrEqualTo: 0)
-            .whereField("alwaysStocked", isNotEqualTo: true)
+            .order(by: "quantity", descending: false)
             .getDocuments(as: StoreProduct.self)
     }
     
     func getOutOfStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
-        var query:Query = collection
-            .order(by: "quantity", descending: false)
+        return try await collection
             .whereField("quantity", isLessThanOrEqualTo: 0)
-            .whereField("alwaysStocked", isNotEqualTo: true)
-           
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        query.limit(to: pageSize)
-        
-        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
-        return (data.items, data.lastDocument)
+            .order(by: "quantity", descending: false)
+            .startAfter(lastDocument: lastSnapShot)
+            .limit(to: 500)
+            .getDocumentWithLastSnapshot(as: StoreProduct.self)
     }
     
     func getStockLessThen(almostOut:Int) async throws -> [StoreProduct] {
         return try await collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
-            .whereField("alwaysStocked", isNotEqualTo: true)
             .order(by: "quantity", descending: true)
             .getDocuments(as: StoreProduct.self)
     }
     
     func getStockLessThen(almostOut:Int, lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
-        var query:Query = collection
+        return try await collection
             .whereField("quantity", isLessThanOrEqualTo: almostOut)
             .whereField("quantity", isGreaterThan: 0)
-            .whereField("alwaysStocked", isNotEqualTo: true)
-            .order(by: "quantity", descending: true)
-           
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        query.limit(to: pageSize)
-        
-        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
-        return (data.items, data.lastDocument)
+            .order(by: "quantity", descending: false)
+            .startAfter(lastDocument: lastSnapShot)
+            .limit(to: 500)
+            .getDocumentWithLastSnapshot(as: StoreProduct.self)
     }
     
     func getByCategory(id:String) async throws -> [StoreProduct] {

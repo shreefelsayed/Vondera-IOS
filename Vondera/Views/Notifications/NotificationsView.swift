@@ -12,7 +12,6 @@ class NotificationsViewModel : ObservableObject {
     @Published var items = [NotificationModel]()
     @Published var isLoading = false
     @Published var canLoadMore = true
-    @Published var error = ""
     
     private var lastSnapshot:DocumentSnapshot?
     
@@ -23,10 +22,7 @@ class NotificationsViewModel : ObservableObject {
     }
     
     func refreshData() async {
-        DispatchQueue.main.async {
-            self.items.removeAll()
-        }
-        
+        self.items.removeAll()
         self.isLoading = false
         self.canLoadMore = true
         self.lastSnapshot = nil
@@ -34,37 +30,40 @@ class NotificationsViewModel : ObservableObject {
     }
     
     func getData() async {
-        guard !isLoading || !canLoadMore else {
+        guard !isLoading, canLoadMore, let id = UserInformation.shared.user?.id else {
             return
         }
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
+        
+        self.isLoading = true
         
         do {
-            if let id = UserInformation.shared.user?.id {
-                let result = try await NotificationsDao(userId: id).getNotifications(lastSnapshot: lastSnapshot)
-                
-                DispatchQueue.main.async {
-                    self.lastSnapshot = result.lastDocument
-                    self.items.append(contentsOf: result.items)
-                    if result.items.count == 0 {
-                        self.canLoadMore = false
-                    }
-                }
+            let result = try await NotificationsDao(userId: id).getNotifications(lastSnapshot: lastSnapshot)
+            
+            DispatchQueue.main.async {
+                self.lastSnapshot = result.lastDocument
+                self.canLoadMore = !result.items.isEmpty
+                self.items.append(contentsOf: result.items)
+                self.isLoading = false
             }
         } catch {
-            print(String(describing: error))
+            print(error)
         }
+    }
+    
+    func deleteItem(index:Int) {
+        guard let id = UserInformation.shared.user?.id else { return }
         
-        DispatchQueue.main.async {
-            self.isLoading = false
+        let notificationId = items[index].id
+        items.remove(at: index)
+        
+        Task {
+            await NotificationsDao(userId: id).removeNotification(id: notificationId)
         }
     }
 }
 
 struct NotificationsView: View {
-    @ObservedObject var viewModel = NotificationsViewModel()
+    @StateObject var viewModel = NotificationsViewModel()
     
     var body: some View {
         List {
@@ -86,20 +85,13 @@ struct NotificationsView: View {
                 }
             }
             .onDelete { index in
-                let notificationId = viewModel.items[index.first ?? 0].id
                 withAnimation {
-                    viewModel.items.remove(atOffsets: index)
-                }
-                
-                Task {
-                    if let id = UserInformation.shared.user?.id {
-                        await NotificationsDao(userId: id).removeNotification(id: notificationId)
-                    }
+                    viewModel.deleteItem(index: index.first ?? 0)
                 }
             }
         }
         .refreshable {
-            await refreshData()
+            await viewModel.refreshData()
         }
         .overlay {
             if !viewModel.isLoading && viewModel.items.isEmpty {
@@ -108,10 +100,6 @@ struct NotificationsView: View {
         }
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle("Notifications")
-    }
-    
-    func refreshData() async {
-        await viewModel.refreshData()
     }
     
     func loadItem() {

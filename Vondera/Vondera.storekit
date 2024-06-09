@@ -158,9 +158,9 @@
             {
               "displayPrice" : "5.99",
               "eligibility" : [
-                "new",
+                "existing",
                 "expired",
-                "existing"
+                "new"
               ],
               "internalID" : "FD2309BD",
               "isStackable" : true,
@@ -311,103 +311,6 @@
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Starter - Year",
           "subscriptionGroupID" : "21473228",
-          "type" : "RecurringSubscription"
-        }
-      ]
-    },
-    {
-      "id" : "21395345",
-      "localizations" : [
-
-      ],
-      "name" : "Vondera Subscribtions",
-      "subscriptions" : [
-        {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "14.99",
-          "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "6468553479",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "Subscribe to our biggest plan",
-              "displayName" : "Enterprise",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "uYv7bdCSNdOfvrmlnaP2",
-          "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Enterprise Plan",
-          "subscriptionGroupID" : "21395345",
-          "type" : "RecurringSubscription"
-        },
-        {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "9.99",
-          "familyShareable" : false,
-          "groupNumber" : 2,
-          "internalID" : "6468559193",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "Premium Plan",
-              "displayName" : "Premium",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "3iYZ70HVkrCNx36JF1JW",
-          "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Premium",
-          "subscriptionGroupID" : "21395345",
-          "type" : "RecurringSubscription"
-        },
-        {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-            {
-              "displayPrice" : "2.99",
-              "eligibility" : [
-                "expired",
-                "existing",
-                "new"
-              ],
-              "internalID" : "FCA0C4F9",
-              "isStackable" : false,
-              "numberOfPeriods" : 1,
-              "paymentMode" : "payUpFront",
-              "referenceName" : "RAMDAN30",
-              "subscriptionPeriod" : "P1M"
-            }
-          ],
-          "displayPrice" : "3.99",
-          "familyShareable" : false,
-          "groupNumber" : 3,
-          "internalID" : "6468560331",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "Standard Plan",
-              "displayName" : "Standard Plan",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "HDHUtqqCY7YX4ydnM1Ik",
-          "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Standard",
-          "subscriptionGroupID" : "21395345",
           "type" : "RecurringSubscription"
         }
       ]

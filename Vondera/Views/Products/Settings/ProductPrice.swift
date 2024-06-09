@@ -141,12 +141,12 @@ struct ProductPrice: View {
         Task {
             do {
                 // --> Update the database
-                var map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
+                let map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
                 try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
                 
                 
                 if withVariant {
-                    var variantsMap:[String:[VariantsDetails]] = ["variantsDetails" : modifiedVariants()]
+                    let variantsMap:[String:[VariantsDetails]] = ["variantsDetails" : modifiedVariants()]
                     let encoded: [String: Any] = try! Firestore.Encoder().encode(variantsMap)
                     try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: encoded)
                 }

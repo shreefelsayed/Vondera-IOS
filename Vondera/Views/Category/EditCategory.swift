@@ -19,10 +19,10 @@ struct EditCategory: View {
 
     @Environment(\.presentationMode) private var presentationMode
     
-    
     @State private var name:String = ""
     @State private var desc:String = ""
     @State private var link:String = ""
+    @State private var hidden = false
     @State private var selectedImage:UIImage?
     @State private var picker:PhotosPickerItem?
     
@@ -44,6 +44,9 @@ struct EditCategory: View {
                 }
                 
                 FloatingTextField(title: "Category Describtion", text: $desc, caption: "This will be visible in your website, make it from 10 to 50 words max", required: false, multiLine: true)
+                
+                
+                Toggle("Hide this category from the website", isOn: $hidden)
             }
         }
         .navigationTitle("Edit Category")
@@ -103,35 +106,32 @@ struct EditCategory: View {
             name = category.name
             link = category.url
             desc = category.desc ?? ""
+            hidden = category.hidden ?? false
         }
     }
     
-    func delete() {
+    private func delete() {
         Task {
             await deleteCategory()
-            onDeleted(category)
         }
     }
     
-    func promoteDelete() {
+    private func promoteDelete() {
         deleteDialog.toggle()
     }
     
-    func updateData() {
+    private func updateData() {
         self.isSaving = true
-        
-        Task {
-            if selectedImage == nil {
-                setData()
-            } else {
-                uploadImage()
-            }
+        if selectedImage == nil {
+            setData()
+        } else {
+            uploadImage()
         }
     }
     
-    func setData() {
+    private func setData() {
         Task {
-            let data:[String:Any] = ["name": name, "url" : link, "desc": desc]
+            let data:[String:Any] = ["name": name, "url" : link, "desc": desc, "hidden": hidden]
             try! await CategoryDao(storeId: storeId).update(id: category.id, hash: data)
             
             DispatchQueue.main.async {
@@ -139,23 +139,24 @@ struct EditCategory: View {
                 newCategory.name = name
                 newCategory.url = link
                 newCategory.desc = desc
+                newCategory.hidden = hidden
                 self.isSaving = false
                 onUpdated(newCategory)
             }
         }
     }
     
-    func deleteCategory() async {
+    private func deleteCategory() async {
         self.isSaving = true
         try! await CategoryDao(storeId: storeId).delete(id: category.id)
         
         DispatchQueue.main.async {
-            print("category Deleted")
             self.isSaving = false
+            onDeleted(category)
         }
     }
     
-    func uploadImage() {
+    private func uploadImage() {
         FirebaseStorageUploader().oneImageUpload(image: selectedImage!, ref: "stores/\(storeId)/categories/\(category.id).jpeg") { url, error in
             if error != nil {
                 DispatchQueue.main.async {

@@ -666,7 +666,7 @@ struct OrderDetails: View {
     }
     
     func getCoureirData() async {
-        guard let courierId = order.courierId, !courierId.isBlank, let storeId = order.storeId, !storeId.isBlank else {
+        guard let courierId = order.courierId, !courierId.isBlank, let storeId = UserInformation.shared.user?.storeId else {
             print("Something iw wrong")
             return
         }
@@ -684,7 +684,7 @@ struct OrderDetails: View {
     }
     
     func getOrderData() async {
-        guard let storeId = order.storeId, !storeId.isBlank else {
+        guard let storeId = UserInformation.shared.user?.storeId else {
             return
         }
         

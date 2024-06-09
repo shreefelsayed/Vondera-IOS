@@ -25,14 +25,16 @@ class ToastManager: ObservableObject {
     init(){}
     
     func showToast(msg:LocalizedStringKey, toastType:types = .normal) {
-        var type = AlertToast.AlertType.regular
-        if toastType == .error {
-            type = AlertToast.AlertType.error(.red)
-        } else if toastType == .success {
-            type = .complete(.green)
+        DispatchQueue.main.async {
+            var type = AlertToast.AlertType.regular
+            if toastType == .error {
+                type = AlertToast.AlertType.error(.red)
+            } else if toastType == .success {
+                type = .complete(.green)
+            }
+            self.toastType = type
+            self.isPresented = true
+            self.msg = msg
         }
-        self.toastType = type
-        self.isPresented = true
-        self.msg = msg
     }
 }

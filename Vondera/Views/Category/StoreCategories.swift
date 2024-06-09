@@ -54,7 +54,7 @@ struct StoreCategories: View {
                     NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
                         onItemAdded(newValue)
                     })) {
-                        Image(.icAdd)
+                        Image(systemName: "plus.app")
                     }
                     .buttonStyle(.plain)
                     .font(.title)
@@ -71,7 +71,8 @@ struct StoreCategories: View {
                 }
             }
         })
-        .overlay(alignment: .center, content: {
+        .willLoad(loading: viewModel.loading)
+        .overlay {
             if !viewModel.loading && viewModel.items.count == 0 {
                 EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No categories were added to your store yet !") {
                     VStack {
@@ -85,10 +86,8 @@ struct StoreCategories: View {
                         }
                     }
                 }
-            } else if viewModel.loading {
-                ProgressView()
             }
-        })
+        }
     }
     
     func onItemAdded(_ item:Category) {
@@ -121,34 +120,6 @@ struct StoreCategories: View {
         }
         
         editCategory = nil
-    }
-}
-
-struct MyDropDelegate : DropDelegate {
-    
-    let item : Category
-    @Binding var items : [Category]
-    @Binding var draggedItem : Category?
-    var onMoved:(() -> ())?
-    
-    func performDrop(info: DropInfo) -> Bool {
-        return true
-    }
-    
-    func dropEntered(info: DropInfo) {
-        guard let draggedItem = self.draggedItem else {
-            return
-        }
-        
-        if draggedItem != item {
-            let from = items.firstIndex(of: draggedItem)!
-            let to = items.firstIndex(of: item)!
-            
-            withAnimation(.default) {
-                self.items.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
-                if onMoved != nil { onMoved!() }
-            }
-        }
     }
 }
 

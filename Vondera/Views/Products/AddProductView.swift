@@ -612,7 +612,14 @@ struct AddProductView: View {
         }
         .onChange(of: images) { newValue in
             Task {
-                viewModel.selectedPhotos = await newValue.getUIImages()
+                do {
+                    let result = try await newValue.getUIImages()
+                    DispatchQueue.main.async {
+                        self.viewModel.selectedPhotos = result
+                    }
+                } catch {
+                    
+                }
             }
         }
     }

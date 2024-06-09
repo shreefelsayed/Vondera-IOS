@@ -147,7 +147,7 @@ struct ImportShopify: View {
             let data = [
                 "storeId": storeId,
                 "accessToken" : adminAccessToken,
-                "shopId" : shopId
+                "shopId" : shopId.replacingOccurrences(of: "https://", with: "")
             ]
             
             if let result = try? await FirebaseFunctionCaller().callFunction(functionName: "shopify-copyShopifyStore", data: data) {

@@ -118,7 +118,7 @@ struct CreateAccountView: View {
                 
                 FloatingTextField(title: "Slogan", text: $viewModel.slogan, caption: "Your store slogan, it will be shown on your receipts and in your website", required: false, autoCapitalize: .words)
                 
-                if let category = CategoryManager().getCategoryById(id: viewModel.selectedCateogry ?? 7) {
+                if let category = CategoryManager().getCategoryById(id: viewModel.selectedCateogry) {
                     HStack {
                         Text("Category")
                         

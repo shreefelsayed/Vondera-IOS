@@ -40,7 +40,7 @@ struct Dashboard: View {
         
             Section() {
                 NavigationLink {
-                    StoreReport(storeId: store.ownerId)
+                    StoreReport()
                 } label: {
                     Label {
                         Text("Reports")
@@ -58,6 +58,17 @@ struct Dashboard: View {
                         Image(.btnExpanses)
                     }
                 }
+                
+                NavigationLink {
+                    StoreComplaints()
+                } label: {
+                    Label {
+                        Text("Complaints")
+                    } icon: {
+                        Image(.btnComplaints)
+                    }
+                }
+
                 
                 //TODO : Create order sheet screen
                 //NavigationLink("Create Orders Sheet", destination: EmptyView())

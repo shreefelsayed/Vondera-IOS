@@ -33,6 +33,11 @@ struct PaymentSettings: View {
                         
                         Spacer()
                         
+                        Image(.wallet)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24)
+                        
                         Image(.mastercard)
                             .resizable()
                             .scaledToFit()

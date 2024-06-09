@@ -301,9 +301,7 @@ struct DiscountCodeItem: View {
             Spacer()
             
             Button {
-                if let mId = UserInformation.shared.user?.store?.merchantId {
-                    CopyingData().copyToClipboard(discountCode.id)
-                }
+                CopyingData().copyToClipboard(discountCode.id)
             } label: {
                 Image(systemName: "doc.on.doc.fill")
             }

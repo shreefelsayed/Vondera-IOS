@@ -29,7 +29,7 @@ struct WarehouseCardSkelton : View {
 }
 struct WarehouseCard: View {
     @Binding var prod:StoreProduct
-    var showVariants = false
+    var showVariants = true
     
     
     @State private var showDetails = false

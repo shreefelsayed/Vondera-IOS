@@ -57,28 +57,25 @@ struct StoreEmployees: View {
             await viewModel.getData()
         }
         .toolbar {
-            if let store = UserInformation.shared.user?.store {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack {
-                        NavigationLink {
-                           BannedEmployees()
-                        } label: {
-                            Image(.btnBan)
-                        }
-                        
-                        Button {
-                            addEmployee.toggle()
-                        } label: {
-                            Image(systemName: "plus.app")
-                        }
-                        
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack {
+                    NavigationLink {
+                       BannedEmployees()
+                    } label: {
+                        Image(.btnBan)
                     }
-                    .buttonStyle(.plain)
-                    .font(.title2)
-                    .bold()
+                    
+                    Button {
+                        addEmployee.toggle()
+                    } label: {
+                        Image(systemName: "plus.app")
+                    }
+                    
                 }
+                .buttonStyle(.plain)
+                .font(.title2)
+                .bold()
             }
-            
         }
         .sheet(item: $contactUser, content: { user in
             ContactDialog(phone: user.phone, toggle: Binding(value: $contactUser))

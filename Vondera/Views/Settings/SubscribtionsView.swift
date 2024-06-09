@@ -13,48 +13,95 @@ struct SubscribtionsView: View {
     var body: some View {
         ScrollView {
             if let plan = UserInformation.shared.user?.store?.storePlanInfo {
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack(alignment: .center) {
-                        Text("Current plan")
-                            .font(.title3)
-                            .bold()
-                        
-                        Spacer()
-                        
-                        Text("\(plan.name)")
-                    }
-                    
-                    if plan.isFreePlan() {
-                        HStack {
-                            Spacer()
-                            
-                            NavigationLink("Upgrade your plan") {
-                                AppPlans()
-                            }
-                        }
-                    } else {
-                        VStack(alignment: .center) {
-                            HStack {
-                                NavigationLink("Upgrade / Change Plan") {
-                                    AppPlans()
-                                }
-                                
-                                Spacer()
-                                
-                                Button("Cancel", role: .destructive) {
-                                    Task {
-                                        await manageSubscriptions()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                SubscribtionCard(plan: plan)
             }
         }
         .padding()
         .navigationTitle("Subscribtions")
-        
+    }
+}
+
+struct SubscribtionCard : View {
+    var plan:StorePlanInfo
+    var body: some View {
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Your plan")
+                        
+                        Text(plan.name)
+                            .font(.headline)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(.icLogoWhite)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 28)
+                }
+                .foregroundColor(.white)
+                .padding()
+                .background(Color(hex: plan.getColorHex()))
+                
+                VStack(alignment: .leading) {
+                    Text("Your next bill we be on \(plan.expireDate.toString(format: "yyyy MMMM, dd"))")
+                    
+                    HStack {
+                        Spacer()
+                        
+                        if !plan.isFreePlan() {
+                            NavigationLink {
+                                AppPlans()
+                            } label: {
+                                Text("Renew Now !")
+                                    .font(.headline)
+                                    .padding(6)
+                                    .background(RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.black, lineWidth: 1.5))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    
+                }
+                .padding()
+                .background(.white)
+               
+            }
+            .cornerRadius(24)
+            
+            HStack {
+                NavigationLink {
+                    AppPlans()
+                } label: {
+                    Text("Change Plan")
+                        .font(.headline)
+                        .padding(6)
+                        .background(RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1.5))
+                }
+                .buttonStyle(.plain)
+
+                
+                
+                Spacer()
+                
+                Button(action: {
+                    Task {
+                        await manageSubscriptions()
+                    }
+                }, label: {
+                    Text("Unsubscribe")
+                })
+                .foregroundColor(.white)
+                .font(.headline)
+                .padding(6)
+                .background(Color.red)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+        }
     }
     
     @MainActor
@@ -69,8 +116,6 @@ struct SubscribtionsView: View {
     }
 }
 
-struct SubscribtionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SubscribtionsView()
-    }
+#Preview {
+    SubscribtionCard(plan: StorePlanInfo())
 }

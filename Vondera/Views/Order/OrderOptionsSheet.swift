@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AlertToast
+import PhotosUI
 
 struct OrderOptionsSheet: View {
     @Binding var order:Order
@@ -19,6 +20,7 @@ struct OrderOptionsSheet: View {
     @State private var comment = false
     @State private var editClient = false
     @State private var editProducts = false
+    @State private var showComplaintDialog = false
     
     @State private var deleteAlert = false
 
@@ -84,6 +86,11 @@ struct OrderOptionsSheet: View {
                             comment = true
                         }
                     
+                    Label("File a complaint", systemImage: "filemenu.and.selection")
+                        .onTapGesture {
+                            showComplaintDialog.toggle()
+                        }
+                    
                     // TODO
                     if order.canDeleteOrder(accountType: myUser.accountType) {
                         Label("Delete Order", systemImage: "trash.fill")
@@ -108,6 +115,10 @@ struct OrderOptionsSheet: View {
                 AddCommentSheet(order: $order, isPresented: $comment)
                     
             }
+            .sheet(isPresented: $showComplaintDialog, content: {
+                MakeComplaintSheet(isPresented: $showComplaintDialog, order: order)
+                    .presentationDetents([.medium])
+            })
             .sheet(isPresented: $editClient) {
                 NavigationStack {
                     EditOrder(order: $order, isPreseneted: $editClient)
@@ -228,6 +239,121 @@ struct OrderQRCode : View {
             
         }
         .presentationDetents([.fraction(0.45)])
+    }
+}
+
+struct MakeComplaintSheet: View {
+    @Binding var isPresented:Bool
+    var order:Order
+    
+    @State private var text = ""
+    @State private var pickedImages = [PhotosPickerItem]()
+    @State private var listPhotos = [UIImage]()
+    @State private var isSaving = false
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Add a complaint")
+                .font(.title3)
+                .bold()
+            
+            FloatingTextField(title: "Type the client's complaint", text: $text, required: true, multiLine: true)
+            
+            HStack {
+                Text("Add Photos")
+                    .font(.headline)
+                
+                Spacer()
+                
+                PhotosPicker(selection: $pickedImages, maxSelectionCount: 6) {
+                    Text("Pick photo")
+                }
+            }
+            
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(listPhotos, id: \.self) { photo in
+                        Image(uiImage: photo)
+                            .centerCropped()
+                            .frame(width: 100, height: 120)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding(.trailing, 12)
+                            .id(photo)
+                    }
+                }
+            }
+            
+            ButtonLarge(label: "Submit Complaint") {
+                uploadImage()
+            }
+            .disabled(isSaving)
+            
+            if isSaving {
+                HStack {
+                    Spacer()
+                    
+                    ProgressView()
+                    
+                    Spacer()
+                }
+            }
+        }
+        .padding()
+        .onChange(of: pickedImages) { newValue in
+            Task {
+                do {
+                    let photos = try await newValue.getUIImages()
+                    DispatchQueue.main.async {
+                        self.listPhotos = photos
+                    }
+                } catch {
+                    print(error)
+                }
+                
+            }
+        }
+    }
+    
+    private func addComplaint(photos:[String]) {
+        guard !text.isBlank, let user = UserInformation.shared.user else {
+            ToastManager.shared.showToast(msg: "Enter your complaint", toastType: .error)
+            return
+        }
+        
+        self.isSaving = true
+        
+        Task {
+            do {
+                var complaint = Complaint(id: order.id, desc: text, by: user.id, listPhotos: photos, storeId: user.storeId, byName: user.name)
+                try await ComplaintsDao(storeId: user.storeId).add(complaint: &complaint)
+               
+                DispatchQueue.main.async {
+                    ToastManager.shared.showToast(msg: "Complaint Added", toastType: .success)
+                    self.isPresented = false
+                }
+            } catch {
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+                self.isSaving = false
+            }
+        }
+    }
+    
+    private func uploadImage() {
+        guard let user = UserInformation.shared.user, !listPhotos.isEmpty else { 
+            addComplaint(photos: [])
+            return
+        }
+        
+        self.isSaving = true
+        
+        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos, storageRef: "stores/\(user.storeId)/complaints/\(order.id)/") { imageURLs, error in
+            if let error = error {
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
+                self.isSaving = false
+            } else if let urls = imageURLs {
+                addComplaint(photos: urls)
+            }
+        }
     }
 }
 

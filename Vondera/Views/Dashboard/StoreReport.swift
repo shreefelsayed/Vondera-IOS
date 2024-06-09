@@ -52,8 +52,6 @@ struct DateChoose:View {
 }
 
 struct StoreReport: View {
-    var storeId:String
-    
     @State var selectedDateIndex = 1
     @State var from: Date = Date().daysAgo(7).startOfDay()
     @State var to:Date = Date().endOfDay()
@@ -147,23 +145,21 @@ struct StoreReport: View {
     }
     
     func getData() async {
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
+        guard let storeId = UserInformation.shared.user?.storeId else { return }
         
-        if let items = try? await OrdersDao(storeId: storeId)
-            .getOrdersByAddDate(from: from.startOfDay(), to: to.endOfDay()), let expanses = try? await ExpansesDao(storeId: storeId)
-            .getBetweenDate(from: from.startOfDay(), to: to.endOfDay()) {
+        self.isLoading = true
+        
+        do {
+            let items = try await OrdersDao(storeId: storeId).getOrdersByAddDate(from: from.startOfDay(), to: to.endOfDay())
+            let expanses = try await ExpansesDao(storeId: storeId).getBetweenDate(from: from.startOfDay(), to: to.endOfDay())
             
             DispatchQueue.main.async {
                 self.items = items
                 self.expanses = expanses
                 self.isLoading = false
             }
+        } catch {
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
     }
-}
-
-#Preview {
-    StoreReport(storeId: Store.Qotoofs())
 }

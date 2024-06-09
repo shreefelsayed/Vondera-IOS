@@ -30,14 +30,12 @@ struct ProductPhotos: View {
             .onDelete { indexSet in
                 if let index = indexSet.first {
                     // --> Remove it from picker
-                    if let image = listPhotos[index].image {
+                    if listPhotos[index].image != nil {
                         images.remove(at: listPhotos[index].index)
                     }
                     
-                    // --> Remove it from list
                     listPhotos.remove(at: index)
                 }
-                
             }
             .onMove { indexSet, index in
                 listPhotos.move(fromOffsets: indexSet, toOffset: index)
@@ -49,9 +47,13 @@ struct ProductPhotos: View {
                 }
                 .onChange(of: images) { newValue in
                     Task {
-                        let photos = await newValue.addToListPhotos(list: listPhotos)
-                        DispatchQueue.main.async {
-                            self.listPhotos = photos
+                        do {
+                            let photos = try await newValue.addToListPhotos(list: listPhotos)
+                            DispatchQueue.main.async {
+                                self.listPhotos = photos
+                            }
+                        } catch {
+                            print(error)
                         }
                     }
                 }
@@ -112,13 +114,14 @@ struct ProductPhotos: View {
         
         self.isSaving = true
         
-        if listPhotos.getItemsToUpload().isEmpty {
+        let items = listPhotos.getItemsToUpload()
+        if items.isEmpty {
             saveProduct()
             return
         }
         
 
-        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/products/\(product.id)") { [self] urls, error in
+        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: items.map { $0.image! }, storageRef: "stores/\(storeId)/products/\(product.id)") { [self] urls, error in
             if let error = error {
                 isSaving = false
                 ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
@@ -149,7 +152,6 @@ struct ProductPhotos: View {
                 }
             } catch {
                 ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
-
             }
             
             self.isSaving = false
@@ -170,18 +172,16 @@ struct ImageRow: View {
                     .id(link)
                 } else if let image = pathOrLink.image {
                     Image(uiImage: image)
-                        .resizable()
+                        .centerCropped()
                         .id(image)
                 }
             }
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 180, height: 100)
-            .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
+            .frame(width: 80)
+            .frame(height: 100)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.trailing, 12)
             .tag(pathOrLink.id)
             
-            
-            Text("Image (\((index + 1)))")
             
             Spacer()
             
@@ -192,7 +192,7 @@ struct ImageRow: View {
     }
 }
 
-struct ImagePickerWithUrL  : Identifiable{
+struct ImagePickerWithUrL  : Identifiable {
     var id = UUID().uuidString
     var image:UIImage?
     var link:String?

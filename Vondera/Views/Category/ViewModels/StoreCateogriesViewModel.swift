@@ -28,13 +28,11 @@ class StoreCategoriesViewModel : ObservableObject {
     func updateIndexes() async {
         do {
             for (index, cat) in items.enumerated() {
-                
                 try await categoryDao.update(id: cat.id, hash: ["sortValue":index])
-                DispatchQueue.main.async { [self] in
-                    items[index].sortValue = index
+                DispatchQueue.main.async {
+                    self.items[index].sortValue = index
                 }
             }
-            print("Updated indexs")
         } catch {
             showTosat(msg: error.localizedDescription)
         }

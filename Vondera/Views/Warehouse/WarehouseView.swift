@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SlidingTabView
 
 struct WarehouseView: View {
     var storeId: String = UserInformation.shared.user?.storeId ?? ""

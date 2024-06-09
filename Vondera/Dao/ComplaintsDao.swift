@@ -24,20 +24,13 @@ class ComplaintsDao {
         return try collection.document(complaint.id).setData(from: complaint)
     }
     
-    func getComplaintByStatue(statue:String = "opened", lastSnapShot:DocumentSnapshot?) async throws -> ([Complaint], QueryDocumentSnapshot?) {
-        
-        var query:Query = collection
-            .whereField("statue", isEqualTo: statue)
+    func getComplaintByStatue(statue:String = "opened", lastSnapShot:DocumentSnapshot?) async throws -> ([Complaint], DocumentSnapshot?){
+        return try await collection
+            .whereField("state", isEqualTo: statue)
             .order(by: "date", descending: true)
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        query.limit(to: pageSize)
-        
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
+            .startAfter(lastDocument: lastSnapShot)
+            .limit(to: pageSize)
+            .getDocumentWithLastSnapshot(as: Complaint.self)
     }
     
     func update(id:String, hashMap:[String:Any]) async throws {

@@ -83,8 +83,10 @@ struct BannerTitles: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Add") {
+                Button {
                     showAddDialog.toggle()
+                } label: {
+                    Image(.icAdd)
                 }
             }
         }

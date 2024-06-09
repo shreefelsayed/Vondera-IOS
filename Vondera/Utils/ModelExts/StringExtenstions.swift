@@ -446,7 +446,7 @@ extension Array where Element == [String: [String]] {
 }
 
 extension Array where Element == PhotosPickerItem {
-    func getUIImages() async -> [UIImage] {
+    func getUIImages() async throws -> [UIImage] {
         var items:[UIImage] = []
         
         for image in self {
@@ -458,9 +458,9 @@ extension Array where Element == PhotosPickerItem {
         return items
     }
     
-    func addToListPhotos(list:[ImagePickerWithUrL]) async -> [ImagePickerWithUrL]{
+    func addToListPhotos(list:[ImagePickerWithUrL]) async throws -> [ImagePickerWithUrL]{
         var listPhotos = list
-        let uiImages = await self.getUIImages()
+        let uiImages = try await self.getUIImages()
         for imageIndex in uiImages.indices {
             let image = uiImages[imageIndex]
             
@@ -556,7 +556,7 @@ extension Array where Element == ImagePickerWithUrL {
     func getItemsToUpload() -> [ImagePickerWithUrL] {
         var images = [ImagePickerWithUrL]()
         for items in self {
-            if let image = items.image{
+            if items.image != nil {
                 images.append(items)
             }
         }
@@ -583,6 +583,7 @@ extension Array where Element == ImagePickerWithUrL {
     
     func getLinks() -> [String] {
         var allLinks = [String]()
+        
         for item in self {
             if let link = item.link, !link.isBlank, item.image == nil {
                 allLinks.append(link)
