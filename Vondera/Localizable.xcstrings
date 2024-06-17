@@ -2,7 +2,6 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -13,7 +12,6 @@
       }
     },
     " and our " : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -24,7 +22,6 @@
       }
     },
     "-" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -35,7 +32,6 @@
       }
     },
     "- %@ EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -46,7 +42,6 @@
       }
     },
     "-%@ LE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -57,7 +52,6 @@
       }
     },
     "(%@ at EGP %lld/mo. Save %lld%%)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -74,7 +68,6 @@
       }
     },
     "(%lld Reviews)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -85,7 +78,6 @@
       }
     },
     "(Delivered Order / Total Orders finished) * 100" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -96,7 +88,6 @@
       }
     },
     "@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -107,7 +98,6 @@
       }
     },
     "@%@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -118,7 +108,6 @@
       }
     },
     "/%@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -129,7 +118,6 @@
       }
     },
     "# %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -140,7 +128,6 @@
       }
     },
     "#%@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -151,7 +138,6 @@
       }
     },
     "%" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -162,7 +148,6 @@
       }
     },
     "%@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -172,8 +157,10 @@
         }
       }
     },
+    "%@ " : {
+
+    },
     "%@ - %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -190,7 +177,6 @@
       }
     },
     "%@ at %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -207,7 +193,6 @@
       }
     },
     "%@ EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -218,7 +203,6 @@
       }
     },
     "%@ LE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -229,7 +213,6 @@
       }
     },
     "%@ Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -240,7 +223,6 @@
       }
     },
     "%@ Report" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -251,7 +233,6 @@
       }
     },
     "%@, %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -268,7 +249,6 @@
       }
     },
     "%@%%" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -279,7 +259,6 @@
       }
     },
     "%lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -290,7 +269,6 @@
       }
     },
     "%lld %%" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -301,7 +279,6 @@
       }
     },
     "%lld Attachment" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -312,7 +289,6 @@
       }
     },
     "%lld Categories" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -323,7 +299,6 @@
       }
     },
     "%lld days ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -334,7 +309,6 @@
       }
     },
     "%lld EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -345,7 +319,6 @@
       }
     },
     "%lld hrs ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -356,7 +329,6 @@
       }
     },
     "%lld Items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -367,7 +339,6 @@
       }
     },
     "%lld Items added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -378,7 +349,6 @@
       }
     },
     "%lld LE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -389,7 +359,6 @@
       }
     },
     "%lld Markets" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -400,7 +369,6 @@
       }
     },
     "%lld mins ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -411,7 +379,6 @@
       }
     },
     "%lld months ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -422,7 +389,6 @@
       }
     },
     "%lld Of %lld Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -439,7 +405,6 @@
       }
     },
     "%lld Of %lld Used" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -456,7 +421,6 @@
       }
     },
     "%lld Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -467,7 +431,6 @@
       }
     },
     "%lld Orders / month" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -478,7 +441,6 @@
       }
     },
     "%lld Pieces" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -489,7 +451,6 @@
       }
     },
     "%lld Pieces Sold" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -500,7 +461,6 @@
       }
     },
     "%lld Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -511,7 +471,6 @@
       }
     },
     "%lld Sales Channels" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -522,7 +481,6 @@
       }
     },
     "%lld seconds ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -533,7 +491,6 @@
       }
     },
     "%lld Selected Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -544,7 +501,6 @@
       }
     },
     "%lld Team members" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -555,7 +511,6 @@
       }
     },
     "%lld Views" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -566,7 +521,6 @@
       }
     },
     "%lld Visits" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -577,7 +531,6 @@
       }
     },
     "%lld x %lf" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -594,7 +547,6 @@
       }
     },
     "%lld yrs ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -605,7 +557,6 @@
       }
     },
     "%lld. %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -622,7 +573,6 @@
       }
     },
     "%lld%%" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -633,7 +583,6 @@
       }
     },
     "+ %@ EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -644,7 +593,6 @@
       }
     },
     "+%@ LE" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -655,7 +603,6 @@
       }
     },
     "0 Pieces" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -666,7 +613,6 @@
       }
     },
     "1 day ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -677,7 +623,6 @@
       }
     },
     "1 hr ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -688,7 +633,6 @@
       }
     },
     "1 min ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -699,7 +643,6 @@
       }
     },
     "1 Month" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -710,7 +653,6 @@
       }
     },
     "1 month ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -721,7 +663,6 @@
       }
     },
     "1 yr ago" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -732,7 +673,6 @@
       }
     },
     "3 Months" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -743,7 +683,6 @@
       }
     },
     "76.76.21.21" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -754,7 +693,6 @@
       }
     },
     "100%" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -765,7 +703,6 @@
       }
     },
     "600 Seconds" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -776,7 +713,6 @@
       }
     },
     "A" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -787,7 +723,6 @@
       }
     },
     "Abandon Carts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -798,7 +733,6 @@
       }
     },
     "About app" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -809,7 +743,6 @@
       }
     },
     "Access" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -820,7 +753,6 @@
       }
     },
     "Account Active" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -831,7 +763,6 @@
       }
     },
     "Account Type" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -842,7 +773,6 @@
       }
     },
     "Actions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -853,7 +783,6 @@
       }
     },
     "Active" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -864,7 +793,6 @@
       }
     },
     "Add" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -875,7 +803,6 @@
       }
     },
     "Add a complaint" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -886,7 +813,6 @@
       }
     },
     "Add a description for your expanse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -897,7 +823,6 @@
       }
     },
     "Add a new expanse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -908,7 +833,6 @@
       }
     },
     "Add a new member" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -919,7 +843,6 @@
       }
     },
     "Add a new picture" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -930,7 +853,6 @@
       }
     },
     "Add at least 2 options to each varient" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -941,7 +863,6 @@
       }
     },
     "Add Attachments" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -952,7 +873,6 @@
       }
     },
     "Add Comment" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -963,7 +883,6 @@
       }
     },
     "Add comment to order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -974,7 +893,6 @@
       }
     },
     "Add Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -985,7 +903,6 @@
       }
     },
     "Add Custom HTML Pages" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -996,7 +913,6 @@
       }
     },
     "Add item" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1007,7 +923,6 @@
       }
     },
     "Add new Comment" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1018,7 +933,6 @@
       }
     },
     "Add Payment gateways" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1029,7 +943,6 @@
       }
     },
     "Add Photos" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1040,7 +953,6 @@
       }
     },
     "Add Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1051,7 +963,6 @@
       }
     },
     "Add product to featured" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1062,7 +973,6 @@
       }
     },
     "Add Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1073,7 +983,6 @@
       }
     },
     "Add this to your custom DNS Record in your domain" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1084,7 +993,6 @@
       }
     },
     "Add to cart" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1095,7 +1003,6 @@
       }
     },
     "Add to Cart" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1106,7 +1013,6 @@
       }
     },
     "Add to stock" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1117,7 +1023,6 @@
       }
     },
     "Add your categories" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1128,7 +1033,6 @@
       }
     },
     "Add your couriers info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1139,7 +1043,6 @@
       }
     },
     "Add your first banner" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1150,7 +1053,6 @@
       }
     },
     "Add your first order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1161,7 +1063,6 @@
       }
     },
     "Add your first page" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1172,7 +1073,6 @@
       }
     },
     "Add your first product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1183,7 +1083,6 @@
       }
     },
     "Add your own payment gateway to your website." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1194,7 +1093,6 @@
       }
     },
     "Add your store logo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1205,7 +1103,6 @@
       }
     },
     "Add your supported shipping areas" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1216,7 +1113,6 @@
       }
     },
     "Added to cart" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1227,7 +1123,6 @@
       }
     },
     "Adding expanses can help you track your net profit." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1238,7 +1133,6 @@
       }
     },
     "Address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1249,7 +1143,6 @@
       }
     },
     "Address : %@ - %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1266,7 +1159,6 @@
       }
     },
     "Admin" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1277,7 +1169,6 @@
       }
     },
     "After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1288,7 +1179,6 @@
       }
     },
     "Agel Wallet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1299,7 +1189,6 @@
       }
     },
     "All Employees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1310,7 +1199,6 @@
       }
     },
     "All Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1321,7 +1209,6 @@
       }
     },
     "All Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1332,7 +1219,6 @@
       }
     },
     "All Store Orders 📦" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1343,7 +1229,6 @@
       }
     },
     "Almost Out" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1354,7 +1239,6 @@
       }
     },
     "Always Stocked" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1365,7 +1249,6 @@
       }
     },
     "Always Stokced" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1376,7 +1259,6 @@
       }
     },
     "Amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1387,7 +1269,6 @@
       }
     },
     "Amount can't be more than the order cod" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1398,7 +1279,6 @@
       }
     },
     "Amount to add" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1409,7 +1289,6 @@
       }
     },
     "Annual plan free domain for one year" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1420,7 +1299,6 @@
       }
     },
     "Another Phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1431,7 +1309,6 @@
       }
     },
     "API Key" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1442,7 +1319,6 @@
       }
     },
     "App Access" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1453,7 +1329,6 @@
       }
     },
     "App Admin" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1464,7 +1339,6 @@
       }
     },
     "App Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1475,7 +1349,6 @@
       }
     },
     "App Version" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1486,7 +1359,6 @@
       }
     },
     "Apparel and Fashion" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1497,7 +1369,6 @@
       }
     },
     "Apple" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1508,7 +1379,6 @@
       }
     },
     "Are you sure you want to delete the order ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1519,7 +1389,6 @@
       }
     },
     "Are you sure you want to delete this category ? your products won't be deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1530,7 +1399,6 @@
       }
     },
     "Are you sure you want to delete this code ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1541,7 +1409,6 @@
       }
     },
     "Are you sure you want to delete this page ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1552,7 +1419,6 @@
       }
     },
     "Are you sure you want to delete this product ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1563,7 +1429,6 @@
       }
     },
     "Are you sure you want to delete this review ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1574,7 +1439,6 @@
       }
     },
     "Are you sure you want to delete your accont ? this will delete all of your data, we can't recover them later." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1585,7 +1449,6 @@
       }
     },
     "Are you sure you want to send this payout request ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1596,7 +1459,6 @@
       }
     },
     "Areas" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1607,7 +1469,6 @@
       }
     },
     "Areas and shipping fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1618,7 +1479,6 @@
       }
     },
     "Armjld Co." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1629,7 +1489,6 @@
       }
     },
     "Assemble orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1640,7 +1499,6 @@
       }
     },
     "Assembled" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1651,7 +1509,6 @@
       }
     },
     "Assign Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1662,7 +1519,6 @@
       }
     },
     "Assign orders to courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1673,7 +1529,6 @@
       }
     },
     "Assign to Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1684,7 +1539,6 @@
       }
     },
     "Assigned to courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1695,7 +1549,6 @@
       }
     },
     "at %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1706,7 +1559,6 @@
       }
     },
     "At least choose 1 photo for your product, you can choose up to 6 photos, note that you can download them later easily." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1717,7 +1569,6 @@
       }
     },
     "Attachments" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1728,7 +1579,6 @@
       }
     },
     "Auth Credntials" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1749,8 +1599,10 @@
         }
       }
     },
+    "Auto send whatsapp messages (Soon)" : {
+
+    },
     "Auto Update my order statue" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1761,7 +1613,6 @@
       }
     },
     "Automatic send whatsapp messages, notifying the user about their order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1772,7 +1623,6 @@
       }
     },
     "Available Balance" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1783,7 +1633,6 @@
       }
     },
     "Ban customer" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1794,7 +1643,6 @@
       }
     },
     "Banned Members" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1805,7 +1653,6 @@
       }
     },
     "Banner Text" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1816,7 +1663,6 @@
       }
     },
     "Banner titles" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1827,7 +1673,6 @@
       }
     },
     "Banners" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1838,7 +1683,6 @@
       }
     },
     "Banning a customer will notify you when you try to add an order with his info again, and auto delete orders made by his phone number or email from website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1849,7 +1693,6 @@
       }
     },
     "Be Able to set your currency, and customize your site language and supported countries." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1860,7 +1703,6 @@
       }
     },
     "Beauty and Cosmetics" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1871,7 +1713,6 @@
       }
     },
     "Books and Media" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1882,7 +1723,6 @@
       }
     },
     "Build your store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1893,7 +1733,6 @@
       }
     },
     "Build your website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1904,7 +1743,6 @@
       }
     },
     "Business phone number" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1915,7 +1753,6 @@
       }
     },
     "By : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1926,7 +1763,6 @@
       }
     },
     "By importing your shopify data, we will import all of your orders, products, collections, if you already imported the data before, you don't need to import it again" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1937,7 +1773,6 @@
       }
     },
     "By signing in, you agree to our " : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1948,7 +1783,6 @@
       }
     },
     "By turning this off you will disable adding any order to this courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1959,7 +1793,6 @@
       }
     },
     "Can worker account reset orders to it's original state ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1970,7 +1803,6 @@
       }
     },
     "Cancel" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1981,7 +1813,6 @@
       }
     },
     "Cannot open Label" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1992,7 +1823,6 @@
       }
     },
     "Card Holder" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2003,7 +1833,6 @@
       }
     },
     "Cart" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2014,7 +1843,6 @@
       }
     },
     "Cash on Delivery" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2025,7 +1853,6 @@
       }
     },
     "Cash With Couriers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2036,7 +1863,6 @@
       }
     },
     "Categories" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2047,7 +1873,6 @@
       }
     },
     "Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2058,7 +1883,6 @@
       }
     },
     "Category Deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2069,7 +1893,6 @@
       }
     },
     "Category Describtion" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2080,7 +1903,6 @@
       }
     },
     "Category info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2091,7 +1913,6 @@
       }
     },
     "Category Name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2102,7 +1923,6 @@
       }
     },
     "Change app language" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2113,7 +1933,6 @@
       }
     },
     "Change App Language" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2124,7 +1943,6 @@
       }
     },
     "Change Configuration?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2135,7 +1953,6 @@
       }
     },
     "Change my password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2146,7 +1963,6 @@
       }
     },
     "Change Password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2157,7 +1973,6 @@
       }
     },
     "Change Phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2167,8 +1982,10 @@
         }
       }
     },
+    "Change photos" : {
+
+    },
     "Change Plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2179,7 +1996,6 @@
       }
     },
     "Change Username" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2190,7 +2006,6 @@
       }
     },
     "Chaning your username will cause in changing your website link, are you sure you want to do this" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2201,7 +2016,6 @@
       }
     },
     "Check out" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2212,7 +2026,6 @@
       }
     },
     "Check the governments you ship to, and enter their shipping fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2223,7 +2036,6 @@
       }
     },
     "Check the order id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2234,7 +2046,6 @@
       }
     },
     "Choose a strong password, it must be 6 chars at least" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2245,7 +2056,6 @@
       }
     },
     "Choose Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2256,7 +2066,6 @@
       }
     },
     "Choose Date" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2267,7 +2076,6 @@
       }
     },
     "Choose Provider" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2278,7 +2086,6 @@
       }
     },
     "Choose your category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2289,7 +2096,6 @@
       }
     },
     "Choose your contact method" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2300,7 +2106,6 @@
       }
     },
     "Choose your language" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2311,7 +2116,6 @@
       }
     },
     "Clear" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2322,7 +2126,6 @@
       }
     },
     "Clear cart" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2333,7 +2136,6 @@
       }
     },
     "Click on the below photo to pick your new logo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2344,7 +2146,6 @@
       }
     },
     "Client info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2355,7 +2156,6 @@
       }
     },
     "Close Complaint" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2365,8 +2165,10 @@
         }
       }
     },
+    "Closed" : {
+
+    },
     "Closed by : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2377,7 +2179,6 @@
       }
     },
     "COD" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2388,7 +2189,6 @@
       }
     },
     "Code added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2399,7 +2199,6 @@
       }
     },
     "Code Deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2410,7 +2209,6 @@
       }
     },
     "Code Updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2421,7 +2219,6 @@
       }
     },
     "Collect %lf EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2432,7 +2229,6 @@
       }
     },
     "Collect Money" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2443,7 +2239,6 @@
       }
     },
     "Collect Payment" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2454,7 +2249,6 @@
       }
     },
     "Comment added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2465,7 +2259,6 @@
       }
     },
     "Commission" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2476,7 +2269,6 @@
       }
     },
     "Communication" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2486,8 +2278,10 @@
         }
       }
     },
+    "Complaint Added" : {
+
+    },
     "Complaint by : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2498,7 +2292,6 @@
       }
     },
     "Complaint Closed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2509,7 +2302,6 @@
       }
     },
     "Complaint Details" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2519,8 +2311,10 @@
         }
       }
     },
+    "Complaint Reopened" : {
+
+    },
     "Complaints" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2531,7 +2325,6 @@
       }
     },
     "Confirm orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2542,7 +2335,6 @@
       }
     },
     "Confirm payout request" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2553,7 +2345,6 @@
       }
     },
     "Confirmed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2564,7 +2355,6 @@
       }
     },
     "Connect" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2575,7 +2365,6 @@
       }
     },
     "Connect your pixel trackers, Google TAG manager, Facebook Pixel, Tiktok Pixel, to keep track of your website conversion." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2586,7 +2375,6 @@
       }
     },
     "Connect your store to pixels" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2597,7 +2385,6 @@
       }
     },
     "Connected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2608,7 +2395,6 @@
       }
     },
     "Contact" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2619,7 +2405,6 @@
       }
     },
     "Contact Client" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2630,7 +2415,6 @@
       }
     },
     "Contact Customer" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2641,7 +2425,6 @@
       }
     },
     "Contact Support" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2652,7 +2435,6 @@
       }
     },
     "Content" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2663,7 +2445,6 @@
       }
     },
     "Continue" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2674,7 +2455,6 @@
       }
     },
     "Copy Order Details" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2685,7 +2465,6 @@
       }
     },
     "Copy Order Link" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2696,7 +2475,6 @@
       }
     },
     "Copy Product Link" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2706,8 +2484,10 @@
         }
       }
     },
+    "Cost" : {
+
+    },
     "Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2718,7 +2498,6 @@
       }
     },
     "Courier Active" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2729,7 +2508,6 @@
       }
     },
     "Courier Added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2740,7 +2518,6 @@
       }
     },
     "Courier Contact Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2751,7 +2528,6 @@
       }
     },
     "Courier Contact Phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2762,7 +2538,6 @@
       }
     },
     "Courier Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2773,7 +2548,6 @@
       }
     },
     "Courier info changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2784,7 +2558,6 @@
       }
     },
     "Courier Name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2795,7 +2568,6 @@
       }
     },
     "Courier Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2806,7 +2578,6 @@
       }
     },
     "Courier Shipping fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2817,7 +2588,6 @@
       }
     },
     "Couriers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2828,7 +2598,6 @@
       }
     },
     "Cover photos" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2838,8 +2607,10 @@
         }
       }
     },
+    "Covers Updated" : {
+
+    },
     "Create" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2850,7 +2621,6 @@
       }
     },
     "Create discount code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2861,7 +2631,6 @@
       }
     },
     "Create dynamic HTML pages in your website." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2882,8 +2651,10 @@
         }
       }
     },
+    "Create mail campaigns (Soon)" : {
+
+    },
     "Create new Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2894,7 +2665,6 @@
       }
     },
     "Create New Store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2905,7 +2675,6 @@
       }
     },
     "Create Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2916,7 +2685,6 @@
       }
     },
     "Create Promo codes" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2927,7 +2695,6 @@
       }
     },
     "Create team member" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2938,7 +2705,6 @@
       }
     },
     "Create your first order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2949,7 +2715,6 @@
       }
     },
     "Create your own customized discount codes, so your customer can get discounts." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2960,7 +2725,6 @@
       }
     },
     "Created By" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2971,7 +2735,6 @@
       }
     },
     "Crossed Price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2982,7 +2745,6 @@
       }
     },
     "Crossed price can't be less than the selling price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2993,7 +2755,6 @@
       }
     },
     "Current Balance" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3004,7 +2765,6 @@
       }
     },
     "Current Cashback" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3015,7 +2775,6 @@
       }
     },
     "Current Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3026,7 +2785,6 @@
       }
     },
     "Current Password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3037,7 +2795,6 @@
       }
     },
     "Current Plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3048,7 +2805,6 @@
       }
     },
     "Custom app admin api token ex (shpat_XXXX)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3059,7 +2815,6 @@
       }
     },
     "Custom Domain" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3070,7 +2825,6 @@
       }
     },
     "Custom HTML Pages" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3081,7 +2835,6 @@
       }
     },
     "Custom message" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3092,7 +2845,6 @@
       }
     },
     "Custom Message" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3103,7 +2855,6 @@
       }
     },
     "Custom Pages" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3114,7 +2865,6 @@
       }
     },
     "Customer banned ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3125,7 +2875,6 @@
       }
     },
     "Customer Details" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3136,7 +2885,6 @@
       }
     },
     "Customer Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3147,7 +2895,6 @@
       }
     },
     "Customers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3168,8 +2915,10 @@
         }
       }
     },
+    "Customers can create accounts (Soon)" : {
+
+    },
     "Customers can prepaid out of stock products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3180,7 +2929,6 @@
       }
     },
     "Customize Varients" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3191,7 +2939,6 @@
       }
     },
     "Customize your receipt" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3202,7 +2949,6 @@
       }
     },
     "Customize your receipt by adding options to it, you can get summarize sheet with the required products, or a sheet with each city orders and more." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3213,7 +2959,6 @@
       }
     },
     "Dashboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3224,7 +2969,6 @@
       }
     },
     "Date Range" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3235,7 +2979,6 @@
       }
     },
     "Default Payment Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3246,7 +2989,6 @@
       }
     },
     "Delete" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3257,7 +2999,6 @@
       }
     },
     "Delete Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3268,7 +3009,6 @@
       }
     },
     "Delete my account" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3279,7 +3019,6 @@
       }
     },
     "Delete order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3290,7 +3029,6 @@
       }
     },
     "Delete Order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3301,7 +3039,6 @@
       }
     },
     "Delete Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3312,7 +3049,6 @@
       }
     },
     "Delete Review" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3323,7 +3059,6 @@
       }
     },
     "Delete Varient" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3334,7 +3069,6 @@
       }
     },
     "Delete your account" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3345,7 +3079,6 @@
       }
     },
     "Deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3356,7 +3089,6 @@
       }
     },
     "Deleted by us" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3367,7 +3099,6 @@
       }
     },
     "Deleted Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3378,7 +3109,6 @@
       }
     },
     "Deleted Orders Notificaton" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3389,7 +3119,6 @@
       }
     },
     "Deleted User" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3400,7 +3129,6 @@
       }
     },
     "Deliver orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3411,7 +3139,6 @@
       }
     },
     "Delivered" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3422,7 +3149,6 @@
       }
     },
     "Delivered Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3433,7 +3159,6 @@
       }
     },
     "Delivered to the client" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3444,7 +3169,6 @@
       }
     },
     "Delivery Success Rate" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3455,7 +3179,6 @@
       }
     },
     "Deposit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3466,7 +3189,6 @@
       }
     },
     "Deposit amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3477,7 +3199,6 @@
       }
     },
     "Describe what is this expanses for ex (Marketing fees, employee salary)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3488,7 +3209,6 @@
       }
     },
     "Description" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3499,7 +3219,6 @@
       }
     },
     "Dicount must be between 1 and 100" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3510,7 +3229,6 @@
       }
     },
     "Disable local orders pickup" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3521,7 +3239,6 @@
       }
     },
     "Discount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3532,7 +3249,6 @@
       }
     },
     "Discount Code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3543,7 +3259,6 @@
       }
     },
     "Discount Codes" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3554,7 +3269,6 @@
       }
     },
     "Do you have a promo code ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3565,7 +3279,6 @@
       }
     },
     "Do you want to update the variants prices too ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3576,7 +3289,6 @@
       }
     },
     "Domain" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3587,7 +3299,6 @@
       }
     },
     "Domain Connected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3598,7 +3309,6 @@
       }
     },
     "Domain Disconnected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3609,7 +3319,6 @@
       }
     },
     "Domain info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3620,7 +3329,6 @@
       }
     },
     "Domain Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3631,7 +3339,6 @@
       }
     },
     "Don't have a Kashier account ? Sign Up now !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3642,7 +3349,6 @@
       }
     },
     "Don't have a MyFatoorah account ? Sign Up now !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3653,7 +3359,6 @@
       }
     },
     "Don't have a paymob account ? Sign Up now !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3664,7 +3369,6 @@
       }
     },
     "Don't have a paytab account ? Sign Up now !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3675,7 +3379,6 @@
       }
     },
     "Don't have an account ? " : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3686,7 +3389,6 @@
       }
     },
     "Done" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3697,7 +3399,6 @@
       }
     },
     "Downgrade to %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3708,7 +3409,6 @@
       }
     },
     "Download %lld attachments" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3719,7 +3419,6 @@
       }
     },
     "Download attachments" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3730,7 +3429,6 @@
       }
     },
     "Downloading started" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3741,7 +3439,6 @@
       }
     },
     "Edit Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3752,7 +3449,6 @@
       }
     },
     "Edit Client Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3763,7 +3459,6 @@
       }
     },
     "Edit Code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3774,7 +3469,6 @@
       }
     },
     "Edit Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3785,7 +3479,6 @@
       }
     },
     "Edit Expanse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3796,7 +3489,6 @@
       }
     },
     "Edit info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3807,7 +3499,6 @@
       }
     },
     "Edit Order Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3818,7 +3509,6 @@
       }
     },
     "Edit Page" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3829,7 +3519,6 @@
       }
     },
     "Edit Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3840,7 +3529,6 @@
       }
     },
     "Edit your integration id and add this link to your Transaction processed callback" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3851,7 +3539,6 @@
       }
     },
     "EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3862,7 +3549,6 @@
       }
     },
     "EGP %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3873,7 +3559,6 @@
       }
     },
     "EGP %@ x %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3890,7 +3575,6 @@
       }
     },
     "EGP %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3901,7 +3585,6 @@
       }
     },
     "EGP %lld / %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3918,7 +3601,6 @@
       }
     },
     "Electronics and Gadgets" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3929,7 +3611,6 @@
       }
     },
     "Email" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3940,7 +3621,6 @@
       }
     },
     "Email address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3951,7 +3631,6 @@
       }
     },
     "Email Address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3962,7 +3641,6 @@
       }
     },
     "Email address : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3973,7 +3651,6 @@
       }
     },
     "Email Provider" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3984,7 +3661,6 @@
       }
     },
     "Email settings updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3995,7 +3671,6 @@
       }
     },
     "Employee" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4006,7 +3681,6 @@
       }
     },
     "Employee Added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4017,7 +3691,6 @@
       }
     },
     "Employee info changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4028,7 +3701,6 @@
       }
     },
     "Employees can reset orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4039,7 +3711,6 @@
       }
     },
     "Enable attachments in local orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4050,7 +3721,6 @@
       }
     },
     "Enable local orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4061,7 +3731,6 @@
       }
     },
     "Enable Prepaid orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4072,7 +3741,6 @@
       }
     },
     "Enable Product Reviews" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4083,7 +3751,6 @@
       }
     },
     "Enable sending a WhatsApp message to your client from your phone, once the order is submitted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4094,7 +3761,6 @@
       }
     },
     "Enable website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4105,7 +3771,6 @@
       }
     },
     "Enable your customers to add reviews to your products." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4116,7 +3781,6 @@
       }
     },
     "Enabling this will not track your items in the warehouse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4127,7 +3791,6 @@
       }
     },
     "English" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4138,7 +3801,6 @@
       }
     },
     "Enter a valid amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4149,7 +3811,6 @@
       }
     },
     "Enter a valid commission percentage" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4160,7 +3821,6 @@
       }
     },
     "Enter a valid cost amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4171,7 +3831,6 @@
       }
     },
     "Enter a valid email address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4182,7 +3841,6 @@
       }
     },
     "Enter a valid employee email" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4193,7 +3851,6 @@
       }
     },
     "Enter a valid password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4204,7 +3861,6 @@
       }
     },
     "Enter a valid phone number" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4215,7 +3871,6 @@
       }
     },
     "Enter a valid price amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4226,7 +3881,6 @@
       }
     },
     "Enter a valid quantity amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4237,7 +3891,6 @@
       }
     },
     "Enter a valid username" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4248,7 +3901,6 @@
       }
     },
     "Enter how many pieces you want to add to your stock" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4259,7 +3911,6 @@
       }
     },
     "Enter product name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4270,7 +3921,6 @@
       }
     },
     "Enter the amount you want to collect from the customer, the order will be updated once the customer pays" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4281,7 +3931,6 @@
       }
     },
     "Enter your complaint" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4292,7 +3941,6 @@
       }
     },
     "Error happened" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4303,7 +3951,6 @@
       }
     },
     "Error Happened" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4314,7 +3961,6 @@
       }
     },
     "Ex (4797932978324)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4325,7 +3971,6 @@
       }
     },
     "Ex (GTM-347934)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4336,7 +3981,6 @@
       }
     },
     "Expanses" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4347,7 +3991,6 @@
       }
     },
     "Expanses 💳" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4358,7 +4001,6 @@
       }
     },
     "Expanses Deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4369,7 +4011,6 @@
       }
     },
     "Expanses Reports" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4380,7 +4021,6 @@
       }
     },
     "Expanses reports from %@ to %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4397,7 +4037,6 @@
       }
     },
     "Expire Date" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4408,7 +4047,6 @@
       }
     },
     "Export Report" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4419,7 +4057,6 @@
       }
     },
     "Export Reports" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4430,7 +4067,6 @@
       }
     },
     "Facebook" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4441,7 +4077,6 @@
       }
     },
     "Facebook Link" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4452,7 +4087,6 @@
       }
     },
     "Facebook Pixel" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4463,7 +4097,6 @@
       }
     },
     "Failed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4474,7 +4107,6 @@
       }
     },
     "Failed Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4485,7 +4117,6 @@
       }
     },
     "Failed Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4496,7 +4127,6 @@
       }
     },
     "Failed to delivered the order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4506,8 +4136,13 @@
         }
       }
     },
+    "Featured" : {
+
+    },
+    "Featured Product" : {
+
+    },
     "Featured Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4518,7 +4153,6 @@
       }
     },
     "File a complaint" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4529,7 +4163,6 @@
       }
     },
     "Fill all the data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4540,7 +4173,6 @@
       }
     },
     "Fill all varients titles" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4551,7 +4183,6 @@
       }
     },
     "Fill from recent products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4562,7 +4193,6 @@
       }
     },
     "Fill the courier name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4573,7 +4203,6 @@
       }
     },
     "Fill the Courier name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4584,7 +4213,6 @@
       }
     },
     "Fill the courier phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4595,7 +4223,6 @@
       }
     },
     "Fill the Courier phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4606,7 +4233,6 @@
       }
     },
     "Fill the current variant first" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4616,8 +4242,10 @@
         }
       }
     },
+    "Fill the current varient first" : {
+
+    },
     "Fill the Employee name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4628,7 +4256,6 @@
       }
     },
     "Fill the Employee phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4639,7 +4266,6 @@
       }
     },
     "Fill the product name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4650,7 +4276,6 @@
       }
     },
     "Fill the required data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4661,7 +4286,6 @@
       }
     },
     "Fill your name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4672,7 +4296,6 @@
       }
     },
     "Fill your store name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4683,7 +4306,6 @@
       }
     },
     "Filter" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4694,7 +4316,6 @@
       }
     },
     "Filters" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4705,7 +4326,6 @@
       }
     },
     "Finished Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4716,7 +4336,6 @@
       }
     },
     "First" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4727,7 +4346,6 @@
       }
     },
     "Fonts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4738,7 +4356,6 @@
       }
     },
     "Food and Beverages" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4749,7 +4366,6 @@
       }
     },
     "Forget Password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4760,7 +4376,6 @@
       }
     },
     "Forget Password ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4771,7 +4386,6 @@
       }
     },
     "Free" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4782,7 +4396,6 @@
       }
     },
     "From" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4793,7 +4406,6 @@
       }
     },
     "Full Name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4804,7 +4416,6 @@
       }
     },
     "Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4815,7 +4426,6 @@
       }
     },
     "Gateways" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4826,7 +4436,6 @@
       }
     },
     "Get a free one year domain, and connect it to your store." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4837,7 +4446,6 @@
       }
     },
     "Get Product Reviews" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4848,7 +4456,6 @@
       }
     },
     "Gifts and Novelties" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4859,7 +4466,6 @@
       }
     },
     "Global Website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4880,8 +4486,10 @@
         }
       }
     },
+    "Global website / Multi languages (Soon)" : {
+
+    },
     "Go to your dashboard/Integration Settings/Webhook \nAdd this link and disable Secret Key, and Check Transaction Status Changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4892,7 +4500,6 @@
       }
     },
     "Google" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4903,7 +4510,6 @@
       }
     },
     "Google tag manager" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4914,7 +4520,6 @@
       }
     },
     "Google Tag Manager" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4925,7 +4530,6 @@
       }
     },
     "Google Tag Manager is a tag management system (TMS) that allows you to quickly and easily update measurement codes and related code fragments collectively known as tags on your website or mobile app. Once the small segment of Tag Manager code has been added to your project, you can safely and easily deploy analytics and measurement tag configurations from a web-based user interface." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4936,7 +4540,6 @@
       }
     },
     "Government" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4947,7 +4550,6 @@
       }
     },
     "Governments" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4958,7 +4560,6 @@
       }
     },
     "GTM ID" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4969,7 +4570,6 @@
       }
     },
     "Have a shopify store ? Import your data now 🚀" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4980,7 +4580,6 @@
       }
     },
     "Help" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4991,7 +4590,6 @@
       }
     },
     "Help us expand and get a free subscribtion, by refferring other stores you will gain cashback from each payment they make which is used automaticlky to renew your monthly subscribtion." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5002,7 +4600,6 @@
       }
     },
     "Hi !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5013,7 +4610,6 @@
       }
     },
     "Hide this category from the website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5024,7 +4620,6 @@
       }
     },
     "Home" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5035,7 +4630,6 @@
       }
     },
     "How much have you spents" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5046,7 +4640,6 @@
       }
     },
     "How much money did the client paid for the courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5057,7 +4650,6 @@
       }
     },
     "How much money will the courier take from you" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5068,7 +4660,6 @@
       }
     },
     "Identifier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5079,7 +4670,6 @@
       }
     },
     "If one of Vondera team invited you, enter his refer code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5090,7 +4680,6 @@
       }
     },
     "IFrame id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5101,7 +4690,6 @@
       }
     },
     "Import from shopify" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5112,7 +4700,6 @@
       }
     },
     "Import shopify data" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5123,7 +4710,6 @@
       }
     },
     "Import Shopify Store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5134,7 +4720,6 @@
       }
     },
     "In order to active this option, you need to add a payment gateway first" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5145,7 +4730,6 @@
       }
     },
     "In Stock" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5156,7 +4740,6 @@
       }
     },
     "Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5167,7 +4750,6 @@
       }
     },
     "Info updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5178,7 +4760,6 @@
       }
     },
     "Instagram Link" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5189,7 +4770,6 @@
       }
     },
     "Integrate with shipping companies" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5200,7 +4780,6 @@
       }
     },
     "Integrate with shipping companies, and always be up to date with the latest orders updates." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5211,7 +4790,6 @@
       }
     },
     "Integration Id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5222,7 +4800,6 @@
       }
     },
     "Integration info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5233,7 +4810,6 @@
       }
     },
     "Items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5244,7 +4820,6 @@
       }
     },
     "Just now" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5255,7 +4830,6 @@
       }
     },
     "Just update price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5266,7 +4840,6 @@
       }
     },
     "Kashier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5277,7 +4850,6 @@
       }
     },
     "Kashier Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5288,7 +4860,6 @@
       }
     },
     "Keep track of your customers by letting them sign in to your store, and track their mails and carts easily" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5299,7 +4870,6 @@
       }
     },
     "Last Order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5310,7 +4880,6 @@
       }
     },
     "Last Order Date" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5321,7 +4890,6 @@
       }
     },
     "Last Ordered" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5332,7 +4900,6 @@
       }
     },
     "Last ordered at : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5343,7 +4910,6 @@
       }
     },
     "Last piece label on products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5354,7 +4920,6 @@
       }
     },
     "Later" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5365,7 +4930,6 @@
       }
     },
     "Latest orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5376,7 +4940,6 @@
       }
     },
     "Latest Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5387,7 +4950,6 @@
       }
     },
     "Latest Updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5398,7 +4960,6 @@
       }
     },
     "Let your customers create accounts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5409,7 +4970,6 @@
       }
     },
     "Link" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5420,7 +4980,6 @@
       }
     },
     "Link Copied to clipboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5431,7 +4990,6 @@
       }
     },
     "Live website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5442,7 +5000,6 @@
       }
     },
     "Local Whatsapp" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5453,7 +5010,6 @@
       }
     },
     "Log Out" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5464,7 +5020,6 @@
       }
     },
     "Logged in" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5475,7 +5030,6 @@
       }
     },
     "Login Credintals" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5486,7 +5040,6 @@
       }
     },
     "Low Stocks Indecator" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5497,7 +5050,6 @@
       }
     },
     "Mail Campaigns" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5508,7 +5060,6 @@
       }
     },
     "Mailing Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5519,7 +5070,6 @@
       }
     },
     "Main info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5530,7 +5080,6 @@
       }
     },
     "Margin" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5541,7 +5090,6 @@
       }
     },
     "Market Places" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5552,7 +5100,6 @@
       }
     },
     "MarketPlaces" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5563,7 +5110,6 @@
       }
     },
     "max use number must be more than zero" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5574,7 +5120,6 @@
       }
     },
     "Max Uses" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5585,7 +5130,6 @@
       }
     },
     "Member settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5596,7 +5140,6 @@
       }
     },
     "Merchant Id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5606,8 +5149,10 @@
         }
       }
     },
+    "Min Amount" : {
+
+    },
     "Min Quantity" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5617,8 +5162,10 @@
         }
       }
     },
+    "Minmum order price" : {
+
+    },
     "Monthly Limit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5629,7 +5176,6 @@
       }
     },
     "More options" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5640,7 +5186,6 @@
       }
     },
     "Most Selling" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5651,7 +5196,6 @@
       }
     },
     "Most Selling Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5662,7 +5206,6 @@
       }
     },
     "Most viewed items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5673,7 +5216,6 @@
       }
     },
     "My Fatoorah" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5684,7 +5226,6 @@
       }
     },
     "My Fatoorah Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5695,7 +5236,6 @@
       }
     },
     "My Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5706,7 +5246,6 @@
       }
     },
     "Name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5717,7 +5256,6 @@
       }
     },
     "Name : %@ - Phone Number : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5734,7 +5272,6 @@
       }
     },
     "Name & Slogan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5744,8 +5281,10 @@
         }
       }
     },
+    "Name and Collection" : {
+
+    },
     "Navigate" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5756,7 +5295,6 @@
       }
     },
     "Net Profit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5767,7 +5305,6 @@
       }
     },
     "Net profit is the orders profit - expanses" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5778,7 +5315,6 @@
       }
     },
     "New" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5789,7 +5325,6 @@
       }
     },
     "New Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5800,7 +5335,6 @@
       }
     },
     "New Category Added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5811,7 +5345,6 @@
       }
     },
     "New Code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5822,7 +5355,6 @@
       }
     },
     "New Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5833,7 +5365,6 @@
       }
     },
     "New Expanse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5844,7 +5375,6 @@
       }
     },
     "New Option" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5855,7 +5385,6 @@
       }
     },
     "New Order Complaint Notificaton" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5866,7 +5395,6 @@
       }
     },
     "New Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5877,7 +5405,6 @@
       }
     },
     "New Orders Notificaton" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5888,7 +5415,6 @@
       }
     },
     "New Page" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5899,7 +5425,6 @@
       }
     },
     "New Password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5910,7 +5435,6 @@
       }
     },
     "New payout request" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5921,7 +5445,6 @@
       }
     },
     "New Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5932,7 +5455,6 @@
       }
     },
     "Next" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5943,7 +5465,6 @@
       }
     },
     "No" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5954,7 +5475,6 @@
       }
     },
     "No categories were added to your store yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5965,7 +5485,6 @@
       }
     },
     "No Confirmed orders found" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5976,7 +5495,6 @@
       }
     },
     "No custom pages were added to your website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5987,7 +5505,6 @@
       }
     },
     "No items are in the warehouse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5998,7 +5515,6 @@
       }
     },
     "No new orders found" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6009,7 +5525,6 @@
       }
     },
     "No notifications" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6020,7 +5535,6 @@
       }
     },
     "No one shopped from your store yet :(" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6031,7 +5545,6 @@
       }
     },
     "No Orders are added by you" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6042,7 +5555,6 @@
       }
     },
     "No orders from this marketplace" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6053,7 +5565,6 @@
       }
     },
     "No orders to select from" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6064,7 +5575,6 @@
       }
     },
     "No orders were deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6075,7 +5585,6 @@
       }
     },
     "No orders were delivered by this courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6086,7 +5595,6 @@
       }
     },
     "No orders were delivered to your clients yet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6097,7 +5605,6 @@
       }
     },
     "No orders were failed to deliver this courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6108,7 +5615,6 @@
       }
     },
     "No payouts requests were made yet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6119,7 +5625,6 @@
       }
     },
     "No Products are added to the store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6130,7 +5635,6 @@
       }
     },
     "No products are added to the store yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6141,7 +5645,6 @@
       }
     },
     "No Products are featured on the website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6152,7 +5655,6 @@
       }
     },
     "No Products in this category, add a new product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6163,7 +5665,6 @@
       }
     },
     "No ready orders found" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6174,7 +5675,6 @@
       }
     },
     "No result for your search %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6185,7 +5685,6 @@
       }
     },
     "No team members are banned" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6196,7 +5695,6 @@
       }
     },
     "No text banners are added to your website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6207,7 +5705,6 @@
       }
     },
     "No Thanks !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6218,7 +5715,6 @@
       }
     },
     "No transactions were made yet by your clients" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6229,7 +5725,6 @@
       }
     },
     "Not Paid" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6240,7 +5735,6 @@
       }
     },
     "Note that the courier shipping fees will be detected from your net proft, this is the price that the couriers get for his service for you" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6251,7 +5745,6 @@
       }
     },
     "Notes" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6262,7 +5755,6 @@
       }
     },
     "Notes : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6273,7 +5765,6 @@
       }
     },
     "Notification Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6284,7 +5775,6 @@
       }
     },
     "Notifications" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6295,7 +5785,6 @@
       }
     },
     "Number of orders assigned to courier in the time range" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6306,7 +5795,6 @@
       }
     },
     "Number of orders created in the time range" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6317,7 +5805,6 @@
       }
     },
     "Number of products sold" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6328,7 +5815,6 @@
       }
     },
     "On Going Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6339,7 +5825,6 @@
       }
     },
     "One Year" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6350,7 +5835,6 @@
       }
     },
     "Online Employees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6361,7 +5845,6 @@
       }
     },
     "Only english lowercased letter, no spaces, no special chatcters" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6372,7 +5855,6 @@
       }
     },
     "Option (Varient)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6383,7 +5865,6 @@
       }
     },
     "Option %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6394,7 +5875,6 @@
       }
     },
     "Option %lld : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6411,7 +5891,6 @@
       }
     },
     "Optional" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6422,7 +5901,6 @@
       }
     },
     "Options" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6433,7 +5911,6 @@
       }
     },
     "Or Login to saved account" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6444,7 +5921,6 @@
       }
     },
     "Order # %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6455,7 +5931,6 @@
       }
     },
     "Order #%@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6466,7 +5941,6 @@
       }
     },
     "Order already with courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6477,7 +5951,6 @@
       }
     },
     "Order assigned to courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6488,7 +5961,6 @@
       }
     },
     "Order By : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6499,7 +5971,6 @@
       }
     },
     "Order confirmed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6510,7 +5981,6 @@
       }
     },
     "Order Confirmed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6521,7 +5991,6 @@
       }
     },
     "Order doesn't need delivery" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6532,7 +6001,6 @@
       }
     },
     "Order Failed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6543,7 +6011,6 @@
       }
     },
     "Order has been reset" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6554,7 +6021,6 @@
       }
     },
     "Order id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6565,7 +6031,6 @@
       }
     },
     "Order id doesn't exist" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6576,7 +6041,6 @@
       }
     },
     "Order infos was edited" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6587,7 +6051,6 @@
       }
     },
     "Order is deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6598,7 +6061,6 @@
       }
     },
     "Order is Delivered" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6609,7 +6071,6 @@
       }
     },
     "Order is partial returned" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6620,7 +6081,6 @@
       }
     },
     "Order Is ready for Shipping" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6631,7 +6091,6 @@
       }
     },
     "Order Is with courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6642,7 +6101,6 @@
       }
     },
     "Order items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6653,7 +6111,6 @@
       }
     },
     "Order prepaid" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6664,7 +6121,6 @@
       }
     },
     "order profit * (%lf / 100) \n * Note that if you changed the employee commission it takes effect for the new orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6675,7 +6131,6 @@
       }
     },
     "Order reports for orders assigned to courier from %@ to %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6692,7 +6147,6 @@
       }
     },
     "Order reports for orders created from %@ to %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6709,7 +6163,6 @@
       }
     },
     "Order Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6720,7 +6173,6 @@
       }
     },
     "Order Statue" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6731,7 +6183,6 @@
       }
     },
     "Order Summery" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6742,7 +6193,6 @@
       }
     },
     "Order Updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6753,7 +6203,6 @@
       }
     },
     "Order Updates" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6764,7 +6213,6 @@
       }
     },
     "Order was reseted to intial value" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6775,7 +6223,6 @@
       }
     },
     "Order was submitted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6786,7 +6233,6 @@
       }
     },
     "Order wasn't found" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6797,7 +6243,6 @@
       }
     },
     "Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6808,7 +6253,6 @@
       }
     },
     "Orders Cash" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6819,7 +6263,6 @@
       }
     },
     "Orders Count" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6830,7 +6273,6 @@
       }
     },
     "Orders Profit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6841,7 +6283,6 @@
       }
     },
     "Orders shipped" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6852,7 +6293,6 @@
       }
     },
     "Orders still with Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6863,7 +6303,6 @@
       }
     },
     "Orders to fulfill" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6874,7 +6313,6 @@
       }
     },
     "Other Phone Number" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6885,7 +6323,6 @@
       }
     },
     "Other Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6896,7 +6333,6 @@
       }
     },
     "Others" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6907,7 +6343,6 @@
       }
     },
     "Out For Delivery" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6918,7 +6353,6 @@
       }
     },
     "Out of stock" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6929,7 +6363,6 @@
       }
     },
     "Out of Stock" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6940,7 +6373,6 @@
       }
     },
     "Overview" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6951,7 +6383,6 @@
       }
     },
     "Paid" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6962,7 +6393,6 @@
       }
     },
     "Paid by %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6973,7 +6403,6 @@
       }
     },
     "Paid Shipping fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6984,7 +6413,6 @@
       }
     },
     "Partial Return" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6995,7 +6423,6 @@
       }
     },
     "Password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7006,7 +6433,6 @@
       }
     },
     "Password : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7017,7 +6443,6 @@
       }
     },
     "Payment" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7028,7 +6453,6 @@
       }
     },
     "Payment Gateways" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7039,7 +6463,6 @@
       }
     },
     "Payment Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7050,7 +6473,6 @@
       }
     },
     "Payment Method" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7061,7 +6483,6 @@
       }
     },
     "Payment Options" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7072,7 +6493,6 @@
       }
     },
     "Payment Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7083,7 +6503,6 @@
       }
     },
     "Payment Statue" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7094,7 +6513,6 @@
       }
     },
     "Payment Transaction" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7105,7 +6523,6 @@
       }
     },
     "Paymob" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7116,7 +6533,6 @@
       }
     },
     "Paymob Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7127,7 +6543,6 @@
       }
     },
     "Payout" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7138,7 +6553,6 @@
       }
     },
     "Payout info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7149,7 +6563,6 @@
       }
     },
     "Payout method" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7160,7 +6573,6 @@
       }
     },
     "Payouts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7171,7 +6583,6 @@
       }
     },
     "Paytabs" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7182,7 +6593,6 @@
       }
     },
     "Paytabs Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7193,7 +6603,6 @@
       }
     },
     "Pending" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7204,7 +6613,6 @@
       }
     },
     "Pending Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7215,7 +6623,6 @@
       }
     },
     "Personal Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7226,7 +6633,6 @@
       }
     },
     "Phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7237,7 +6643,6 @@
       }
     },
     "Phone Call" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7248,7 +6653,6 @@
       }
     },
     "Phone number" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7259,7 +6663,6 @@
       }
     },
     "Phone Number" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7270,7 +6673,6 @@
       }
     },
     "Pick Email Service" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7281,7 +6683,6 @@
       }
     },
     "Pick photo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7292,7 +6693,6 @@
       }
     },
     "Pixel ID" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7303,7 +6703,6 @@
       }
     },
     "Pixels" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7314,7 +6713,6 @@
       }
     },
     "Pixels and conversions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7325,7 +6723,6 @@
       }
     },
     "Places where you sell the most" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7336,7 +6733,6 @@
       }
     },
     "Plans" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7347,7 +6743,6 @@
       }
     },
     "Please but a describtion for the amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7358,7 +6753,6 @@
       }
     },
     "Please choose which action you want to make on the orders, note that this action is not reversible" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7369,7 +6763,6 @@
       }
     },
     "Please enter a valid amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7380,7 +6773,6 @@
       }
     },
     "Please enter the category name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7391,7 +6783,6 @@
       }
     },
     "Please enter the client address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7402,7 +6793,6 @@
       }
     },
     "Please enter the client name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7413,7 +6803,6 @@
       }
     },
     "Please enter the client phone" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7424,7 +6813,6 @@
       }
     },
     "Please enter the client state" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7435,7 +6823,6 @@
       }
     },
     "Please enter the store address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7446,7 +6833,6 @@
       }
     },
     "Please fill the store name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7457,7 +6843,6 @@
       }
     },
     "Please fill the store phone number" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7468,7 +6853,6 @@
       }
     },
     "Please make sure you inputed a valid promocode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7479,7 +6863,6 @@
       }
     },
     "Please repick the image" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7490,7 +6873,6 @@
       }
     },
     "Please select a category image" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7500,8 +6882,10 @@
         }
       }
     },
+    "Please select a cateogry" : {
+
+    },
     "Please select the new logo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7512,7 +6896,6 @@
       }
     },
     "Please select the store city" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7523,7 +6906,6 @@
       }
     },
     "Preorder Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7534,7 +6916,6 @@
       }
     },
     "Prepaid" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7545,7 +6926,6 @@
       }
     },
     "Price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7556,7 +6936,6 @@
       }
     },
     "Price and cost" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7567,7 +6946,6 @@
       }
     },
     "Primary Color" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7578,7 +6956,6 @@
       }
     },
     "Print Receipt" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7589,7 +6966,6 @@
       }
     },
     "Print Receipts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7600,7 +6976,6 @@
       }
     },
     "Print Seller name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7611,7 +6986,6 @@
       }
     },
     "Print Shipping Serial no." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7622,7 +6996,6 @@
       }
     },
     "Privacy Center" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7633,7 +7006,6 @@
       }
     },
     "Privacy Policy" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7644,7 +7016,6 @@
       }
     },
     "Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7655,7 +7026,6 @@
       }
     },
     "Product Cost" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7665,8 +7035,10 @@
         }
       }
     },
+    "Product cost and price changed" : {
+
+    },
     "Product Description" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7677,7 +7049,6 @@
       }
     },
     "Product Editable Prices" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7688,7 +7059,6 @@
       }
     },
     "Product has been added" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7699,7 +7069,6 @@
       }
     },
     "Product Images Changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7710,7 +7079,6 @@
       }
     },
     "Product info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7721,7 +7089,6 @@
       }
     },
     "Product info updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7732,7 +7099,6 @@
       }
     },
     "Product marked as out of stock" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7743,7 +7109,6 @@
       }
     },
     "Product Name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7754,7 +7119,6 @@
       }
     },
     "Product photos" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7765,7 +7129,6 @@
       }
     },
     "Product Price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7776,7 +7139,6 @@
       }
     },
     "Product Reviews" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7787,7 +7149,6 @@
       }
     },
     "Product Stock Finished Notificaton" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7797,8 +7158,10 @@
         }
       }
     },
+    "Product Stock Updated" : {
+
+    },
     "Product Stocks" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7809,7 +7172,6 @@
       }
     },
     "Product Title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7820,7 +7182,6 @@
       }
     },
     "Product Updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7831,7 +7192,6 @@
       }
     },
     "Product variants updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7842,7 +7202,6 @@
       }
     },
     "Product Varients" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7853,7 +7212,6 @@
       }
     },
     "Product Visibility" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7864,7 +7222,6 @@
       }
     },
     "Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7875,7 +7232,6 @@
       }
     },
     "Products price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7886,7 +7242,6 @@
       }
     },
     "Products prices" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7897,7 +7252,6 @@
       }
     },
     "Products Report Sheet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7908,7 +7262,6 @@
       }
     },
     "Products Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7919,7 +7272,6 @@
       }
     },
     "Products Shipped" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7930,7 +7282,6 @@
       }
     },
     "Products Sold" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7941,7 +7292,6 @@
       }
     },
     "Products view" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7952,7 +7302,6 @@
       }
     },
     "Profile Id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7963,7 +7312,6 @@
       }
     },
     "Profit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7974,7 +7322,6 @@
       }
     },
     "Profit calculated using this formula (Product Price + the shipping fees of the client) - (Discount on the order - Courier Fees - Seller Comission) \n * Make sure you add your courier with their fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7985,7 +7332,6 @@
       }
     },
     "Provider integration" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7996,7 +7342,6 @@
       }
     },
     "Provider Integration" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8007,7 +7352,6 @@
       }
     },
     "Provider serial no . %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8018,7 +7362,6 @@
       }
     },
     "Purchase Date : %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8029,7 +7372,6 @@
       }
     },
     "Quantity" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8040,7 +7382,6 @@
       }
     },
     "Quantity %lld" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8051,7 +7392,6 @@
       }
     },
     "Rate our app" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8062,7 +7402,6 @@
       }
     },
     "Ready" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8073,7 +7412,6 @@
       }
     },
     "Ready to be shipped" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8084,7 +7422,6 @@
       }
     },
     "Receipt Options" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8095,7 +7432,6 @@
       }
     },
     "Receipts PDF" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8106,7 +7442,6 @@
       }
     },
     "Refer Code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8117,7 +7452,6 @@
       }
     },
     "Reffer Program" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8127,8 +7461,10 @@
         }
       }
     },
+    "Renew Now !" : {
+
+    },
     "Reopen Complaint" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8139,7 +7475,6 @@
       }
     },
     "Repeat Password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8150,7 +7485,6 @@
       }
     },
     "Reports" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8161,7 +7495,6 @@
       }
     },
     "Require Deposit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8172,7 +7505,6 @@
       }
     },
     "Require Shipping" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8183,7 +7515,6 @@
       }
     },
     "Require user to add his address at checkout" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8194,7 +7525,6 @@
       }
     },
     "Require user to input email address" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8205,7 +7535,6 @@
       }
     },
     "Required" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8216,7 +7545,6 @@
       }
     },
     "Requiring a depoist will close the cash on delivery option, the deposit will be added to the order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8227,7 +7555,6 @@
       }
     },
     "Reset" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8238,7 +7565,6 @@
       }
     },
     "Reset order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8249,7 +7575,6 @@
       }
     },
     "Reset warehouse count" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8260,7 +7585,6 @@
       }
     },
     "Review Deleted" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8271,7 +7595,6 @@
       }
     },
     "Reviews" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8282,7 +7605,6 @@
       }
     },
     "Sales" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8293,7 +7615,6 @@
       }
     },
     "Sales & Profit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8304,7 +7625,6 @@
       }
     },
     "Sales Account" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8315,7 +7635,6 @@
       }
     },
     "Sales Channels" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8326,7 +7645,6 @@
       }
     },
     "Sales Employee" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8337,7 +7655,6 @@
       }
     },
     "Sales Report" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8348,7 +7665,6 @@
       }
     },
     "Sales Sheet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8359,7 +7675,6 @@
       }
     },
     "Save" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8370,7 +7685,6 @@
       }
     },
     "Scan the qrcode, or share it to visit your website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8381,7 +7695,6 @@
       }
     },
     "Search %lld Categories" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8392,7 +7705,6 @@
       }
     },
     "Search %lld Couriers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8403,7 +7715,6 @@
       }
     },
     "Search %lld Employees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8414,7 +7725,6 @@
       }
     },
     "Search %lld Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8425,7 +7735,6 @@
       }
     },
     "Search by name, phone or id" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8436,7 +7745,6 @@
       }
     },
     "Search for expanse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8447,7 +7755,6 @@
       }
     },
     "Search for order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8458,7 +7765,6 @@
       }
     },
     "Search Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8469,7 +7775,6 @@
       }
     },
     "Search your shoppers by name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8480,7 +7785,6 @@
       }
     },
     "Second" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8491,7 +7795,6 @@
       }
     },
     "Secondary Color" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8502,7 +7805,6 @@
       }
     },
     "Select All" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8513,7 +7815,6 @@
       }
     },
     "Select Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8524,7 +7825,6 @@
       }
     },
     "Select one photo at least" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8535,7 +7835,6 @@
       }
     },
     "Select orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8546,7 +7845,6 @@
       }
     },
     "Select the category that this product belongs too" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8557,7 +7855,6 @@
       }
     },
     "Select the product category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8568,7 +7865,6 @@
       }
     },
     "Select your action" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8579,7 +7875,6 @@
       }
     },
     "Select your plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8590,7 +7885,6 @@
       }
     },
     "Selling Commission" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8601,7 +7895,6 @@
       }
     },
     "Selling price can't be Zero" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8610,6 +7903,9 @@
           }
         }
       }
+    },
+    "Selling price can't be Zero LE" : {
+
     },
     "Send abandon carts emails" : {
       "extractionState" : "stale",
@@ -8622,8 +7918,10 @@
         }
       }
     },
+    "Send abandon carts emails (Soon)" : {
+
+    },
     "Send Email" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8634,7 +7932,6 @@
       }
     },
     "Send email to customer" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8645,7 +7942,6 @@
       }
     },
     "Send emails to your customers in bulk." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8656,7 +7952,6 @@
       }
     },
     "Send mail to customers notifying them about their abandon carts." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8667,7 +7962,6 @@
       }
     },
     "Send my order data to provider" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8678,7 +7972,6 @@
       }
     },
     "Send payout request" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8689,7 +7982,6 @@
       }
     },
     "Send request" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8700,7 +7992,6 @@
       }
     },
     "Send SMS" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8711,7 +8002,6 @@
       }
     },
     "Send Telegram Message" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8722,7 +8012,6 @@
       }
     },
     "Send Whatsapp message" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8733,7 +8022,6 @@
       }
     },
     "Send Whatsapp Message" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8744,7 +8032,6 @@
       }
     },
     "Set up an indecator to track your low stocks" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8755,7 +8042,6 @@
       }
     },
     "Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8766,7 +8052,6 @@
       }
     },
     "Settings updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8777,7 +8062,6 @@
       }
     },
     "Share the app" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8788,7 +8072,6 @@
       }
     },
     "Shipping companies integration" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8799,7 +8082,6 @@
       }
     },
     "Shipping excel sheet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8810,7 +8092,6 @@
       }
     },
     "Shipping Fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8821,7 +8102,6 @@
       }
     },
     "Shipping info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8832,7 +8112,6 @@
       }
     },
     "Shipping Price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8843,7 +8122,6 @@
       }
     },
     "Shipping price changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8854,7 +8132,6 @@
       }
     },
     "Shipping Prices" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8865,7 +8142,6 @@
       }
     },
     "Shopify" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8876,7 +8152,6 @@
       }
     },
     "Show order QRCode" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8887,7 +8162,6 @@
       }
     },
     "Show whatsapp contact button" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8898,7 +8172,6 @@
       }
     },
     "Sign in" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8909,7 +8182,6 @@
       }
     },
     "Sign Up" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8920,7 +8192,6 @@
       }
     },
     "Site Options" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8931,7 +8202,6 @@
       }
     },
     "Skip" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8942,7 +8212,6 @@
       }
     },
     "Skip " : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8953,7 +8222,6 @@
       }
     },
     "Slogan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8964,7 +8232,6 @@
       }
     },
     "Social Media Accounts" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8975,7 +8242,6 @@
       }
     },
     "Sold Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8986,7 +8252,6 @@
       }
     },
     "Sorry :(\nThere is no new orders in your store." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8997,7 +8262,6 @@
       }
     },
     "Sort Option" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9008,7 +8272,6 @@
       }
     },
     "Sports and Outdoors" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9019,7 +8282,6 @@
       }
     },
     "Start importing" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9030,7 +8292,6 @@
       }
     },
     "Start Importing" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9041,7 +8302,6 @@
       }
     },
     "Start typing to search" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9052,7 +8312,6 @@
       }
     },
     "Stock Handling" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9063,7 +8322,6 @@
       }
     },
     "Store Admin" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9074,7 +8332,6 @@
       }
     },
     "Store Category" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9084,8 +8341,10 @@
         }
       }
     },
+    "Store id is empty" : {
+
+    },
     "Store info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9096,7 +8355,6 @@
       }
     },
     "Store information" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9107,7 +8365,6 @@
       }
     },
     "Store Information" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9118,7 +8375,6 @@
       }
     },
     "Store Logo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9129,7 +8385,6 @@
       }
     },
     "Store Logo Changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9140,7 +8395,6 @@
       }
     },
     "Store Name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9151,7 +8405,6 @@
       }
     },
     "Store Name Changed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9162,7 +8415,6 @@
       }
     },
     "Store Owner" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9173,7 +8425,6 @@
       }
     },
     "Store Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9183,8 +8434,10 @@
         }
       }
     },
+    "Store Shipping info changed" : {
+
+    },
     "Store Users" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9195,7 +8448,6 @@
       }
     },
     "Submit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9205,8 +8457,10 @@
         }
       }
     },
+    "Submit Complaint" : {
+
+    },
     "Subscribtions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9217,7 +8471,6 @@
       }
     },
     "Subscriptions and payments" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9228,7 +8481,6 @@
       }
     },
     "Successfully Subscribed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9239,7 +8491,6 @@
       }
     },
     "Summery" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9250,7 +8501,6 @@
       }
     },
     "Switch Account" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9261,7 +8511,6 @@
       }
     },
     "Team members" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9272,7 +8521,6 @@
       }
     },
     "Template date filled" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9283,7 +8531,6 @@
       }
     },
     "TEnter how many of this product do you have right now in the warehouse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9294,7 +8541,6 @@
       }
     },
     "Terms & Conditions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9305,7 +8551,6 @@
       }
     },
     "Terms and conditions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9316,7 +8561,6 @@
       }
     },
     "Text" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9327,7 +8571,6 @@
       }
     },
     "Thank god, no complaints are added to your orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9338,7 +8581,6 @@
       }
     },
     "That's your signed email, we will send a mail to this address with instructions to reset your password" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9349,7 +8591,6 @@
       }
     },
     "The amount of cash that expected to receive from the coureirs (Order price - Courier Fees)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9360,7 +8601,6 @@
       }
     },
     "the amount that you should receive after the courier fees detected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9371,7 +8611,6 @@
       }
     },
     "The API Key found in your dashboard / integrations / payment key" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9382,7 +8621,6 @@
       }
     },
     "The API Key found in your developers / key in the dashboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9393,7 +8631,6 @@
       }
     },
     "The cash that you should get from the courier for all of the orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9404,7 +8641,6 @@
       }
     },
     "The courier fees for all orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9415,7 +8651,6 @@
       }
     },
     "The courier fees for the delivered orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9426,7 +8661,6 @@
       }
     },
     "The courier fees for the on going orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9437,7 +8671,6 @@
       }
     },
     "The courier has no ongoing orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9448,7 +8681,6 @@
       }
     },
     "The discount percentage that will be applied to the order from 1 to 100" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9459,7 +8691,6 @@
       }
     },
     "The Facebook pixel is a piece of code that you place on your website. It collects data that helps you track conversions from Facebook ads, optimize ads, build targeted audiences for future ads and remarket to people who have already taken some kind of action on your website." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9470,7 +8701,6 @@
       }
     },
     "The maximum number this code will be used" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9481,7 +8711,6 @@
       }
     },
     "The name of the emloyee you want to add" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9492,7 +8721,6 @@
       }
     },
     "The name of the member you want to add" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9503,7 +8731,6 @@
       }
     },
     "The owner disabled new orders for now" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9514,7 +8741,6 @@
       }
     },
     "The product must have at least one photo" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9525,7 +8751,6 @@
       }
     },
     "The Quantity of each product x The cost of the product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9536,7 +8761,6 @@
       }
     },
     "The Quantity of each product x The price of the product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9547,7 +8771,6 @@
       }
     },
     "The store logo is used to identify your store in the app. It will be displayed on the store page and in the store list. The logo should be a square image with a minimum size of 512x512 pixels. The recommended size is 1024x1024 pixels. The logo will be displayed at a size of 120x120 pixels." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9558,7 +8781,6 @@
       }
     },
     "Their is no closed complaints in your store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9569,7 +8791,6 @@
       }
     },
     "Theme" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9580,7 +8801,6 @@
       }
     },
     "Theming" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9591,7 +8811,6 @@
       }
     },
     "There is no ready orders in your store, assemble some orders to get them ready" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9602,7 +8821,6 @@
       }
     },
     "Third" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9613,7 +8831,6 @@
       }
     },
     "This application needs to restart to update the configuration.\n\nDo you want to restart the application?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9624,7 +8841,6 @@
       }
     },
     "This client is banned" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9634,8 +8850,10 @@
         }
       }
     },
+    "This client ordered %lld times before" : {
+
+    },
     "This code exists before" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9646,7 +8864,6 @@
       }
     },
     "This Code exists before" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9657,7 +8874,6 @@
       }
     },
     "This commission will be calculate from the order's netprofit From 1% to 99%" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9668,7 +8884,6 @@
       }
     },
     "This how much the product costs you" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9679,7 +8894,6 @@
       }
     },
     "This is enabled by default, if you turn this off no one will be able to create new orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9690,7 +8904,6 @@
       }
     },
     "This is how much balance you want to withdraw" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9701,7 +8914,6 @@
       }
     },
     "This is how much you are selling your product for" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9712,7 +8924,6 @@
       }
     },
     "This is how much your product costs you" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9723,7 +8934,6 @@
       }
     },
     "This is showed in your website, to compare the price this doesn't have any effect on the real price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9734,7 +8944,6 @@
       }
     },
     "This is the courier company name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9745,7 +8954,6 @@
       }
     },
     "This is the discount code itself, it should be unique and never used before" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9756,7 +8964,6 @@
       }
     },
     "This is the Merhcanit id found in your dashboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9767,7 +8974,6 @@
       }
     },
     "This is the name of the product, which will appear on the website and the app" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9778,7 +8984,6 @@
       }
     },
     "This is the profile id found in your paytabs dashboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9789,7 +8994,6 @@
       }
     },
     "This is the selling price of the product which the user will be charged at" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9800,7 +9004,6 @@
       }
     },
     "This is the shop id found under your store name in shopify settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9811,7 +9014,6 @@
       }
     },
     "This is turned off by default, enabling it will add the option to pickup local orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9822,7 +9024,6 @@
       }
     },
     "This is your api key should be found in the settings menu in your dashboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9833,7 +9034,6 @@
       }
     },
     "This is your api key should be found in the settings menu in your paymob dashboard" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9844,7 +9044,6 @@
       }
     },
     "This is your Card live integration id from Paymob Developer Page" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9855,7 +9054,6 @@
       }
     },
     "This is your custom domain ex (vondera.app)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9866,7 +9064,6 @@
       }
     },
     "This is your iframe id, it should be located in paymob dashboard in the developer page" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9877,7 +9074,6 @@
       }
     },
     "This is your main email address, note you can't change it later, you will use it to login to your store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9888,7 +9084,6 @@
       }
     },
     "This is your store name, it will be printed on the receipts and in your website, it can be changed later" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9899,7 +9094,6 @@
       }
     },
     "This is your varient title for example (Color, Size, ..)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9910,7 +9104,6 @@
       }
     },
     "This is your wallet number, or your instapay ipa" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9920,8 +9113,10 @@
         }
       }
     },
+    "This marks the product as a sale" : {
+
+    },
     "This Month" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9932,7 +9127,6 @@
       }
     },
     "This order is hidden" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9943,7 +9137,6 @@
       }
     },
     "This order require shipping" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9954,7 +9147,6 @@
       }
     },
     "This Quarter" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9965,7 +9157,6 @@
       }
     },
     "This team member hasn't added any orders to your store yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9976,7 +9167,6 @@
       }
     },
     "This variant is out of stock right now !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9987,7 +9177,6 @@
       }
     },
     "This Week" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9998,7 +9187,6 @@
       }
     },
     "This will be displayed at the end of your receipt" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10009,7 +9197,6 @@
       }
     },
     "This will be shown on the top of your site" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10020,7 +9207,6 @@
       }
     },
     "This will be visible in your website, make it from 10 to 50 words max" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10031,7 +9217,6 @@
       }
     },
     "This will be your link, it should be english, no spaces, uniquie, no numbers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10042,7 +9227,6 @@
       }
     },
     "This will delete the order, but you can restore it later." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10053,7 +9237,6 @@
       }
     },
     "This will help you contact the courier company easily" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10064,7 +9247,6 @@
       }
     },
     "This will not be visible anywere" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10075,7 +9257,6 @@
       }
     },
     "This will reset your order statue to pending, are you sure you want to reset the order ?" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10086,7 +9267,6 @@
       }
     },
     "This will set your product as out of stock, and the avilable quantity to zero" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10097,7 +9277,6 @@
       }
     },
     "This year" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10108,7 +9287,6 @@
       }
     },
     "Those are the market places (Sales Channels) you sell on, select only where your brand sell" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10119,7 +9297,6 @@
       }
     },
     "Those are the orders that still with you" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10130,7 +9307,6 @@
       }
     },
     "Those are the orders with your couriers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10141,7 +9317,6 @@
       }
     },
     "Thumbnail" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10152,7 +9327,6 @@
       }
     },
     "Tik Tok Link" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10163,7 +9337,6 @@
       }
     },
     "Tip of the day 💭" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10174,7 +9347,6 @@
       }
     },
     "Title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10185,7 +9357,6 @@
       }
     },
     "To" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10196,7 +9367,6 @@
       }
     },
     "Today" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10207,7 +9377,6 @@
       }
     },
     "Total" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10218,7 +9387,6 @@
       }
     },
     "Total (%lld) items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10229,7 +9397,6 @@
       }
     },
     "Total Cash" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10240,7 +9407,6 @@
       }
     },
     "Total Cash from Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10251,7 +9417,6 @@
       }
     },
     "Total Cost" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10262,7 +9427,6 @@
       }
     },
     "Total Fees" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10273,7 +9437,6 @@
       }
     },
     "Total Items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10284,7 +9447,6 @@
       }
     },
     "Total Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10295,7 +9457,6 @@
       }
     },
     "Total Pieces" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10306,7 +9467,6 @@
       }
     },
     "Total Products price" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10317,7 +9477,6 @@
       }
     },
     "Total Sold items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10328,7 +9487,6 @@
       }
     },
     "Total Spent" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10339,7 +9497,6 @@
       }
     },
     "Track your expanses" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10350,7 +9507,6 @@
       }
     },
     "Transaction" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10361,7 +9517,6 @@
       }
     },
     "Transaction amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10372,7 +9527,6 @@
       }
     },
     "Transaction Date" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10383,7 +9537,6 @@
       }
     },
     "Transaction details" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10394,7 +9547,6 @@
       }
     },
     "Transactions" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10405,7 +9557,6 @@
       }
     },
     "TTL" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10416,7 +9567,6 @@
       }
     },
     "Turning this off will hide this product and no one can make an order with it" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10427,7 +9577,6 @@
       }
     },
     "Turning this on will disable stock handling for this product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10437,8 +9586,10 @@
         }
       }
     },
+    "Turning this on will mark the product as featured on your website" : {
+
+    },
     "Type" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10448,8 +9599,10 @@
         }
       }
     },
+    "Type the client's complaint" : {
+
+    },
     "Unknown" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10460,7 +9613,6 @@
       }
     },
     "Unlimited Products" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10471,7 +9623,6 @@
       }
     },
     "Unselect All" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10482,7 +9633,6 @@
       }
     },
     "Unsubscribe" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10493,7 +9643,6 @@
       }
     },
     "Update" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10504,7 +9653,6 @@
       }
     },
     "Update courier fees from server" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10515,7 +9663,6 @@
       }
     },
     "Update subscribtion duration" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10525,8 +9672,10 @@
         }
       }
     },
+    "Update Varaints" : {
+
+    },
     "Update Variants" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10537,7 +9686,6 @@
       }
     },
     "Updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10548,7 +9696,6 @@
       }
     },
     "Upgrade to %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10559,7 +9706,6 @@
       }
     },
     "Upgrade your plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10570,7 +9716,6 @@
       }
     },
     "Use the whatsapp number of the employee" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10581,7 +9726,6 @@
       }
     },
     "Use the whatsapp number of the member" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10592,7 +9736,6 @@
       }
     },
     "Use Vondera mail" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10603,7 +9746,6 @@
       }
     },
     "User Info" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10614,7 +9756,6 @@
       }
     },
     "Username" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10625,7 +9766,6 @@
       }
     },
     "V Pay" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10636,7 +9776,6 @@
       }
     },
     "V Pay is a payment gateway connected to your vondera account, it's created by us, this is no setup needed" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10647,7 +9786,6 @@
       }
     },
     "Value" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10658,7 +9796,6 @@
       }
     },
     "Variant Title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10669,7 +9806,6 @@
       }
     },
     "Variants" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10680,7 +9816,6 @@
       }
     },
     "Variants are used to create different versions of the same product. For example, if you have a t-shirt, you can create a variant for each size and color, just click next if you don't have any variants" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10691,7 +9826,6 @@
       }
     },
     "Variants Customizations" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10702,7 +9836,6 @@
       }
     },
     "Variants updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10713,7 +9846,6 @@
       }
     },
     "Varient" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10724,7 +9856,6 @@
       }
     },
     "Varient Title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10735,7 +9866,6 @@
       }
     },
     "Varients" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10746,7 +9876,6 @@
       }
     },
     "Views" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10757,7 +9886,6 @@
       }
     },
     "Visit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10768,7 +9896,6 @@
       }
     },
     "Visit Product" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10779,7 +9906,6 @@
       }
     },
     "Visitors" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10790,7 +9916,6 @@
       }
     },
     "Visits" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10801,7 +9926,6 @@
       }
     },
     "Vondera" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10812,7 +9936,6 @@
       }
     },
     "VPay Gateway" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10823,7 +9946,6 @@
       }
     },
     "VPay Wallet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10834,7 +9956,6 @@
       }
     },
     "Walkthrough" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10845,7 +9966,6 @@
       }
     },
     "Warehouse" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10856,7 +9976,6 @@
       }
     },
     "Warehouse Quantity" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10867,7 +9986,6 @@
       }
     },
     "WARNING" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10878,7 +9996,6 @@
       }
     },
     "We are all good\nThere is no failed orders in your store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10889,7 +10006,6 @@
       }
     },
     "We are all good\nThere is no orders are still pending with couriers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10900,7 +10016,6 @@
       }
     },
     "We are getting your store ready .." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10911,7 +10026,6 @@
       }
     },
     "We will use this number to contact you for any inquaries" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10922,7 +10036,6 @@
       }
     },
     "We won't share your address, we collect it for analyze perpose" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10933,7 +10046,6 @@
       }
     },
     "Website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10944,7 +10056,6 @@
       }
     },
     "Website settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10955,7 +10066,6 @@
       }
     },
     "Website Settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10966,7 +10076,6 @@
       }
     },
     "Website theme" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10977,7 +10086,6 @@
       }
     },
     "Website Username" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10988,7 +10096,6 @@
       }
     },
     "Welcome Back !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10999,7 +10106,6 @@
       }
     },
     "Whatsapp" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11010,7 +10116,6 @@
       }
     },
     "With Courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11021,7 +10126,6 @@
       }
     },
     "With Courier Orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11032,7 +10136,6 @@
       }
     },
     "With Couriers" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11043,7 +10146,6 @@
       }
     },
     "Withdraw from Agel" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11054,7 +10156,6 @@
       }
     },
     "Withdrawable amount" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11065,7 +10166,6 @@
       }
     },
     "Yes" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11076,7 +10176,6 @@
       }
     },
     "You are only allowed to open the package in front of the courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11087,7 +10186,6 @@
       }
     },
     "You can add negative numbers to decrease your current warehouse items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11097,8 +10195,10 @@
         }
       }
     },
+    "You can optionaly upload an image to each varient" : {
+
+    },
     "You have %lld orders, renew your plan to unlock them" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11109,7 +10209,6 @@
       }
     },
     "You have no active discount codes, create one now !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11120,7 +10219,6 @@
       }
     },
     "You have no deleted orders in your store" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11131,7 +10229,6 @@
       }
     },
     "You have no orders that were confirmed with your customers." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11142,7 +10239,6 @@
       }
     },
     "You have reached order limit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11153,7 +10249,6 @@
       }
     },
     "You have reached sales channels limit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11164,7 +10259,6 @@
       }
     },
     "You have reached team members limit" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11175,7 +10269,6 @@
       }
     },
     "You have reached your plan's max orders limit, all new orders will be hidden until you subscribe." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11186,7 +10279,6 @@
       }
     },
     "You have reached your sales channels limit, upgrade to be able to toggle new sales channels." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11197,7 +10289,6 @@
       }
     },
     "You have reached your team members limit, upgrade your plan so you can add more members." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11208,7 +10299,6 @@
       }
     },
     "You have successfully subscribed to the plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11219,7 +10309,6 @@
       }
     },
     "You haven't added any couriers yet" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11230,7 +10319,6 @@
       }
     },
     "You haven't added any orders yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11241,7 +10329,6 @@
       }
     },
     "You haven't added any products to your cart yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11252,7 +10339,6 @@
       }
     },
     "You haven't added any products to your store yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11263,7 +10349,6 @@
       }
     },
     "You haven't added any team members yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11274,7 +10359,6 @@
       }
     },
     "You haven't recorded any expanses yet !" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11285,7 +10369,6 @@
       }
     },
     "You may need to genrate an app password from your email provider (a diffrent password than your main one)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11296,7 +10379,6 @@
       }
     },
     "You must add products to order" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11307,7 +10389,6 @@
       }
     },
     "You need at least 10,000 LE in your wallet to withdraw fund" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11318,7 +10399,6 @@
       }
     },
     "You're using the free plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11329,7 +10409,6 @@
       }
     },
     "You've %lld orders left in your plan" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11340,7 +10419,6 @@
       }
     },
     "Your custom domain" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11351,7 +10429,6 @@
       }
     },
     "Your data from shopify has been imported 🎉" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11362,7 +10439,6 @@
       }
     },
     "Your employees can edit the product prices on the checkout proccess" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11373,7 +10449,6 @@
       }
     },
     "Your first steps with Vondera" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11384,7 +10459,6 @@
       }
     },
     "Your info updated" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11395,7 +10469,6 @@
       }
     },
     "Your next bill we be on %@" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11406,7 +10479,6 @@
       }
     },
     "Your notification settings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11417,7 +10489,6 @@
       }
     },
     "Your personal legal name" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11427,8 +10498,10 @@
         }
       }
     },
+    "Your plan" : {
+
+    },
     "Your product describtion will be visible for users in your website and in the app" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11439,7 +10512,6 @@
       }
     },
     "Your Quote has been exceeded" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11450,7 +10522,6 @@
       }
     },
     "Your reffer code" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11461,7 +10532,6 @@
       }
     },
     "Your shop id ex (f31a37.myshopify.com)" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11472,7 +10542,6 @@
       }
     },
     "Your store has no orders" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11483,7 +10552,6 @@
       }
     },
     "Your store slogan, it will be shown on your receipts and in your website" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11494,7 +10562,6 @@
       }
     },
     "Your subscription will expire in %lld days" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11505,7 +10572,6 @@
       }
     },
     "Your website is active, but all it's orders are hidden, upgrade your plan to support the website orders." : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11516,7 +10582,6 @@
       }
     },
     "Your website url will be https://%@.vondera.shop/" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -11527,7 +10592,6 @@
       }
     },
     "العربية" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

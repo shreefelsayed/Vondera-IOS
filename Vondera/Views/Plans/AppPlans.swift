@@ -179,7 +179,9 @@ struct PlansFeatureSlider : View {
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
             TabView(selection: $currentIndex) {
-                ForEach(FeatureKeys.allCases.indices, id: \.self) { index in
+                let items = FeatureKeys.allCases.dropFirst(3)
+                
+                ForEach(items.indices, id: \.self) { index in
                     let feature = FeatureKeys.allCases[index]
                     PlanItemView(imageName: feature.getDrawable(), title: feature.getTitle(), desc: feature.getDesc())
                         .tag(index)

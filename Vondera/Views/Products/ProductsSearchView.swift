@@ -53,7 +53,7 @@ struct ProductsSearchView: View {
                                     vm.items.remove(at: index)
                                 }
                             })) {
-                                WarehouseCard(prod: $vm.items[index])
+                                WarehouseCard(prod: $vm.items[index], showVariants: false)
                             }
                             .buttonStyle(.plain)
                         }

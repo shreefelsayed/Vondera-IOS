@@ -21,4 +21,5 @@ struct SiteData : Codable {
     var listBanners:[String]? = [String]()
     var primaryColor:String? = "#673ab7"
     var secondaryColor:String? = "#FAFAFA"
+    var minOrderAmount:Double? = 0.0
 }

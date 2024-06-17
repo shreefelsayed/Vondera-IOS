@@ -74,16 +74,16 @@ extension PlanInfo {
         features.append(Feature(name: "Create Promo codes", available: planFeatures.discounts))
         features.append(Feature(name: "Integrate with shipping companies", available: planFeatures.couriers))
         features.append(Feature(name: "Add Payment gateways", available: planFeatures.payments))
-        features.append(Feature(name: "Auto send whatsapp messages", available: planFeatures.whatsapp))
         features.append(Feature(name: "Connect your store to pixels", available: planFeatures.pixels))
         features.append(Feature(name: "Track your expanses", available: planFeatures.expanses))
         features.append(Feature(name: "Add Custom HTML Pages", available: planFeatures.customPages))
-        features.append(Feature(name: "Global website / Multi languages", available: planFeatures.globalSite))
-        features.append(Feature(name: "Create mail campaigns", available: planFeatures.mailCampaigns))
         features.append(Feature(name: "Annual plan free domain for one year", available: planFeatures.freeDomain))
-        features.append(Feature(name: "Customers can create accounts", available: planFeatures.siteUsers))
-        features.append(Feature(name: "Send abandon carts emails", available: planFeatures.abandonCarts))
         features.append(Feature(name: "Customize your receipt", available: planFeatures.customReceipt))
+        features.append(Feature(name: "Global website / Multi languages (Soon)", available: planFeatures.globalSite))
+        features.append(Feature(name: "Auto send whatsapp messages (Soon)", available: planFeatures.whatsapp))
+        features.append(Feature(name: "Create mail campaigns (Soon)", available: planFeatures.mailCampaigns))
+        features.append(Feature(name: "Customers can create accounts (Soon)", available: planFeatures.siteUsers))
+        features.append(Feature(name: "Send abandon carts emails (Soon)", available: planFeatures.abandonCarts))
         return features
     }
 }
