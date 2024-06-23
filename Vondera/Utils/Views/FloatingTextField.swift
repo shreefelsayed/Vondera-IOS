@@ -46,6 +46,7 @@ struct FloatingTextField: View {
                             .frame(height: 100)
                             .textInputAutocapitalization(autoCapitalize)
                             .disabled(isDiabled)
+                            .submitLabel(.done)
                         
                             //.textInputAutocapitalization(autoCapitalize)
                     } else {
@@ -55,6 +56,7 @@ struct FloatingTextField: View {
                             })
                             .keyboardType(enableNegative ? .asciiCapableNumberPad : .numberPad)
                             .disabled(isDiabled)
+                            .submitLabel(.done)
                         } else {
                             TextField(title, text: text, onEditingChanged: { focus in
                                 isFocused = focus
@@ -62,6 +64,7 @@ struct FloatingTextField: View {
                             .keyboardType(keyboard)
                             .textInputAutocapitalization(autoCapitalize)
                             .disabled(isDiabled)
+                            .submitLabel(.done)
                         }
                     }
                 }

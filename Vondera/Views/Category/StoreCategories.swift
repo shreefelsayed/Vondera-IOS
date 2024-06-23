@@ -57,7 +57,6 @@ struct StoreCategories: View {
                         Image(systemName: "plus.app")
                     }
                     .buttonStyle(.plain)
-                    .font(.title)
                     .bold()
                 }
             }

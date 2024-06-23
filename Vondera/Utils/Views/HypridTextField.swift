@@ -27,6 +27,7 @@ struct HybridTextField: View {
                     TextField(titleKey, text: $text) { focus in
                         isFocused = focus
                     }
+                    .submitLabel(.done)
                 }
             }
             //.animation(.easeInOut(duration: 0.2), value: isSecure)

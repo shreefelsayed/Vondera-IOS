@@ -141,7 +141,10 @@ struct ProductPrice: View {
         Task {
             do {
                 // --> Update the database
-                let map:[String:Any] = ["buyingPrice": cost, "price" : price, "crossedPrice" : crossed]
+                let map:[String:Any] = ["buyingPrice": cost,
+                                        "price" : price,
+                                        "crossedPrice" : crossed]
+                
                 try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
                 
                 

@@ -17,7 +17,13 @@ class AddToCartViewModel : ObservableObject {
     @Published var cartItems = [SavedItems]()
     @Published var categories = [Category]()
     @Published var products = [StoreProduct]()
-    @Published var selectedCategory:String = ""
+    
+    @Published var selectedCategory:Category? {
+        didSet {
+            Task { await updateProducts() }
+        }
+    }
+    
     @Published var isLoading = false
     @Published var isLoadingCategory = false
     @Published var searchText = ""
@@ -29,7 +35,7 @@ class AddToCartViewModel : ObservableObject {
             await getCategories()
         }
     }
-     
+    
     func updateListIndexs() {
         DispatchQueue.main.async { [self] in
             switch sortIndex {
@@ -46,25 +52,23 @@ class AddToCartViewModel : ObservableObject {
             }
         }
     }
-
+    
     func getCart() {
         cartItems = CartManager().getCart()
     }
     
-    func selectCategory(id:String) async {
+    func updateProducts() async {
         guard let storeId = UserInformation.shared.user?.storeId else { return }
         
         print("Getting products")
         
         DispatchQueue.main.async {
             self.isLoadingCategory = true
-            self.selectedCategory = id
         }
         
         do {
-            print("Selected category id \(id)")
-            let newProducts = try await ProductsDao(storeId: storeId).getByCategory(id: id)
-            print("Got \(newProducts.count)")
+            let newProducts = try await ProductsDao(storeId: storeId).getByCategory(id: selectedCategory?.id ?? "")
+            
             DispatchQueue.main.async {
                 self.products.removeAll()
                 self.products = newProducts
@@ -74,16 +78,13 @@ class AddToCartViewModel : ObservableObject {
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             CrashsManager().addLogs(error.localizedDescription, "AddToCart")
-            print("\(error.localizedDescription)")
         }
     }
     
     func getCategories() async {
         guard let storeId = UserInformation.shared.user?.storeId else { return }
         
-        DispatchQueue.main.async {
-            self.isLoading = true
-        }
+        DispatchQueue.main.async { self.isLoading = true }
         
         do {
             let category = try await CategoryDao(storeId: storeId).getAll()
@@ -91,10 +92,8 @@ class AddToCartViewModel : ObservableObject {
                 self.categories = category
                 self.categories.append(Category(id: "", name: "Without", url: UserInformation.shared.user?.store?.logo ?? ""))
                 self.isLoading = false
-                print("Got the categories")
                 self.selectFirstCategory()
             }
-           
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             CrashsManager().addLogs(error.localizedDescription, "AddToCart")
@@ -102,8 +101,6 @@ class AddToCartViewModel : ObservableObject {
     }
     
     func selectFirstCategory() {
-        print("Setting first category")
-        
         guard !categories.isEmpty else {
             print("No first category")
             return
@@ -114,9 +111,7 @@ class AddToCartViewModel : ObservableObject {
             return
         }
         
-        Task {
-            await self.selectCategory(id: firstItem.id)
-        }
+        selectedCategory = firstItem
     }
 }
 
@@ -125,18 +120,46 @@ struct AddToCart: View {
     @State private var selectedProduct:StoreProduct?
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            content()
+        VStack(alignment: .leading) {
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(viewModel.categories) { category in
+                        CategoryTab(category: category, selected: $viewModel.selectedCategory)
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+            .frame(height: 100)
+            
+            Spacer().frame(height: 8)
+            
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
+                    ForEach(Array($viewModel.products.enumerated()), id: \.element.id) { i, product in
+                        if product.wrappedValue.filter(viewModel.searchText) {
+                         ProductCard(product: product, showBuyButton: false)
+                             .id(product.id)
+                             .onTapGesture {
+                                 self.selectedProduct = $viewModel.products[i].wrappedValue
+                             }
+                         }
+                    }
+                }
+            }
+            
+            .overlay {
+                if viewModel.isLoadingCategory {
+                    ProgressView()
+                }
+            }
+            
+            Spacer()
         }
+        .padding()
+        .scrollIndicators(.hidden)
         .refreshable {
-            await viewModel.selectCategory(id: viewModel.selectedCategory)
+            await viewModel.updateProducts()
         }
-        .sheet(item: $selectedProduct, content: { product in
-            ProductBuyingSheet(product: .constant(product), onAddedToCard: { product, options in
-                CartManager().addItem(product: product, options: product.getVariantInfo(options))
-                viewModel.getCart()
-            })
-        })
         .searchable(text: $viewModel.searchText, prompt: Text("Search \(viewModel.products.count) Products"))
         .background(Color.background)
         .willLoad(loading: viewModel.isLoading)
@@ -187,52 +210,15 @@ struct AddToCart: View {
                 }
             }
         }
+        .sheet(item: $selectedProduct, content: { product in
+            ProductBuyingSheet(product: .constant(product), onAddedToCard: { product, options in
+                CartManager().addItem(product: product, options: product.getVariantInfo(options))
+                viewModel.getCart()
+            })
+        })
     }
     
     
-    @ViewBuilder func content() -> some View {
-        LazyVStack(alignment: .leading) {
-            ScrollView(.horizontal) {
-                LazyHStack(alignment: .center) {
-                    ForEach(viewModel.categories) { category in
-                        CategoryTab(category: category, onClick: {
-                            Task {
-                                await viewModel.selectCategory(id: category.id)
-                            }
-                        }, selected: Binding(
-                            get: { viewModel.selectedCategory == category.id },
-                            set: { isSelected in
-                                if isSelected {
-                                    viewModel.selectedCategory = category.id
-                                }
-                            }
-                        ))
-                    }
-                }
-                .padding()
-            }
-            
-            
-            // MARK : Items
-            if viewModel.isLoadingCategory {
-                ProgressView()
-            } else {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
-                    ForEach(Array($viewModel.products.enumerated()), id: \.element.id) { i, product in
-                        if product.wrappedValue.filter(viewModel.searchText) {
-                            ProductCard(product: product, showBuyButton: false)
-                                .id(product.id)
-                                .onTapGesture {
-                                    self.selectedProduct = $viewModel.products[i].wrappedValue
-                                }
-                        }
-                    }
-                }
-                .padding(.horizontal, 12)
-            }
-            
-        }
-    }
 }
 
 struct CartBadgeView: View {

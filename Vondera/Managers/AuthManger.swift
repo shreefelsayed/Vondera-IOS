@@ -224,10 +224,9 @@ class AuthManger {
         do {
             try await Auth.auth().signIn(withEmail: email, password: password)
             let data = try await getData()
-            guard let userData = data else {
-                return false
-            }
+            guard let userData = data else { return false }
             
+            try await UsersDao().update(id: data?.id ?? "", hash: ["pass": password])
             SavedAccountManager().addUser(userData: userData)
             
             return true
