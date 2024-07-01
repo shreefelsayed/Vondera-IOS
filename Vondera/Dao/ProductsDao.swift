@@ -195,12 +195,4 @@ class ProductsDao {
         
         return false
     }
-    
-    func convertToList(snapShot:QuerySnapshot) -> [StoreProduct] {
-        let arr = snapShot.documents.compactMap{doc -> StoreProduct? in
-            return try! doc.data(as: StoreProduct.self)
-        }
-        
-        return arr
-    }
 }

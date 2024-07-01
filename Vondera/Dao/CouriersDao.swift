@@ -29,33 +29,25 @@ class CouriersDao {
     }
     
     func getByVisibility(isVisible:Bool = true) async throws -> [Courier] {
-        return convertToList(snapShot: try await collection
+        return try await collection
             .whereField("visible", isEqualTo: isVisible)
-            .getDocuments())
+            .getDocuments(as: Courier.self)
         
     }
     
     func getStoreCouriers() async throws -> [Courier] {
-        return convertToList(snapShot: try await collection.getDocuments())
+        return try await collection.getDocuments(as: Courier.self)
         
     }
     
     func getByStatue(statue:Bool = true) async throws -> [Courier] {
-        return convertToList(snapShot: try await collection
+        return try await collection
             .whereField("visible", isEqualTo: statue)
-            .getDocuments())
+            .getDocuments(as: Courier.self)
         
     }
     
     func update(id:String, hashMap:[String:Any]) async throws {
         return try await collection.document(id).updateData(hashMap)
-    }
-    
-    func convertToList(snapShot:QuerySnapshot) -> [Courier] {
-        let arr = snapShot.documents.compactMap{doc -> Courier? in
-            return try! doc.data(as: Courier.self)
-        }
-        
-        return arr
     }
 }

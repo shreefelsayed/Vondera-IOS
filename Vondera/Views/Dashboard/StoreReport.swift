@@ -39,7 +39,7 @@ struct DateChoose:View {
                         .cornerRadius(8)
                         .onTapGesture {
                             withAnimation {
-                                from = Date().daysAgo(dates[index].range).startOfDay()
+                                from = Date().daysAgo(dates[index].range - 1).startOfDay()
                                 to = Date().endOfDay()
                                 selectedIndex = index
                             }

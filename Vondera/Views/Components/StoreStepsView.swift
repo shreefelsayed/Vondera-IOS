@@ -20,6 +20,8 @@ struct StoreStepsView: View {
                 
                 
                 Text("Have a shopify store ? Import your data now 🚀")
+                
+                Spacer()
             }
             .onTapGesture {
                 openImport.toggle()
@@ -56,9 +58,7 @@ struct StoreStepsView: View {
             .padding()
             .background(Color.gray.opacity(0.1))
             .cornerRadius(12)
-        }
-        
-        
+        }        
     }
 }
 

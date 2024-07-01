@@ -17,21 +17,11 @@ class GovStaticsDao {
     }
     
     func getStatics() async throws -> [GovStatics] {
-        
-        return convertToList(snapShot: try await collection
+        return try await collection
             .order(by: "count", descending: true)
             .whereField("count", isGreaterThan: 0)
             .limit(to: 10)
-            .getDocuments())
+            .getDocuments(as: GovStatics.self)
         
-    }
-    
-    
-    func convertToList(snapShot:QuerySnapshot) -> [GovStatics] {
-        let arr = snapShot.documents.compactMap{doc -> GovStatics? in
-            return try! doc.data(as: GovStatics.self)
-        }
-        
-        return arr
     }
 }

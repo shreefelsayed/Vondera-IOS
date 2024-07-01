@@ -7,7 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
-
+import FirebaseCrashlytics
 
 extension DocumentReference {
     func getDocument<T>(as type: T.Type) async throws -> (item : T, exists : Bool) where T : Decodable {
@@ -28,6 +28,10 @@ extension Query {
         return self
     }
     
+    func getCount() async throws -> Int {
+        return try await self.count.getAggregation(source: .server).count.intValue
+    }
+    
     func getDocuments<T>(as type: T.Type) async throws -> [T] where T : Decodable {
         try await getDocumentWithLastSnapshot(as: type).items
     }
@@ -41,6 +45,7 @@ extension Query {
             do {
                 items.append(try document.data(as: T.self))
             } catch {
+                Crashlytics.crashlytics().record(error: error, userInfo: ["errorInfo" : "Error at \(document.reference.path) with \(error)"])
                 print("Error at \(document.reference.path) with \(error)")
             }
         }

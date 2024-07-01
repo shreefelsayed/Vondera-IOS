@@ -40,12 +40,4 @@ class ComplaintsDao {
     func getId() -> String {
         return collection.document().documentID
     }
-    
-    func convertToList(snapShot:QuerySnapshot) -> [Complaint] {
-        let arr = snapShot.documents.compactMap{doc -> Complaint? in
-            return try! doc.data(as: Complaint.self)
-        }
-        
-        return arr
-    }
 }

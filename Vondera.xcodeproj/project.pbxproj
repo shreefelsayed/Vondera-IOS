@@ -164,6 +164,21 @@
 		B35329EC2BB601A400893FA1 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35329EB2BB601A400893FA1 /* ReviewModel.swift */; };
 		B35329EE2BB6029D00893FA1 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35329ED2BB6029D00893FA1 /* ReviewCard.swift */; };
 		B3534BB72AC7AD8300E92CA6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3534BB52AC7AC9600E92CA6 /* GoogleService-Info.plist */; };
+		B359A7332C2EA6B00074732C /* AdminMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7322C2EA6B00074732C /* AdminMain.swift */; };
+		B359A7352C2EAA710074732C /* StoresScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7342C2EAA710074732C /* StoresScreen.swift */; };
+		B359A7372C2EAA790074732C /* StoresSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7362C2EAA790074732C /* StoresSearchScreen.swift */; };
+		B359A7392C2EAA7F0074732C /* StoresProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7382C2EAA7F0074732C /* StoresProfileScreen.swift */; };
+		B359A73B2C2EAA910074732C /* VonderaTransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A73A2C2EAA910074732C /* VonderaTransactionsScreen.swift */; };
+		B359A73D2C2EAA9C0074732C /* AdminPayoutsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A73C2C2EAA9C0074732C /* AdminPayoutsScreen.swift */; };
+		B359A73F2C2EAAA40074732C /* AdminWalletsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A73E2C2EAAA40074732C /* AdminWalletsScreen.swift */; };
+		B359A7412C2EAAB30074732C /* AdminPayoutUpdateScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7402C2EAAB30074732C /* AdminPayoutUpdateScreen.swift */; };
+		B359A7442C2EAADF0074732C /* SendNotificationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7432C2EAADF0074732C /* SendNotificationScreen.swift */; };
+		B359A7472C2EAB400074732C /* VonderaStaticsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7462C2EAB400074732C /* VonderaStaticsScreen.swift */; };
+		B359A7492C2EAB540074732C /* CreateTipsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7482C2EAB540074732C /* CreateTipsScreen.swift */; };
+		B359A74B2C2EAB740074732C /* DiscountCodesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A74A2C2EAB740074732C /* DiscountCodesScreen.swift */; };
+		B359A74D2C2EAB7D0074732C /* AddDiscountCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A74C2C2EAB7D0074732C /* AddDiscountCode.swift */; };
+		B359A74F2C2EBA9F0074732C /* AdminTransDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A74E2C2EBA9F0074732C /* AdminTransDao.swift */; };
+		B359A7512C2EBD8F0074732C /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359A7502C2EBD8F0074732C /* TransactionDetail.swift */; };
 		B35A430B2ADEACCE0027C29B /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35A430A2ADEACCE0027C29B /* LoginInfo.swift */; };
 		B35A430D2ADEAD2C0027C29B /* SavedAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35A430C2ADEAD2C0027C29B /* SavedAccountManager.swift */; };
 		B35A430F2ADEAEE20027C29B /* SwitchAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35A430E2ADEAEE20027C29B /* SwitchAccountView.swift */; };
@@ -555,6 +570,21 @@
 		B35329EB2BB601A400893FA1 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
 		B35329ED2BB6029D00893FA1 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
 		B3534BB52AC7AC9600E92CA6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B359A7322C2EA6B00074732C /* AdminMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMain.swift; sourceTree = "<group>"; };
+		B359A7342C2EAA710074732C /* StoresScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresScreen.swift; sourceTree = "<group>"; };
+		B359A7362C2EAA790074732C /* StoresSearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresSearchScreen.swift; sourceTree = "<group>"; };
+		B359A7382C2EAA7F0074732C /* StoresProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresProfileScreen.swift; sourceTree = "<group>"; };
+		B359A73A2C2EAA910074732C /* VonderaTransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VonderaTransactionsScreen.swift; sourceTree = "<group>"; };
+		B359A73C2C2EAA9C0074732C /* AdminPayoutsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPayoutsScreen.swift; sourceTree = "<group>"; };
+		B359A73E2C2EAAA40074732C /* AdminWalletsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminWalletsScreen.swift; sourceTree = "<group>"; };
+		B359A7402C2EAAB30074732C /* AdminPayoutUpdateScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPayoutUpdateScreen.swift; sourceTree = "<group>"; };
+		B359A7432C2EAADF0074732C /* SendNotificationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNotificationScreen.swift; sourceTree = "<group>"; };
+		B359A7462C2EAB400074732C /* VonderaStaticsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VonderaStaticsScreen.swift; sourceTree = "<group>"; };
+		B359A7482C2EAB540074732C /* CreateTipsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTipsScreen.swift; sourceTree = "<group>"; };
+		B359A74A2C2EAB740074732C /* DiscountCodesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountCodesScreen.swift; sourceTree = "<group>"; };
+		B359A74C2C2EAB7D0074732C /* AddDiscountCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDiscountCode.swift; sourceTree = "<group>"; };
+		B359A74E2C2EBA9F0074732C /* AdminTransDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTransDao.swift; sourceTree = "<group>"; };
+		B359A7502C2EBD8F0074732C /* TransactionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
 		B35A430A2ADEACCE0027C29B /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		B35A430C2ADEAD2C0027C29B /* SavedAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedAccountManager.swift; sourceTree = "<group>"; };
 		B35A430E2ADEAEE20027C29B /* SwitchAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchAccountView.swift; sourceTree = "<group>"; };
@@ -1120,6 +1150,67 @@
 			path = Pixels;
 			sourceTree = "<group>";
 		};
+		B359A72D2C2EA66F0074732C /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				B359A7452C2EAAEA0074732C /* Discounts */,
+				B359A7422C2EAAC40074732C /* Tools */,
+				B359A7302C2EA6810074732C /* VPay */,
+				B359A72F2C2EA6790074732C /* Transactions */,
+				B359A72E2C2EA6750074732C /* Stores */,
+				B359A7322C2EA6B00074732C /* AdminMain.swift */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		B359A72E2C2EA6750074732C /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				B359A7342C2EAA710074732C /* StoresScreen.swift */,
+				B359A7362C2EAA790074732C /* StoresSearchScreen.swift */,
+				B359A7382C2EAA7F0074732C /* StoresProfileScreen.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		B359A72F2C2EA6790074732C /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				B359A73A2C2EAA910074732C /* VonderaTransactionsScreen.swift */,
+				B359A7502C2EBD8F0074732C /* TransactionDetail.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		B359A7302C2EA6810074732C /* VPay */ = {
+			isa = PBXGroup;
+			children = (
+				B359A73C2C2EAA9C0074732C /* AdminPayoutsScreen.swift */,
+				B359A73E2C2EAAA40074732C /* AdminWalletsScreen.swift */,
+				B359A7402C2EAAB30074732C /* AdminPayoutUpdateScreen.swift */,
+			);
+			path = VPay;
+			sourceTree = "<group>";
+		};
+		B359A7422C2EAAC40074732C /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				B359A7432C2EAADF0074732C /* SendNotificationScreen.swift */,
+				B359A7462C2EAB400074732C /* VonderaStaticsScreen.swift */,
+				B359A7482C2EAB540074732C /* CreateTipsScreen.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
+		B359A7452C2EAAEA0074732C /* Discounts */ = {
+			isa = PBXGroup;
+			children = (
+				B359A74A2C2EAB740074732C /* DiscountCodesScreen.swift */,
+				B359A74C2C2EAB7D0074732C /* AddDiscountCode.swift */,
+			);
+			path = Discounts;
+			sourceTree = "<group>";
+		};
 		B36923982A41C1DC00709112 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1401,6 +1492,7 @@
 		B3A7C8C52A285C1E00D6C1D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B359A72D2C2EA66F0074732C /* Admin */,
 				B3D9305A2C0269FC0027E6FB /* Complaints */,
 				B3D067BB2BA1E3F000EB7A06 /* Splash */,
 				B3155A6B2AE703C8006419F0 /* Notifications */,
@@ -1487,6 +1579,7 @@
 				B3EBA5C92ACBE84B00AFDC69 /* FirebaseFunctionCaller.swift */,
 				B3155A692AE70238006419F0 /* NotificationsDao.swift */,
 				B33B50792AECD3890032942D /* PagesDao.swift */,
+				B359A74E2C2EBA9F0074732C /* AdminTransDao.swift */,
 				B33B507B2AECD3910032942D /* CodesDao.swift */,
 				B35329E92BB6014300893FA1 /* ReviewsDao.swift */,
 			);
@@ -1983,6 +2076,7 @@
 				B3DFDC292A450B1600037858 /* CategoryPicker.swift in Sources */,
 				B3E776C92B1844D500BA7076 /* ImportShopify.swift in Sources */,
 				B3DFDC1E2A44EB5100037858 /* Copying.swift in Sources */,
+				B359A74D2C2EAB7D0074732C /* AddDiscountCode.swift in Sources */,
 				B3A7C8DD2A28600100D6C1D2 /* ShopifyPojo.swift in Sources */,
 				B339709C2A45F62E00E44FA2 /* Dashboard.swift in Sources */,
 				B314F4EA2A4EB7EA009856E3 /* FloatingActionButton.swift in Sources */,
@@ -2008,6 +2102,7 @@
 				B34687192A3FB58900FFFA1E /* GSignInHelper.swift in Sources */,
 				B3977F8C2A40A03200927558 /* OrderFragmentsViewModel.swift in Sources */,
 				B36923CB2A41EC8700709112 /* OrderDetails.swift in Sources */,
+				B359A7492C2EAB540074732C /* CreateTipsScreen.swift in Sources */,
 				B3A7C8ED2A28708600D6C1D2 /* LoginViewModel.swift in Sources */,
 				B3D9305E2C026A1A0027E6FB /* StoreClosedComplaints.swift in Sources */,
 				B33D80E42B15503200A679FF /* OrderFailed.swift in Sources */,
@@ -2028,9 +2123,11 @@
 				B310E73D2BB1F50B008C7A3C /* EmailSettings.swift in Sources */,
 				B31CFA632A2853AF00CBA01C /* VonderaApp.swift in Sources */,
 				B3D067C82BA228E400EB7A06 /* ToastManager.swift in Sources */,
+				B359A7392C2EAA7F0074732C /* StoresProfileScreen.swift in Sources */,
 				B30115D12A5702C600A7F701 /* PlanCard.swift in Sources */,
 				B31FAC932AED4F3900023BE0 /* AppLanguage.swift in Sources */,
 				B3A7C9012A287E4100D6C1D2 /* EncodableExtenstion.swift in Sources */,
+				B359A73F2C2EAAA40074732C /* AdminWalletsScreen.swift in Sources */,
 				B33B50672AECB1AA0032942D /* WebsiteTheme.swift in Sources */,
 				B3A7C8EB2A28707F00D6C1D2 /* MainViewModel.swift in Sources */,
 				B390EB6E2A48BF580058D06B /* StoreSocialViewModel.swift in Sources */,
@@ -2041,6 +2138,7 @@
 				B36D8C682A408E1300A8C555 /* Updates.swift in Sources */,
 				B30CF0B82A51FBC400245955 /* ProductStocksViewModel.swift in Sources */,
 				B3D8E5202A9FBE2800DC5049 /* OrderListExt.swift in Sources */,
+				B359A7412C2EAAB30074732C /* AdminPayoutUpdateScreen.swift in Sources */,
 				B339709E2A45FB5500E44FA2 /* StoreAllOrders.swift in Sources */,
 				B3D8E52E2A9FF99D00DC5049 /* AppPlans.swift in Sources */,
 				B36923A72A41C28600709112 /* ChangePhoneView.swift in Sources */,
@@ -2067,7 +2165,9 @@
 				B34896292A3F4E6100BD99AE /* AuthManger.swift in Sources */,
 				B36D8C5D2A40876800A8C555 /* LatestOrdersFragment.swift in Sources */,
 				B33DBD372A4A5531008BBB69 /* Contact.swift in Sources */,
+				B359A7472C2EAB400074732C /* VonderaStaticsScreen.swift in Sources */,
 				B33DBCEC2A48D512008BBB69 /* SwipeHelper.swift in Sources */,
+				B359A7442C2EAADF0074732C /* SendNotificationScreen.swift in Sources */,
 				B3F981892ACDABF200D70FAF /* LottieView.swift in Sources */,
 				B3A7C9032A2880D900D6C1D2 /* UserHome.swift in Sources */,
 				B35329EC2BB601A400893FA1 /* ReviewModel.swift in Sources */,
@@ -2086,6 +2186,7 @@
 				B3EBA5C82ACBE59E00AFDC69 /* StoreKitManager.swift in Sources */,
 				B3A7C8D52A285E3F00D6C1D2 /* Store.swift in Sources */,
 				B30316A52AC63AAC002134A2 /* StoreMarketPlacesSheet.swift in Sources */,
+				B359A7512C2EBD8F0074732C /* TransactionDetail.swift in Sources */,
 				B3A7C8D12A285DAF00D6C1D2 /* UserData.swift in Sources */,
 				B33DBCFB2A48FE38008BBB69 /* AlmostOutViewModel.swift in Sources */,
 				B3A7C8FF2A287D1A00D6C1D2 /* DateExtenstions.swift in Sources */,
@@ -2116,6 +2217,7 @@
 				B3DFDC182A44A71F00037858 /* CourierFinishedOrders.swift in Sources */,
 				B33B50752AECBF150032942D /* WebsiteSection.swift in Sources */,
 				B390EB752A48C3B10058D06B /* StoreCateogriesViewModel.swift in Sources */,
+				B359A73B2C2EAA910074732C /* VonderaTransactionsScreen.swift in Sources */,
 				B3191D762B43BA8200E7CA9B /* MyFatoorah.swift in Sources */,
 				B3A7C8CB2A285D0700D6C1D2 /* LoginView.swift in Sources */,
 				B30316A72AC6567E002134A2 /* StoreCategoryUpdate.swift in Sources */,
@@ -2138,6 +2240,7 @@
 				B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */,
 				B37F5FA52BAE55A3007FD672 /* FilteredOrdersView.swift in Sources */,
 				B32206032AE8BB7700B2C27C /* ExpansesExcel.swift in Sources */,
+				B359A73D2C2EAA9C0074732C /* AdminPayoutsScreen.swift in Sources */,
 				B36D8C612A40878C00A8C555 /* ReadyOrdersFragment.swift in Sources */,
 				B33970AB2A461F8700E44FA2 /* EmployeeCard.swift in Sources */,
 				B30115CF2A56F13300A7F701 /* StoreShippingViewModel.swift in Sources */,
@@ -2204,12 +2307,14 @@
 				B334038A2A47068A008CB1D8 /* CutomerProfile.swift in Sources */,
 				B3F0F3E12AC4A158000AFB0C /* ImagePlaceholder.swift in Sources */,
 				B3CF6B962B3E598000134806 /* BannerTitles.swift in Sources */,
+				B359A7372C2EAA790074732C /* StoresSearchScreen.swift in Sources */,
 				B3C30F492A9EECA40086B3FE /* PushNotificationManager.swift in Sources */,
 				B390EB542A47A1540058D06B /* ExpansesDao.swift in Sources */,
 				B36D89CD2A9F2B8000948FF8 /* SalesExcel.swift in Sources */,
 				B390EB682A489C9D0058D06B /* StoreLogoViewModel.swift in Sources */,
 				B33B506D2AECB1C50032942D /* CustomPage.swift in Sources */,
 				B35A43112ADEF69A0027C29B /* HypridTextField.swift in Sources */,
+				B359A74F2C2EBA9F0074732C /* AdminTransDao.swift in Sources */,
 				B36923B62A41CE3D00709112 /* TipCard.swift in Sources */,
 				B314F4E62A4E8FDE009856E3 /* OrderManager.swift in Sources */,
 				B33970BC2A46308200E44FA2 /* ClientsViewModel.swift in Sources */,
@@ -2220,8 +2325,10 @@
 				B35A430D2ADEAD2C0027C29B /* SavedAccountManager.swift in Sources */,
 				B32205FD2AE89F3000B2C27C /* EmployeeReports.swift in Sources */,
 				B3E2BCAD2AF1506100A6FCFA /* PaymentsOptions.swift in Sources */,
+				B359A7352C2EAA710074732C /* StoresScreen.swift in Sources */,
 				B33B50632AECACD40032942D /* WebsiteSettings.swift in Sources */,
 				B36923D02A41F30F00709112 /* OrderDetailsViewModel.swift in Sources */,
+				B359A74B2C2EAB740074732C /* DiscountCodesScreen.swift in Sources */,
 				B334039C2A47434F008CB1D8 /* WarehouseView.swift in Sources */,
 				B316642D2B1B7C3C001C8C6A /* ProductSalesExcel.swift in Sources */,
 				B3E2BCAB2AF14F4400A6FCFA /* CashOnDelivery.swift in Sources */,
@@ -2235,6 +2342,7 @@
 				B352ADA12AF2907500068D1A /* ChangeUsername.swift in Sources */,
 				B3C30F532A9F1C4B0086B3FE /* FileUtils.swift in Sources */,
 				B33B506B2AECB1BE0032942D /* FeaturedProducts.swift in Sources */,
+				B359A7332C2EA6B00074732C /* AdminMain.swift in Sources */,
 				B33DBD0C2A4A09D9008BBB69 /* SearchBar.swift in Sources */,
 				B314F4E22A4DF0D4009856E3 /* ProductBuyingSheet.swift in Sources */,
 				B3155A712AE74663006419F0 /* StoreCustomMessage.swift in Sources */,
@@ -2386,7 +2494,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 70;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2407,7 +2515,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.3;
+				MARKETING_VERSION = 4.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2429,7 +2537,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 68;
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2449,7 +2557,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.3;
+				MARKETING_VERSION = 4.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

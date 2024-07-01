@@ -14,16 +14,10 @@ class TipDao {
     
     
     func getTipOfTheDay() async throws -> Tip? {
-        return convertToTipList(snapShot: try await collection.order(by: "date", descending: true)
+        return try await collection.order(by: "date", descending: true)
             .limit(to: 1)
-            .getDocuments())[0]
+            .getDocuments(as: Tip.self)
+            .first
     }
     
-    func convertToTipList(snapShot:QuerySnapshot) -> [Tip] {
-        let arr = snapShot.documents.compactMap{doc -> Tip? in
-            return try! doc.data(as: Tip.self)
-        }
-        
-        return arr
-    }
 }

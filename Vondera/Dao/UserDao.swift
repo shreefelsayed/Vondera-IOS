@@ -78,13 +78,4 @@ class UsersDao {
     func getUser(uId:String) async throws -> (item: UserData?, exists:Bool) {
         return try await collection.document(uId).getDocument(as: UserData.self)
     }
-    
-    func convertToList(snapShot:QuerySnapshot) -> [UserData] {
-        let arr = snapShot.documents.compactMap{doc -> UserData? in
-            return try! doc.data(as: UserData.self)
-        }
-        
-        return arr
-    }
-    
 }

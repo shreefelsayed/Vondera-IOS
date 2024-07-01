@@ -18,7 +18,7 @@ struct AccountHomeScreen : View {
                 } else if myUser.accountType == "Sales" {
                     #warning("Set the sales Dashboard")
                 } else if myUser.accountType == "Admin" {
-                    #warning("Set the Admin Dashboard")
+                    AdminMain()
                 }
             }
         }

@@ -742,6 +742,9 @@
         }
       }
     },
+    "About App" : {
+
+    },
     "Access" : {
       "localizations" : {
         "ar" : {
@@ -762,6 +765,9 @@
         }
       }
     },
+    "Account Settings" : {
+
+    },
     "Account Type" : {
       "localizations" : {
         "ar" : {
@@ -771,6 +777,9 @@
           }
         }
       }
+    },
+    "Action" : {
+
     },
     "Actions" : {
       "localizations" : {
@@ -791,6 +800,12 @@
           }
         }
       }
+    },
+    "Active Stores" : {
+
+    },
+    "Active Wallets" : {
+
     },
     "Add" : {
       "localizations" : {
@@ -1168,6 +1183,9 @@
         }
       }
     },
+    "Admin Dashboard" : {
+
+    },
     "After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." : {
       "localizations" : {
         "ar" : {
@@ -1228,6 +1246,9 @@
         }
       }
     },
+    "Almost Expired" : {
+
+    },
     "Almost Out" : {
       "localizations" : {
         "ar" : {
@@ -1277,6 +1298,12 @@
           }
         }
       }
+    },
+    "Amount of subscribtion fees we received" : {
+
+    },
+    "Amount Paid By User" : {
+
     },
     "Amount to add" : {
       "localizations" : {
@@ -1811,6 +1838,9 @@
           }
         }
       }
+    },
+    "Cancelled" : {
+
     },
     "Cannot open Label" : {
       "localizations" : {
@@ -2704,6 +2734,9 @@
         }
       }
     },
+    "Create Tips" : {
+
+    },
     "Create your first order" : {
       "localizations" : {
         "ar" : {
@@ -2803,6 +2836,9 @@
           }
         }
       }
+    },
+    "Current Plan : %@" : {
+
     },
     "Custom app admin api token ex (shpat_XXXX)" : {
       "localizations" : {
@@ -2967,6 +3003,9 @@
           }
         }
       }
+    },
+    "Date" : {
+
     },
     "Date Range" : {
       "localizations" : {
@@ -3437,6 +3476,9 @@
           }
         }
       }
+    },
+    "Duration" : {
+
     },
     "Edit Category" : {
       "localizations" : {
@@ -4579,6 +4621,9 @@
         }
       }
     },
+    "Hello, World!" : {
+
+    },
     "Help" : {
       "localizations" : {
         "ar" : {
@@ -4658,6 +4703,9 @@
           }
         }
       }
+    },
+    "Identifer" : {
+
     },
     "Identifier" : {
       "localizations" : {
@@ -5009,6 +5057,9 @@
         }
       }
     },
+    "Log out" : {
+
+    },
     "Log Out" : {
       "localizations" : {
         "ar" : {
@@ -5149,6 +5200,9 @@
         }
       }
     },
+    "Method" : {
+
+    },
     "Min Amount" : {
 
     },
@@ -5163,6 +5217,12 @@
       }
     },
     "Minmum order price" : {
+
+    },
+    "Monthly" : {
+
+    },
+    "Monthly Active" : {
 
     },
     "Monthly Limit" : {
@@ -5454,6 +5514,18 @@
         }
       }
     },
+    "New Products" : {
+
+    },
+    "New Products added to vondera in this period" : {
+
+    },
+    "New Stores" : {
+
+    },
+    "New Stores created in this period" : {
+
+    },
     "Next" : {
       "localizations" : {
         "ar" : {
@@ -5523,6 +5595,9 @@
           }
         }
       }
+    },
+    "No New payout requests" : {
+
     },
     "No notifications" : {
       "localizations" : {
@@ -5724,6 +5799,9 @@
         }
       }
     },
+    "No users have money in their wallets" : {
+
+    },
     "Not Paid" : {
       "localizations" : {
         "ar" : {
@@ -5764,6 +5842,12 @@
         }
       }
     },
+    "Notification Body" : {
+
+    },
+    "Notification sent !" : {
+
+    },
     "Notification Settings" : {
       "localizations" : {
         "ar" : {
@@ -5774,6 +5858,9 @@
         }
       }
     },
+    "Notification Title" : {
+
+    },
     "Notifications" : {
       "localizations" : {
         "ar" : {
@@ -5783,6 +5870,9 @@
           }
         }
       }
+    },
+    "Number of orders added." : {
+
     },
     "Number of orders assigned to courier in the time range" : {
       "localizations" : {
@@ -5813,6 +5903,12 @@
           }
         }
       }
+    },
+    "Number of stores that were active in the last 3 days" : {
+
+    },
+    "Number of stores that will expire in the next 3 days" : {
+
     },
     "On Going Orders" : {
       "localizations" : {
@@ -6322,6 +6418,9 @@
         }
       }
     },
+    "Other Reports" : {
+
+    },
     "Other Settings" : {
       "localizations" : {
         "ar" : {
@@ -6341,6 +6440,9 @@
           }
         }
       }
+    },
+    "Our retention Perecentage caculated by currently subscrbied stores / every subscribed store" : {
+
     },
     "Out For Delivery" : {
       "localizations" : {
@@ -6512,6 +6614,9 @@
         }
       }
     },
+    "Payment Success" : {
+
+    },
     "Payment Transaction" : {
       "localizations" : {
         "ar" : {
@@ -6571,6 +6676,15 @@
           }
         }
       }
+    },
+    "Payout request" : {
+
+    },
+    "Payout Requests" : {
+
+    },
+    "Payout Updated" : {
+
     },
     "Payouts" : {
       "localizations" : {
@@ -6731,6 +6845,9 @@
           }
         }
       }
+    },
+    "Plan" : {
+
     },
     "Plans" : {
       "localizations" : {
@@ -7231,6 +7348,9 @@
         }
       }
     },
+    "Products Count" : {
+
+    },
     "Products price" : {
       "localizations" : {
         "ar" : {
@@ -7390,6 +7510,9 @@
           }
         }
       }
+    },
+    "Quarter" : {
+
     },
     "Rate our app" : {
       "localizations" : {
@@ -7584,6 +7707,9 @@
         }
       }
     },
+    "Retention" : {
+
+    },
     "Review Deleted" : {
       "localizations" : {
         "ar" : {
@@ -7653,6 +7779,9 @@
           }
         }
       }
+    },
+    "Sales made by using Vondera, including manual orders" : {
+
     },
     "Sales Report" : {
       "localizations" : {
@@ -7971,6 +8100,12 @@
         }
       }
     },
+    "Send Notification" : {
+
+    },
+    "Send Notifictaions" : {
+
+    },
     "Send payout request" : {
       "localizations" : {
         "ar" : {
@@ -8201,6 +8336,9 @@
         }
       }
     },
+    "Site Views" : {
+
+    },
     "Skip" : {
       "localizations" : {
         "ar" : {
@@ -8271,6 +8409,9 @@
         }
       }
     },
+    "Sorting" : {
+
+    },
     "Sports and Outdoors" : {
       "localizations" : {
         "ar" : {
@@ -8311,6 +8452,9 @@
         }
       }
     },
+    "Statistics" : {
+
+    },
     "Stock Handling" : {
       "localizations" : {
         "ar" : {
@@ -8340,6 +8484,9 @@
           }
         }
       }
+    },
+    "Store Id" : {
+
     },
     "Store id is empty" : {
 
@@ -8424,6 +8571,9 @@
         }
       }
     },
+    "Store Search" : {
+
+    },
     "Store Settings" : {
       "localizations" : {
         "ar" : {
@@ -8447,6 +8597,9 @@
         }
       }
     },
+    "Stores" : {
+
+    },
     "Submit" : {
       "localizations" : {
         "ar" : {
@@ -8458,6 +8611,12 @@
       }
     },
     "Submit Complaint" : {
+
+    },
+    "Subscribe" : {
+
+    },
+    "Subscribed to the %@ Plan" : {
 
     },
     "Subscribtions" : {
@@ -9376,6 +9535,9 @@
         }
       }
     },
+    "Tools" : {
+
+    },
     "Total" : {
       "localizations" : {
         "ar" : {
@@ -9385,6 +9547,9 @@
           }
         }
       }
+    },
+    "Total : %@ EGP" : {
+
     },
     "Total (%lld) items" : {
       "localizations" : {
@@ -9456,6 +9621,9 @@
         }
       }
     },
+    "Total Payments" : {
+
+    },
     "Total Pieces" : {
       "localizations" : {
         "ar" : {
@@ -9475,6 +9643,9 @@
           }
         }
       }
+    },
+    "Total Sales" : {
+
     },
     "Total Sold items" : {
       "localizations" : {
@@ -9536,6 +9707,9 @@
         }
       }
     },
+    "Transaction Detail" : {
+
+    },
     "Transaction details" : {
       "localizations" : {
         "ar" : {
@@ -9555,6 +9729,9 @@
           }
         }
       }
+    },
+    "TRX ID" : {
+
     },
     "TTL" : {
       "localizations" : {
@@ -9662,6 +9839,9 @@
         }
       }
     },
+    "Update Payment" : {
+
+    },
     "Update subscribtion duration" : {
       "localizations" : {
         "ar" : {
@@ -9755,6 +9935,9 @@
         }
       }
     },
+    "User Subscribed" : {
+
+    },
     "Username" : {
       "localizations" : {
         "ar" : {
@@ -9764,6 +9947,9 @@
           }
         }
       }
+    },
+    "Users Reports" : {
+
     },
     "V Pay" : {
       "localizations" : {
@@ -9875,6 +10061,9 @@
         }
       }
     },
+    "Verify Subscribe plan" : {
+
+    },
     "Views" : {
       "localizations" : {
         "ar" : {
@@ -9935,6 +10124,9 @@
         }
       }
     },
+    "VPay" : {
+
+    },
     "VPay Gateway" : {
       "localizations" : {
         "ar" : {
@@ -9964,6 +10156,9 @@
           }
         }
       }
+    },
+    "Wallets" : {
+
     },
     "Warehouse" : {
       "localizations" : {
@@ -10165,6 +10360,9 @@
         }
       }
     },
+    "Yearly" : {
+
+    },
     "Yes" : {
       "localizations" : {
         "ar" : {
@@ -10217,6 +10415,9 @@
           }
         }
       }
+    },
+    "You have no couriers yet !" : {
+
     },
     "You have no deleted orders in your store" : {
       "localizations" : {

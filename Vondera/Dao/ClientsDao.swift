@@ -22,33 +22,23 @@ class ClientsDao {
     }
     
     func getClientsByData(from:Timestamp, to:Timestamp) async throws -> [Client] {
-        return convertToList(snapShot: try await collection
+        return try await collection
             .order(by: "lastOrder", descending: true)
             .whereField("lastOrder", isGreaterThanOrEqualTo: from)
             .whereField("lastOrder", isLessThanOrEqualTo: to)
-            .getDocuments()
-        )
+            .getDocuments(as: Client.self)
     }
-    func search(search:String, field:String = "name", lastSnapShot:DocumentSnapshot?) async throws -> ([Client], QueryDocumentSnapshot?) {
-        
-        var query:Query = collection
+    
+    func search(search:String, field:String = "name", lastSnapShot:DocumentSnapshot?) async throws -> ([Client], DocumentSnapshot?) {
+        return try await collection
             .order(by: field, descending: false)
             .start(at: [search])
-            .end(at: ["\(search)\u{f8ff}"])  // Pass the value as an array
-        
-        if lastSnapShot != nil {
-            query = query.start(afterDocument: lastSnapShot!)
-        }
-        
-        query.limit(to: pageSize)
-        
-        let docs = try await query.getDocuments()
-        return (convertToList(snapShot: docs), docs.documents.last)
-        
+            .end(at: ["\(search)\u{f8ff}"])
+            .startAfter(lastDocument: lastSnapShot)
+            .limit(to: pageSize)
+            .getDocumentWithLastSnapshot(as: Client.self)
     }
                                                                                                        
-                                                                                                
-    
     func getClients(sort:String = "lastOrder", lastSnapShot:DocumentSnapshot?) async throws -> (items: [Client], lastDocument: DocumentSnapshot?) {
         return try await collection
             .order(by: sort, descending: true)
@@ -60,13 +50,4 @@ class ClientsDao {
     func update(id:String, hashMap:[String:Any]) async throws {
         return try await collection.document(id).updateData(hashMap)
     }
-    
-    func convertToList(snapShot:QuerySnapshot) -> [Client] {
-        let arr = snapShot.documents.compactMap{doc -> Client? in
-            return try! doc.data(as: Client.self)
-        }
-        
-        return arr
-    }
-    
 }

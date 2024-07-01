@@ -21,6 +21,10 @@ struct PlanInfo : Codable {
         return planInfoPrices.first?.price ?? 0
     }
     
+    func getPlanPrice(_ subId:String) -> Int {
+        return planInfoPrices.first(where: {$0.id == subId})?.price ?? 0
+    }
+    
     func getButtonTitle() -> LocalizedStringKey {
         let storePlanLevel = UserInformation.shared.user?.store?.storePlanInfo?.getPlanLevel() ?? 0
         let planLevel = getPlanLevel()
@@ -160,7 +164,6 @@ struct PlanInfoPrices: Codable, Identifiable {
         let saving = savingRatio * 100.0  // Convert to percentage
         return Int(saving)
     }
-    
     
     
     func getDurationDisplay() -> LocalizedStringKey {

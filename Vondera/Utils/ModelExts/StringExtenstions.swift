@@ -68,6 +68,16 @@ extension String {
         return LocalizedStringKey(self)
     }
     
+    
+    func toIntOrZero() -> Int {
+        return Int(self) ?? 0
+    }
+    
+    // Converts a String to Double and returns 0.0 if conversion fails
+    func toDoubleOrZero() -> Double {
+        return Double(self) ?? 0.0
+    }
+    
     var firstName: String {
         let components = self.components(separatedBy: " ")
         if let firstName = components.first {
@@ -125,10 +135,10 @@ extension String {
     }
     
     func containsOnlyEnglishLettersOrNumbers() -> Bool {
-            let regex = try? NSRegularExpression(pattern: "^[a-zA-Z0-9]*$", options: .caseInsensitive)
-            let range = NSRange(location: 0, length: self.utf16.count)
-            return regex?.firstMatch(in: self, options: [], range: range) != nil
-        }
+        let regex = try? NSRegularExpression(pattern: "^[a-zA-Z0-9]*$", options: .caseInsensitive)
+        let range = NSRange(location: 0, length: self.utf16.count)
+        return regex?.firstMatch(in: self, options: [], range: range) != nil
+    }
     
     var isBlank: Bool {
         return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -137,7 +147,7 @@ extension String {
     func toHtml() -> NSAttributedString {
         let encodedData = self.data(using: String.Encoding.utf8)!
         var attributedString: NSAttributedString
-
+        
         do {
             attributedString = try NSAttributedString(data: encodedData, options: [NSAttributedString.DocumentReadingOptionKey.documentType:NSAttributedString.DocumentType.html,NSAttributedString.DocumentReadingOptionKey.characterEncoding:NSNumber(value: String.Encoding.utf8.rawValue)], documentAttributes: nil)
             
@@ -428,7 +438,7 @@ extension Array where Element == [String: [String]] {
                 details.append(VariantsDetails(options: currentOptions, quantity: q, sold: 0, image: "", cost: cost, price: price))
                 return
             }
-
+            
             let currentOption = variantOptions[currentOptionIndex]
             for (optionKey, optionValues) in currentOption {
                 for value in optionValues {
@@ -511,11 +521,11 @@ extension PhotosPickerItem {
     func getURL(item: PhotosPickerItem) async throws -> URL? {
         // Step 1: Load as Data object.
         let data = try await item.loadTransferable(type: Data.self)
-
+        
         if let contentType = item.supportedContentTypes.first {
             // Step 2: make the URL file name and get a file extension.
             let url = getDocumentsDirectory().appendingPathComponent("\(UUID().uuidString).\(contentType.preferredFilenameExtension ?? "")")
-
+            
             if let data = data {
                 do {
                     try data.write(to: url)
@@ -529,16 +539,16 @@ extension PhotosPickerItem {
         
         return nil
     }
-
+    
     /// from: https://www.hackingwithswift.com/books/ios-swiftui/writing-data-to-the-documents-directory
     func getDocumentsDirectory() -> URL {
         // find all possible documents directories for this user
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-
+        
         // just send back the first one, which ought to be the only one
         return paths[0]
     }
-
+    
 }
 
 extension Array where Element == String {
@@ -551,7 +561,7 @@ extension Array where Element == String {
 }
 
 
-    
+
 extension Array where Element == ImagePickerWithUrL {
     func getItemsToUpload() -> [ImagePickerWithUrL] {
         var images = [ImagePickerWithUrL]()

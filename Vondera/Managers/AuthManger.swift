@@ -140,16 +140,11 @@ class AuthManger {
         }
         
         if var user = try await usersDao.getUser(uId: uId!).item {
-            guard user.isStoreUser else {
-                print("Unsporrted user type")
-                await logOut()
-                return nil
+            if user.isStoreUser {
+                let store = try await storesDao.getStore(uId: user.storeId)
+                user.store = store
             }
-            
-            print("User \(user.name)")
-            
-            let store = try await storesDao.getStore(uId: user.storeId)
-            user.store = store
+          
             UserInformation.shared.updateUser(user)
             await onSignIn()
             return user

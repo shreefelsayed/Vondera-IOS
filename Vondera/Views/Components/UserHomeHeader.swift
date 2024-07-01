@@ -42,42 +42,56 @@ struct UserHomeHeader: View {
                         }
                 }
                 
-                //MARK : LINK
                 HStack {
-                    Image(.icCopy)
-                        .onTapGesture {
-                            CopyingData().copyToClipboard(link)
+                    //MARK : LINK
+                    HStack {
+                        Image(.icCopy)
+                            .onTapGesture {
+                                CopyingData().copyToClipboard(link)
+                            }
+                            .padding(.horizontal, 4)
+                        
+                        Divider()
+                        
+                        Spacer()
+                        
+                        Link(link, destination: URL(string: link)!)
+                        
+                        Spacer()
+                        
+                        Divider()
+                        
+                        Image(.icShare)
+                            .onTapGesture {
+                                shareLink()
+                            }
+                            .padding(.horizontal, 4)
+                    }
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 24)
+                            .fill(Color.white)
+                    )
+                    
+                    if let store = myUser.store, myUser.canAccessAdmin {
+                        NavigationLink(destination: Dashboard(store: store)) {
+                            Image(.icDashboard)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24)
+                                .padding(4)
+                                .background(Color.white)
+                                .clipShape(Circle())
                         }
-                        .padding(.horizontal, 4)
-                    
-                    Divider()
-                    
-                    Spacer()
-                    
-                    Link(link, destination: URL(string: link)!)
-                    
-                    Spacer()
-                    
-                    Divider()
-                    
-                    Image(.icShare)
-                        .onTapGesture {
-                            shareLink()
-                        }
-                        .padding(.horizontal, 4)
+                        .buttonStyle(.plain)
+                    }
                 }
-                .padding(8)
-                .background(
-                    RoundedRectangle(cornerRadius: 24)
-                        .fill(Color.white)
-                )
-                
             }
         }
         .padding(12)
         .background(
-           RoundedRectangle(cornerRadius: 12)
-            .fill(Color.accentColor)
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.accentColor)
         )
         .sheet(isPresented: $showSheet, content: {
             if let user = user.user {
@@ -92,10 +106,10 @@ struct UserHomeHeader: View {
     
     func shareLink() {
         if let link = user.user?.store?.getStoreDomain(), let appURL = URL(string: link) {
-                let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
-            }
+            let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
         }
+    }
 }
 
 struct QRCodeSheet : View {

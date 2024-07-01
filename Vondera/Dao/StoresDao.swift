@@ -40,6 +40,28 @@ class StoresDao {
         return store
     }
     
+    func getStores(lastSnapshot:DocumentSnapshot?, sorting:String = "date") async throws -> ([Store], DocumentSnapshot?) {
+        return try await collection
+            .order(by: sorting, descending: true)
+            .startAfter(lastDocument: lastSnapshot)
+            .limit(to: 25)
+            .getDocumentWithLastSnapshot(as: Store.self)
+    }
+    
+    func getStoresWithWallets() async throws -> [Store] {
+        return try await collection
+            .order(by: "vPayWallet", descending: true)
+            .whereField("vPayWallet", isGreaterThan: 15)
+            .getDocuments(as: Store.self)
+    }
+    
+    func search(query:String) async throws -> [Store] {
+        return try await collection
+            .order(by: "merchantId", descending: false)
+            .whereField("merchantId", isEqualTo: query)
+            .getDocuments(as: Store.self)
+    }
+    
     func update(id:String, hashMap:[String:Any]) async throws {
         return try await collection.document(id).updateData(hashMap)
     }
