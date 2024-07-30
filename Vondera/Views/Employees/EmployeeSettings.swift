@@ -28,18 +28,18 @@ struct EmployeeSettings: View {
             }
             
             Section("Access") {
+                
                 Picker("Account Type", selection: $viewModel.selectedAccountType) {
-                    Text("Admin").tag(AccountType.admin)
-                    Text("Employee").tag(AccountType.employee)
-                    Text("Sales Account").tag(AccountType.sales)
+                    Text("Admin").tag(UserRoles.admin)
+                    Text("Employee").tag(UserRoles.employee)
+                    Text("Sales Account").tag(UserRoles.modrator)
                 }
                 .pickerStyle(.menu)
                 
-                
-                Text(desc)
+                Text(viewModel.selectedAccountType.getRoleDesc())
                     .font(.caption)
                 
-                if viewModel.selectedAccountType == .sales {
+                if viewModel.selectedAccountType == .modrator {
                     HStack {
                         FloatingTextField(title: "Commission", text: .constant(""), caption: "This commission will be calculate from the order's netprofit From 1% to 99%", required: false, isNumric: true, number: $viewModel.perc)
                         
@@ -71,8 +71,6 @@ struct EmployeeSettings: View {
                         }
                 }
             }
-            
-            
         }
         .listStyle(.plain)
         .navigationTitle("Member settings")
@@ -97,6 +95,7 @@ struct EmployeeSettings: View {
                        type: .regular,
                        title: viewModel.msg?.toString())
         }
+        .withAccessLevel(accessKey: .teamMembersUpdate, presentation: presentationMode)
     }
     
     func update() {
@@ -104,16 +103,7 @@ struct EmployeeSettings: View {
             await viewModel.update()
         }
     }
-    
-    var desc:String {
-        if viewModel.selectedAccountType == AccountType.admin {
-            return "Admin account has access to the dashboard, add employees and couriers and the statics or reports"
-        } else if viewModel.selectedAccountType == AccountType.employee {
-            return "Employee account can add orders and make actions on the orders, can assign orders to couriers too"
-        } else {
-            return "Sales account can only add orders, search for orders. and you can add a sales commission based on the net profit of each order the account adds."
-        }
-    }
+
 }
 
 struct EmployeeSettings_Previews: PreviewProvider {

@@ -42,14 +42,12 @@ struct ProductCard: View {
                 // Product Image Info
                 HStack {
                     // MARK : Quantity
-                    if let stocked = product.alwaysStocked, stocked {
-                        Text("\(product.quantity)")
-                            .foregroundStyle(.white)
-                            .padding(6)
-                            .background(product.quantity > 0 ? Color.black : .red)
-                            .cornerRadius(6)
-                            .frame(alignment: .topLeading)
-                    }
+                    Text((product.alwaysStocked ?? false) ? "∞" : "\(product.getQuantity())")
+                        .foregroundStyle(.white)
+                        .padding(6)
+                        .background((product.alwaysStocked ?? false) ? Color.green : product.getQuantity() > 0 ? Color.black : .red)
+                        .cornerRadius(6)
+                        .frame(alignment: .topLeading)
                     
                     Spacer()
                     
@@ -64,7 +62,7 @@ struct ProductCard: View {
                 }
                 
                 // MARK : OUT OF STOCK
-                if !(product.alwaysStocked ?? false) && product.quantity <= 0 {
+                if !(product.alwaysStocked ?? false) && product.getQuantity() <= 0 {
                     HStack {
                         Text("Out of stock")
                             .foregroundStyle(.red)

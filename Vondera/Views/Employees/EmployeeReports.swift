@@ -17,6 +17,7 @@ struct EmployeeReports: View {
 
     @State var isLoading = false
     @State var report = false
+    @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         List() {
@@ -59,9 +60,7 @@ struct EmployeeReports: View {
 
                     ReportCard(title: "Delivery Success Rate", amount: items.getSuccessPercentage().double(), prefix: "%", desc: "(Delivered Order / Total Orders finished) * 100")
                     
-                    if employee.accountType == "Marketing" {
-                        ReportCard(title: "Selling Commission", amount: items.getSellingCommission(), prefix: "EGP", desc: "order profit * (\((employee.percentage ?? 0) * 100) / 100) \n * Note that if you changed the employee commission it takes effect for the new orders", nutural: true)
-                    }
+                    ReportCard(title: "Selling Commission", amount: items.getSellingCommission(), prefix: "EGP", desc: "order profit * (\((employee.percentage ?? 0) * 100) / 100) \n * Note that if you changed the employee commission it takes effect for the new orders", nutural: true)
                     
                     ReportCard(title: "Orders Profit", amount: items.totalNetProfit(), prefix: "EGP", desc: "Profit calculated using this formula (Product Price + the shipping fees of the client) - (Discount on the order - Courier Fees - Seller Comission) \n * Make sure you add your courier with their fees")
                 }
@@ -84,6 +83,7 @@ struct EmployeeReports: View {
         .onAppear {
             fetch()
         }
+        .withAccessLevel(accessKey: .statisticsRead, presentation: presentationMode)
     }
     
     func fetch() {

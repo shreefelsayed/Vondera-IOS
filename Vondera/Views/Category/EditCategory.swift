@@ -52,13 +52,15 @@ struct EditCategory: View {
         .navigationTitle("Edit Category")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Text("Delete")
-                    .foregroundColor(.red)
-                    .bold()
-                    .disabled(isSaving)
-                    .onTapGesture {
-                        promoteDelete()
-                    }
+                if AccessFeature.categoriesDelete.canAccess() {
+                    Text("Delete")
+                        .foregroundColor(.red)
+                        .bold()
+                        .disabled(isSaving)
+                        .onTapGesture {
+                            promoteDelete()
+                        }
+                }
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -108,6 +110,8 @@ struct EditCategory: View {
             desc = category.desc ?? ""
             hidden = category.hidden ?? false
         }
+        .withAccessLevel(accessKey: .categoriesUpdate, presentation: presentationMode)
+
     }
     
     private func delete() {

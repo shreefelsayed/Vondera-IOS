@@ -226,7 +226,16 @@ struct SubscribeSheet : View {
             
             Divider()
             
+            let priceDisabled = !(UserInformation.shared.user?.isShreif ?? false) && (store.renewCount ?? 0) > 0
+            
             FloatingTextField(title: "Amount Paid By User", text: $priceInput, required: nil, keyboard: .numberPad)
+                .disabled(priceDisabled)
+            
+            if priceDisabled {
+                Text("You can't make a discount, because this user subscribed before !")
+                    .bold()
+                    .foregroundStyle(.red)
+            }
             
             ButtonLarge(label: "Subscribe") {
                 Task { await subscribe() }

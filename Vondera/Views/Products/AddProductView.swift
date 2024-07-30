@@ -389,6 +389,7 @@ struct AddProductView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
+        .withAccessLevel(accessKey: .productsWrite, presentation: presentationMode)
     }
     
     var page3: some View {

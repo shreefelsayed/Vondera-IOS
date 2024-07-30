@@ -79,18 +79,16 @@ struct ProductsFragment: View {
                     Spacer()
                     
                     HStack {
-                        if user.canAccessAdmin {
-                            Menu {
-                                NavigationLink(destination: AddProductView(storeId: user.storeId)) {
-                                    Label("New Product", systemImage: "tag.fill")
-                                }
-                                
-                                NavigationLink(destination: CreateCategory(storeId: user.storeId, onAdded: nil)) {
-                                    Label("New Category", systemImage: "plus")
-                                }
-                            } label: {
-                                Image(systemName: "plus.app")
+                        Menu {
+                            NavigationLink(destination: AddProductView(storeId: user.storeId)) {
+                                Label("New Product", systemImage: "tag.fill")
                             }
+                            
+                            NavigationLink(destination: CreateCategory(storeId: user.storeId, onAdded: nil)) {
+                                Label("New Category", systemImage: "plus")
+                            }
+                        } label: {
+                            Image(systemName: "plus.app")
                         }
                         
                         NavigationLink(destination: ProductsSearchView()) {
@@ -108,14 +106,12 @@ struct ProductsFragment: View {
                 if let count = user.store?.productsCount, count <= 0 {
                     EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No Products in this category, add a new product") {
                         VStack {
-                            if UserInformation.shared.user?.canAccessAdmin ?? false {
-                                NavigationLink {
-                                    AddProductView()
-                                } label: {
-                                    Text("Add Product")
-                                }
-                                .buttonStyle(.bordered)
+                            NavigationLink {
+                                AddProductView()
+                            } label: {
+                                Text("Add Product")
                             }
+                            .buttonStyle(.bordered)
                         }
                     }
                 } else {
@@ -137,28 +133,26 @@ struct ProductsFragment: View {
                                 
                             }
                             
-                            if user.canAccessAdmin {
-                                NavigationLink(destination: StoreCategories(store: user.store!)) {
-                                    HStack {
-                                        Label(
-                                            title: { Text("Categories").bold() },
-                                            icon: { Image(.btnCollections) }
-                                        )
-                                        Spacer()
-                                        
-                                        Text("\(user.store?.categoriesCount ?? 0)")
-                                    }
-                                }
-                                
-                                
-                                NavigationLink {
-                                    WarehouseView(storeId: user.storeId)
-                                } label: {
+                            NavigationLink(destination: StoreCategories(store: user.store!)) {
+                                HStack {
                                     Label(
-                                        title: { Text("Warehouse").bold() },
-                                        icon: { Image(.btnWarehouse) }
+                                        title: { Text("Categories").bold() },
+                                        icon: { Image(.btnCollections) }
                                     )
+                                    Spacer()
+                                    
+                                    Text("\(user.store?.categoriesCount ?? 0)")
                                 }
+                            }
+                            
+                            
+                            NavigationLink {
+                                WarehouseView(storeId: user.storeId)
+                            } label: {
+                                Label(
+                                    title: { Text("Warehouse").bold() },
+                                    icon: { Image(.btnWarehouse) }
+                                )
                             }
                         }
                         
@@ -215,54 +209,52 @@ struct ProductsFragment: View {
                         }
                         
                         // MARK : REPORTS
-                        if user.canAccessAdmin {
-                            Section {
-                                HStack {
-                                    // MARK : Added to Cart
-                                    ReportCardView(title: "Added to cart",
-                                                   desc: "\(vm.siteReports.getTotalAddedToCart()) Items added",
-                                                   dataSuffix: "Items",
-                                                   data: vm.siteReports.getAddedToCartData(), lineColor: .blue, smallSize: true)
-                                    
-                                    // MARK : Products View
-                                    ReportCardView(title: "Products view",
-                                                   desc: "\(vm.siteReports.getTotalProductsView()) Views",
-                                                   dataSuffix: "Views",
-                                                   data: vm.siteReports.getProductsViewsData(),
-                                                   lineColor: .mint, smallSize: true)
-                                }
-                                .listRowSeparator(.hidden)
+                        Section {
+                            HStack {
+                                // MARK : Added to Cart
+                                ReportCardView(title: "Added to cart",
+                                               desc: "\(vm.siteReports.getTotalAddedToCart()) Items added",
+                                               dataSuffix: "Items",
+                                               data: vm.siteReports.getAddedToCartData(), lineColor: .blue, smallSize: true)
                                 
-                            } header: {
-                                HStack {
-                                    Text("Overview")
-                                        .font(.headline)
-                                        .bold()
+                                // MARK : Products View
+                                ReportCardView(title: "Products view",
+                                               desc: "\(vm.siteReports.getTotalProductsView()) Views",
+                                               dataSuffix: "Views",
+                                               data: vm.siteReports.getProductsViewsData(),
+                                               lineColor: .mint, smallSize: true)
+                            }
+                            .listRowSeparator(.hidden)
+                            
+                        } header: {
+                            HStack {
+                                Text("Overview")
+                                    .font(.headline)
+                                    .bold()
+                                
+                                Spacer()
+                                
+                                Picker("Date Range", selection: $vm.staticsDays) {
+                                    Text("Today")
+                                        .tag(1)
                                     
-                                    Spacer()
+                                    Text("This Week")
+                                        .tag(7)
                                     
-                                    Picker("Date Range", selection: $vm.staticsDays) {
-                                        Text("Today")
-                                            .tag(1)
-                                        
-                                        Text("This Week")
-                                            .tag(7)
-                                        
-                                        Text("This Month")
-                                            .tag(30)
-                                        
-                                        Text("This Quarter")
-                                            .tag(90)
-                                        
-                                        Text("This year")
-                                            .tag(365)
-                                    }
+                                    Text("This Month")
+                                        .tag(30)
+                                    
+                                    Text("This Quarter")
+                                        .tag(90)
+                                    
+                                    Text("This year")
+                                        .tag(365)
                                 }
                             }
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
-                            
                         }
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
+                        
                         
                         // MARK : Last ordered
                         if !vm.itemsLastOrdered.isEmpty {

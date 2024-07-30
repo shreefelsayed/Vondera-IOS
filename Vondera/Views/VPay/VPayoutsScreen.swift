@@ -128,6 +128,7 @@ struct PayoutCardView : View {
 }
 
 struct PayoutRequest: View {
+    @Environment(\.presentationMode) private var presentationMode
     @Binding var isPresenting:Bool
     var onRequestMade:(() -> ())
     let methods = ["Instapay", "Wallet"]
@@ -194,6 +195,7 @@ struct PayoutRequest: View {
         .task {
             await getData()
         }
+        .withAccessLevel(accessKey: .vPayPayouts, presentation: presentationMode)
     }
     
     func check() -> Bool {

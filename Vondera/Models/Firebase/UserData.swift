@@ -31,6 +31,7 @@ struct UserData: Codable, Identifiable {
     var numberVerfied: Bool? = false
     var messageCounter: Int? = 0
     var ios: Bool? = true
+    var accessLevels:AccessLevels? = AccessLevels()
     
     init() {}
     
@@ -46,14 +47,6 @@ struct UserData: Codable, Identifiable {
     
     var isStoreUser:Bool {
         return accountType == "Owner" || accountType == "Store Admin" || accountType == "Marketing" || accountType == "Worker" || accountType == "Courier"
-    }
-    
-    var canAccessAdmin:Bool {
-        return accountType == "Store Admin" || accountType == "Owner"
-    }
-    
-    var canAssignToCourier: Bool {
-        return accountType == "Store Admin" || accountType == "Owner" || accountType == "Worker" || accountType == "Courier"
     }
     
     var isShreif: Bool {
@@ -128,3 +121,48 @@ extension UserData {
     }
 }
 
+enum UserRoles: String, CaseIterable {
+    case admin = "Store Admin"
+    case modrator = "Marketing"
+    case employee = "Worker"
+    case accountant = "Accountant"
+    
+    func getDisplayName() -> LocalizedStringKey {
+        switch self {
+        case .admin:
+            "Store Admin"
+        case .modrator:
+            "Page Modrator"
+        case .employee:
+            "Employee"
+        case .accountant:
+            "Accountant"
+        }
+    }
+    
+    func getRoleDesc() -> LocalizedStringKey {
+        switch self {
+        case .admin:
+            "Store admin mostly have access to all the of the store settings"
+        case .modrator:
+            "A user that normally responds to messages in your social media"
+        case .employee:
+            "A user which is responsible on packing or operating the store"
+        case .accountant:
+            "A user the is responsible for accounting and tracking expanses and profit"
+        }
+    }
+    
+    func getDefaultAccessLevel() -> AccessLevels {
+        switch self {
+        case .admin:
+            return AccessLevels().getAdminDefault()
+        case .modrator:
+            return AccessLevels().getMarketingDefault()
+        case .employee:
+            return AccessLevels().getEmployeeDefault()
+        case .accountant:
+            return AccessLevels().getAccountantDefault()
+        }
+    }
+}

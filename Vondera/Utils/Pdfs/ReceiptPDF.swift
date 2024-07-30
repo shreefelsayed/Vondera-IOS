@@ -144,38 +144,46 @@ struct PDFReceipt: View {
                 VStack(alignment: .center) {
                     // HEADER
                     HStack (alignment: .center){
-                        // ORDER ID
-                        Text("#\(order.id)")
-                            .font(.caption)
-                            .bold()
+                        // Shipping
+                        if let serial = order.courierInfo?.receiptId, !serial.isBlank, let bar = serial.barCodeUIImage {
+                            VStack {
+                                Image(uiImage: bar)
+                                    .resizable()
+                                    .frame(width: 80, height: 30)
+                                
+                                Text("\(order.courierInfo?.handler ?? "NONE"). \(serial)")
+                                    .font(.caption)
+                            }
+                        }
                         
                         Spacer()
                         
-                        HStack(alignment: .center) {
+                        VStack(alignment: .center) {
                             ImagePlaceHolder(url: store.logo ?? "", placeHolder: UIImage(named: "app_icon"), reduis: 40, iconOverly: nil)
-                            
-                            VStack(alignment: .center) {
-                                Text(store.name)
-                                    .font(.caption)
-                                    .bold()
+                            Text(store.name)
+                                .font(.caption)
+                                .bold()
 
-                                
-                                if !(store.slogan?.isBlank ?? true) {
-                                    Text(store.slogan ?? "")
-                                        .font(.caption)
-                                }
-                                
+                            
+                            if !(store.slogan?.isBlank ?? true) {
+                                Text(store.slogan ?? "")
+                                    .font(.caption)
                             }
-                            .padding(.horizontal, 20)
+                            
                         }
-                        
                         
                         Spacer()
                         
                         // QR CODE
-                        Image(uiImage: order.id.qrCodeUIImage!)
-                            .resizable()
-                            .frame(width: 40, height: 40)
+                        VStack {
+                            Image(uiImage: order.id.qrCodeUIImage!)
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                            
+                            Text("#\(order.id)")
+                                .font(.caption)
+                                .bold()
+                        }
                     }
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -267,11 +275,11 @@ struct PDFReceipt: View {
                                
                             Spacer()
                                                     
-                            Text("\(product.quantity) x \(product.price)")
+                            Text("\(product.quantity) x \(product.price.toString())")
                                 
                             Spacer()
                             
-                            Text("\((product.quantity.double() * product.price).formatted()) EGP")
+                            Text("\((product.quantity.double() * product.price).toString()) EGP")
                             
                         }
                         .font(.caption2)

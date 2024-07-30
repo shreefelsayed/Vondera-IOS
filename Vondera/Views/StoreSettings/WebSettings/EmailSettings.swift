@@ -112,6 +112,7 @@ struct EmailSettings: View {
         
         do {
             let result = try await StoresDao().getStore(uId: storeId)
+            guard let result = result else { return }
             if let emailService = result.emailService {
                 if let service = emailList.first(where: {$0.lowercased() == emailService.email ?? "Gmail"}) {
                     self.email = service

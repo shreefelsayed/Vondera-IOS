@@ -19,6 +19,7 @@ struct CourierReports: View {
     @State var isLoading = false
     
     @State var report = false
+    @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         List() {
@@ -98,6 +99,8 @@ struct CourierReports: View {
         .onAppear {
             fetch()
         }
+        .withAccessLevel(accessKey: .statisticsRead, presentation: presentationMode)
+
     }
     
     func fetch() {

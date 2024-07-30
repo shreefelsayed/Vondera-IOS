@@ -83,16 +83,17 @@ struct SettingsFragment: View {
                             Color.accentColor
                         )
                         
-                        
-                        if myUser.accountType == "Owner", let store = myUser.store, !collapsed {
+                        if let store = UserInformation.shared.user?.store {
                             PlanCard(store: store)
                                 .padding()
                         }
+                            
+                        
                     }
                     .listRowInsets(EdgeInsets())
                     
                     // MARK : STORE SETTINGS
-                    if myUser.accountType == "Owner", let store = myUser.store {
+                    if let store = myUser.store {
                         Section("Store Settings") {
                             NavigationLink(destination: SubscribtionsView()) {
                                 Label(

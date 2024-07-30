@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CustomersScreen: View {
     @StateObject var viewModel = ClientsViewModel()
+    @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
         List {
@@ -45,10 +46,12 @@ struct CustomersScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
-                    Image(.icPrint)
-                        .onTapGesture {
-                           //TODO
-                        }
+                    if AccessFeature.customersDataExport.canAccess() {
+                        Image(.icPrint)
+                            .onTapGesture {
+                               //TODO
+                            }
+                    }
                     
                     Menu {
                         Picker("Sort Option", selection: $viewModel.sortIndex) {
@@ -71,6 +74,7 @@ struct CustomersScreen: View {
             }
         }
         .navigationTitle("Customers")
+        .withAccessLevel(accessKey: .customersDataRead, presentation: presentationMode)
     }
     
     func refreshData() async {

@@ -19,13 +19,13 @@ struct StatueButton : View {
     @State var deleteWarning = false
     @State var resetWarning = false
     
+    
     var body: some View {
         VStack {
             Picker(selection: $selecting) {
                 ForEach(OrderStatues.allCases, id: \.rawValue) { statue in
                     Text("\(statue.rawValue)")
                         .tag(statue)
-                    
                 }
             } label: {
                 Text(order.getStatueLocalized())
@@ -108,7 +108,9 @@ struct StatueButton : View {
             ready()
             break
         case .withCourier:
-            courierScreen.toggle()
+            if AccessFeature.accessCouriersAssign.canAccess() {
+                courierScreen.toggle()
+            }
             break
         case .delivered:
             deliver()
@@ -117,7 +119,9 @@ struct StatueButton : View {
             failedScreen.toggle()
             break
         case .deleted:
-            deleteWarning.toggle()
+            if AccessFeature.orderDelete.canAccess() {
+                deleteWarning.toggle()
+            }
             break
         case .none:
             break
@@ -248,10 +252,10 @@ struct OrderDetailLoading : View {
         self.isLoading = true
         do {
             let result = try await OrdersDao(storeId: storeId).getOrder(id: id)
-            if result.exists {
-                self.order = result.item
-                self.isLoading = false
-            }
+            guard result.exists, let order = result.item else { return }
+            
+            self.order = order
+            self.isLoading = false
         } catch {
             CrashsManager().addLogs(error.localizedDescription, "Order Details")
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
@@ -310,9 +314,9 @@ struct OrderDetails: View {
                     }
                     
                     // Stepper
-                    if order.statue != "Deleted" {
+                    /*if order.statue != "Deleted" {
                         StatueSteps(currentStep: order.getCurrentStep(), steps: order.getOrderSteps())
-                    }
+                    }*/
                 }
                 
                 //MARK : ORDER PRODUCTS
@@ -325,8 +329,6 @@ struct OrderDetails: View {
 
                         }
                         .buttonStyle(.plain)
-
-                
                     }
                 }
                 
@@ -690,8 +692,8 @@ struct OrderDetails: View {
         
         do {
             let orderData = try await OrdersDao(storeId: storeId).getOrder(id: order.id)
-            guard orderData.exists else { return }
-            DispatchQueue.main.async { self.order = orderData.item }
+            guard orderData.exists, let order = orderData.item else { return }
+            DispatchQueue.main.async { self.order = order }
         } catch {
             CrashsManager().addLogs(error.localizedDescription, "Order Details")
             showTosat(error.localizedDescription.localize())

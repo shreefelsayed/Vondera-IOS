@@ -53,9 +53,12 @@ struct ProductSettings: View {
                 ProductFeatured(product:product)
             }
             
-            Button("Delete Product", role:.destructive) {
-                delete.toggle()
+            if AccessFeature.productsDelete.canAccess() {
+                Button("Delete Product", role:.destructive) {
+                    delete.toggle()
+                }
             }
+            
         }
         .confirmationDialog("Are you sure you want to delete this product ?", isPresented: $delete, titleVisibility: .visible, actions: {
             Button("Delete", role: .destructive) {
@@ -67,6 +70,8 @@ struct ProductSettings: View {
         })
         
         .navigationTitle(product.name)
+        .withAccessLevel(accessKey: .productsUpdate, presentation: presentationMode)
+
     }
     
     

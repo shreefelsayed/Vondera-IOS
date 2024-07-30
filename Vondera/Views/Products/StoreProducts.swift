@@ -162,14 +162,12 @@ struct StoreProducts: View {
             if viewModel.products.isEmpty {
                 EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "You haven't added any products to your store yet !") {
                     VStack {
-                        if UserInformation.shared.user?.canAccessAdmin ?? false {
-                            NavigationLink {
-                                AddProductView()
-                            } label: {
-                                Text("Add Product")
-                            }
-                            .buttonStyle(.bordered)
+                        NavigationLink {
+                            AddProductView()
+                        } label: {
+                            Text("Add Product")
                         }
+                        .buttonStyle(.bordered)
                     }
                 }
             }
@@ -199,11 +197,9 @@ struct StoreProducts: View {
                 }
             }
             
-            if let myUser = myUser, myUser.canAccessAdmin {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink("Add") {
-                        AddProductView(storeId: storeId)
-                    }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink("Add") {
+                    AddProductView(storeId: storeId)
                 }
             }
         }

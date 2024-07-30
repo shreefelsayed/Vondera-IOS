@@ -29,32 +29,29 @@ struct StoreCouriers: View {
         })
         .withEmptySearchView(searchText: viewModel.searchText, resultCount: viewModel.filteredItems.count)
         .toolbar {
-            if let user = UserInformation.shared.user, user.canAccessAdmin {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack {
-                        NavigationLink {
-                           BannedEmployees()
-                        } label: {
-                            Image(.btnBan)
-                        }
-                        
-                        Button {
-                            showAdd.toggle()
-                        } label: {
-                            Image(systemName: "plus.app")
-                        }
-                        
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack {
+                    NavigationLink {
+                       BannedEmployees()
+                    } label: {
+                        Image(.btnBan)
                     }
-                    .buttonStyle(.plain)
-                    .font(.title2)
-                    .bold()
+                    
+                    Button {
+                        showAdd.toggle()
+                    } label: {
+                        Image(systemName: "plus.app")
+                    }
+                    
                 }
+                .buttonStyle(.plain)
+                .font(.title2)
+                .bold()
             }
         }
         .navigationDestination(isPresented: $showAdd, destination: {
             NewCourier(currentList: $viewModel.couriers)
         })
         .navigationTitle("Couriers")
-        
     }
 }

@@ -118,7 +118,8 @@ class AddToCartViewModel : ObservableObject {
 struct AddToCart: View {
     @StateObject var viewModel = AddToCartViewModel()
     @State private var selectedProduct:StoreProduct?
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         VStack(alignment: .leading) {
             ScrollView(.horizontal) {
@@ -167,14 +168,12 @@ struct AddToCart: View {
             if !viewModel.isLoading, viewModel.products.isEmpty {
                 EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No Products in this category, add a new product") {
                     VStack {
-                        if UserInformation.shared.user?.canAccessAdmin ?? false {
-                            NavigationLink {
-                                AddProductView()
-                            } label: {
-                                Text("Add Product")
-                            }
-                            .buttonStyle(.bordered)
+                        NavigationLink {
+                            AddProductView()
+                        } label: {
+                            Text("Add Product")
                         }
+                        .buttonStyle(.bordered)
                     }
                 }
             }
@@ -216,6 +215,7 @@ struct AddToCart: View {
                 viewModel.getCart()
             })
         })
+        .withAccessLevel(accessKey: .orderAdd, presentation: presentationMode)
     }
     
     

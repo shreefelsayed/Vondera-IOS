@@ -14,7 +14,8 @@ struct StoreCategories: View {
     @State private var draggingIndex: Int?
     @State var draggedItem : Category?
     @State var editCategory: Category?
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     init(store: Store) {
         self.store = store
         self.viewModel = StoreCategoriesViewModel(store: store)
@@ -75,18 +76,17 @@ struct StoreCategories: View {
             if !viewModel.loading && viewModel.items.count == 0 {
                 EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No categories were added to your store yet !") {
                     VStack {
-                        if UserInformation.shared.user?.canAccessAdmin ?? false {
-                            NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
-                                onItemAdded(newValue)
-                            })) {
-                                Text("Create new Category")
-                            }
-                            .buttonStyle(.bordered)
+                        NavigationLink(destination: CreateCategory(storeId: store.ownerId, onAdded: { newValue in
+                            onItemAdded(newValue)
+                        })) {
+                            Text("Create new Category")
                         }
+                        .buttonStyle(.bordered)
                     }
                 }
             }
         }
+        .withAccessLevel(accessKey: .categoriesRead, presentation: presentationMode)
     }
     
     func onItemAdded(_ item:Category) {

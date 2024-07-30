@@ -30,8 +30,9 @@ class StoresDao {
         return try await collection.document(id).delete()
     }
     
-    func getStore(uId:String) async throws -> Store {
+    func getStore(uId:String) async throws -> Store? {
         let store = try await collection.document(uId).getDocument(as: Store.self).item
+        guard var store = store else { return nil }
         
         if store.siteData == nil {
             store.siteData = SiteData()
@@ -43,6 +44,33 @@ class StoresDao {
     func getStores(lastSnapshot:DocumentSnapshot?, sorting:String = "date") async throws -> ([Store], DocumentSnapshot?) {
         return try await collection
             .order(by: sorting, descending: true)
+            .startAfter(lastDocument: lastSnapshot)
+            .limit(to: 25)
+            .getDocumentWithLastSnapshot(as: Store.self)
+    }
+    
+    func getWithHiddenOrders(lastSnapshot:DocumentSnapshot?) async throws -> ([Store], DocumentSnapshot?) {
+        return try await collection
+            .order(by: "hiddenOrders", descending: true)
+            .whereField("hiddenOrders", isGreaterThan: 0)
+            .startAfter(lastDocument: lastSnapshot)
+            .limit(to: 25)
+            .getDocumentWithLastSnapshot(as: Store.self)
+    }
+    
+    func getCurrentlySubscribed(lastSnapshot:DocumentSnapshot?) async throws -> ([Store], DocumentSnapshot?) {
+        return try await collection
+            .whereField("renewCount", isGreaterThan: 0)
+            .whereField("storePlanInfo.planId", isNotEqualTo: "free")
+            .startAfter(lastDocument: lastSnapshot)
+            .limit(to: 25)
+            .getDocumentWithLastSnapshot(as: Store.self)
+    }
+    
+    func getStopedSubscribing(lastSnapshot:DocumentSnapshot?) async throws -> ([Store], DocumentSnapshot?) {
+        return try await collection
+            .whereField("renewCount", isGreaterThan: 0)
+            .whereField("storePlanInfo.planId", isEqualTo: "free")
             .startAfter(lastDocument: lastSnapshot)
             .limit(to: 25)
             .getDocumentWithLastSnapshot(as: Store.self)

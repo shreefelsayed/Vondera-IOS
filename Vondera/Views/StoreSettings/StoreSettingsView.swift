@@ -4,7 +4,8 @@ struct StoreSettingsView: View {
     @State var store:Store
     @State private var deleteStoreAlert = false
     @State private var deleting = false
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         List {
             Section() {
@@ -33,6 +34,15 @@ struct StoreSettingsView: View {
             }
             
             Section() {
+                NavigationLink(destination: WhatsappSettings()) {
+                    Label(
+                        title: { Text("Whatsapp Settings") },
+                        icon: { Image(.whatsapp).resizable().frame(width: 24, height: 24).scaledToFit() }
+                    )
+                }
+            }
+            
+            Section() {
                 NavigationLink(destination: StoreOrderSettings()) {
                     Label(
                         title: { Text("Order Settings") },
@@ -53,7 +63,6 @@ struct StoreSettingsView: View {
                         icon: { Image(.btnSettings) }
                     )
                 }
-                
             }
             
             Section() {
@@ -89,6 +98,7 @@ struct StoreSettingsView: View {
             )
         }
         .navigationTitle("Store Settings")
+        .withAccessLevel(accessKey: .storeSettings, presentation: presentationMode)
     }
     
     func deleteStore() {

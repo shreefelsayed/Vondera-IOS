@@ -10,6 +10,12 @@ import FirebaseFirestore
 import SwiftUI
 
 extension Date {
+    func asFormatedString(_ format:String = "YYYY-MM-dd") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: self)
+    }
+    
     func toFirestoreTimestamp() -> Timestamp {
         return Timestamp(date: self)
     }

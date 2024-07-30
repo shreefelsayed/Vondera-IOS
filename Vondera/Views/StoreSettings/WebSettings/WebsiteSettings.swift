@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct WebsiteSettings: View {
+    @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var user = UserInformation.shared
     @State var active = true
+    
     var body: some View {
         List {
             if let myUser = user.getUser(), let store = myUser.store {
@@ -137,12 +139,12 @@ struct WebsiteSettings: View {
                     try? await StoresDao().update(id:id, hashMap: ["websiteEnabled" : newValue])
                 }
             }
-            
         })
         .navigationTitle("Website settings")
         .task {
             active = user.getUser()?.store?.websiteEnabled ?? true
         }
+        .withAccessLevel(accessKey: .websiteCustomization, presentation: presentationMode)
     }
 }
 

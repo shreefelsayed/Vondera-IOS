@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct VPayScreen: View {
+    @Environment(\.presentationMode) private var presentationMode
+
     @State var selectedTab = 0
     
     @State private var store:Store?
@@ -59,6 +61,7 @@ struct VPayScreen: View {
             .presentationDetents([.fraction(0.8)])
         }
         .navigationTitle("VPay Wallet")
+        .withAccessLevel(accessKey: .vPayRead, presentation: presentationMode)
     }
     
     func getData() async {

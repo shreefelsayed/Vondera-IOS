@@ -73,7 +73,7 @@ struct UserHomeHeader: View {
                             .fill(Color.white)
                     )
                     
-                    if let store = myUser.store, myUser.canAccessAdmin {
+                    if let store = UserInformation.shared.user?.store {
                         NavigationLink(destination: Dashboard(store: store)) {
                             Image(.icDashboard)
                                 .resizable()
@@ -85,6 +85,7 @@ struct UserHomeHeader: View {
                         }
                         .buttonStyle(.plain)
                     }
+                   
                 }
             }
         }

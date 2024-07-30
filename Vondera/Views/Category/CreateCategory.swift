@@ -82,6 +82,8 @@ struct CreateCategory: View {
                        title: viewModel.msg?.toString())
         }
         .willProgress(saving: viewModel.isSaving)
+        .withAccessLevel(accessKey: .categoriesWrite, presentation: presentationMode)
+
     }
     
     func save() {

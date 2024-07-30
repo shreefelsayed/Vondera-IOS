@@ -126,6 +126,7 @@ struct StoreInformation: View {
             }
         }
         .navigationTitle("Store information")
+        .withAccessLevel(accessKey: .storeSettings, presentation: presentationMode)
     }
     
     
@@ -137,6 +138,7 @@ struct StoreInformation: View {
         self.isLoading = true
         do {
             let result = try await StoresDao().getStore(uId: storeId)
+            guard let result = result else { return }
             DispatchQueue.main.async {
                 self.name = result.name
                 self.slogan = result.slogan ?? ""

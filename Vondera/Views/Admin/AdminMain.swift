@@ -15,20 +15,40 @@ class AdminMainViewModel : ObservableObject {
     @Published var payoutRequestCount = 0
     @Published var storesCount = 0
     @Published var activeCount = 0
+    @Published var withHiddenOrders = 0
+    
+    @Published var currentlySub = 0
+    @Published var stopedSub = 0
     
     init() {
         Task { await getCounters() }
     }
     
-    private func getCounters() async {
+    func getCounters() async {
         isLoading = true
         do {
             let pCount = try await Firestore.firestore().collectionGroup("vPayouts").whereField("statue", isEqualTo: "Pending").getCount()
             
             let sCount = try await Firestore.firestore().collection("stores").getCount()
             
+            let hCount = try await Firestore.firestore().collection("stores")
+                .whereField("hiddenOrders", isGreaterThan: 0)
+                .getCount()
+            
+            let stopped = try await Firestore.firestore().collection("stores")
+                .whereField("renewCount", isGreaterThan: 0)
+                .whereField("storePlanInfo.planId", isEqualTo: "free")
+                .getCount()
+            
+            let still = try await Firestore.firestore().collection("stores")
+                .whereField("renewCount", isGreaterThan: 0)
+                .whereField("storePlanInfo.planId", isNotEqualTo: "free")
+                .getCount()
+            
             let aCount =  try await Firestore.firestore().collection("stores")
-                .order(by: "vPayWallet", descending: true).whereField("vPayWallet", isGreaterThan: 5).getCount()
+                .order(by: "vPayWallet", descending: true)
+                .whereField("vPayWallet", isGreaterThan: 5)
+                .getCount()
             
             let tCount = try await AdminTransDao().getTodayTrans().getCount()
             
@@ -37,7 +57,10 @@ class AdminMainViewModel : ObservableObject {
                 self.payoutRequestCount = pCount
                 self.storesCount = sCount
                 self.activeCount = aCount
+                self.withHiddenOrders = hCount
                 
+                self.currentlySub = still
+                self.stopedSub = stopped
                 self.isLoading = false
             }
         } catch {
@@ -54,6 +77,9 @@ struct AdminMain: View {
 
     var body: some View {
         List {
+            Text("Welcome Back \(UserInformation.shared.user?.name ?? "User") !")
+                .bold()
+            
             Section("Stores") {
                 NavigationLink {
                     StoresScreen()
@@ -65,6 +91,45 @@ struct AdminMain: View {
                         if viewModel.storesCount > 0 {
                             Text("\(viewModel.storesCount)")
                                 
+                        }
+                    }
+                }
+                
+                NavigationLink {
+                    SubscribedStoresScreen()
+                } label: {
+                    HStack {
+                        Text("Currently Subscribed")
+                        Spacer()
+                        
+                        if viewModel.currentlySub > 0 {
+                            Text("\(viewModel.currentlySub)")
+                        }
+                    }
+                }
+                
+                NavigationLink {
+                    HiddenOrdersStoreScreen()
+                } label: {
+                    HStack {
+                        Text("With Hidden Orders")
+                        Spacer()
+                        
+                        if viewModel.withHiddenOrders > 0 {
+                            Text("\(viewModel.withHiddenOrders)")
+                        }
+                    }
+                }
+                
+                NavigationLink {
+                    StopedSubscribeStores()
+                } label: {
+                    HStack {
+                        Text("Stoped Subscribing")
+                        Spacer()
+                        
+                        if viewModel.stopedSub > 0 {
+                            Text("\(viewModel.stopedSub)")
                         }
                     }
                 }
@@ -186,6 +251,9 @@ struct AdminMain: View {
             SwitchAccountView(show: $showSavedItems)
         })
         .willLoad(loading: viewModel.isLoading)
+        .refreshable {
+            await viewModel.getCounters()
+        }
     }
 }
 

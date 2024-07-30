@@ -14,7 +14,8 @@ struct WarehouseView: View {
     @State private var inStockView: InStock?
     @State private var almostOutView: AlmostOut?
     @State private var outOfStockView: OutOfStock?
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         VStack(alignment: .leading) {
             CustomTopTabBar(tabIndex: $selectedTab, titles: ["Always Stocked", "In Stock", "Almost Out", "Out of Stock"])
@@ -43,6 +44,7 @@ struct WarehouseView: View {
         .task {
             initPages()
         }
+        .withAccessLevel(accessKey: .warehouseRead, presentation: presentationMode)
     }
     
     func initPages() {

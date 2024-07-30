@@ -186,6 +186,25 @@ extension String {
         return uiimage.pngData()!
     }
     
+    var barcodeData: Data? {
+        let filter = CIFilter(name: "CICode128BarcodeGenerator")!
+        
+        // Convert the string to data
+        guard let data = self.data(using: .ascii, allowLossyConversion: false) else { return nil }
+        
+        // Set the input message
+        filter.setValue(data, forKey: "inputMessage")
+        
+        // Set the output image size
+        let outputImage = filter.outputImage!
+        let transform = CGAffineTransform(scaleX: 3.0, y: 3.0) // Adjust scale as needed
+        let scaledImage = outputImage.transformed(by: transform)
+        
+        // Convert to UIImage and then to PNG data
+        let uiImage = UIImage(ciImage: scaledImage)
+        return uiImage.pngData()
+    }
+    
     func qrCodeDataWithLogo(assetName:String = "app_icon") -> Data? {
         guard let logoImage = UIImage(named: assetName) else {
             return nil
@@ -234,6 +253,14 @@ extension String {
     
     var qrCodeUIImage : UIImage? {
         if let data = qrCodeData {
+            return UIImage(data: data)
+        }
+        
+        return nil
+    }
+    
+    var barCodeUIImage : UIImage? {
+        if let data = barcodeData {
             return UIImage(data: data)
         }
         

@@ -158,7 +158,14 @@
       }
     },
     "%@ " : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "%@ - %@" : {
       "localizations" : {
@@ -244,6 +251,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@. %2$@"
           }
         }
       }
@@ -530,7 +547,18 @@
         }
       }
     },
+    "%lld x %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld x %2$@"
+          }
+        }
+      }
+    },
     "%lld x %lf" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -601,6 +629,9 @@
           }
         }
       }
+    },
+    "∞" : {
+
     },
     "0 Pieces" : {
       "localizations" : {
@@ -722,6 +753,36 @@
         }
       }
     },
+    "A user that normally responds to messages in your social media" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المستخدم الذي عاده يقوم بالرد علي رسائل مواقع التواصل الاجتماعي"
+          }
+        }
+      }
+    },
+    "A user the is responsible for accounting and tracking expanses and profit" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الموظف المتخصص في الحسابات"
+          }
+        }
+      }
+    },
+    "A user which is responsible on packing or operating the store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الموظف المتخصص في التغليف و متابعه الطلبات"
+          }
+        }
+      }
+    },
     "Abandon Carts" : {
       "localizations" : {
         "ar" : {
@@ -743,7 +804,14 @@
       }
     },
     "About App" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عن التطبيق"
+          }
+        }
+      }
     },
     "Access" : {
       "localizations" : {
@@ -751,6 +819,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الصلاحيات"
+          }
+        }
+      }
+    },
+    "Access Couriers" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوصول الي شركات الشحن"
+          }
+        }
+      }
+    },
+    "Access Levels" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستويات الوصول"
           }
         }
       }
@@ -765,8 +853,25 @@
         }
       }
     },
+    "Account Created !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تسجيل الحساب"
+          }
+        }
+      }
+    },
     "Account Settings" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الحساب"
+          }
+        }
+      }
     },
     "Account Type" : {
       "localizations" : {
@@ -778,8 +883,35 @@
         }
       }
     },
+    "Accountant" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محاسب"
+          }
+        }
+      }
+    },
     "Action" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاكشن"
+          }
+        }
+      }
+    },
+    "Action Date" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ الرساله"
+          }
+        }
+      }
     },
     "Actions" : {
       "localizations" : {
@@ -802,10 +934,34 @@
       }
     },
     "Active Stores" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتاجر النشطة"
+          }
+        }
+      }
+    },
+    "Active this message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل هذه الرساله"
+          }
+        }
+      }
     },
     "Active Wallets" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المحافظ"
+          }
+        }
+      }
     },
     "Add" : {
       "localizations" : {
@@ -1183,8 +1339,25 @@
         }
       }
     },
+    "Admin at Vondera" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب اداره في فونديرا"
+          }
+        }
+      }
+    },
     "Admin Dashboard" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لوحه التحكم"
+          }
+        }
+      }
     },
     "After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." : {
       "localizations" : {
@@ -1247,7 +1420,14 @@
       }
     },
     "Almost Expired" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قارب علي الانتهاء"
+          }
+        }
+      }
     },
     "Almost Out" : {
       "localizations" : {
@@ -1300,10 +1480,24 @@
       }
     },
     "Amount of subscribtion fees we received" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مبلغ الاشتراكات المدفوع"
+          }
+        }
+      }
     },
     "Amount Paid By User" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه المبلغ من المستخدم"
+          }
+        }
+      }
     },
     "Amount to add" : {
       "localizations" : {
@@ -1535,6 +1729,16 @@
         }
       }
     },
+    "Assign" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعيين"
+          }
+        }
+      }
+    },
     "Assign Orders" : {
       "localizations" : {
         "ar" : {
@@ -1605,29 +1809,25 @@
         }
       }
     },
-    "Auth Credntials" : {
+    "Authntication" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "بيانات تسجيل الدخول"
-          }
-        }
-      }
-    },
-    "Auto send whatsapp messages" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ارسال رسائل واتس اب"
+            "value" : "المصادقه"
           }
         }
       }
     },
     "Auto send whatsapp messages (Soon)" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال رسائل واتس اب تلقائيه"
+          }
+        }
+      }
     },
     "Auto Update my order statue" : {
       "localizations" : {
@@ -1789,6 +1989,16 @@
         }
       }
     },
+    "By Admin" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عن طريق الاداره"
+          }
+        }
+      }
+    },
     "By importing your shopify data, we will import all of your orders, products, collections, if you already imported the data before, you don't need to import it again" : {
       "localizations" : {
         "ar" : {
@@ -1819,6 +2029,36 @@
         }
       }
     },
+    "Can customize the website" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنه التحكم في الموقع الالكتروني"
+          }
+        }
+      }
+    },
+    "Can subscribe to the store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنه تجديد اشتراك المتجر"
+          }
+        }
+      }
+    },
+    "Can update store settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنه تحديث إعدادات المتجر."
+          }
+        }
+      }
+    },
     "Can worker account reset orders to it's original state ?" : {
       "localizations" : {
         "ar" : {
@@ -1840,7 +2080,14 @@
       }
     },
     "Cancelled" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الغيت"
+          }
+        }
+      }
     },
     "Cannot open Label" : {
       "localizations" : {
@@ -1942,6 +2189,16 @@
         }
       }
     },
+    "Category Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اداره التصنيفات"
+          }
+        }
+      }
+    },
     "Category Name" : {
       "localizations" : {
         "ar" : {
@@ -2013,7 +2270,14 @@
       }
     },
     "Change photos" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغيير الصور"
+          }
+        }
+      }
     },
     "Change Plan" : {
       "localizations" : {
@@ -2044,6 +2308,9 @@
           }
         }
       }
+    },
+    "Check Courier Sheet" : {
+
     },
     "Check out" : {
       "localizations" : {
@@ -2185,6 +2452,16 @@
         }
       }
     },
+    "Close" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غلق"
+          }
+        }
+      }
+    },
     "Close Complaint" : {
       "localizations" : {
         "ar" : {
@@ -2196,7 +2473,14 @@
       }
     },
     "Closed" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مغلقه"
+          }
+        }
+      }
     },
     "Closed by : %@" : {
       "localizations" : {
@@ -2248,7 +2532,11 @@
         }
       }
     },
+    "Collect %@ EGP" : {
+
+    },
     "Collect %lf EGP" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2309,7 +2597,14 @@
       }
     },
     "Complaint Added" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه الشكول"
+          }
+        }
+      }
     },
     "Complaint by : %@" : {
       "localizations" : {
@@ -2342,7 +2637,14 @@
       }
     },
     "Complaint Reopened" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اعاده فتح الشكوي"
+          }
+        }
+      }
     },
     "Complaints" : {
       "localizations" : {
@@ -2350,6 +2652,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الشكاوي"
+          }
+        }
+      }
+    },
+    "Complaints Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اداره الشكاوي"
           }
         }
       }
@@ -2515,7 +2827,14 @@
       }
     },
     "Cost" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التكلفه"
+          }
+        }
+      }
     },
     "Courier" : {
       "localizations" : {
@@ -2587,6 +2906,16 @@
         }
       }
     },
+    "Courier Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اداره الشحن"
+          }
+        }
+      }
+    },
     "Courier Name" : {
       "localizations" : {
         "ar" : {
@@ -2638,7 +2967,14 @@
       }
     },
     "Covers Updated" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث صور الغلاف"
+          }
+        }
+      }
     },
     "Create" : {
       "localizations" : {
@@ -2670,19 +3006,15 @@
         }
       }
     },
-    "Create mail campaigns" : {
-      "extractionState" : "stale",
+    "Create mail campaigns (Soon)" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "حملات بريديه"
+            "value" : "حملات دعايه بالبريد"
           }
         }
       }
-    },
-    "Create mail campaigns (Soon)" : {
-
     },
     "Create new Category" : {
       "localizations" : {
@@ -2735,7 +3067,14 @@
       }
     },
     "Create Tips" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف نصيحة"
+          }
+        }
+      }
     },
     "Create your first order" : {
       "localizations" : {
@@ -2838,7 +3177,34 @@
       }
     },
     "Current Plan : %@" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الباقه الحاليه : %@"
+          }
+        }
+      }
+    },
+    "Currently Online users" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اونلاين حاليا"
+          }
+        }
+      }
+    },
+    "Currently Subscribed" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشترك حاليا"
+          }
+        }
+      }
     },
     "Custom app admin api token ex (shpat_XXXX)" : {
       "localizations" : {
@@ -2910,6 +3276,16 @@
         }
       }
     },
+    "Customer Data Access" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصول بيانات العملاء."
+          }
+        }
+      }
+    },
     "Customer Details" : {
       "localizations" : {
         "ar" : {
@@ -2940,19 +3316,15 @@
         }
       }
     },
-    "Customers can create accounts" : {
-      "extractionState" : "stale",
+    "Customers can create accounts (Soon)" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يمكن للعملاء انشاء حسابات علي موقعك"
+            "value" : "يمكن للعملاء إنشاء حساب علي الموقع (قريبا)"
           }
         }
       }
-    },
-    "Customers can create accounts (Soon)" : {
-
     },
     "Customers can prepaid out of stock products" : {
       "localizations" : {
@@ -2960,6 +3332,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "يمكن طلب المنتجات المنتهيه من الموقع"
+          }
+        }
+      }
+    },
+    "Customers Data" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات العملاء"
+          }
+        }
+      }
+    },
+    "Customize & Enable" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تشخيص و تفعيل"
           }
         }
       }
@@ -3005,7 +3397,14 @@
       }
     },
     "Date" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التاريخ"
+          }
+        }
+      }
     },
     "Date Range" : {
       "localizations" : {
@@ -3016,6 +3415,20 @@
           }
         }
       }
+    },
+    "Default access levels for %@ updated !" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث مستويات الوصول الافتراضية لـ %@!"
+          }
+        }
+      }
+    },
+    "Default access levels updated !" : {
+
     },
     "Default Payment Gateway" : {
       "localizations" : {
@@ -3183,6 +3596,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تم التسليم"
+          }
+        }
+      }
+    },
+    "Delivered Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رساله الاستلام"
           }
         }
       }
@@ -3478,7 +3901,14 @@
       }
     },
     "Duration" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المده"
+          }
+        }
+      }
     },
     "Edit Category" : {
       "localizations" : {
@@ -3723,6 +4153,7 @@
       }
     },
     "Employee Added" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4078,12 +4509,52 @@
         }
       }
     },
+    "Expenses" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مصروفات"
+          }
+        }
+      }
+    },
+    "Expenses Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إدارة النفقات."
+          }
+        }
+      }
+    },
     "Expire Date" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "تاريخ الانتهاء"
+          }
+        }
+      }
+    },
+    "Expired" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتهي"
+          }
+        }
+      }
+    },
+    "Export" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاركه"
           }
         }
       }
@@ -4179,10 +4650,24 @@
       }
     },
     "Featured" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المميزة"
+          }
+        }
+      }
     },
     "Featured Product" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات المميزة"
+          }
+        }
+      }
     },
     "Featured Products" : {
       "localizations" : {
@@ -4285,7 +4770,14 @@
       }
     },
     "Fill the current varient first" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "املئ المتغير الحالي اولا"
+          }
+        }
+      }
     },
     "Fill the Employee name" : {
       "localizations" : {
@@ -4517,19 +5009,15 @@
         }
       }
     },
-    "Global website / Multi languages" : {
-      "extractionState" : "stale",
+    "Global website / Multi languages (Soon)" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "موقع دولي / متعدد اللغات"
+            "value" : "موقع دولي / تعدد لغات"
           }
         }
       }
-    },
-    "Global website / Multi languages (Soon)" : {
-
     },
     "Go to your dashboard/Integration Settings/Webhook \nAdd this link and disable Secret Key, and Check Transaction Status Changed" : {
       "localizations" : {
@@ -4705,7 +5193,14 @@
       }
     },
     "Identifer" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المعرف"
+          }
+        }
+      }
     },
     "Identifier" : {
       "localizations" : {
@@ -4736,6 +5231,9 @@
           }
         }
       }
+    },
+    "Import Excel File" : {
+
     },
     "Import from shopify" : {
       "localizations" : {
@@ -4807,6 +5305,16 @@
         }
       }
     },
+    "Insert variables : " : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف المتغيرات  :"
+          }
+        }
+      }
+    },
     "Instagram Link" : {
       "localizations" : {
         "ar" : {
@@ -4856,6 +5364,12 @@
           }
         }
       }
+    },
+    "Invalid Courier" : {
+
+    },
+    "Invalid Prices" : {
+
     },
     "Items" : {
       "localizations" : {
@@ -5058,7 +5572,14 @@
       }
     },
     "Log out" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الخروج"
+          }
+        }
+      }
     },
     "Log Out" : {
       "localizations" : {
@@ -5201,10 +5722,24 @@
       }
     },
     "Method" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الطريقة"
+          }
+        }
+      }
     },
     "Min Amount" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اقل سعر"
+          }
+        }
+      }
     },
     "Min Quantity" : {
       "localizations" : {
@@ -5217,13 +5752,34 @@
       }
     },
     "Minmum order price" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اقل سعر للطلب"
+          }
+        }
+      }
     },
     "Monthly" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شهري"
+          }
+        }
+      }
     },
     "Monthly Active" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نشط شهريا"
+          }
+        }
+      }
     },
     "Monthly Limit" : {
       "localizations" : {
@@ -5342,7 +5898,14 @@
       }
     },
     "Name and Collection" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاسم و التصنيف"
+          }
+        }
+      }
     },
     "Navigate" : {
       "localizations" : {
@@ -5380,6 +5943,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "جديد"
+          }
+        }
+      }
+    },
+    "New %lld - %@ EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جديد %1$lld - %2$@ جنيه مصري."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "New %1$lld - %2$@ EGP"
           }
         }
       }
@@ -5444,12 +6023,32 @@
         }
       }
     },
+    "New Order" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلب جديد"
+          }
+        }
+      }
+    },
     "New Order Complaint Notificaton" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "اشعار شكاوي الطلبات"
+          }
+        }
+      }
+    },
+    "New Order Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رساله الطلبات الجديده"
           }
         }
       }
@@ -5515,16 +6114,54 @@
       }
     },
     "New Products" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنتجات الجديده"
+          }
+        }
+      }
     },
     "New Products added to vondera in this period" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المنتجات الجيدده في الفتره المحدده"
+          }
+        }
+      }
     },
     "New Stores" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتاجر الجديده"
+          }
+        }
+      }
     },
     "New Stores created in this period" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المتاجر الجيدده في الفتره المحدده"
+          }
+        }
+      }
+    },
+    "New TRX" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عمليه جديده"
+          }
+        }
+      }
     },
     "Next" : {
       "localizations" : {
@@ -5597,7 +6234,14 @@
       }
     },
     "No New payout requests" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد طلبات سحب جديده"
+          }
+        }
+      }
     },
     "No notifications" : {
       "localizations" : {
@@ -5800,7 +6444,14 @@
       }
     },
     "No users have money in their wallets" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد مستخدمين برصيد في محفظتهم"
+          }
+        }
+      }
     },
     "Not Paid" : {
       "localizations" : {
@@ -5843,10 +6494,24 @@
       }
     },
     "Notification Body" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محتوي الاشعار"
+          }
+        }
+      }
     },
     "Notification sent !" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم ارسال الاشعار"
+          }
+        }
+      }
     },
     "Notification Settings" : {
       "localizations" : {
@@ -5859,7 +6524,14 @@
       }
     },
     "Notification Title" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عنوان الاشعار"
+          }
+        }
+      }
     },
     "Notifications" : {
       "localizations" : {
@@ -5871,8 +6543,25 @@
         }
       }
     },
+    "Number of online users right now" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المستخدمين المتصلين الآن."
+          }
+        }
+      }
+    },
     "Number of orders added." : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد الطلبات المضافه"
+          }
+        }
+      }
     },
     "Number of orders assigned to courier in the time range" : {
       "localizations" : {
@@ -5905,10 +6594,24 @@
       }
     },
     "Number of stores that were active in the last 3 days" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المتاجر النشطه خلال اخر ٣ ايام"
+          }
+        }
+      }
     },
     "Number of stores that will expire in the next 3 days" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المتاجر التي قاربت باقتها علي الانتهاء ف ال٣ ايام القادمين"
+          }
+        }
+      }
     },
     "On Going Orders" : {
       "localizations" : {
@@ -6086,6 +6789,16 @@
         }
       }
     },
+    "Order Delivered" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند تسليم الطلب"
+          }
+        }
+      }
+    },
     "Order doesn't need delivery" : {
       "localizations" : {
         "ar" : {
@@ -6206,6 +6919,29 @@
         }
       }
     },
+    "Order Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إدارة الطلبات."
+          }
+        }
+      }
+    },
+    "Order No" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم الطلب"
+          }
+        }
+      }
+    },
+    "Order Not Found" : {
+
+    },
     "Order prepaid" : {
       "localizations" : {
         "ar" : {
@@ -6264,6 +7000,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "اعدادات الطلبات"
+          }
+        }
+      }
+    },
+    "Order Shipped" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شحن الطلب"
+          }
+        }
+      }
+    },
+    "Order Shipped Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رساله شحن الطلب"
           }
         }
       }
@@ -6358,6 +7114,16 @@
         }
       }
     },
+    "Orders Commission" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عموله الطلبات"
+          }
+        }
+      }
+    },
     "Orders Count" : {
       "localizations" : {
         "ar" : {
@@ -6408,6 +7174,16 @@
         }
       }
     },
+    "Other" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اخري"
+          }
+        }
+      }
+    },
     "Other Phone Number" : {
       "localizations" : {
         "ar" : {
@@ -6419,7 +7195,14 @@
       }
     },
     "Other Reports" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقارير اخري"
+          }
+        }
+      }
     },
     "Other Settings" : {
       "localizations" : {
@@ -6442,7 +7225,14 @@
       }
     },
     "Our retention Perecentage caculated by currently subscrbied stores / every subscribed store" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسبه التجديد تحسب بعدد المتاجر المشتركة \\ عدد المتاجر الي اشتركت مره علي الاقل"
+          }
+        }
+      }
     },
     "Out For Delivery" : {
       "localizations" : {
@@ -6480,6 +7270,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ملخص"
+          }
+        }
+      }
+    },
+    "Page Modrator" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشرف الصفحة."
           }
         }
       }
@@ -6615,7 +7415,14 @@
       }
     },
     "Payment Success" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الدفع بنجاي"
+          }
+        }
+      }
     },
     "Payment Transaction" : {
       "localizations" : {
@@ -6678,13 +7485,34 @@
       }
     },
     "Payout request" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات السحب"
+          }
+        }
+      }
     },
     "Payout Requests" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلبات الدفع"
+          }
+        }
+      }
     },
     "Payout Updated" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث طلب الدفع"
+          }
+        }
+      }
     },
     "Payouts" : {
       "localizations" : {
@@ -6786,6 +7614,9 @@
         }
       }
     },
+    "Pick an excel file to start checking the orders, first column is for order numbers, second is for prices" : {
+
+    },
     "Pick Email Service" : {
       "localizations" : {
         "ar" : {
@@ -6847,7 +7678,14 @@
       }
     },
     "Plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخطة"
+          }
+        }
+      }
     },
     "Plans" : {
       "localizations" : {
@@ -7000,7 +7838,14 @@
       }
     },
     "Please select a cateogry" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء اختيار التصنيف"
+          }
+        }
+      }
     },
     "Please select the new logo" : {
       "localizations" : {
@@ -7153,7 +7998,14 @@
       }
     },
     "Product cost and price changed" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تكلفه المنتج و سعره"
+          }
+        }
+      }
     },
     "Product Description" : {
       "localizations" : {
@@ -7211,6 +8063,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تم تحديث بيانات المنتج"
+          }
+        }
+      }
+    },
+    "Product Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Product Management"
           }
         }
       }
@@ -7276,7 +8138,14 @@
       }
     },
     "Product Stock Updated" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث اعداد المنتجات"
+          }
+        }
+      }
     },
     "Product Stocks" : {
       "localizations" : {
@@ -7349,7 +8218,14 @@
       }
     },
     "Products Count" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المنتجات"
+          }
+        }
+      }
     },
     "Products price" : {
       "localizations" : {
@@ -7512,7 +8388,14 @@
       }
     },
     "Quarter" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ربع سنوي"
+          }
+        }
+      }
     },
     "Rate our app" : {
       "localizations" : {
@@ -7520,6 +8403,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تقييم التطبيق"
+          }
+        }
+      }
+    },
+    "Read" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قراءه"
           }
         }
       }
@@ -7584,8 +8477,51 @@
         }
       }
     },
+    "Remove" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف"
+          }
+        }
+      }
+    },
+    "Renew : %lld - %@ EGP" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجديد: %1$lld - %2$@ جنيه مصري."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Renew : %1$lld - %2$@ EGP"
+          }
+        }
+      }
+    },
     "Renew Now !" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجديد الان"
+          }
+        }
+      }
+    },
+    "Renewal TRX" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجديد"
+          }
+        }
+      }
     },
     "Reopen Complaint" : {
       "localizations" : {
@@ -7708,7 +8644,14 @@
       }
     },
     "Retention" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعاده الاستخدام"
+          }
+        }
+      }
     },
     "Review Deleted" : {
       "localizations" : {
@@ -7781,7 +8724,14 @@
       }
     },
     "Sales made by using Vondera, including manual orders" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مبيعات المتاجر في الفتره المحدده بما في ذلك الطلبات اليدويه"
+          }
+        }
+      }
     },
     "Sales Report" : {
       "localizations" : {
@@ -7869,6 +8819,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "بحث بالاسم، رقم الهاتف او الكود"
+          }
+        }
+      }
+    },
+    "Search for access ..." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابحث عن الوصول..."
           }
         }
       }
@@ -8034,21 +8994,24 @@
       }
     },
     "Selling price can't be Zero LE" : {
-
-    },
-    "Send abandon carts emails" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ارسال ايميلات بالمشتريات المتروكه"
+            "value" : "لا يمكن ان يكون سعر البيع صفر"
           }
         }
       }
     },
     "Send abandon carts emails (Soon)" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال بريد للتذكير بالعربه (قريبا)"
+          }
+        }
+      }
     },
     "Send Email" : {
       "localizations" : {
@@ -8101,10 +9064,24 @@
       }
     },
     "Send Notification" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال اشعارات"
+          }
+        }
+      }
     },
     "Send Notifictaions" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسل اشعارات"
+          }
+        }
+      }
     },
     "Send payout request" : {
       "localizations" : {
@@ -8337,7 +9314,14 @@
       }
     },
     "Site Views" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاهدين الموقع"
+          }
+        }
+      }
     },
     "Skip" : {
       "localizations" : {
@@ -8410,7 +9394,14 @@
       }
     },
     "Sorting" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الترتيب"
+          }
+        }
+      }
     },
     "Sports and Outdoors" : {
       "localizations" : {
@@ -8453,7 +9444,24 @@
       }
     },
     "Statistics" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاحصائيات"
+          }
+        }
+      }
+    },
+    "Statistics Access" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصول الإحصائيات."
+          }
+        }
+      }
     },
     "Stock Handling" : {
       "localizations" : {
@@ -8465,12 +9473,32 @@
         }
       }
     },
+    "Stoped Subscribing" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم إيقاف الاشتراك."
+          }
+        }
+      }
+    },
     "Store Admin" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "اداره المتجر"
+          }
+        }
+      }
+    },
+    "Store admin mostly have access to all the of the store settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عادةً ما يكون لدى مشرف المتجر الوصول إلى جميع إعدادات المتجر."
           }
         }
       }
@@ -8486,10 +9514,24 @@
       }
     },
     "Store Id" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "معرف المتجر"
+          }
+        }
+      }
     },
     "Store id is empty" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "معرف المتجر فارغ"
+          }
+        }
+      }
     },
     "Store info" : {
       "localizations" : {
@@ -8572,7 +9614,14 @@
       }
     },
     "Store Search" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بحث المتاجر"
+          }
+        }
+      }
     },
     "Store Settings" : {
       "localizations" : {
@@ -8585,7 +9634,14 @@
       }
     },
     "Store Shipping info changed" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث بيانات الشحن"
+          }
+        }
+      }
     },
     "Store Users" : {
       "localizations" : {
@@ -8598,7 +9654,14 @@
       }
     },
     "Stores" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتاجر"
+          }
+        }
+      }
     },
     "Submit" : {
       "localizations" : {
@@ -8611,13 +9674,34 @@
       }
     },
     "Submit Complaint" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف كوي"
+          }
+        }
+      }
     },
     "Subscribe" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اشترك"
+          }
+        }
+      }
     },
-    "Subscribed to the %@ Plan" : {
-
+    "Subscribed Stores" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المتاجر المشترك بها."
+          }
+        }
+      }
     },
     "Subscribtions" : {
       "localizations" : {
@@ -8625,6 +9709,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الاشتراكات"
+          }
+        }
+      }
+    },
+    "Subscription Access" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصول الاشتراك."
           }
         }
       }
@@ -8675,6 +9769,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "افراد الفريق"
+          }
+        }
+      }
+    },
+    "Team Members" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أعضاء الفريق."
+          }
+        }
+      }
+    },
+    "Team Members Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إدارة أعضاء الفريق."
           }
         }
       }
@@ -9010,7 +10124,14 @@
       }
     },
     "This client ordered %lld times before" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قام العميل بالطلب %lld مره مسبقا"
+          }
+        }
+      }
     },
     "This code exists before" : {
       "localizations" : {
@@ -9273,7 +10394,14 @@
       }
     },
     "This marks the product as a sale" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه علامه خصم علي المنتج"
+          }
+        }
+      }
     },
     "This Month" : {
       "localizations" : {
@@ -9425,6 +10553,36 @@
         }
       }
     },
+    "This will send a message when a new order is made" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيقوم بإرسال رساله واتس اب عند وجود طلب جديد"
+          }
+        }
+      }
+    },
+    "This will send a message when an order delivered" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرساله التي ترغب في ارسالها للعميل عند استلام الطلب"
+          }
+        }
+      }
+    },
+    "This will send a message when an order marked as shipped" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرساله التي ترغب في ارسالها عند خروج الاوردر للتسليم"
+          }
+        }
+      }
+    },
     "This will set your product as out of stock, and the avilable quantity to zero" : {
       "localizations" : {
         "ar" : {
@@ -9525,6 +10683,16 @@
         }
       }
     },
+    "to the %@ Plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلى خطة %@."
+          }
+        }
+      }
+    },
     "Today" : {
       "localizations" : {
         "ar" : {
@@ -9536,7 +10704,14 @@
       }
     },
     "Tools" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الادوات"
+          }
+        }
+      }
     },
     "Total" : {
       "localizations" : {
@@ -9549,7 +10724,30 @@
       }
     },
     "Total : %@ EGP" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الاجمالي : %@ جم"
+          }
+        }
+      }
+    },
+    "Total : %@ EGP - %lld items" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإجمالي: %1$@ جنيه مصري - %2$lld عنصر."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Total : %1$@ EGP - %2$lld items"
+          }
+        }
+      }
     },
     "Total (%lld) items" : {
       "localizations" : {
@@ -9622,7 +10820,14 @@
       }
     },
     "Total Payments" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سعر الطلب"
+          }
+        }
+      }
     },
     "Total Pieces" : {
       "localizations" : {
@@ -9645,7 +10850,14 @@
       }
     },
     "Total Sales" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجمالي المبيعات"
+          }
+        }
+      }
     },
     "Total Sold items" : {
       "localizations" : {
@@ -9708,7 +10920,14 @@
       }
     },
     "Transaction Detail" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بيانات العمليه"
+          }
+        }
+      }
     },
     "Transaction details" : {
       "localizations" : {
@@ -9731,7 +10950,14 @@
       }
     },
     "TRX ID" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رقم العمليه"
+          }
+        }
+      }
     },
     "TTL" : {
       "localizations" : {
@@ -9764,7 +10990,14 @@
       }
     },
     "Turning this on will mark the product as featured on your website" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل هذا الاختيار سيظهر المنتج في المنتجات المميزه علي الموقع"
+          }
+        }
+      }
     },
     "Type" : {
       "localizations" : {
@@ -9777,7 +11010,14 @@
       }
     },
     "Type the client's complaint" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل شكوي العميل"
+          }
+        }
+      }
     },
     "Unknown" : {
       "localizations" : {
@@ -9840,7 +11080,14 @@
       }
     },
     "Update Payment" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث الدفع"
+          }
+        }
+      }
     },
     "Update subscribtion duration" : {
       "localizations" : {
@@ -9853,7 +11100,14 @@
       }
     },
     "Update Varaints" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث الاختيارات"
+          }
+        }
+      }
     },
     "Update Variants" : {
       "localizations" : {
@@ -9925,6 +11179,16 @@
         }
       }
     },
+    "User email this will be used by the user to sign in" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بريد المستخدم الإلكتروني سيُستخدم من قبل المستخدم لتسجيل الدخول."
+          }
+        }
+      }
+    },
     "User Info" : {
       "localizations" : {
         "ar" : {
@@ -9935,8 +11199,35 @@
         }
       }
     },
+    "User password this will be used by the user to log in, DON'T ENTER YOUR PASSWORD" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمة مرور المستخدم ستُستخدم من قبل المستخدم لتسجيل الدخول، لا تدخل كلمة مرورك."
+          }
+        }
+      }
+    },
+    "User Role" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دور المستخدم"
+          }
+        }
+      }
+    },
     "User Subscribed" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الاشتراك للمتجر"
+          }
+        }
+      }
     },
     "Username" : {
       "localizations" : {
@@ -9948,8 +11239,25 @@
         }
       }
     },
+    "Users" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المستخدمين"
+          }
+        }
+      }
+    },
     "Users Reports" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقارير المستخدم"
+          }
+        }
+      }
     },
     "V Pay" : {
       "localizations" : {
@@ -9970,6 +11278,9 @@
           }
         }
       }
+    },
+    "Valid Order" : {
+
     },
     "Value" : {
       "localizations" : {
@@ -10062,7 +11373,14 @@
       }
     },
     "Verify Subscribe plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأكيد خطه الاشتراك"
+          }
+        }
+      }
     },
     "Views" : {
       "localizations" : {
@@ -10090,6 +11408,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "زياره المنتج"
+          }
+        }
+      }
+    },
+    "Visit Store" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "زياره المتجر"
           }
         }
       }
@@ -10125,7 +11453,24 @@
       }
     },
     "VPay" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في باي"
+          }
+        }
+      }
+    },
+    "VPay Access" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوصول لمحفظه VPay"
+          }
+        }
+      }
     },
     "VPay Gateway" : {
       "localizations" : {
@@ -10158,7 +11503,14 @@
       }
     },
     "Wallets" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المحافظ"
+          }
+        }
+      }
     },
     "Warehouse" : {
       "localizations" : {
@@ -10166,6 +11518,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "المخزن"
+          }
+        }
+      }
+    },
+    "Warehouse Management" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إدارة المستودع."
           }
         }
       }
@@ -10250,6 +11612,16 @@
         }
       }
     },
+    "Website Customization" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تخصيص الموقع الإلكتروني."
+          }
+        }
+      }
+    },
     "Website settings" : {
       "localizations" : {
         "ar" : {
@@ -10300,12 +11672,52 @@
         }
       }
     },
+    "Welcome Back %@ !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرحبًا بعودتك %@!"
+          }
+        }
+      }
+    },
     "Whatsapp" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "واتس اب"
+          }
+        }
+      }
+    },
+    "Whatsapp info updated" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث بيانات الواتس اب"
+          }
+        }
+      }
+    },
+    "Whatsapp settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الواتس اب"
+          }
+        }
+      }
+    },
+    "Whatsapp Settings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الواتس اب"
           }
         }
       }
@@ -10340,6 +11752,16 @@
         }
       }
     },
+    "With Hidden Orders" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع الطلبات المخفية."
+          }
+        }
+      }
+    },
     "Withdraw from Agel" : {
       "localizations" : {
         "ar" : {
@@ -10360,8 +11782,25 @@
         }
       }
     },
+    "Write" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل"
+          }
+        }
+      }
+    },
     "Yearly" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سنوي"
+          }
+        }
+      }
     },
     "Yes" : {
       "localizations" : {
@@ -10394,7 +11833,164 @@
       }
     },
     "You can optionaly upload an image to each varient" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك اضافه صور لكل اختيار"
+          }
+        }
+      }
+    },
+    "You can't make a discount, because this user subscribed before !" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يمكنك تقديم خصم، لأن هذا المستخدم قد اشترك سابقًا!"
+          }
+        }
+      }
+    },
+    "You do not have access to customize the website. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لتخصيص الموقع الإلكتروني. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage categories. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة الفئات. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage complaints. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة الشكاوى. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage couriers. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة السعاة. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage expenses. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة النفقات. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage orders. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة الطلبات. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage products. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة المنتجات. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage store settings. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة إعدادات المتجر. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage team members. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة أعضاء الفريق. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to manage the warehouse. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لإدارة المستودع. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to subscription features. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول إلى ميزات الاشتراك. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to view or export customer data. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لعرض أو تصدير بيانات العملاء. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to view or export statistics. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول لعرض أو تصدير الإحصاءات. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
+    },
+    "You do not have access to VPay features. Please contact your administrator for more information." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ليس لديك حق الوصول إلى ميزات VPay. يرجى الاتصال بالمسؤول الخاص بك لمزيد من المعلومات."
+          }
+        }
+      }
     },
     "You have %lld orders, renew your plan to unlock them" : {
       "localizations" : {
@@ -10417,7 +12013,14 @@
       }
     },
     "You have no couriers yet !" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد لديك اي مناديب حتي الان"
+          }
+        }
+      }
     },
     "You have no deleted orders in your store" : {
       "localizations" : {
@@ -10700,7 +12303,14 @@
       }
     },
     "Your plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطتك"
+          }
+        }
+      }
     },
     "Your product describtion will be visible for users in your website and in the app" : {
       "localizations" : {

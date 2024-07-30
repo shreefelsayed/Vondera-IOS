@@ -47,6 +47,7 @@ struct EditExpanse: View {
                 }
             }
         }
+        .withAccessLevel(accessKey: .expensesRemove, presentation: presentationMode)
     }
     
     func save() async {

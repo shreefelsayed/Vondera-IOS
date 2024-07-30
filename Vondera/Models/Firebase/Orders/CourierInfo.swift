@@ -9,11 +9,11 @@ import Foundation
 
 struct CourierInfo : Codable, Hashable {
     var receiptId:String? = ""
-    var courierHandler:String? = ""
+    var handler:String? = ""
     
-    init(receiptId: String? = nil, courierHandler: String? = nil) {
+    init(receiptId: String? = nil, handler: String? = nil) {
         self.receiptId = receiptId
-        self.courierHandler = courierHandler
+        self.handler = handler
     }
     
 }

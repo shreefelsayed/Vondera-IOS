@@ -24,6 +24,7 @@ class OrderManager {
     
     func outForDelivery(list: inout [Order], courier:Courier) async -> [Order] {
         for var order in list {
+            
             order = await outForDelivery(order: &order, courier: courier)
             
             // Update the order in the list
@@ -77,13 +78,18 @@ class OrderManager {
         hash["courierConnected"] = !(courier.courierHandler ?? "").isBlank
         hash["courierInfo"] = [:]
         
-        try! await ordersDao.update(id: order.id, hashMap: hash)
-        order = await addComment(order: &order, msg: "", code: OUT_FOR_DELV_CODE)
-        order.statue = "Out For Delivery"
-        order.courierId = courier.id
-        order.courierName = courier.name
-        order.courierShippingFees = fees
-        order.dateShipping = Timestamp(date: Date())
+        do {
+            try! await ordersDao.update(id: order.id, hashMap: hash)
+            order = await addComment(order: &order, msg: "", code: OUT_FOR_DELV_CODE)
+            order.statue = "Out For Delivery"
+            order.courierId = courier.id
+            order.courierName = courier.name
+            order.courierShippingFees = fees
+            order.dateShipping = Timestamp(date: Date())
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         
         return order
     }
@@ -332,7 +338,7 @@ class OrderManager {
     }
     
     func checkCommission(order: inout Order) async {
-        guard let myUser = UserInformation.shared.getUser(), myUser.accountType == "Marketing", let perc = myUser.percentage, perc > 0 else {
+        guard let myUser = UserInformation.shared.getUser(), let perc = myUser.percentage, perc > 0 else {
             order.percPaid = true
             return
         }

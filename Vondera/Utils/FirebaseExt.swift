@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseCrashlytics
 
 extension DocumentReference {
-    func getDocument<T>(as type: T.Type) async throws -> (item : T, exists : Bool) where T : Decodable {
+    func getDocument<T>(as type: T.Type) async throws -> (item : T?, exists : Bool) where T : Decodable {
         let doc = try await self.getDocument()
         let item = try doc.data(as: type)
         

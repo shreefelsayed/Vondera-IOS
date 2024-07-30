@@ -133,23 +133,36 @@ class AuthManger {
         print("Current user is \(String(describing: uId))")
         
         
-        guard uId != nil else {
+        guard let uid =  uId else {
             print("No user id not found")
             await logOut()
             return nil
         }
         
-        if var user = try await usersDao.getUser(uId: uId!).item {
+        do {
+            let user = try await usersDao.getUser(uId: uid).item
+            guard var user = user else {
+                return nil
+            }
+            
             if user.isStoreUser {
                 let store = try await storesDao.getStore(uId: user.storeId)
                 user.store = store
             }
-          
+            
+            if user.accessLevels == nil {
+                let levels = UserRoles(rawValue: user.accountType)?.getDefaultAccessLevel()
+                user.accessLevels = levels
+                if let levels = levels {
+                    try? await UsersDao().update(id: user.id, hash: ["accessLevels":levels.asDicitionry()])
+                }
+            }
+            
             UserInformation.shared.updateUser(user)
             await onSignIn()
             return user
-        } else {
-            print("Failed to get user")
+        } catch {
+            print(error)
             await logOut()
             return nil
         }

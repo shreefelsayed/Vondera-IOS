@@ -11,6 +11,7 @@ struct EmployeeProfile: View {
     
     var employee:UserData
     @StateObject var viewModel:EmployeeProfileViewModel
+    @Environment(\.presentationMode) private var presentationMode
 
     init(user: UserData) {
         self.employee = user
@@ -44,27 +45,26 @@ struct EmployeeProfile: View {
             }
         }
         .toolbar {
-            if let myUser = UserInformation.shared.user, myUser.canAccessAdmin {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        NavigationLink {
-                            EmployeeReports(employee: employee)
-                        } label: {
-                            Label("Reports", systemImage: "filemenu.and.selection")
-                        }
-                        
-                        NavigationLink {
-                            EmployeeSettings(id: employee.id)
-                        } label: {
-                            Label("Settings", systemImage: "gearshape.fill")
-                        }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    NavigationLink {
+                        EmployeeReports(employee: employee)
                     } label: {
-                        Image(systemName: "ellipsis.circle.fill")
+                        Label("Reports", systemImage: "filemenu.and.selection")
                     }
+                    
+                    NavigationLink {
+                        EmployeeSettings(id: employee.id)
+                    } label: {
+                        Label("Settings", systemImage: "gearshape.fill")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
                 }
             }
         }
         .navigationTitle(employee.name)
+        .withAccessLevel(accessKey: .teamMembersRead, presentation: presentationMode)
     }
              
     func refreshData() async {

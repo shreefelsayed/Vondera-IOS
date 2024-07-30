@@ -17,7 +17,9 @@ class VonderaStaticsScreenVM : ObservableObject {
     
     @Published var retentionPerecentage = 0
     @Published var online:Double = 0
+    @Published var onlineUsers:Double = 0
     @Published var almostExpired = 0.0
+    
     
     @Published var isLoading = false
     
@@ -39,6 +41,12 @@ class VonderaStaticsScreenVM : ObservableObject {
             
             let onlineUsers = try await Firestore.firestore().collection("stores")
                 .whereField("latestActive", isGreaterThan: Date().daysAgo(3))
+                .count
+                .getAggregation(source: .server)
+                .count.doubleValue
+            
+            let onlineEmployees = try await Firestore.firestore().collection("users")
+                .whereField("online", isEqualTo: true)
                 .count
                 .getAggregation(source: .server)
                 .count.doubleValue
@@ -70,6 +78,7 @@ class VonderaStaticsScreenVM : ObservableObject {
                 self.retentionPerecentage = Int(perc)
                 self.online = onlineUsers
                 self.almostExpired = almostExpired
+                self.onlineUsers = onlineEmployees
             }
         } catch {
             print(error)
@@ -137,6 +146,8 @@ struct VonderaStaticsScreen: View {
                     .font(.headline)
                 
                 ReportCard(title: "Retention", amount: viewModel.retentionPerecentage.double(), prefix: "%", desc : "Our retention Perecentage caculated by currently subscrbied stores / every subscribed store")
+                
+                ReportCard(title: "Currently Online users", amount: viewModel.onlineUsers, prefix: "Users", desc : "Number of online users right now")
                 
                 ReportCard(title: "Active Stores", amount: viewModel.online, prefix: "Stores", desc : "Number of stores that were active in the last 3 days")
                 

@@ -35,24 +35,24 @@ class AdminWalletsScreenVM : ObservableObject {
 struct AdminWalletsScreen: View {
     @StateObject private var viewModel = AdminWalletsScreenVM()
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading) {
-                ForEach(viewModel.items, id: \.ownerId) { store in
-                    VStack {
-                        HStack {
-                            StoreCard(store: store)
-                            
-                            Text("\(store.vPayWallet?.toString() ?? "0") LE")
-                                .foregroundStyle(.red)
-                                .font(.headline)
-                                .bold()
-                        }
+        List {
+            ForEach(viewModel.items, id: \.ownerId) { store in
+                NavigationLink {
+                    
+                    StoresProfileScreen(id: store.ownerId)
+                } label: {
+                    HStack {
+                        StoreCard(store: store)
                         
-                        Divider()
+                        Text("\(store.vPayWallet?.toString() ?? "0") LE")
+                            .foregroundStyle(.red)
+                            .font(.headline)
+                            .bold()
                     }
+                    
                 }
+                .buttonStyle(.plain)
             }
-            .padding()
         }
         .navigationTitle("Wallets")
         .willLoad(loading: viewModel.isLoading)

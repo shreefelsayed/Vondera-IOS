@@ -245,6 +245,8 @@ struct OrderQRCode : View {
 struct MakeComplaintSheet: View {
     @Binding var isPresented:Bool
     var order:Order
+    @Environment(\.presentationMode) private var presentationMode
+
     
     @State private var text = ""
     @State private var pickedImages = [PhotosPickerItem]()
@@ -312,6 +314,7 @@ struct MakeComplaintSheet: View {
                 
             }
         }
+        .withAccessLevel(accessKey: .complaintsAdd, presentation: presentationMode)
     }
     
     private func addComplaint(photos:[String]) {

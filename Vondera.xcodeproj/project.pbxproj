@@ -90,6 +90,14 @@
 		B32206032AE8BB7700B2C27C /* ExpansesExcel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32206022AE8BB7700B2C27C /* ExpansesExcel.swift */; };
 		B3275F432A53D86100F4F935 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3275F422A53D86100F4F935 /* DownloadManager.swift */; };
 		B3275F452A53DFFC00F4F935 /* CourierPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3275F442A53DFFB00F4F935 /* CourierPicker.swift */; };
+		B32CA9202C35A7C10007416C /* WbInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CA91F2C35A7C10007416C /* WbInfo.swift */; };
+		B32CA9222C35AE050007416C /* WhatsappSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CA9212C35AE050007416C /* WhatsappSettings.swift */; };
+		B32CA9242C35BEAC0007416C /* Cursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CA9232C35BEAC0007416C /* Cursor.swift */; };
+		B32CA9262C35D70A0007416C /* WBShippedSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CA9252C35D70A0007416C /* WBShippedSettings.swift */; };
+		B32CA9282C35D7590007416C /* WBDeliveredSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32CA9272C35D7590007416C /* WBDeliveredSettings.swift */; };
+		B32F93702C3D38C1004B9E15 /* HiddenOrdersStoreScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32F936F2C3D38C0004B9E15 /* HiddenOrdersStoreScreen.swift */; };
+		B32F93722C3D39D7004B9E15 /* SubscribedStoresScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32F93712C3D39D7004B9E15 /* SubscribedStoresScreen.swift */; };
+		B32F93742C3D3A0D004B9E15 /* StopedSubscribeStores.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32F93732C3D3A0D004B9E15 /* StopedSubscribeStores.swift */; };
 		B32FB4982BC505EF004D61B7 /* PlanInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32FB4972BC505EF004D61B7 /* PlanInfo.swift */; };
 		B334038A2A47068A008CB1D8 /* CutomerProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33403892A47068A008CB1D8 /* CutomerProfile.swift */; };
 		B334038C2A470698008CB1D8 /* ClientOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B334038B2A470698008CB1D8 /* ClientOrdersViewModel.swift */; };
@@ -155,6 +163,7 @@
 		B34687192A3FB58900FFFA1E /* GSignInHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34687182A3FB58900FFFA1E /* GSignInHelper.swift */; };
 		B346871B2A3FBE0A00FFFA1E /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B346871A2A3FBE0A00FFFA1E /* BottomSheet.swift */; };
 		B34896292A3F4E6100BD99AE /* AuthManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34896282A3F4E6100BD99AE /* AuthManger.swift */; };
+		B34D89222C3433FB00C424C5 /* WBNewOrderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34D89212C3433FB00C424C5 /* WBNewOrderSettings.swift */; };
 		B35099F82BB0D5CB00D1246A /* NotificationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35099F72BB0D5CB00D1246A /* NotificationCard.swift */; };
 		B352ADA12AF2907500068D1A /* ChangeUsername.swift in Sources */ = {isa = PBXBuildFile; fileRef = B352ADA02AF2907500068D1A /* ChangeUsername.swift */; };
 		B35329E42BB5F56900893FA1 /* GTMScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35329E32BB5F56900893FA1 /* GTMScreen.swift */; };
@@ -230,6 +239,8 @@
 		B37045902AE8274500360726 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B370458F2AE8274500360726 /* FirebaseAnalyticsSwift */; };
 		B371077D2A47917B002FF1CB /* ComplaintsDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B371077C2A47917B002FF1CB /* ComplaintsDao.swift */; };
 		B37769E82B66B67700E5AC1E /* CustomDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37769E72B66B67700E5AC1E /* CustomDomain.swift */; };
+		B37AA7262C466DBD0061BF4A /* CourierImportExcel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37AA7252C466DBD0061BF4A /* CourierImportExcel.swift */; };
+		B37AA7292C466EEC0061BF4A /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = B37AA7282C466EEC0061BF4A /* CoreXLSX */; };
 		B37F5FA52BAE55A3007FD672 /* FilteredOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F5FA42BAE55A3007FD672 /* FilteredOrdersView.swift */; };
 		B37F5FA82BAE626D007FD672 /* Flow in Frameworks */ = {isa = PBXBuildFile; productRef = B37F5FA72BAE626D007FD672 /* Flow */; };
 		B383457F2BA5EBB800FCCB02 /* OrderCustomPaginationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B383457E2BA5EBB800FCCB02 /* OrderCustomPaginationScreen.swift */; };
@@ -291,7 +302,6 @@
 		B3A7C8D72A285F7600D6C1D2 /* CourierPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8D62A285F7600D6C1D2 /* CourierPrice.swift */; };
 		B3A7C8D92A285FB400D6C1D2 /* OrdersCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8D82A285FB400D6C1D2 /* OrdersCount.swift */; };
 		B3A7C8DD2A28600100D6C1D2 /* ShopifyPojo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8DC2A28600100D6C1D2 /* ShopifyPojo.swift */; };
-		B3A7C8DF2A28600800D6C1D2 /* WhatsappPojo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8DE2A28600800D6C1D2 /* WhatsappPojo.swift */; };
 		B3A7C8E22A286F0E00D6C1D2 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B3A7C8E12A286F0E00D6C1D2 /* GoogleSignIn */; };
 		B3A7C8E42A286F0E00D6C1D2 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B3A7C8E32A286F0E00D6C1D2 /* GoogleSignInSwift */; };
 		B3A7C8EB2A28707F00D6C1D2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7C8EA2A28707F00D6C1D2 /* MainViewModel.swift */; };
@@ -399,6 +409,9 @@
 		B3F0F3F12AC62A34000AFB0C /* MarketCheckCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F3F02AC62A34000AFB0C /* MarketCheckCard.swift */; };
 		B3F0F3F32AC62BF2000AFB0C /* MarketHeaderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F3F22AC62BF1000AFB0C /* MarketHeaderCard.swift */; };
 		B3F23FEA2BA06BF500A68025 /* PrivacyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FE92BA06BF500A68025 /* PrivacyCenter.swift */; };
+		B3F966602C415F50003007CE /* AccessLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9665F2C415F50003007CE /* AccessLevels.swift */; };
+		B3F966622C4165D6003007CE /* EmployeeAccessLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F966612C4165D6003007CE /* EmployeeAccessLevel.swift */; };
+		B3F966652C416C3E003007CE /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F966642C416C3E003007CE /* AccessManager.swift */; };
 		B3F981842ACD85DC00D70FAF /* AgelWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F981832ACD85DC00D70FAF /* AgelWallet.swift */; };
 		B3F981872ACDABD100D70FAF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B3F981862ACDABD100D70FAF /* Lottie */; };
 		B3F981892ACDABF200D70FAF /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F981882ACDABF100D70FAF /* LottieView.swift */; };
@@ -497,6 +510,14 @@
 		B32206022AE8BB7700B2C27C /* ExpansesExcel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansesExcel.swift; sourceTree = "<group>"; };
 		B3275F422A53D86100F4F935 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		B3275F442A53DFFB00F4F935 /* CourierPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierPicker.swift; sourceTree = "<group>"; };
+		B32CA91F2C35A7C10007416C /* WbInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WbInfo.swift; sourceTree = "<group>"; };
+		B32CA9212C35AE050007416C /* WhatsappSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsappSettings.swift; sourceTree = "<group>"; };
+		B32CA9232C35BEAC0007416C /* Cursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cursor.swift; sourceTree = "<group>"; };
+		B32CA9252C35D70A0007416C /* WBShippedSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBShippedSettings.swift; sourceTree = "<group>"; };
+		B32CA9272C35D7590007416C /* WBDeliveredSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBDeliveredSettings.swift; sourceTree = "<group>"; };
+		B32F936F2C3D38C0004B9E15 /* HiddenOrdersStoreScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenOrdersStoreScreen.swift; sourceTree = "<group>"; };
+		B32F93712C3D39D7004B9E15 /* SubscribedStoresScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedStoresScreen.swift; sourceTree = "<group>"; };
+		B32F93732C3D3A0D004B9E15 /* StopedSubscribeStores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopedSubscribeStores.swift; sourceTree = "<group>"; };
 		B32FB4972BC505EF004D61B7 /* PlanInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanInfo.swift; sourceTree = "<group>"; };
 		B33403892A47068A008CB1D8 /* CutomerProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutomerProfile.swift; sourceTree = "<group>"; };
 		B334038B2A470698008CB1D8 /* ClientOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientOrdersViewModel.swift; sourceTree = "<group>"; };
@@ -559,6 +580,7 @@
 		B34687182A3FB58900FFFA1E /* GSignInHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSignInHelper.swift; sourceTree = "<group>"; };
 		B346871A2A3FBE0A00FFFA1E /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		B34896282A3F4E6100BD99AE /* AuthManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManger.swift; sourceTree = "<group>"; };
+		B34D89212C3433FB00C424C5 /* WBNewOrderSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBNewOrderSettings.swift; sourceTree = "<group>"; };
 		B350590C2B6C79A2009AEF0A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B350590E2B6C79A2009AEF0A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B35099F72BB0D5CB00D1246A /* NotificationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCard.swift; sourceTree = "<group>"; };
@@ -634,6 +656,7 @@
 		B370458B2AE80F2200360726 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		B371077C2A47917B002FF1CB /* ComplaintsDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplaintsDao.swift; sourceTree = "<group>"; };
 		B37769E72B66B67700E5AC1E /* CustomDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDomain.swift; sourceTree = "<group>"; };
+		B37AA7252C466DBD0061BF4A /* CourierImportExcel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierImportExcel.swift; sourceTree = "<group>"; };
 		B37F5FA42BAE55A3007FD672 /* FilteredOrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredOrdersView.swift; sourceTree = "<group>"; };
 		B383457E2BA5EBB800FCCB02 /* OrderCustomPaginationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomPaginationScreen.swift; sourceTree = "<group>"; };
 		B38345802BA5F2B200FCCB02 /* NewAllOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllOrders.swift; sourceTree = "<group>"; };
@@ -683,7 +706,6 @@
 		B3A7C8D62A285F7600D6C1D2 /* CourierPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierPrice.swift; sourceTree = "<group>"; };
 		B3A7C8D82A285FB400D6C1D2 /* OrdersCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersCount.swift; sourceTree = "<group>"; };
 		B3A7C8DC2A28600100D6C1D2 /* ShopifyPojo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopifyPojo.swift; sourceTree = "<group>"; };
-		B3A7C8DE2A28600800D6C1D2 /* WhatsappPojo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsappPojo.swift; sourceTree = "<group>"; };
 		B3A7C8EA2A28707F00D6C1D2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B3A7C8EC2A28708600D6C1D2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B3A7C8EE2A28708D00D6C1D2 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -786,6 +808,9 @@
 		B3F0F3F02AC62A34000AFB0C /* MarketCheckCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketCheckCard.swift; sourceTree = "<group>"; };
 		B3F0F3F22AC62BF1000AFB0C /* MarketHeaderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketHeaderCard.swift; sourceTree = "<group>"; };
 		B3F23FE92BA06BF500A68025 /* PrivacyCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCenter.swift; sourceTree = "<group>"; };
+		B3F9665F2C415F50003007CE /* AccessLevels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessLevels.swift; sourceTree = "<group>"; };
+		B3F966612C4165D6003007CE /* EmployeeAccessLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeAccessLevel.swift; sourceTree = "<group>"; };
+		B3F966642C416C3E003007CE /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		B3F981832ACD85DC00D70FAF /* AgelWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgelWallet.swift; sourceTree = "<group>"; };
 		B3F981882ACDABF100D70FAF /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		B3FACA662AA0203200EB55F6 /* EditCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategory.swift; sourceTree = "<group>"; };
@@ -809,6 +834,7 @@
 				B3A7C8BA2A285B5600D6C1D2 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				B30316AD2AC67D83002134A2 /* SwiftUICharts in Frameworks */,
 				B30E2FAB2A42668700F45D7F /* ImageSlideshow in Frameworks */,
+				B37AA7292C466EEC0061BF4A /* CoreXLSX in Frameworks */,
 				B3A7C8E22A286F0E00D6C1D2 /* GoogleSignIn in Frameworks */,
 				B370458E2AE8274500360726 /* FirebaseAnalytics in Frameworks */,
 				B3A7C8BC2A285B5600D6C1D2 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
@@ -1137,8 +1163,20 @@
 				B31FAC902AED4DFD00023BE0 /* LocalizationService.swift */,
 				B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */,
 				B3E1B14A2BE016CC004239B0 /* CrashsManager.swift */,
+				B3F966642C416C3E003007CE /* AccessManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		B34D89202C3433D700C424C5 /* WhatsappSettings */ = {
+			isa = PBXGroup;
+			children = (
+				B34D89212C3433FB00C424C5 /* WBNewOrderSettings.swift */,
+				B32CA9212C35AE050007416C /* WhatsappSettings.swift */,
+				B32CA9272C35D7590007416C /* WBDeliveredSettings.swift */,
+				B32CA9252C35D70A0007416C /* WBShippedSettings.swift */,
+			);
+			path = WhatsappSettings;
 			sourceTree = "<group>";
 		};
 		B35329E22BB5F56000893FA1 /* Pixels */ = {
@@ -1167,6 +1205,9 @@
 			isa = PBXGroup;
 			children = (
 				B359A7342C2EAA710074732C /* StoresScreen.swift */,
+				B32F936F2C3D38C0004B9E15 /* HiddenOrdersStoreScreen.swift */,
+				B32F93712C3D39D7004B9E15 /* SubscribedStoresScreen.swift */,
+				B32F93732C3D3A0D004B9E15 /* StopedSubscribeStores.swift */,
 				B359A7362C2EAA790074732C /* StoresSearchScreen.swift */,
 				B359A7382C2EAA7F0074732C /* StoresProfileScreen.swift */,
 			);
@@ -1305,6 +1346,7 @@
 				B3A230172ADD769B0073B15D /* FirebaseExt.swift */,
 				B3D067C72BA228E400EB7A06 /* ToastManager.swift */,
 				B360BB812BA8FB5500E7921B /* CachedImageView.swift */,
+				B32CA9232C35BEAC0007416C /* Cursor.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1449,6 +1491,7 @@
 		B390EB572A47D4AD0058D06B /* StoreSettings */ = {
 			isa = PBXGroup;
 			children = (
+				B34D89202C3433D700C424C5 /* WhatsappSettings */,
 				B3C1497E2BA37CF10071642C /* Toggles */,
 				B3E776CA2B1844E800BA7076 /* ShopifyImport */,
 				B33B50612AECAC990032942D /* WebSettings */,
@@ -1715,6 +1758,7 @@
 				B30CF0BF2A5288CB00245955 /* EmployeeSettings.swift */,
 				B32205FC2AE89F3000B2C27C /* EmployeeReports.swift */,
 				B360BB8D2BAA933E00E7921B /* BannedEmployees.swift */,
+				B3F966612C4165D6003007CE /* EmployeeAccessLevel.swift */,
 			);
 			path = Employees;
 			sourceTree = "<group>";
@@ -1788,6 +1832,7 @@
 				B30CF0C72A52944800245955 /* CourierFees.swift */,
 				B32205FE2AE8AD5C00B2C27C /* CourierReports.swift */,
 				B3C698552B8A2D4200CDBA55 /* ProviderIntegrationView.swift */,
+				B37AA7252C466DBD0061BF4A /* CourierImportExcel.swift */,
 			);
 			path = Couriers;
 			sourceTree = "<group>";
@@ -1827,12 +1872,13 @@
 				B36923B72A41CE6D00709112 /* Tip.swift */,
 				B3A7C8D02A285DAF00D6C1D2 /* UserData.swift */,
 				B3F0F3E92AC61417000AFB0C /* StoreMarketPlace.swift */,
-				B3A7C8DE2A28600800D6C1D2 /* WhatsappPojo.swift */,
 				B30316AE2AC67D9E002134A2 /* StoreStatics.swift */,
 				B3155A672AE7014F006419F0 /* NotificationModel.swift */,
 				B33B50722AECBF000032942D /* DiscountCode.swift */,
 				B33B50742AECBF150032942D /* WebsiteSection.swift */,
 				B35329EB2BB601A400893FA1 /* ReviewModel.swift */,
+				B32CA91F2C35A7C10007416C /* WbInfo.swift */,
+				B3F9665F2C415F50003007CE /* AccessLevels.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -1899,6 +1945,7 @@
 				B32205FA2AE8756700B2C27C /* Siren */,
 				B3C899D92AED03C70071706C /* RichTextKit */,
 				B37F5FA72BAE626D007FD672 /* Flow */,
+				B37AA7282C466EEC0061BF4A /* CoreXLSX */,
 			);
 			productName = Vondera;
 			productReference = B31CFA5F2A2853AF00CBA01C /* Vondera.app */;
@@ -1949,6 +1996,7 @@
 				B32205F92AE8756600B2C27C /* XCRemoteSwiftPackageReference "Siren" */,
 				B33B50762AECC6770032942D /* XCRemoteSwiftPackageReference "RichTextKit" */,
 				B37F5FA62BAE626C007FD672 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */,
+				B37AA7272C466EEC0061BF4A /* XCRemoteSwiftPackageReference "CoreXLSX" */,
 			);
 			productRefGroup = B31CFA602A2853AF00CBA01C /* Products */;
 			projectDirPath = "";
@@ -2009,6 +2057,7 @@
 				B30115CB2A554DE600A7F701 /* StoreStepsView.swift in Sources */,
 				B3C30F4B2A9F0EE20086B3FE /* ColorsUtil.swift in Sources */,
 				B33970B92A462FB200E44FA2 /* ClientsDao.swift in Sources */,
+				B32CA9242C35BEAC0007416C /* Cursor.swift in Sources */,
 				B33DBD2C2A4A4436008BBB69 /* EditExpanse.swift in Sources */,
 				B3DC4A642BBF6F16009A17C7 /* CollectOrderPayment.swift in Sources */,
 				B314F4DC2A4DE825009856E3 /* SavedItem.swift in Sources */,
@@ -2055,6 +2104,7 @@
 				B3EF61662A43AFD5007930ED /* Category.swift in Sources */,
 				B37769E82B66B67700E5AC1E /* CustomDomain.swift in Sources */,
 				B36923C82A41E67D00709112 /* StoreOrdersCount.swift in Sources */,
+				B32CA9222C35AE050007416C /* WhatsappSettings.swift in Sources */,
 				B3F0F3EC2AC61472000AFB0C /* Markets.swift in Sources */,
 				B3155A6A2AE70238006419F0 /* NotificationsDao.swift in Sources */,
 				B33DBD242A4A38B0008BBB69 /* OrderSearchViewModel.swift in Sources */,
@@ -2091,6 +2141,7 @@
 				B35329EA2BB6014300893FA1 /* ReviewsDao.swift in Sources */,
 				B360BB802BA8DB9D00E7921B /* SkeltonManager.swift in Sources */,
 				B33B507C2AECD3910032942D /* CodesDao.swift in Sources */,
+				B32F93742C3D3A0D004B9E15 /* StopedSubscribeStores.swift in Sources */,
 				B3A7E77C2A3F5FB700F0CD11 /* CustomButton.swift in Sources */,
 				B31FAC912AED4DFD00023BE0 /* LocalizationService.swift in Sources */,
 				B33970AD2A46249300E44FA2 /* EmployeeProfile.swift in Sources */,
@@ -2145,6 +2196,7 @@
 				B31AE3FF2A413EF0003B7867 /* ReadyViewModel.swift in Sources */,
 				B38C0AFA2B4114C1008D247F /* VPay.swift in Sources */,
 				B38C0B0A2B4121B0008D247F /* VPayoutsDao.swift in Sources */,
+				B37AA7262C466DBD0061BF4A /* CourierImportExcel.swift in Sources */,
 				B3A7C8F62A287CB800D6C1D2 /* UserDao.swift in Sources */,
 				B30CF0BE2A51FBCD00245955 /* ProductVarientsViewModel.swift in Sources */,
 				B314F4D72A4DE724009856E3 /* CheckOut.swift in Sources */,
@@ -2163,6 +2215,7 @@
 				B3E2BCAF2AF151B900A6FCFA /* PaymentSettings.swift in Sources */,
 				B3AA36892AE1BC9800AABA71 /* EditOrder.swift in Sources */,
 				B34896292A3F4E6100BD99AE /* AuthManger.swift in Sources */,
+				B3F966602C415F50003007CE /* AccessLevels.swift in Sources */,
 				B36D8C5D2A40876800A8C555 /* LatestOrdersFragment.swift in Sources */,
 				B33DBD372A4A5531008BBB69 /* Contact.swift in Sources */,
 				B359A7472C2EAB400074732C /* VonderaStaticsScreen.swift in Sources */,
@@ -2182,11 +2235,13 @@
 				B30316B12AC681BD002134A2 /* StaticsDao.swift in Sources */,
 				B33970B42A462D1500E44FA2 /* ClientCard.swift in Sources */,
 				B30CF0AB2A51F7F100245955 /* ProductPrice.swift in Sources */,
+				B32F93722C3D39D7004B9E15 /* SubscribedStoresScreen.swift in Sources */,
 				B33970B22A46263600E44FA2 /* EmployeeProfileViewModel.swift in Sources */,
 				B3EBA5C82ACBE59E00AFDC69 /* StoreKitManager.swift in Sources */,
 				B3A7C8D52A285E3F00D6C1D2 /* Store.swift in Sources */,
 				B30316A52AC63AAC002134A2 /* StoreMarketPlacesSheet.swift in Sources */,
 				B359A7512C2EBD8F0074732C /* TransactionDetail.swift in Sources */,
+				B32F93702C3D38C1004B9E15 /* HiddenOrdersStoreScreen.swift in Sources */,
 				B3A7C8D12A285DAF00D6C1D2 /* UserData.swift in Sources */,
 				B33DBCFB2A48FE38008BBB69 /* AlmostOutViewModel.swift in Sources */,
 				B3A7C8FF2A287D1A00D6C1D2 /* DateExtenstions.swift in Sources */,
@@ -2201,6 +2256,7 @@
 				B3EF61842A440D7E007930ED /* CourierCard.swift in Sources */,
 				B3A2301A2ADDCB540073B15D /* UserHomeHeader.swift in Sources */,
 				B36923CD2A41F0B600709112 /* ProductOrderCard.swift in Sources */,
+				B3F966652C416C3E003007CE /* AccessManager.swift in Sources */,
 				B390EB602A4860B90058D06B /* StoreLogo.swift in Sources */,
 				B3AA368F2AE1D66000AABA71 /* OrdersFragment.swift in Sources */,
 				B369239F2A41C23200709112 /* RefferView.swift in Sources */,
@@ -2239,6 +2295,7 @@
 				B30CF0B62A51FBC300245955 /* ProductPriceViewModel.swift in Sources */,
 				B3D8E5282A9FE32100DC5049 /* AppStoreHelper.swift in Sources */,
 				B37F5FA52BAE55A3007FD672 /* FilteredOrdersView.swift in Sources */,
+				B3F966622C4165D6003007CE /* EmployeeAccessLevel.swift in Sources */,
 				B32206032AE8BB7700B2C27C /* ExpansesExcel.swift in Sources */,
 				B359A73D2C2EAA9C0074732C /* AdminPayoutsScreen.swift in Sources */,
 				B36D8C612A40878C00A8C555 /* ReadyOrdersFragment.swift in Sources */,
@@ -2283,6 +2340,7 @@
 				B3275F432A53D86100F4F935 /* DownloadManager.swift in Sources */,
 				B314F4CB2A4DD42D009856E3 /* UserHomeViewModel.swift in Sources */,
 				B3A1DB8B2AE2B6E00094C100 /* UserInformation.swift in Sources */,
+				B32CA9262C35D70A0007416C /* WBShippedSettings.swift in Sources */,
 				B3EF615C2A43AA26007930ED /* Courier.swift in Sources */,
 				B38C0B012B41157F008D247F /* VTrasnactionsScreen.swift in Sources */,
 				B314F4DA2A4DE766009856E3 /* CartManager.swift in Sources */,
@@ -2293,7 +2351,6 @@
 				B3C149842BA37D110071642C /* StoreOtherSettings.swift in Sources */,
 				B3D8E5302A9FFA2200DC5049 /* PlanDao.swift in Sources */,
 				B3EF61892A440E40007930ED /* StoreCouriersViewModel.swift in Sources */,
-				B3A7C8DF2A28600800D6C1D2 /* WhatsappPojo.swift in Sources */,
 				B33970A32A45FB7100E44FA2 /* StoreAllOrderViewModel.swift in Sources */,
 				B36923A92A41C2E200709112 /* ConnectSocialView.swift in Sources */,
 				B3C149822BA37D0A0071642C /* StoreProductSettings.swift in Sources */,
@@ -2321,6 +2378,7 @@
 				B33970A92A461F4600E44FA2 /* StoreEmployeesViewModel.swift in Sources */,
 				B314F4E42A4E132C009856E3 /* CartCard.swift in Sources */,
 				B3A7C8FC2A287CCD00D6C1D2 /* ProductsDao.swift in Sources */,
+				B32CA9282C35D7590007416C /* WBDeliveredSettings.swift in Sources */,
 				B36923AF2A41C44400709112 /* SettingsFragmentViewModel.swift in Sources */,
 				B35A430D2ADEAD2C0027C29B /* SavedAccountManager.swift in Sources */,
 				B32205FD2AE89F3000B2C27C /* EmployeeReports.swift in Sources */,
@@ -2337,6 +2395,7 @@
 				B36923A12A41C24900709112 /* StoreSettingsView.swift in Sources */,
 				B30CF0CC2A52A66C00245955 /* CheckBoxView.swift in Sources */,
 				B36D8C592A40872A00A8C555 /* SettingsFragment.swift in Sources */,
+				B34D89222C3433FB00C424C5 /* WBNewOrderSettings.swift in Sources */,
 				B36923AD2A41C30800709112 /* AboutAppView.swift in Sources */,
 				B3F981842ACD85DC00D70FAF /* AgelWallet.swift in Sources */,
 				B352ADA12AF2907500068D1A /* ChangeUsername.swift in Sources */,
@@ -2361,6 +2420,7 @@
 				B3EF61792A43F7FD007930ED /* ProductCard.swift in Sources */,
 				B3D067C12BA1E45100EB7A06 /* AccountHomeScreen.swift in Sources */,
 				B3F23FEA2BA06BF500A68025 /* PrivacyCenter.swift in Sources */,
+				B32CA9202C35A7C10007416C /* WbInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2494,7 +2554,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 72;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2515,7 +2575,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.5;
+				MARKETING_VERSION = 4.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2537,7 +2597,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 70;
+				CURRENT_PROJECT_VERSION = 72;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2557,7 +2617,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.5;
+				MARKETING_VERSION = 4.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2672,6 +2732,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
+			};
+		};
+		B37AA7272C466EEC0061BF4A /* XCRemoteSwiftPackageReference "CoreXLSX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CoreOffice/CoreXLSX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.14.2;
 			};
 		};
 		B37F5FA62BAE626C007FD672 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */ = {
@@ -2813,6 +2881,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B3A7C8AC2A285B5600D6C1D2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsSwift;
+		};
+		B37AA7282C466EEC0061BF4A /* CoreXLSX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B37AA7272C466EEC0061BF4A /* XCRemoteSwiftPackageReference "CoreXLSX" */;
+			productName = CoreXLSX;
 		};
 		B37F5FA72BAE626D007FD672 /* Flow */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -9,7 +9,7 @@ import SwiftUI
 import StoreKit
 
 struct SubscribtionsView: View {
-    
+    @Environment(\.presentationMode) private var presentationMode
     var body: some View {
         ScrollView {
             if let plan = UserInformation.shared.user?.store?.storePlanInfo {
@@ -18,6 +18,7 @@ struct SubscribtionsView: View {
         }
         .padding()
         .navigationTitle("Subscribtions")
+        .withAccessLevel(accessKey: .subscription, presentation: presentationMode)
     }
 }
 
@@ -102,6 +103,7 @@ struct SubscribtionCard : View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }
+        
     }
     
     @MainActor

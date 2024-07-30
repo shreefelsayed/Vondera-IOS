@@ -257,7 +257,7 @@ class OrdersDao {
         return Int(truncating: count)
     }
 
-    func getOrder(id: String) async throws -> (item : Order, exists : Bool) {
+    func getOrder(id: String) async throws -> (item : Order?, exists : Bool) {
         return try await collection.document(id).getDocument(as: Order.self)
     }
     

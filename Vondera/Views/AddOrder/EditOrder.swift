@@ -33,6 +33,7 @@ struct EditOrder: View {
     @State private var clientShippingFees = 0.0
     @State private var discount = 0.0
     @State private var paid = false
+    @Environment(\.presentationMode) private var presentationMode
 
     init(order: Binding<Order>, isPreseneted:Binding<Bool>) {
         _order = order
@@ -211,6 +212,7 @@ struct EditOrder: View {
                 updateUI()
             }
         }
+        .withAccessLevel(accessKey: .orderWrite, presentation: presentationMode)
     }
     
     func updateUI() {

@@ -46,6 +46,8 @@ struct AddExpanse: View {
                 }
             }
         }
+        .withAccessLevel(accessKey: .expensesAdd, presentation: presentationMode)
+
     }
 }
 

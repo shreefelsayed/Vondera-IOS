@@ -10,6 +10,8 @@ import CodeScanner
 import AlertToast
 
 struct AssignToCourierView : View {
+    @Environment(\.presentationMode) private var presentationMode
+
     var courier:Courier
     var storeId:String
     
@@ -56,6 +58,7 @@ struct AssignToCourierView : View {
         .toast(isPresenting: Binding(value: $msg)) {
             AlertToast(displayMode: .banner(.pop), type: .regular, title: msg?.toString())
         }
+        .withAccessLevel(accessKey: .accessCouriersAssign, presentation: presentationMode)
     }
     
     func findOrder(_ id:String) async {
@@ -73,7 +76,7 @@ struct AssignToCourierView : View {
                 return
             }
             
-            var order = result.item
+            guard var order = result.item else { return }
             let canAssing = OrderManager().canAddToCourier(order: order, courierId: courier.id)
             
             guard canAssing.confirmed else {
@@ -120,10 +123,8 @@ struct CourierCurrentOrders: View {
                 SearchBar(text: $viewModel.searchText, hint: "Search \(viewModel.items.count) Orders")
             }
             
-            
             ForEach($viewModel.items.indices, id: \.self) { index in
                 if $viewModel.items[index].wrappedValue.filter(searchText: viewModel.searchText) {
-                    
                     OrderCard(order: $viewModel.items[index], allowSelect: {
                         selectOrders.toggle()
                     })
@@ -141,35 +142,37 @@ struct CourierCurrentOrders: View {
         }
         .navigationTitle("Current Orders")
         .toolbar {
-            if let myUser = UserInformation.shared.user {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        if (myUser.canAssignToCourier && courier.visible) {
-                            Button {
-                                self.assignOrders.toggle()
-                            } label: {
-                                Label("Assign Orders", systemImage: "qrcode.viewfinder")
-                            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    if courier.visible {
+                        Button {
+                            self.assignOrders.toggle()
+                        } label: {
+                            Label("Assign Orders", systemImage: "qrcode.viewfinder")
                         }
-                        
-                        if myUser.canAccessAdmin {
-                            NavigationLink {
-                                CourierReports(courier: courier)
-                            } label: {
-                                Label("Reports", systemImage: "filemenu.and.selection")
-                            }
-                            
-                            NavigationLink {
-                                CourierSettingsView(courier: courier, storeId: storeId)
-                            } label: {
-                                Label("Settings", systemImage: "gearshape.fill")
-                            }
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis.circle.fill")
                     }
                     
+                    NavigationLink {
+                        CourierReports(courier: courier)
+                    } label: {
+                        Label("Reports", systemImage: "filemenu.and.selection")
+                    }
                     
+                    NavigationLink {
+                        CourierImportExcel(courierId: courier.id)
+                    } label: {
+                        Label("Check Courier Sheet", systemImage: "filemenu.and.cursorarrow")
+                    }
+                    
+                    NavigationLink {
+                        CourierSettingsView(courier: courier, storeId: storeId)
+                    } label: {
+                        Label("Settings", systemImage: "gearshape.fill")
+                    }
+                    
+                   
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
                 }
             }
         }

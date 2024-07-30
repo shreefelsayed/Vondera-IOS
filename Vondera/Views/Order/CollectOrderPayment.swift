@@ -26,7 +26,7 @@ struct CollectOrderPayment: View {
             
             FloatingTextField(title: "Amount", text: .constant(""), required: nil, isNumric: true, number: $amount)
             
-            ButtonLarge(label: "Collect \(amount) EGP") {
+            ButtonLarge(label: "Collect \(amount.toString()) EGP") {
                 Task {
                     await genrateAndCopy()
                 }
@@ -104,9 +104,11 @@ struct CollectOrderPayment: View {
                 return
             }
             
+            guard let order = result.item else { return }
+            
             DispatchQueue.main.async {
-                self.amount = result.item.COD
-                self.cod = result.item.COD
+                self.amount = order.COD
+                self.cod = order.COD
                 self.isLoading = false
             }
         } catch {

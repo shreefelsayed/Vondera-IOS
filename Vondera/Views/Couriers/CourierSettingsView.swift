@@ -10,7 +10,8 @@ import SwiftUI
 struct CourierSettingsView: View {
     var courier:Courier
     var storeId:String
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         List {
             Section {
@@ -40,5 +41,6 @@ struct CourierSettingsView: View {
             }
         }
         .navigationTitle("Courier Settings")
+        .withAccessLevel(accessKey: .accessCouriersRemove, presentation: presentationMode)
     }
 }

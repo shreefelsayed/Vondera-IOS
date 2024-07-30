@@ -137,6 +137,7 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
         if alwaysStocked ?? false {
             return 0
         }
+        
         if hasVariants() {
             return getVariant().totalQuantity()
         }

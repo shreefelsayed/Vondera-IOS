@@ -70,7 +70,12 @@ struct SwitchCard : View {
             
             VStack(alignment: .leading) {
                 Text(user.name).bold()
-                Text("\(user.accountType) at \(user.storeName)")
+                if user.accountType != "Admin" {
+                    Text("\(user.accountType) at \(user.storeName)")
+                } else {
+                    Text("Admin at Vondera")
+                        .bold()
+                }
             }
             
             Spacer()

@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 
 class AdminTransDao {
     var collection:CollectionReference = Firestore.firestore().collection("transactions")
@@ -37,4 +38,22 @@ struct AdminTransaction: Codable {
     var planId: String? // PlanId
     var date: Date // Date
     var amount: Double // Amount
+    var count:Int?
+    var actionBy:String?
+    
+    func getImage() -> ImageResource {
+        guard let method = method else { return .btnWallet }
+        switch method.lowercased() {
+        case "admin":
+            return .defaultPhoto
+        case "wallet" :
+            return .btnWallet
+        case "card":
+            return .btnInstapay
+        case "vpay":
+            return .btnVpay
+        default:
+            return .btnWallet
+        }
+    }
 }

@@ -52,7 +52,7 @@ struct InStock: View {
                 }
             }
             
-            if !viewModel.items.isEmpty {
+            if !viewModel.items.isEmpty && AccessFeature.warehouseExport.canAccess(){
                 FloatingActionButton(symbolName: "square.and.arrow.up.fill") {
                     if let url = WarehouseExcel(list: viewModel.items).generateReport() {
                         DispatchQueue.main.async {

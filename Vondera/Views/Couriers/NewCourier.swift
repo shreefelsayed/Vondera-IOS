@@ -71,5 +71,6 @@ struct NewCourier: View {
                 }
             }
         }
+        .withAccessLevel(accessKey: .accessCouriersAdd, presentation: presentationMode)
     }
 }

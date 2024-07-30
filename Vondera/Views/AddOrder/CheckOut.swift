@@ -199,9 +199,7 @@ class CheckOutViewModel: ObservableObject {
     func check() -> Bool {
         if myUser!.store!.QuoteExceeded() {
             showToast("Your Quote has been exceeded")
-            if myUser?.accountType == "Owner" {
-                openPlan.toggle()
-            }
+            openPlan.toggle()
             
             return false
         }

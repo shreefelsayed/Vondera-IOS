@@ -18,7 +18,7 @@ class UsersDao {
             return nil
         }
         
-        var user = result.item
+        guard var user = result.item else { return nil }
         let store = try await StoresDao().getStore(uId: user.storeId)
         user.store = store
         return user

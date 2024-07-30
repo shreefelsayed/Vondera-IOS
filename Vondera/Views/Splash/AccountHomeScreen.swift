@@ -15,10 +15,10 @@ struct AccountHomeScreen : View {
             if let myUser = myUser {
                 if myUser.isStoreUser {
                     UserHome()
+                } else if myUser.accountType == "Admin" {
+                        AdminMain()
                 } else if myUser.accountType == "Sales" {
                     #warning("Set the sales Dashboard")
-                } else if myUser.accountType == "Admin" {
-                    AdminMain()
                 }
             }
         }

@@ -92,14 +92,12 @@ struct MarketPlaceOrders: View {
             await refreshData()
         }
         .toolbar {
-            if let myUser = UserInformation.shared.user, myUser.canAccessAdmin {
-                NavigationLink {
-                    MarketPlaceReport(marketPlaceId: marketPlaceId)
-                } label: {
-                    Image(systemName: "filemenu.and.selection")
-                        .font(.callout)
-                        .bold()
-                }
+            NavigationLink {
+                MarketPlaceReport(marketPlaceId: marketPlaceId)
+            } label: {
+                Image(systemName: "filemenu.and.selection")
+                    .font(.callout)
+                    .bold()
             }
         }
         .overlay {

@@ -189,6 +189,7 @@ struct ProductDetails: View {
                             
                             Divider()
                             
+                            // Stock
                             HStack {
                                 Text("In Stock")
                                     .font(.headline)
@@ -196,38 +197,58 @@ struct ProductDetails: View {
                                 
                                 Spacer()
                                 
+                                
                                 Text(product.alwaysStocked ?? false ? "Always Stokced" : "\(product.getQuantity()) Pieces")
                                     .font(.headline)
                             }
+                            
+                            // Variants
+                            if product.hasVariants() && !(product.alwaysStocked ?? false) {
+                                Divider()
+                                
+                                ForEach(product.getVariant(), id: \.self) { item in
+                                    VStack {
+                                        HStack {
+                                            Text(item.formatOptions())
+                                                .font(.headline)
+                                            
+                                            Spacer()
+                                            
+                                            Text("\(item.quantity) Pieces")
+                                                .font(.headline)
+                                                .foregroundStyle(item.quantity <= 0 ? .red : .black)
+                                        }
+                                        
+                                        Divider()
+                                    }
+                                }
+                            }
+                            
                         }
                         Spacer().frame(height: 12)
                         
                         //MARK : Settings
-                        if (myUser?.canAccessAdmin ?? false) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text("Margin")
-                                        .bold()
-                                    
-                                    Text("\(product.getMargin())%")
-                                }
-                                .padding(24)
-                                .background(.secondary.opacity(0.2))
-                                .cornerRadius(12)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Margin")
+                                    .bold()
                                 
-                                VStack(alignment: .leading) {
-                                    Text("Profit")
-                                        .bold()
-                                    
-                                    Text("EGP \(product.getProfit())")
-                                }
-                                .padding(24)
-                                .background(.secondary.opacity(0.2))
-                                .cornerRadius(12)
+                                Text("\(product.getMargin())%")
                             }
-                        }
-                        
-                        
+                            .padding(24)
+                            .background(.secondary.opacity(0.2))
+                            .cornerRadius(12)
+                            
+                            VStack(alignment: .leading) {
+                                Text("Profit")
+                                    .bold()
+                                
+                                Text("EGP \(product.getProfit())")
+                            }
+                            .padding(24)
+                            .background(.secondary.opacity(0.2))
+                            .cornerRadius(12)
+                        }                        
                     }
                     .padding()
                     
@@ -300,17 +321,15 @@ struct ProductDetails: View {
                         }
                     }
                     
-                    if (myUser?.canAccessAdmin ?? false) {
-                        NavigationLink {
-                            ProductSettings(product: $product, onDeleted: { value in
-                                if let onDelete = onDelete {
-                                    onDelete(value)
-                                }
-                                self.presentationMode.wrappedValue.dismiss()
-                            })
-                        } label: {
-                            Label("Options", systemImage: "gearshape")
-                        }
+                    NavigationLink {
+                        ProductSettings(product: $product, onDeleted: { value in
+                            if let onDelete = onDelete {
+                                onDelete(value)
+                            }
+                            self.presentationMode.wrappedValue.dismiss()
+                        })
+                    } label: {
+                        Label("Options", systemImage: "gearshape")
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle.fill")

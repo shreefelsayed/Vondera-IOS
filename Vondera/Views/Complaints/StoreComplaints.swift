@@ -62,6 +62,7 @@ class StoreComplaintsVM : ObservableObject {
 }
 
 struct StoreComplaints : View {
+    @Environment(\.presentationMode) private var presentationMode
     @StateObject private var viewModel = StoreComplaintsVM()
     
     var body: some View {
@@ -103,6 +104,7 @@ struct StoreComplaints : View {
                 }
             }
         }
+        .withAccessLevel(accessKey: .complaintsRead, presentation: presentationMode)
     }
     
     func closeComplaint(complaint:Complaint) {
@@ -184,8 +186,10 @@ struct ComplaintCard : View {
 }
 
 struct ComplaintSheet : View {
+    @Environment(\.presentationMode) private var presentationMode
     var complaint:Complaint
     var onButtonClicked:(()->())
+    
     var body: some View {
         VStack(alignment: .leading) {
             NavigationLink("# \(complaint.id)", destination: {
@@ -227,6 +231,8 @@ struct ComplaintSheet : View {
             }
         }
         .navigationTitle("Complaint Details")
+        .withAccessLevel(accessKey: .complaintsUpdate, presentation: presentationMode)
+
     }
 }
 

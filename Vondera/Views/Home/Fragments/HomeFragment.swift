@@ -9,14 +9,10 @@ struct StoreToolbar : View {
     var body: some View {
         HStack {
             if let myUser = user.getUser() {
-                if myUser.canAccessAdmin {
-                    NavigationLink(destination: Dashboard(store: myUser.store!)) {
-                        IconAndName(myUser: myUser)
-                    }
-                    .buttonStyle(.plain)
-                } else {
+                NavigationLink(destination: Dashboard(store: myUser.store!)) {
                     IconAndName(myUser: myUser)
                 }
+                .buttonStyle(.plain)
                 
                 Spacer()
                 
@@ -86,14 +82,12 @@ struct HomeFragment: View {
                             }
                             
                             // MARK : Statics Cards
-                            if !viewModel.storeStatics.isEmpty && myUser.canAccessAdmin {
+                            if !viewModel.storeStatics.isEmpty {
                                 HomeReports(reportsDays: $viewModel.staticsDays, reports: viewModel.storeStatics)
                             }
  
                             // MARK : TOP SELLING AREAS
-                            if viewModel.topAreas.count > 0 && myUser.canAccessAdmin {
-                                TopSellingAreas(list: viewModel.topAreas)
-                            }
+                            TopSellingAreas(list: viewModel.topAreas)
                             
                         }
                     }

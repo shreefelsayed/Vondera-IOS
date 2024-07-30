@@ -59,7 +59,8 @@ struct EditOrderProducts: View {
     
     @State var addItemSheet = false
     @ObservedObject var viewModel = EditOrderProductsVM()
-    
+    @Environment(\.presentationMode) private var presentationMode
+
     var body: some View {
         VStack {
             List {
@@ -151,6 +152,7 @@ struct EditOrderProducts: View {
             }
             
         })
+        .withAccessLevel(accessKey: .orderWrite, presentation: presentationMode)
     }
 }
 

@@ -28,22 +28,18 @@ struct CategoryPicker: View {
             if items.isEmpty {
                 EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "No categories were added to your store yet !") {
                     VStack {
-                        if UserInformation.shared.user?.canAccessAdmin ?? false {
-                            Button("Create new Category") {
-                                showAdd.toggle()
-                            }
-                            .buttonStyle(.bordered)
+                        Button("Create new Category") {
+                            showAdd.toggle()
                         }
+                        .buttonStyle(.bordered)
                     }
                 }
             }
         })
         .toolbar {
-            if UserInformation.shared.user?.canAccessAdmin ?? false {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("New") {
-                        showAdd.toggle()
-                    }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("New") {
+                    showAdd.toggle()
                 }
             }
         }

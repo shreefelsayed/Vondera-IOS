@@ -219,6 +219,7 @@ struct ProductStock: View {
         }, message: {
             Text("This will set your product as out of stock, and the avilable quantity to zero")
         })
+        .withAccessLevel(accessKey: .warehouseAdd, presentation: presentationMode)
     }
     
     func getData() async {

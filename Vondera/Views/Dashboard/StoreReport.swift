@@ -16,7 +16,7 @@ struct DateChoose:View {
     @Binding var selectedIndex:Int
     @Binding var from:Date
     @Binding var to:Date
-    
+
     
     let dates = [
         DateModel(title: "Today", range: 1),
@@ -52,6 +52,8 @@ struct DateChoose:View {
 }
 
 struct StoreReport: View {
+    @Environment(\.presentationMode) private var presentationMode
+
     @State var selectedDateIndex = 1
     @State var from: Date = Date().daysAgo(7).startOfDay()
     @State var to:Date = Date().endOfDay()
@@ -120,14 +122,17 @@ struct StoreReport: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Image(systemName: "square.and.arrow.up.fill")
-                    .foregroundColor(Color.accentColor)
-                    .onTapGesture {
-                        showReport.toggle()
-                    }
-                    .isHidden(items.isEmpty)
+            if AccessFeature.statisticsExport.canAccess() {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Image(systemName: "square.and.arrow.up.fill")
+                        .foregroundColor(Color.accentColor)
+                        .onTapGesture {
+                            showReport.toggle()
+                        }
+                        .isHidden(items.isEmpty)
+                }
             }
+           
         }
         .sheet(isPresented: $showReport, content: {
             ReportsDialog(listOrder: items)
@@ -136,6 +141,8 @@ struct StoreReport: View {
         .onAppear {
             fetch()
         }
+        .withAccessLevel(accessKey: .statisticsRead, presentation: presentationMode)
+
     }
     
     func fetch() {

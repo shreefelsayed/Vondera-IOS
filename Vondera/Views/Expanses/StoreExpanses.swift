@@ -154,26 +154,23 @@ struct StoreExpanses: View {
             }
         }
         .toolbar {
-            if let myUser = UserInformation.shared.user, myUser.canAccessAdmin {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button {
-                            addExpanses.toggle()
-                        } label: {
-                            Label("Add", systemImage: "plus")
-                        }
-                        
-                        NavigationLink {
-                            ExpansesReport(storeId: myUser.storeId)
-                        } label: {
-                            Label("Reports", systemImage: "filemenu.and.selection")
-                        }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button {
+                        addExpanses.toggle()
                     } label: {
-                        Image(systemName: "ellipsis.circle.fill")
+                        Label("Add", systemImage: "plus")
                     }
+                    
+                    NavigationLink {
+                        ExpansesReport(storeId: UserInformation.shared.user?.storeId ?? "")
+                    } label: {
+                        Label("Reports", systemImage: "filemenu.and.selection")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle.fill")
                 }
             }
-            
         }
         .refreshable {
             await refreshData()
@@ -202,8 +199,8 @@ struct StoreExpanses: View {
         }
         .background(Color.background)
         .navigationTitle("Expanses 💳")
+        .withAccessLevel(accessKey: .expensesRead, presentation: presentationMode)
         .withPaywall(accessKey: .expanses, presentation: presentationMode)
-
     }
     
     func refreshData() async {
@@ -220,6 +217,5 @@ struct StoreExpanses: View {
 #Preview {
     NavigationView {
         StoreExpanses()
-
     }
 }

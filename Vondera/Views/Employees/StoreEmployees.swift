@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StoreEmployees: View {
+    @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel:StoreEmployeesViewModel
     @State var contactUser:UserData?
     @State private var sheetHeight: CGFloat = .zero
@@ -84,6 +85,7 @@ struct StoreEmployees: View {
             NewEmployee()
         })
         .navigationTitle("Team members")
+        .withAccessLevel(accessKey: .teamMembersRead, presentation: presentationMode)
     }
 }
 

@@ -73,6 +73,7 @@ struct FbPixelScreen: View {
         
         do {
             let store = try await StoresDao().getStore(uId: storeId)
+            guard let store = store else { return }
             DispatchQueue.main.async {
                 self.fbPixel = store.fbPixel ?? ""
                 self.isLoading = false

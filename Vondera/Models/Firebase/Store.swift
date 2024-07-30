@@ -17,6 +17,7 @@ class Store: Codable {
     var addBy: String? = ""
     
     var active: Bool? = true
+    var renewCount:Int? = 0
     
     var fbLink: String? = ""
     var instaLink: String? = ""
@@ -64,12 +65,12 @@ class Store: Codable {
 
     
     var siteData:SiteData? = SiteData()
-    var whatsappPojo: WhatsappPojo? = WhatsappPojo()
     var shopify: ShopifyPojo? = ShopifyPojo()
     var storePlanInfo: StorePlanInfo?
     var ordersCountObj: OrdersCount? = OrdersCount()
     var paymentOptions: PaymentsOptions? = PaymentsOptions()
     var emailService:EmailService? = EmailService()
+    var wbInfo:WbInfo? = WbInfo()
     
     
     // --> Pixels

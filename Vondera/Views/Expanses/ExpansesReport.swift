@@ -16,6 +16,8 @@ struct ExpansesReport: View {
     @State var expanses:[Expense] = []
 
     @State var isLoading = false
+    @Environment(\.presentationMode) private var presentationMode
+
 
     var body: some View {
         List() {
@@ -67,6 +69,8 @@ struct ExpansesReport: View {
         .onAppear {
             fetch()
         }
+        .withAccessLevel(accessKey: .expensesExport, presentation: presentationMode)
+
     }
     
     func fetch() {
