@@ -64,10 +64,6 @@ class HomeFragmentViewModel : ObservableObject {
     }
     
     func getStatics() async {
-        guard (myUser?.store?.ordersCount ?? 0) > 10 else {
-            return
-        }
-        
         do {
             if let storeId = myUser?.storeId {
                 let items = try await StaticsDao(storeId: storeId).getLastDays(days: staticsDays)

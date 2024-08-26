@@ -34,6 +34,7 @@ class Store: Codable {
     var canWorkersReset: Bool? = false
     var orderAttachments: Bool? = false
     var canEditPrice: Bool? = false
+    var localOutOfStock:Bool? = false
     var canPrePaid: Bool? = true
     var websiteEnabled: Bool? = true
     var cantOpenPackage: Bool? = false
@@ -99,7 +100,7 @@ class Store: Codable {
     }
         
     func getVonderaLink() -> String {
-        return "https://" + merchantId + ".vondera.shop/"
+        return "https://" + merchantId + ".vondera.shop"
     }
     
     func getStoreDomain() -> String {

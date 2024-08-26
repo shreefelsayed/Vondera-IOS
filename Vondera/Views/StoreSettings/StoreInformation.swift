@@ -11,14 +11,14 @@ import PhotosUI
 struct StoreInformation: View {
     @Environment(\.presentationMode) private var presentationMode
     @ObservedObject var userInfo = UserInformation.shared
-
+    
     @State private var name = ""
     @State private var slogan = ""
     @State private var phone = ""
     @State private var address = ""
     @State private var gov = ""
     @State private var cateNo:Int = 7
-
+    
     @State private var selectedImage: UIImage? = nil
     @State private var pickedPhoto:PhotosPickerItem?
     
@@ -164,7 +164,7 @@ struct StoreInformation: View {
         Task {
             if let storeId = userInfo.user?.storeId {
                 do {
- 
+                    
                     let data = [
                         "name": name,
                         "phone": phone,
@@ -175,7 +175,7 @@ struct StoreInformation: View {
                     ]
                     
                     try await StoresDao().update(id: storeId, hashMap: data)
-
+                    
                     // --> Check if image changed, then update the image
                     if selectedImage != nil  {
                         self.savePhoto()
@@ -192,19 +192,19 @@ struct StoreInformation: View {
     
     func savePhoto() {
         // --> Upload the new Image
-        if let selectedImage = selectedImage, let id = userInfo.user?.storeId {
-            FirebaseStorageUploader().oneImageUpload(image: selectedImage, ref: "stores/\(id) - Logo.jpeg") { url, error in
-                if let error = error {
-                    self.onError(error: error.localizedDescription)
-                } else if let url = url?.absoluteString {
-                    Task {
-                        if let _ = try? await StoresDao().update(id: id, hashMap: ["logo" : url]) {
-                            _ = try await FirebaseFunctionCaller().callFunction(functionName: "sheets-logoChanged", data: ["mid" : userInfo.user?.store?.merchantId ?? "", "link" : url])
-                            
-                            self.onUpdateCompleted(url: url)
-                        }
+        guard let image = selectedImage, let user = userInfo.user else { return }
+        
+        S3Handler.singleUpload(image: image,
+                               path: "stores/\(user.storeId)/icon.jpg",
+                               maxSizeMB: 0.3) { link in
+            if let link = link {
+                Task {
+                    if let _ = try? await StoresDao().update(id: user.storeId, hashMap: ["logo" : link]) {
+                        self.onUpdateCompleted(url: link)
                     }
                 }
+            } else {
+                ToastManager.shared.showToast(msg: "Error Updating image", toastType: .error)
             }
         }
     }
@@ -225,13 +225,13 @@ struct StoreInformation: View {
             userInfo.user?.store?.governorate = gov
             userInfo.user?.store?.categoryNo = cateNo
             userInfo.user?.store?.phone = phone
-
+            
             if let url = url {
                 userInfo.user?.store?.logo = url
             }
             
             UserInformation.shared.updateUser(userInfo.user)
-
+            
             self.presentationMode.wrappedValue.dismiss()
             self.isSaving = false
             ToastManager.shared.showToast(msg: "Your info updated", toastType: .success)

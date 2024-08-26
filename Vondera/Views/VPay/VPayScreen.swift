@@ -58,7 +58,6 @@ struct VPayScreen: View {
                     await getData()
                 }
             }
-            .presentationDetents([.fraction(0.8)])
         }
         .navigationTitle("VPay Wallet")
         .withAccessLevel(accessKey: .vPayRead, presentation: presentationMode)

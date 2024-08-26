@@ -9,16 +9,16 @@ import SwiftUI
 import PhotosUI
 
 struct ProductPhotos: View {
-    @Binding var product:StoreProduct
+    @Binding var product: StoreProduct
     @State private var images = [PhotosPickerItem]()
     @State private var imagesWithIndexs = [(PhotosPickerItem, Int)]()
     
     @State private var listPhotos = [ImagePickerWithUrL]()
+    @State private var listOptamized = [String]()
     @State private var isSaving = false
     @State private var isLoading = false
     
     @Environment(\.presentationMode) private var presentationMode
-    
     
     var body: some View {
         List {
@@ -29,19 +29,21 @@ struct ProductPhotos: View {
             }
             .onDelete { indexSet in
                 if let index = indexSet.first {
-                    // --> Remove it from picker
+                    // Remove from picker and from optimized list
                     if listPhotos[index].image != nil {
                         images.remove(at: listPhotos[index].index)
                     }
                     
                     listPhotos.remove(at: index)
+                    listOptamized.remove(at: index)
                 }
             }
             .onMove { indexSet, index in
                 listPhotos.move(fromOffsets: indexSet, toOffset: index)
+                listOptamized.move(fromOffsets: indexSet, toOffset: index)
             }
             
-            if(listPhotos.count < 6) {
+            if listPhotos.count < 6 {
                 PhotosPicker(selection: $images, maxSelectionCount: (6 - listPhotos.count), matching: .images) {
                     Label("Add a new picture", systemImage: "plus")
                 }
@@ -73,7 +75,7 @@ struct ProductPhotos: View {
                 Button("Update") {
                     uploadPhotos()
                 }
-                .disabled(isLoading || isSaving || product.listPhotos.isEmpty)
+                .disabled(isLoading || isSaving || listPhotos.isEmpty)
             }
         }
         .task {
@@ -94,6 +96,15 @@ struct ProductPhotos: View {
                 DispatchQueue.main.async {
                     self.product = product
                     self.listPhotos = product.listPhotos.convertImageUrlsToItems()
+                    self.listOptamized = product.listOptamized ?? []
+                    
+                    // Ensure listOptamized has the same size as listPhotos
+                    if self.listOptamized.count < self.listPhotos.count {
+                        self.listOptamized.append(contentsOf: Array(repeating: "", count: self.listPhotos.count - self.listOptamized.count))
+                    } else if self.listOptamized.count > self.listPhotos.count {
+                        self.listOptamized = Array(self.listOptamized.prefix(self.listPhotos.count))
+                    }
+                    
                     self.isLoading = false
                 }
             }
@@ -120,19 +131,20 @@ struct ProductPhotos: View {
             return
         }
         
-
-        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: items.map { $0.image! }, storageRef: "stores/\(storeId)/products/\(product.id)") { [self] urls, error in
-            if let error = error {
-                isSaving = false
-                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
-            } else if let urls = urls {
-                listPhotos = listPhotos.mapUrlsToLinks(urls: urls)
+        let imagesToUpload = items.map { $0.image! }
+        S3Handler.uploadImages(imagesToUpload: imagesToUpload,
+                               maxSizeMB: 4,
+                               path: "stores/\(storeId)/products/\(product.id)",
+                               createThumbnail: true) { imageLinks in
+            DispatchQueue.main.async {
+                listPhotos = listPhotos.mapUrlsToLinks(urls: imageLinks.0)
+                listOptamized = imageLinks.1.compactMap { $0 }
                 saveProduct()
             }
         }
     }
     
-    func saveProduct()  {
+    func saveProduct() {
         guard let storeId = UserInformation.shared.user?.storeId else {
             return
         }
@@ -142,7 +154,7 @@ struct ProductPhotos: View {
         Task {
             do {
                 let links = listPhotos.getLinks()
-                let map:[String:Any] = ["listPhotos": links]
+                let map: [String: Any] = ["listPhotos": links, "listOptamized": listOptamized]
                 try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: map)
                 
                 DispatchQueue.main.async {
@@ -156,6 +168,16 @@ struct ProductPhotos: View {
             
             self.isSaving = false
         }
+    }
+}
+
+extension Array {
+    mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
+        var removedItems = [Element]()
+        for i in source.reversed() {
+            removedItems.insert(remove(at: i), at: 0)
+        }
+        insert(contentsOf: removedItems, at: destination)
     }
 }
 

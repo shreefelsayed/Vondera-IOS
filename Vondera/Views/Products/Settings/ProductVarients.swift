@@ -161,7 +161,7 @@ struct ProductVarients: View {
     func listVarient() -> [[String: [String]]] {
         var listVars = [[String: [String]]]()
         for (index, title) in listTitles.enumerated() {
-            listVars.append([title:listOptions[index]])
+            listVars.append([title.trimmingCharacters(in: .whitespacesAndNewlines) : listOptions[index].uniqueElements().map({$0.trimmingCharacters(in: .whitespacesAndNewlines)})])
         }
         
         return listVars

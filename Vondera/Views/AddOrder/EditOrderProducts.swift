@@ -145,18 +145,16 @@ struct EditOrderProducts: View {
         })
         .navigationTitle("Edit Products")
         .sheet(isPresented: $addItemSheet, content: {
-            NavigationStack {
-                AddItemsToOrder { product, options in
-                    viewModel.addItem(product: product, option: options)
-                }
+            AddItemsToOrder { product, options in
+                viewModel.addItem(product: product, option: options)
             }
-            
         })
         .withAccessLevel(accessKey: .orderWrite, presentation: presentationMode)
     }
 }
 
 struct AddItemsToOrder : View {
+    @State private var sheetHeight: CGFloat = .zero
     var onItemAdded:((StoreProduct, [String:String]) -> ())
     @State var items = [StoreProduct]()
     @State var searchText = ""
@@ -180,6 +178,7 @@ struct AddItemsToOrder : View {
                 }
                 .padding(.horizontal, 12)
             }
+            .measureHeight()
         }
         .willLoad(loading: isLoading)
         .overlay {
@@ -198,11 +197,12 @@ struct AddItemsToOrder : View {
         }
         .navigationTitle("Add Products")
         .sheet(item: $selectedProduct) { prod in
-            
             ProductBuyingSheet(product: .constant(prod), onAddedToCard: { product, options in
                 onItemAdded(product, options)
             })
         }
+        .wrapSheet(sheetHeight: $sheetHeight)
+
     }
     
     func getData() async {

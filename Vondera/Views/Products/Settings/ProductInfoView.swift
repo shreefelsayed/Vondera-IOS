@@ -131,7 +131,7 @@ struct ProductInfoView: View {
         self.isSaving = true
         
         // --> Update the database
-        let data:[String:Any] = ["name": name,
+        let data:[String:Any] = ["name": name.lowercased(),
                                  "desc": desc,
                                  "alwaysStocked": stocked,
                                  "categoryId": selectedCategory?.id ?? "",
@@ -141,7 +141,7 @@ struct ProductInfoView: View {
             try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: data)
             
             DispatchQueue.main.async {
-                self.product.name = name
+                self.product.name = name.lowercased()
                 self.product.desc = desc
                 self.product.alwaysStocked = stocked
                 self.product.categoryId = selectedCategory?.id ?? ""

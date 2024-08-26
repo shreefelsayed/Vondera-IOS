@@ -83,16 +83,13 @@ struct WebsiteCover: View {
         
         isSaving = true
         
-        // Upload the items
-        FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: listPhotos.getItemsToUpload().map { $0.image! }, storageRef: "stores/\(storeId)/cover/") { imageURLs, error in
-            if let error = error {
-                self.isSaving = false
-                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
-            } else if let urls = imageURLs {
-                self.listPhotos = self.listPhotos.mapUrlsToLinks(urls: urls)
-                self.updateURL()
-            }
+        let itemsToUpload = listPhotos.getItemsToUpload().map { $0.image! }
+        
+        S3Handler.uploadImages(imagesToUpload: itemsToUpload, maxSizeMB: 4, path: "stores/\(storeId)/cover/", createThumbnail: false) { uploadedUrls in
+            self.listPhotos = self.listPhotos.mapUrlsToLinks(urls: uploadedUrls.0)
+            self.updateURL()
         }
+        
     }
     
     func updateURL() {

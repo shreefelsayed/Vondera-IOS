@@ -156,17 +156,17 @@ struct EditInfoView: View {
     
     func savePhoto() {
         // --> Upload the new Image
-        if let selectedImage = selectedImage, let id = userInfo.user?.id {
-            FirebaseStorageUploader().oneImageUpload(image: selectedImage, ref: "users/\(id).jpeg") { url, error in
-                if let error = error {
-                    self.onError(error: error.localizedDescription)
-                } else if let url = url?.absoluteString {
-                    Task {
-                        if let _ = try? await UsersDao().update(id: id, hash: ["userURL" : url]) {
-                            self.onUpdateCompleted(url: url)
-                        }
+        guard let selectedImage = selectedImage, let user = userInfo.user else { return }
+        
+        S3Handler.singleUpload(image: selectedImage, path: "stores/\(user.storeId)/users/\(user.id)/avatar.jpg", maxSizeMB: 0.3) { link in
+            if let link = link {
+                Task {
+                    if let _ = try? await UsersDao().update(id: user.id, hash: ["userURL" : link]) {
+                        self.onUpdateCompleted(url: link)
                     }
                 }
+            } else {
+                ToastManager.shared.showToast(msg: "Error with uploading", toastType: .error)
             }
         }
     }

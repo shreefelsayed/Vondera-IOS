@@ -83,7 +83,7 @@ struct SettingsFragment: View {
                             Color.accentColor
                         )
                         
-                        if let store = UserInformation.shared.user?.store {
+                        if let store = UserInformation.shared.user?.store, !collapsed {
                             PlanCard(store: store)
                                 .padding()
                         }

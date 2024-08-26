@@ -17,6 +17,7 @@ struct StoreOrderSettings: View {
     @State private var localOrder = true
     @State private var localPickup = true
     @State private var prepaidLocal = true
+    @State private var localOutOfStock = true
     @State private var attachments = true
     @State private var reset = true
 
@@ -37,6 +38,8 @@ struct StoreOrderSettings: View {
             }
             
             Toggle("Enable Prepaid orders", isOn: $prepaidLocal)
+            
+            Toggle("Enable Order out of stock products", isOn: $localOutOfStock)
             
             Toggle("Enable attachments in local orders", isOn: $attachments)
             
@@ -73,7 +76,8 @@ struct StoreOrderSettings: View {
                     "offlineStore" : !localPickup,
                     "canPrePaid" : prepaidLocal,
                     "orderAttachments" : attachments,
-                    "canWorkersReset" : reset
+                    "canWorkersReset" : reset,
+                    "localOutOfStock": localOutOfStock
                 ]
                 
                 // --> Save the data
@@ -103,6 +107,7 @@ struct StoreOrderSettings: View {
             self.localPickup = !(store.offlineStore ?? false)
             self.prepaidLocal = store.canPrePaid ?? false
             self.attachments = store.orderAttachments ?? false
+            self.localOutOfStock = store.localOutOfStock ?? true
             self.reset = store.canWorkersReset ?? false
         }
         

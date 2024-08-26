@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProductBuyingSheet: View {
     @Binding var product:StoreProduct
+    @State private var sheetHeight: CGFloat = .zero
     var onAddedToCard:((StoreProduct, [String:String]) -> ())
     
     @State private var selectedDetent = PresentationDetent.large
@@ -148,6 +149,10 @@ struct ProductBuyingSheet: View {
                     
                     if !product.canAddToCart(variant: selectedVariant) {
                         ButtonLarge(label: "Preorder Product", background: .red ,textColor: .white) {
+                            if !(UserInformation.shared.user?.store?.localOutOfStock ?? true) {
+                                return
+                            }
+                            
                             onAddedToCard(product, getVariantsMap())
                             dismiss()
                         }
@@ -168,7 +173,7 @@ struct ProductBuyingSheet: View {
                 .frame(maxWidth: .infinity)
                 .padding()
             }
-            .frame(maxWidth: .infinity)
+            .measureHeight()
         }
         .onAppear {
             setDefaultOptions()
@@ -178,7 +183,7 @@ struct ProductBuyingSheet: View {
                 self.selectedVariant = variant
             }
         }
-        .navigationTitle("Product info")
+        .wrapSheet(sheetHeight: $sheetHeight)
     }
     
     func getVariantsMap() -> [String: String] {

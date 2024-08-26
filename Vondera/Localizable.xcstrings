@@ -219,6 +219,16 @@
         }
       }
     },
+    "%@ LE #%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ LE #%2$@"
+          }
+        }
+      }
+    },
     "%@ Orders" : {
       "localizations" : {
         "ar" : {
@@ -257,6 +267,12 @@
     },
     "%@. %@" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@. %2$@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -549,27 +565,16 @@
     },
     "%lld x %@" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld x %2$@"
-          }
-        }
-      }
-    },
-    "%lld x %lf" : {
-      "extractionState" : "stale",
-      "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "%1$lld × %2$@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$lld x %2$lf"
+            "value" : "%1$lld x %2$@"
           }
         }
       }
@@ -631,7 +636,14 @@
       }
     },
     "∞" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "0 Pieces" : {
       "localizations" : {
@@ -2310,7 +2322,15 @@
       }
     },
     "Check Courier Sheet" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأكد من شيت طلبات المندوب"
+          }
+        }
+      }
     },
     "Check out" : {
       "localizations" : {
@@ -2533,15 +2553,11 @@
       }
     },
     "Collect %@ EGP" : {
-
-    },
-    "Collect %lf EGP" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "استلم %lf جم"
+            "value" : "جمع %@ ج.م"
           }
         }
       }
@@ -2832,6 +2848,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "التكلفه"
+          }
+        }
+      }
+    },
+    "Couldn't upload image" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطأ في تحديث الصور"
           }
         }
       }
@@ -3416,19 +3442,15 @@
         }
       }
     },
-    "Default access levels for %@ updated !" : {
-      "extractionState" : "stale",
+    "Default access levels updated !" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تم تحديث مستويات الوصول الافتراضية لـ %@!"
+            "value" : "تم تحديث صلاحيات المستخدم"
           }
         }
       }
-    },
-    "Default access levels updated !" : {
-
     },
     "Default Payment Gateway" : {
       "localizations" : {
@@ -4152,17 +4174,6 @@
         }
       }
     },
-    "Employee Added" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تم اضافه الموظف"
-          }
-        }
-      }
-    },
     "Employee info changed" : {
       "localizations" : {
         "ar" : {
@@ -4199,6 +4210,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "قبول الطلبات من التطبيق"
+          }
+        }
+      }
+    },
+    "Enable Order out of stock products" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضافه المنتجات بدون وجود كميه"
           }
         }
       }
@@ -4429,6 +4450,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "حصل خطأ ما"
+          }
+        }
+      }
+    },
+    "Error Updating image" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطأ في تحديث الصور"
+          }
+        }
+      }
+    },
+    "Error with uploading" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطأ في تحديث الصور"
           }
         }
       }
@@ -5233,7 +5274,14 @@
       }
     },
     "Import Excel File" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف شيت اكسيل"
+          }
+        }
+      }
     },
     "Import from shopify" : {
       "localizations" : {
@@ -5366,10 +5414,24 @@
       }
     },
     "Invalid Courier" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مع مندوب أخر"
+          }
+        }
+      }
     },
     "Invalid Prices" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سعر غير متطابق"
+          }
+        }
+      }
     },
     "Items" : {
       "localizations" : {
@@ -6940,7 +7002,14 @@
       }
     },
     "Order Not Found" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم ايجاد الطلب"
+          }
+        }
+      }
     },
     "Order prepaid" : {
       "localizations" : {
@@ -7255,6 +7324,16 @@
       }
     },
     "Out of Stock" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد بالمخزن"
+          }
+        }
+      }
+    },
+    "Out Of Stock" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7615,7 +7694,14 @@
       }
     },
     "Pick an excel file to start checking the orders, first column is for order numbers, second is for prices" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر ملف Excel لبدء التحقق من الطلبات، العمود الأول لأرقام الطلبات، والثاني للأسعار"
+          }
+        }
+      }
     },
     "Pick Email Service" : {
       "localizations" : {
@@ -11280,7 +11366,14 @@
       }
     },
     "Valid Order" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طلب سليم"
+          }
+        }
+      }
     },
     "Value" : {
       "localizations" : {

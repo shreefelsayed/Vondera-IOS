@@ -177,10 +177,7 @@ struct ComplaintCard : View {
         }
         .cardView()
         .sheet(isPresented: $openSheet, content: {
-            NavigationStack {
-                ComplaintSheet(complaint: complaint, onButtonClicked: onClosed)
-            }
-            .presentationDetents([.medium, .large])
+            ComplaintSheet(complaint: complaint, onButtonClicked: onClosed)
         })
     }
 }
@@ -189,6 +186,7 @@ struct ComplaintSheet : View {
     @Environment(\.presentationMode) private var presentationMode
     var complaint:Complaint
     var onButtonClicked:(()->())
+    @State private var sheetHeight: CGFloat = .zero
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -232,7 +230,8 @@ struct ComplaintSheet : View {
         }
         .navigationTitle("Complaint Details")
         .withAccessLevel(accessKey: .complaintsUpdate, presentation: presentationMode)
-
+        .measureHeight()
+        .wrapSheet(sheetHeight: $sheetHeight)
     }
 }
 

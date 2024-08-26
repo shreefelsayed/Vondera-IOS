@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ReportsDialog: View {
     var listOrder:[Order]
+    @State private var sheetHeight: CGFloat = .zero
+    
     var body: some View {
         NavigationStack {
             List {
@@ -53,9 +55,10 @@ struct ReportsDialog: View {
             }
             .listStyle(.plain)
             .navigationTitle("Export Report")
-            
+            .measureHeight()
         }
-        .presentationDetents([.medium])
+        .wrapSheet(sheetHeight: $sheetHeight)
+
     }
 }
 

@@ -401,7 +401,7 @@ struct CheckOut: View {
                         NavigationLink {
                             CutomerProfile(client: client)
                         } label: {
-                            if client.isBanned ?? false {
+                            if client.banned ?? false {
                                 Text("This client is banned")
                                     .font(.headline)
                                     .foregroundStyle(.red)

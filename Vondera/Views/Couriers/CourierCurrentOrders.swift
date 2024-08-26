@@ -158,11 +158,11 @@ struct CourierCurrentOrders: View {
                         Label("Reports", systemImage: "filemenu.and.selection")
                     }
                     
-                    NavigationLink {
+                    /*NavigationLink {
                         CourierImportExcel(courierId: courier.id)
                     } label: {
                         Label("Check Courier Sheet", systemImage: "filemenu.and.cursorarrow")
-                    }
+                    }*/
                     
                     NavigationLink {
                         CourierSettingsView(courier: courier, storeId: storeId)

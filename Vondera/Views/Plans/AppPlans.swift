@@ -80,7 +80,6 @@ struct AppPlans: View {
                 DurationSheet(isPresenting: $showPickDurationDialog, plan: pickerPlan) { subPlanId in
                     subscribe(pickerPlan.id, subPlanId)
                 }
-                .presentationDetents([.medium])
             }
         })
         .willProgress(saving: storeVM.isBuying)
@@ -262,6 +261,7 @@ struct PlanInfoView : View {
 
 // MARK : The Duration Picker Sheet
 struct DurationSheet :View {
+    @State private var sheetHeight: CGFloat = .zero
     @Binding var isPresenting:Bool
     var plan:PlanInfo
     var onPicked:((String) -> ())
@@ -318,6 +318,8 @@ struct DurationSheet :View {
                 print("Offer code redemption failed: \(error.localizedDescription)")
             }
         }
+        .measureHeight()
+        .wrapSheet(sheetHeight: $sheetHeight)
     }
 }
 

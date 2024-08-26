@@ -105,6 +105,9 @@
 		B33403952A471427008CB1D8 /* PDFViewer in Frameworks */ = {isa = PBXBuildFile; productRef = B33403942A471427008CB1D8 /* PDFViewer */; };
 		B33403992A473DFE008CB1D8 /* SlideNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33403982A473DFE008CB1D8 /* SlideNetworkView.swift */; };
 		B334039C2A47434F008CB1D8 /* WarehouseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B334039B2A47434F008CB1D8 /* WarehouseView.swift */; };
+		B3349B6B2C71E40F0092BB17 /* S3Handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3349B6A2C71E40F0092BB17 /* S3Handler.swift */; };
+		B3349B6F2C71E8180092BB17 /* AWSCore in Frameworks */ = {isa = PBXBuildFile; productRef = B3349B6E2C71E8180092BB17 /* AWSCore */; };
+		B3349B712C71E8180092BB17 /* AWSS3 in Frameworks */ = {isa = PBXBuildFile; productRef = B3349B702C71E8180092BB17 /* AWSS3 */; };
 		B33970992A45E8D500E44FA2 /* UpdateCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33970982A45E8D500E44FA2 /* UpdateCard.swift */; };
 		B339709C2A45F62E00E44FA2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339709B2A45F62E00E44FA2 /* Dashboard.swift */; };
 		B339709E2A45FB5500E44FA2 /* StoreAllOrders.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339709D2A45FB5500E44FA2 /* StoreAllOrders.swift */; };
@@ -523,6 +526,7 @@
 		B334038B2A470698008CB1D8 /* ClientOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientOrdersViewModel.swift; sourceTree = "<group>"; };
 		B33403982A473DFE008CB1D8 /* SlideNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideNetworkView.swift; sourceTree = "<group>"; };
 		B334039B2A47434F008CB1D8 /* WarehouseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarehouseView.swift; sourceTree = "<group>"; };
+		B3349B6A2C71E40F0092BB17 /* S3Handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Handler.swift; sourceTree = "<group>"; };
 		B33970982A45E8D500E44FA2 /* UpdateCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCard.swift; sourceTree = "<group>"; };
 		B339709B2A45F62E00E44FA2 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		B339709D2A45FB5500E44FA2 /* StoreAllOrders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAllOrders.swift; sourceTree = "<group>"; };
@@ -849,8 +853,10 @@
 				B3A7C8C22A285B5600D6C1D2 /* FirebaseRemoteConfigSwift in Frameworks */,
 				B33403952A471427008CB1D8 /* PDFViewer in Frameworks */,
 				B3C30F5F2A9F28A10086B3FE /* SwiftXLSX in Frameworks */,
+				B3349B6F2C71E8180092BB17 /* AWSCore in Frameworks */,
 				B33DBD0F2A4A32DC008BBB69 /* CodeScanner in Frameworks */,
 				B3DFDC302A45337500037858 /* WrappingStack in Frameworks */,
+				B3349B712C71E8180092BB17 /* AWSS3 in Frameworks */,
 				B30316B42AC68948002134A2 /* LineChartView in Frameworks */,
 				B3A7C8B42A285B5600D6C1D2 /* FirebaseFirestore in Frameworks */,
 				B3A7C8E42A286F0E00D6C1D2 /* GoogleSignInSwift in Frameworks */,
@@ -1164,6 +1170,7 @@
 				B3EAFA0D2BB466F0007EC6DA /* DynamicNavigation.swift */,
 				B3E1B14A2BE016CC004239B0 /* CrashsManager.swift */,
 				B3F966642C416C3E003007CE /* AccessManager.swift */,
+				B3349B6A2C71E40F0092BB17 /* S3Handler.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1946,6 +1953,8 @@
 				B3C899D92AED03C70071706C /* RichTextKit */,
 				B37F5FA72BAE626D007FD672 /* Flow */,
 				B37AA7282C466EEC0061BF4A /* CoreXLSX */,
+				B3349B6E2C71E8180092BB17 /* AWSCore */,
+				B3349B702C71E8180092BB17 /* AWSS3 */,
 			);
 			productName = Vondera;
 			productReference = B31CFA5F2A2853AF00CBA01C /* Vondera.app */;
@@ -1997,6 +2006,7 @@
 				B33B50762AECC6770032942D /* XCRemoteSwiftPackageReference "RichTextKit" */,
 				B37F5FA62BAE626C007FD672 /* XCRemoteSwiftPackageReference "SwiftUI-Flow" */,
 				B37AA7272C466EEC0061BF4A /* XCRemoteSwiftPackageReference "CoreXLSX" */,
+				B3349B6D2C71E75A0092BB17 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
 			);
 			productRefGroup = B31CFA602A2853AF00CBA01C /* Products */;
 			projectDirPath = "";
@@ -2098,6 +2108,7 @@
 				B30CF0D02A52A82100245955 /* OrderSelectView.swift in Sources */,
 				B30CF0A92A51F7EA00245955 /* ProductVarients.swift in Sources */,
 				B31664312B1B82BB001C8C6A /* ReportsDialog.swift in Sources */,
+				B3349B6B2C71E40F0092BB17 /* S3Handler.swift in Sources */,
 				B36923B42A41C92000709112 /* HomeFragmentViewModel.swift in Sources */,
 				B3A7C8D92A285FB400D6C1D2 /* OrdersCount.swift in Sources */,
 				B3D567DB2BD18B4200BB4047 /* VarientsSettings.swift in Sources */,
@@ -2554,7 +2565,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 74;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2575,7 +2586,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.7;
+				MARKETING_VERSION = 4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2597,7 +2608,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 72;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2617,7 +2628,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.6.7;
+				MARKETING_VERSION = 4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2708,6 +2719,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+		};
+		B3349B6D2C71E75A0092BB17 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/aws-sdk-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.36.7;
 			};
 		};
 		B33B50762AECC6770032942D /* XCRemoteSwiftPackageReference "RichTextKit" */ = {
@@ -2861,6 +2880,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B33403932A471427008CB1D8 /* XCRemoteSwiftPackageReference "PDFViewer" */;
 			productName = PDFViewer;
+		};
+		B3349B6E2C71E8180092BB17 /* AWSCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3349B6D2C71E75A0092BB17 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSCore;
+		};
+		B3349B702C71E8180092BB17 /* AWSS3 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3349B6D2C71E75A0092BB17 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */;
+			productName = AWSS3;
 		};
 		B33DBD092A49F944008BBB69 /* SwiftUIGenericDialog */ = {
 			isa = XCSwiftPackageProductDependency;

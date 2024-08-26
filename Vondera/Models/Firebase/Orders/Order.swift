@@ -73,6 +73,8 @@ struct Order: Codable, Identifiable, Equatable {
     var email:String? = ""
     var hidden:Bool? = false
     
+    var discountCode:String? = ""
+    
     var payment:OrderPayment? = OrderPayment()
     var courierInfo:CourierInfo?
     

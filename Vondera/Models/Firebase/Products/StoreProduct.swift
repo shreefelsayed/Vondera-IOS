@@ -145,20 +145,20 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
         return quantity
     }
     
-    func canAddToCart(variant:VariantsDetails?, quantity:Int? = nil) -> Bool {
+    func getMaxQuantity(variant:VariantsDetails?) -> Int {
+        if alwaysStocked ?? false {
+            return 1000
+        }
+        
         if let variant = variant, getVariantInfo(variant.options) != nil {
-            if let quantity = quantity {
-                return variant.quantity >= quantity
-            }
-            
-            return variant.quantity > 0
+            return variant.quantity
         }
         
-        if let quantity = quantity {
-            return self.quantity >= quantity
-        }
-        
-        return self.quantity > 0
+        return self.quantity
+    }
+    
+    func canAddToCart(variant:VariantsDetails?) -> Bool {
+       return getMaxQuantity(variant: variant) > 0
     }
     
     static func ==(lhs: StoreProduct, rhs: StoreProduct) -> Bool {

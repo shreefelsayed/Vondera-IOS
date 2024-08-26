@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import FirebaseStorage
 import PhotosUI
 import SwiftUI
 
@@ -38,7 +37,7 @@ class CreateCategoryViewModel : ObservableObject {
     
     func saveCategory() async {
         // --> Check if image wasn't selected
-        guard selectedImage != nil else {
+        guard let selectedImage = selectedImage else {
             showMessage("Please select a category image")
             self.isSaving = false
             return
@@ -54,28 +53,26 @@ class CreateCategoryViewModel : ObservableObject {
         
         let id = categoryDao.getId()
         
-        // --> Upload the new Image
-        FirebaseStorageUploader().oneImageUpload(image: selectedImage! ,ref: "stores/\(storeId)/categories/\(id).jpeg") { url, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.isSaving = false
-                    self.showMessage(error.localizedDescription.localize())
-                }
-            } else if let url = url {
+        S3Handler.singleUpload(image: selectedImage, path: "stores/\(storeId)/categories/\(id).jpg", maxSizeMB: 1) { link in
+            if let link = link {
                 Task {
                     print("New logo uploaded")
-                    await self.addCategory(url: url, id: id)
+                    await self.addCategory(url: link, id: id)
                 }
-                
+            } else {
+                DispatchQueue.main.async {
+                    self.isSaving = false
+                    self.showMessage("Couldn't upload image")
+                }
             }
         }
     }
     
-    func addCategory(url:URL, id:String) async {
+    func addCategory(url:String, id:String) async {
         do {
             print("store id \(storeId)")
             let myUser = UserInformation.shared.getUser()
-            var created = Category(id: id,name: name, url: url.absoluteString, sortValue: myUser?.store!.categoriesCount ?? 0)
+            var created = Category(id: id,name: name, url: url, sortValue: myUser?.store!.categoriesCount ?? 0)
             created.desc = desc
             try await categoryDao.add(category: &created)
             

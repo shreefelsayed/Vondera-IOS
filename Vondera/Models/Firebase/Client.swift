@@ -18,7 +18,7 @@ struct Client: Codable, Hashable, Identifiable {
     var otherPhone: String? = ""
     var ordersCount: Int? = 0
     var total: Double? = 0
-    var isBanned: Bool? = false
+    var banned: Bool? = false
     var lastOrder:Timestamp? = Timestamp(date: Date())
 }
 

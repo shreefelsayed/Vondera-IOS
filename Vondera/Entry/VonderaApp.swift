@@ -22,6 +22,9 @@ struct VonderaApp: App {
             MainView()
                 .preferredColorScheme(.light)
                 .environment(\.font, .custom("Montserrat-Medium", size: 16))
+                .task {
+                    S3Handler.configureAWS()
+                }
         }
     }
 }

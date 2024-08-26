@@ -9,7 +9,6 @@ import SwiftUI
 import PhotosUI
 import Foundation
 import Firebase
-import FirebaseStorage
 import Combine
 
 class AddProductViewModel : ObservableObject {
@@ -211,15 +210,12 @@ class AddProductViewModel : ObservableObject {
         }
         
         if let storeId = myUser?.storeId {
-            FirebaseStorageUploader().uploadImagesToFirebaseStorage(images: selectedPhotos, storageRef: "stores/\(storeId)/products/\(productId)") { imageURLs, error in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        self.isSaving = false
-                        ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
-                    }
-                } else if let imageURLs = imageURLs {
-                    self.saveProduct(uris: imageURLs)
-                }
+            let path = "stores/\(storeId)/products/\(productId)"
+            S3Handler.uploadImages(imagesToUpload: selectedPhotos,
+                                   maxSizeMB: 4,
+                                   path: path,
+                                   createThumbnail: true) { uploadResults in
+                self.saveProduct(uris: uploadResults)
             }
         }
     }
@@ -256,7 +252,7 @@ class AddProductViewModel : ObservableObject {
         ToastManager.shared.showToast(msg: "Template date filled")
     }
     
-    func saveProduct(uris: [String]) {
+    func saveProduct(uris: ([String], [String?])) {
         Task {
             // MARK : Create a product Object
             var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
@@ -264,7 +260,8 @@ class AddProductViewModel : ObservableObject {
             product.desc = desc
             product.storeId = storeId
             product.crossedPrice = Double(crossed) ?? 0
-            product.listPhotos = uris
+            product.listPhotos = uris.0
+            product.listOptamized = uris.1.compactMap { $0 ?? "" }
             product.hashVarients = listVarient()
             product.alwaysStocked = alwaysStocked
             product.categoryId = selectedCategory?.id ?? ""

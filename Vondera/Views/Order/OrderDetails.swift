@@ -364,7 +364,14 @@ struct OrderDetails: View {
                         HStack {
                             Text("Discount")
                             Spacer()
-                            Text("\(discount.toString()) LE")
+                            Group {
+                                if let code = order.discountCode, !code.isBlank {
+                                    Text("\(discount.toString()) LE #\(code)")
+                                } else {
+                                    Text("\(discount.toString()) LE")
+                                }
+                            }
+                            
                                 .foregroundColor(.red)
                                 .bold()
                         }

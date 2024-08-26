@@ -45,7 +45,7 @@ struct CustomerBanScreen: View {
                 
         Task {
             do {
-                try await ClientsDao(storeId: storeId).update(id: phone, hashMap: ["isBanned" : isBanned])
+                try await ClientsDao(storeId: storeId).update(id: phone, hashMap: ["banned" : isBanned])
             } catch {
                 ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             }
@@ -60,7 +60,7 @@ struct CustomerBanScreen: View {
         self.isLoading = true
         if let result = try? await ClientsDao(storeId: storeId).getClient(phone: phone) {
             DispatchQueue.main.async {
-                self.isBanned = result.isBanned ?? false
+                self.isBanned = result.banned ?? false
                 self.isLoading = false
             }
         }

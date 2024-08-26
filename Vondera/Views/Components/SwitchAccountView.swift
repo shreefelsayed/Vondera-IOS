@@ -11,51 +11,51 @@ struct SwitchAccountView: View {
     @Binding var show:Bool
     @State var users = [LoginInfo]()
     @State var currentAccount = ""
+    @State private var sheetHeight: CGFloat = .zero
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(users) { user in
-                    SwitchCard(user: user, currentAccount: currentAccount == user.id, onSignin: {
-                        Task {
-                            if !currentAccount.isBlank {
-                                await AuthManger().logOut()
-                            }
-                            _ = await AuthManger().signUserInViaMail(email: user.email, password: user.password)
-                            
-                            show = false
+        List {
+            ForEach(users) { user in
+                SwitchCard(user: user, currentAccount: currentAccount == user.id, onSignin: {
+                    Task {
+                        if !currentAccount.isBlank {
+                            await AuthManger().logOut()
                         }
-                    })
-                    .listRowInsets(EdgeInsets())
-                    .swipeActions(edge: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/, allowsFullSwipe: false) {
-                        Button(role: .destructive) {
-                            withAnimation {
-                                users.removeAll { $0.id == user.id}
-                                SavedAccountManager().removeUser(uId: user.id)
-                                // MARK : Close the dialog if there is no more accounts
-                                if users.isEmpty {
-                                    show = false
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "trash.fill")
-                        }
+                        _ = await AuthManger().signUserInViaMail(email: user.email, password: user.password)
                         
+                        show = false
                     }
+                })
+                .listRowInsets(EdgeInsets())
+                .swipeActions(edge: /*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/, allowsFullSwipe: false) {
+                    Button(role: .destructive) {
+                        withAnimation {
+                            users.removeAll { $0.id == user.id}
+                            SavedAccountManager().removeUser(uId: user.id)
+                            // MARK : Close the dialog if there is no more accounts
+                            if users.isEmpty {
+                                show = false
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "trash.fill")
+                    }
+                    
                 }
             }
-            .listStyle(.plain)
-            .navigationBarTitleDisplayMode(.large)
-            .navigationTitle("Switch Account")
-            .task {
-                users = SavedAccountManager().getAllUsers()
-                if let myUser = UserInformation.shared.user {
-                    currentAccount = myUser.id
-                }
-            }
-            
+            .measureHeight()
         }
-        .presentationDetents([.medium])
+        .listStyle(.plain)
+        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle("Switch Account")
+        .task {
+            users = SavedAccountManager().getAllUsers()
+            if let myUser = UserInformation.shared.user {
+                currentAccount = myUser.id
+            }
+        }
+        .wrapSheet(sheetHeight: $sheetHeight)
+
     }
 }
 

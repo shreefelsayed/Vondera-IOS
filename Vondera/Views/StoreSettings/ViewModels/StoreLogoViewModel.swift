@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import FirebaseStorage
 import PhotosUI
 import SwiftUI
 
@@ -45,41 +44,36 @@ class StoreLogoViewModel : ObservableObject {
         }
         
         // --> Upload the new Image
-        let ref = Storage.storage().reference().child("stores")
-        
-        guard let image = selectedImage else {
+        guard let image = selectedImage, let user = UserInformation.shared.user else {
             isSaving = false
             showMessage("Please repick the image")
             return
         }
 
-        if selectedImage != nil {
-            isSaving = true
-            FirebaseStorageUploader().oneImageUpload(image: image, ref: "stores/\(String(describing: store.ownerId)) - Logo.jpeg") { [self] url, error in
-                if let error = error {
-                    isSaving = false
-                    showMessage(error.localizedDescription.localize())
-                } else if let url = url {
-                    updateRef(url: url)
-                }
+        isSaving = true
+        
+        S3Handler.singleUpload(image: image,
+                               path: "stores/\(user.storeId)/icon.jpg",
+                               maxSizeMB: 0.3) { link in
+            if let link = link {
+                self.updateRef(url: link)
+            } else {
+                self.isSaving = false
+                self.showMessage("Error Updating image")
             }
         }
     }
     
-    private func updateRef(url:URL) {
+    private func updateRef(url:String) {
         Task {
             do {
-                try await storesDao.update(id: store.ownerId, hashMap: ["logo": url.absoluteString])
-                store.logo = url.absoluteString
+                try await storesDao.update(id: store.ownerId, hashMap: ["logo": url])
+                store.logo = url
                 
                 // Saving local
                 if let myUser = UserInformation.shared.getUser() {
-                    myUser.store?.logo = url.absoluteString
-                    UserInformation.shared.updateUser(myUser)
-
-                    // Call the firebase function
-                    let data:[String:Any] = ["mid" : myUser.store?.merchantId ?? "", "link" : url.absoluteString]
-                    try await FirebaseFunctionCaller().callFunction(functionName: "sheets-logoChanged", data: data)
+                    myUser.store?.logo = url
+                    UserInformation.shared.updateUser(myUser)                    
                 }
                                 
                 DispatchQueue.main.async {

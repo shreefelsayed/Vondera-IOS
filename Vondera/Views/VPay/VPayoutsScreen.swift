@@ -128,6 +128,7 @@ struct PayoutCardView : View {
 }
 
 struct PayoutRequest: View {
+    @State private var sheetHeight: CGFloat = .zero
     @Environment(\.presentationMode) private var presentationMode
     @Binding var isPresenting:Bool
     var onRequestMade:(() -> ())
@@ -143,49 +144,47 @@ struct PayoutRequest: View {
     @State private var isSaving = false
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                if let store = store {
-                    CreditCardView(amount: Int(store.vPayWallet ?? 0), storeName: store.name, onClicked: nil)
+        VStack {
+            if let store = store {
+                CreditCardView(amount: Int(store.vPayWallet ?? 0), storeName: store.name, onClicked: nil)
+                
+                HStack {
+                    Text("Payout method")
                     
-                    HStack {
-                        Text("Payout method")
-                        
-                        Spacer()
-                        Picker("Payout method", selection: $method) {
-                            ForEach(methods, id: \.self) { method in
-                                Text(method)
-                                    .tag(method)
-                            }
+                    Spacer()
+                    Picker("Payout method", selection: $method) {
+                        ForEach(methods, id: \.self) { method in
+                            Text(method)
+                                .tag(method)
                         }
-                    }
-                    
-                    FloatingTextField(title: "Amount", text: .constant(""), caption: "This is how much balance you want to withdraw", isNumric: true, number: $amount)
-                    
-                    FloatingTextField(title: "Identifier", text: $identifier, caption: "This is your wallet number, or your instapay ipa")
-                    
-                    Button("Send payout request") {
-                        if check() {
-                            showConfirmation.toggle()
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
-            }
-            .padding()
-            .confirmationDialog("Confirm payout request", isPresented: $showConfirmation) {
-                Button("Send request", role: .none) {
-                    Task {
-                        await sendPayoutRequest()
                     }
                 }
                 
-                Button("Cancel", role: .cancel) {
-                    
+                FloatingTextField(title: "Amount", text: .constant(""), caption: "This is how much balance you want to withdraw", isNumric: true, number: $amount)
+                
+                FloatingTextField(title: "Identifier", text: $identifier, caption: "This is your wallet number, or your instapay ipa")
+                
+                Button("Send payout request") {
+                    if check() {
+                        showConfirmation.toggle()
+                    }
                 }
-            } message: {
-                Text("Are you sure you want to send this payout request ?")
+                .buttonStyle(.borderedProminent)
             }
+        }
+        .padding()
+        .confirmationDialog("Confirm payout request", isPresented: $showConfirmation) {
+            Button("Send request", role: .none) {
+                Task {
+                    await sendPayoutRequest()
+                }
+            }
+            
+            Button("Cancel", role: .cancel) {
+                
+            }
+        } message: {
+            Text("Are you sure you want to send this payout request ?")
         }
         .willProgress(saving: isSaving)
         .toast(isPresenting: Binding(value: $msg), alert: {
@@ -196,6 +195,9 @@ struct PayoutRequest: View {
             await getData()
         }
         .withAccessLevel(accessKey: .vPayPayouts, presentation: presentationMode)
+        .measureHeight()
+        .wrapSheet(sheetHeight: $sheetHeight)
+
     }
     
     func check() -> Bool {

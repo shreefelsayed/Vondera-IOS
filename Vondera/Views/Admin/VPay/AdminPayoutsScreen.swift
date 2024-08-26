@@ -70,7 +70,6 @@ struct AdminPayoutsScreen: View {
                     }
                 }
             })
-            .presentationDetents([.medium])
         }
     }
 }
@@ -81,6 +80,7 @@ struct PayoutDetail : View {
     var onAction:(()->())
     @State private var statue = "Pending"
     @State private var isSaving = false
+    @State private var sheetHeight: CGFloat = .zero
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
@@ -169,6 +169,8 @@ struct PayoutDetail : View {
         }
         .padding()
         .willProgress(saving: isSaving, msg: "Upading payout ..")
+        .measureHeight()
+        .wrapSheet(sheetHeight: $sheetHeight)
     }
     
     private func updatePayment() async {

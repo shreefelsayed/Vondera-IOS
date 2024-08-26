@@ -7,7 +7,6 @@
 
 import SwiftUI
 import AlertToast
-import FirebaseStorage
 import PhotosUI
 
 
@@ -161,14 +160,18 @@ struct EditCategory: View {
     }
     
     private func uploadImage() {
-        FirebaseStorageUploader().oneImageUpload(image: selectedImage!, ref: "stores/\(storeId)/categories/\(category.id).jpeg") { url, error in
-            if error != nil {
+        guard let selectedImage = selectedImage else { return }
+        
+        S3Handler.singleUpload(image: selectedImage, path: "stores/\(storeId)/categories/\(category.id).jpg", maxSizeMB: 1) { link in
+            if let link = link {
+                self.link = link
+                self.setData()
+                
+            } else {
                 DispatchQueue.main.async {
                     self.isSaving = false
+                    self.msg = "Couldn't upload image"
                 }
-            } else if let url = url {
-                self.link = url.absoluteString
-                self.setData()
             }
         }
     }

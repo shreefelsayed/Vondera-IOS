@@ -455,3 +455,35 @@ extension SecureField {
     }
 }
 
+struct ContentHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
+struct MeasureHeightModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .background(
+                GeometryReader { geometry in
+                    Color.clear.preference(key: ContentHeightKey.self, value: geometry.size.height)
+                }
+            )
+    }
+}
+
+extension View {
+    func measureHeight() -> some View {
+        self.modifier(MeasureHeightModifier())
+    }
+    
+    func wrapSheet(sheetHeight: Binding<CGFloat>) -> some View {
+        self.onPreferenceChange(ContentHeightKey.self) { newHeight in
+            sheetHeight.wrappedValue = newHeight
+        }
+        .presentationDetents([.height(sheetHeight.wrappedValue)])
+        .presentationDragIndicator(.visible)
+    }
+}

@@ -260,17 +260,13 @@ struct VarientsSettings: View {
                 // Enter the DispatchGroup
                 dispatchGroup.enter()
                 
-                FirebaseStorageUploader().oneImageUpload(image: image, ref: "stores/\(storeId)/products/\(product.id)/varients/\(UUID().uuidString)") { url, error in
+                S3Handler.singleUpload(image: image, path: "stores/\(storeId)/products/\(product.id)/varients/\(UUID().uuidString).jpg", maxSizeMB: 2.5) { link in
                     defer {
                         // Leave the DispatchGroup regardless of success or failure
                         dispatchGroup.leave()
                     }
                     
-                    if let url = url {
-                        self.urls[index] = url.absoluteString
-                    } else {
-                        self.urls[index] = ""
-                    }
+                    self.urls[index] = link ?? ""
                 }
             }
         }
