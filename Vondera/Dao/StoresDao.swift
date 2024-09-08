@@ -32,7 +32,7 @@ class StoresDao {
     
     func getStore(uId:String) async throws -> Store? {
         let store = try await collection.document(uId).getDocument(as: Store.self).item
-        guard var store = store else { return nil }
+        guard let store = store else { return nil }
         
         if store.siteData == nil {
             store.siteData = SiteData()

@@ -43,8 +43,9 @@ struct SwitchAccountView: View {
                     
                 }
             }
-            .measureHeight()
+            
         }
+        
         .listStyle(.plain)
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle("Switch Account")
@@ -54,7 +55,9 @@ struct SwitchAccountView: View {
                 currentAccount = myUser.id
             }
         }
-        .wrapSheet(sheetHeight: $sheetHeight)
+        .presentationDetents([.medium, .fraction(0.8)])
+        .presentationDragIndicator(.visible)
+        //.wrapSheet(sheetHeight: $sheetHeight)
 
     }
 }

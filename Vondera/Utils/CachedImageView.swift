@@ -93,3 +93,9 @@ struct CachedImageView: View {
         }.resume()
     }
 }
+
+func removeImageCache(url:String) {
+    if let url = URL(string: url) {
+        URLCache.shared.removeCachedResponse(for: URLRequest(url: url))
+    }
+}

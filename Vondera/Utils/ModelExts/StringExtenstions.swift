@@ -481,10 +481,9 @@ extension Array where Element == [String: [String]] {
         return details
     }
 }
-
 extension Array where Element == PhotosPickerItem {
     func getUIImages() async throws -> [UIImage] {
-        var items:[UIImage] = []
+        var items: [UIImage] = []
         
         for image in self {
             if let uiImage = try? await image.getImage() {
@@ -495,35 +494,29 @@ extension Array where Element == PhotosPickerItem {
         return items
     }
     
-    func addToListPhotos(list:[ImagePickerWithUrL]) async throws -> [ImagePickerWithUrL]{
+    func addToListPhotos(list: [ImagePickerWithUrL]) async throws -> [ImagePickerWithUrL] {
         var listPhotos = list
         let uiImages = try await self.getUIImages()
-        for imageIndex in uiImages.indices {
-            let image = uiImages[imageIndex]
-            
-            var foundImage = false
-            for photoIndex in listPhotos.indices {
-                // MARK : Delete changed images
-                let item = listPhotos[photoIndex].image
-                if let item = item, uiImages.firstIndex(of: item) == nil {
-                    listPhotos.remove(at: photoIndex)
-                    continue
-                }
-                
-                if item == image {
-                    foundImage = true
-                }
+        
+        // Create a set for image comparison
+        var existingImagesSet = Set<UIImage>(listPhotos.compactMap { $0.image })
+        
+        // Add new images and remove changed images
+        for image in uiImages {
+            if !existingImagesSet.contains(image) {
+                listPhotos.append(ImagePickerWithUrL(image: image, link: nil, index: listPhotos.count))
+                existingImagesSet.insert(image) // Update the set
             }
-            
-            // --> Add the image
-            if !foundImage {
-                listPhotos.append(ImagePickerWithUrL(image: image, link: nil, index: imageIndex))
-            }
+        }
+        
+        // Remove images that are no longer present
+        listPhotos.removeAll { item in
+            guard let itemImage = item.image else { return false }
+            return !uiImages.contains(itemImage)
         }
         
         return listPhotos
     }
-    
 }
 
 extension PhotosPickerItem {

@@ -38,15 +38,16 @@ struct BottomSheet: View {
                     .transition(.move(edge: .bottom))
                     .background(Color.background)
                     .cornerRadius(16, corners: [.topLeft, .topRight])
-                    .animation(.easeInOut)
                     .onReceive(keyboardHeightPublisher) { height in
-                        keyboardHeight = height
+                        withAnimation {
+                            keyboardHeight = height
+                        }
+                        
                     }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .ignoresSafeArea()
-        .animation(.easeInOut)
     }
 
     private func hideKeyboard() {

@@ -62,18 +62,16 @@ struct ProductsSearchView: View {
                 .listStyle(.plain)
             } else {
                 ScrollView {
-                    VStack {
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                            ForEach($vm.items.indices, id: \.self) { index in
-                                if $vm.items[index].wrappedValue.filter(vm.searchText) {
-                                    NavigationLink(destination: ProductDetails(product: $vm.items[index])) {
-                                        ProductCard(product: $vm.items[index])
-                                    }
-                                    .buttonStyle(.plain)
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                        ForEach($vm.items.indices, id: \.self) { index in
+                            if $vm.items[index].wrappedValue.filter(vm.searchText) {
+                                NavigationLink(destination: ProductDetails(product: $vm.items[index])) {
+                                    ProductCard(product: $vm.items[index])
                                 }
+                                .buttonStyle(.plain)
                             }
                         }
-                    }
+                    }.padding()
                 }
             }
         }

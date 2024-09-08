@@ -65,9 +65,7 @@ struct AdminPayoutsScreen: View {
         .sheet(item: $selectedObject) { item in
             PayoutDetail(payout: item, onAction: {
                 if let index = viewModel.items.firstIndex(where: {$0.id == item.id}) {
-                    withAnimation {
-                        viewModel.items.remove(at: index)
-                    }
+                    viewModel.items.remove(at: index)
                 }
             })
         }

@@ -32,6 +32,7 @@ struct ImagePickupHolder: View {
                 .clipShape(Circle())
         } else {
             CachedImageView(imageUrl: currentImageURL ?? "", scaleType: .centerCrop, placeHolder: currentImagePlaceHolder)
+            
             .overlay(alignment: .center) {
                 if let iconOverly = iconOverly {
                     Image(systemName: iconOverly)

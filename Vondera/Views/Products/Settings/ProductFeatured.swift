@@ -67,9 +67,7 @@ struct ProductFeatured: View {
     }
 
     func update() async {
-        guard let storeId = UserInformation.shared.user?.storeId else {
-            return
-        }
+        guard UserInformation.shared.user?.storeId != nil else { return }
         
         self.isSaving = true
         

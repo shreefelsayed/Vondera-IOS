@@ -24,20 +24,16 @@ class Contact {
 
 
     
-    func openWhatsApp(phoneNumber: String, message: String) -> Bool {
+    func openWhatsApp(phoneNumber: String, message: String) {
         let urlWhats = "whatsapp://send?phone=+2\(phoneNumber)&text=\(message)"
-            if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed) {
-                if let whatsappURL = URL(string: urlString) {
-                    if UIApplication.shared.canOpenURL(whatsappURL) {
-                        UIApplication.shared.openURL(whatsappURL)
-                        return true
-                    } else {
-                       return false
-                    }
-                }
-            }
         
-        return false
+        if let urlString = urlWhats.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+           let whatsappURL = URL(string: urlString) {
+            
+            if UIApplication.shared.canOpenURL(whatsappURL) {
+                UIApplication.shared.open(whatsappURL, options: [:])
+            }
+        }
     }
     
     func makePhoneCall(phoneNumber: String) {

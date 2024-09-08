@@ -67,9 +67,7 @@ struct ProductVisibilty: View {
     }
 
     func update() async {
-        guard let storeId = UserInformation.shared.user?.storeId else {
-            return
-        }
+        guard UserInformation.shared.user != nil else { return }
         
         self.isSaving = true
         

@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct OrderSearchView: View {
-    var storeId:String
+    var storeId: String
     
-    @StateObject var viewModel:OrderSearchViewModel
+    @StateObject var viewModel: OrderSearchViewModel
     
-    init(storeId:String) {
+    init(storeId: String) {
         self.storeId = storeId
-        _viewModel = StateObject(wrappedValue:OrderSearchViewModel(storeId:storeId))
+        _viewModel = StateObject(wrappedValue: OrderSearchViewModel(storeId: storeId))
     }
     
     var body: some View {
         List {
-            ForEach($viewModel.result.indices, id: \.self) { index in
+            ForEach(Array(viewModel.result.enumerated()), id: \.element.id) { index, order in
                 OrderCard(order: $viewModel.result[index])
             }
         }
@@ -31,7 +31,6 @@ struct OrderSearchView: View {
                 } label: {
                     Image(systemName: "qrcode.viewfinder")
                 }
-
             }
         }
         .searchable(text: $viewModel.searchText, prompt: "Search by name, phone or id")
@@ -41,11 +40,5 @@ struct OrderSearchView: View {
             }
         })
         .navigationTitle("Search for order")
-    }
-}
-
-struct OrderSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        OrderSearchView(storeId: "")
     }
 }

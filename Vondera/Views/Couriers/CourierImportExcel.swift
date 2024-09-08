@@ -57,7 +57,7 @@ class CourierImportExcelVM : ObservableObject {
                 
                 print("File imported rows \(rows.count)")
                 
-                for (index, row) in rows.enumerated() {
+                for (_, row) in rows.enumerated() {
                     // Skip the first row
                     //if index == 0 { continue }
                     print(row.cells.map {$0.value ?? ""}.joined(separator: ", "))

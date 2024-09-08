@@ -10,11 +10,28 @@ class S3Handler {
         let secretAccessKey = "0U8u8d2O8tfO5roMpA2iaqxAzWXmpdonMyudDp/f"
         let region = AWSRegionType.EUNorth1
 
+        // Credentials provider
         let credentialsProvider = AWSStaticCredentialsProvider(accessKey: accessKeyId, secretKey: secretAccessKey)
-        let configuration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
-        AWSServiceManager.default().defaultServiceConfiguration = configuration
-    }
 
+        // Service configuration
+        let serviceConfiguration = AWSServiceConfiguration(region: region, credentialsProvider: credentialsProvider)
+
+        // Register the service configuration as the default
+        AWSServiceManager.default().defaultServiceConfiguration = serviceConfiguration
+
+        // Transfer Utility Configuration
+        let transferUtilityConfiguration = AWSS3TransferUtilityConfiguration()
+        transferUtilityConfiguration.isAccelerateModeEnabled = true // Enable S3 Transfer Acceleration if needed
+        transferUtilityConfiguration.retryLimit = 3 // Retry 3 times before failing
+
+        // Register Transfer Utility with the configuration
+        AWSS3TransferUtility.register(
+            with: serviceConfiguration!,
+            transferUtilityConfiguration: transferUtilityConfiguration,
+            forKey: "S3TransferUtility"
+        )
+    }
+    
     static func uploadImages(imagesToUpload: [UIImage],
                                  maxSizeMB: Double? = nil,
                                  path: String,
@@ -86,6 +103,7 @@ class S3Handler {
                     complete("Error")
                 } else {
                     let fileUrl = getFileUrl(for: path)
+                    removeImageCache(url: fileUrl)
                     complete(fileUrl)
                 }
             }.continueWith { task -> AnyObject? in

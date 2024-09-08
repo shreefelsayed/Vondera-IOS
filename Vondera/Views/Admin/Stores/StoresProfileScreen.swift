@@ -267,7 +267,7 @@ struct SubscribeSheet : View {
             
             DispatchQueue.main.async {
                 self.isSubscribing = false
-                guard let resultData = result.data as? [String: Any] else {
+                guard let _ = result.data as? [String: Any] else {
                     ToastManager.shared.showToast(msg: "Error happened", toastType: .error)
                     return
                 }

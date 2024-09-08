@@ -355,7 +355,6 @@ struct FloatingLabelTextFieldStyle: ViewModifier {
                 .frame(height: 1)
                 .foregroundColor(isEditing ? .accentColor : .secondary)
         }
-        .animation(.spring())
         .onTapGesture {
             withAnimation {
                 isEditing = true

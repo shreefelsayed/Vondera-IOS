@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import AlertToast
+import UIKit
 
 struct UserHomeHeader: View {
     @ObservedObject var user = UserInformation.shared
@@ -55,7 +56,15 @@ struct UserHomeHeader: View {
                         
                         Spacer()
                         
-                        Link(link, destination: URL(string: link)!)
+                        if let url = URL(string: link) {
+                            Link(destination: url) {
+                                Text(link)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                            }
+                        }
+                        
+                      
                         
                         Spacer()
                         
@@ -106,9 +115,16 @@ struct UserHomeHeader: View {
     }
     
     func shareLink() {
-        if let link = user.user?.store?.getStoreDomain(), let appURL = URL(string: link) {
-            let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
-            UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+        guard let link = user.user?.store?.getStoreDomain(), let appURL = URL(string: link) else {
+            return
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let rootViewController = windowScene.windows.first(where: \.isKeyWindow)?.rootViewController {
+                rootViewController.present(activityViewController, animated: true, completion: nil)
+            }
         }
     }
 }

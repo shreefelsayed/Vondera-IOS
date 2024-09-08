@@ -20,8 +20,6 @@ struct EditInfoView: View {
     var body: some View {
         List {
             Section() {
-                
-                // MARK : Photo Picker
                 HStack {
                     Spacer()
                     PhotosPicker(selection: $pickedPhoto) {
@@ -162,6 +160,7 @@ struct EditInfoView: View {
             if let link = link {
                 Task {
                     if let _ = try? await UsersDao().update(id: user.id, hash: ["userURL" : link]) {
+                        print("Link Updated new link \(link)")
                         self.onUpdateCompleted(url: link)
                     }
                 }

@@ -44,12 +44,10 @@ struct StoreInformation: View {
                         }
                     }
                     .onChange(of: pickedPhoto) { _ in
+                        guard let pickedPhoto = pickedPhoto else { return }
                         Task {
-                            if let data = try? await pickedPhoto?.loadTransferable(type: Data.self) {
-                                if let uiImage = UIImage(data: data) {
-                                    self.selectedImage = uiImage
-                                    return
-                                }
+                            if let image = try? await pickedPhoto.getImage() {
+                                self.selectedImage = image
                             }
                         }
                     }

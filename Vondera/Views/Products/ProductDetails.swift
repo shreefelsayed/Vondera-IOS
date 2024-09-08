@@ -63,7 +63,7 @@ struct ProductDetails: View {
             ScrollView(showsIndicators: false) {
                 VStack (alignment: .leading) {
                     NavigationLink(destination: FullScreenImageView(imageURLs: product.listPhotos)) {
-                        SlideNetworkView(imageUrls: product.listPhotos, autoChange: true)
+                        SlideNetworkView(imageUrls: product.getDisplayPhotos(), autoChange: true)
                             .id(product.listPhotos)
                     }
                     .ignoresSafeArea()
@@ -350,9 +350,7 @@ struct ProductDetails: View {
         }
         
         let id = items[index].id
-        withAnimation {
-            items.remove(at: index)
-        }
+        items.remove(at: index)
         
         Task {
             try? await ReviewsDao(storeId: storeId, productId: product.id).removeReview(id:id)
@@ -385,10 +383,8 @@ struct ProductDetails: View {
         do {
             let result = try await ReviewsDao(storeId: storeId, productId: product.id).getReviews(lastSnapshot: lastDoc)
             self.isLoading = true
-            print("Result \(result.items.count)")
             
             DispatchQueue.main.async {
-                print("Got \(items.count) Reviews")
                 self.items.append(contentsOf: result.items)
                 self.lastDoc = result.lastDocument
                 self.hasMore = !result.items.isEmpty

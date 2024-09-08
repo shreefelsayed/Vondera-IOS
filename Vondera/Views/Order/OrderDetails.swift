@@ -74,9 +74,6 @@ struct StatueButton : View {
             Text("This will delete the order, but you can restore it later.")
         })
         .onChange(of: selecting) { _ in
-            guard selecting != order.statue else {
-                return
-            }
             
             // --> Then we make the action
             makeActionOnNewStatue(selecting)
@@ -97,6 +94,8 @@ struct StatueButton : View {
     }
     
     private func makeActionOnNewStatue(_ statue:String) {
+        guard selecting != order.statue else { return }
+
         switch OrderStatues(rawValue: statue) {
         case .pending:
             resetWarning.toggle()
@@ -125,6 +124,7 @@ struct StatueButton : View {
             break
         case .none:
             break
+        
         }
     }
     
@@ -133,7 +133,7 @@ struct StatueButton : View {
             let order = await OrderManager().confirmOrder(order:&order)
             DispatchQueue.main.async { [order] in
                 self.order = order
-                self.showTosat("Order Confirmed")
+                self.showToast("Order Confirmed")
             }
         }
     }
@@ -144,28 +144,32 @@ struct StatueButton : View {
             if order.success {
                 DispatchQueue.main.async { [order] in
                     self.order = order.result
-                    self.showTosat("Order Is ready for Shipping")
+                    self.showToast("Order has been deleted")
                 }
             }
         }
     }
     
-    func assign(_ courier:Courier) {
+    func assign(_ courier: Courier) {
         Task {
-            let order = await OrderManager().outForDelivery(order: &order, courier: courier)
-            DispatchQueue.main.async { [order] in
-                self.order = order
-                self.showTosat("Order Is with courier")
+            let updatedOrder = await OrderManager().outForDelivery(order: &order, courier: courier)
+            DispatchQueue.main.async { [updatedOrder] in
+                self.order = updatedOrder
+                self.showToast("Order is with courier")
             }
         }
     }
     
     func ready() {
         Task {
-            let order = await OrderManager().assambleOrder(order:&order)
-            DispatchQueue.main.async { [order] in
-                self.order = order
-                self.showTosat("Order Is ready for Shipping")
+            do {
+                let order = await OrderManager().assambleOrder(order:&order)
+                DispatchQueue.main.async { [order] in
+                    self.order = order
+                    self.showToast("Order Is ready for Shipping")
+                }
+            } catch {
+                print("Failed to set order as ready")
             }
         }
     }
@@ -175,7 +179,7 @@ struct StatueButton : View {
             let order  = await OrderManager().orderDelivered(order:&order)
             DispatchQueue.main.async { [order] in
                 self.order = order
-                self.showTosat("Order is Delivered")
+                self.showToast("Order is Delivered")
             }
         }
     }
@@ -183,7 +187,7 @@ struct StatueButton : View {
     func reset() {
         Task {
             self.order = await OrderManager().resetOrder(order:&order)
-            self.showTosat("Order has been reset")
+            self.showToast("Order has been reset")
         }
     }
     
@@ -192,12 +196,12 @@ struct StatueButton : View {
             let order = await OrderManager().orderFailed(order:&order)
             DispatchQueue.main.async { [order] in
                 self.order = order
-                self.showTosat("Order Failed")
+                self.showToast("Order Failed")
             }
         }
     }
     
-    private func showTosat(_ msg: LocalizedStringKey) {
+    private func showToast(_ msg: LocalizedStringKey) {
         DispatchQueue.main.async {
             ToastManager.shared.showToast(msg: msg)
         }

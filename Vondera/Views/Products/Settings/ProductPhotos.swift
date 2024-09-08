@@ -28,8 +28,10 @@ struct ProductPhotos: View {
                 }
             }
             .onDelete { indexSet in
-                if let index = indexSet.first {
-                    // Remove from picker and from optimized list
+                for index in indexSet {
+                    guard listPhotos.indices.contains(index),
+                          listOptamized.indices.contains(index) else { return }
+                    
                     if listPhotos[index].image != nil {
                         images.remove(at: listPhotos[index].index)
                     }
@@ -172,12 +174,14 @@ struct ProductPhotos: View {
 }
 
 extension Array {
-    mutating func move(fromOffsets source: IndexSet, toOffset destination: Int) {
+    mutating func moveSafely(fromOffsets source: IndexSet, toOffset destination: Int) {
         var removedItems = [Element]()
         for i in source.reversed() {
+            guard i < count else { return }  // Ensure index is valid
             removedItems.insert(remove(at: i), at: 0)
         }
-        insert(contentsOf: removedItems, at: destination)
+        let insertIndex = destination > count ? count : destination
+        insert(contentsOf: removedItems, at: insertIndex)
     }
 }
 

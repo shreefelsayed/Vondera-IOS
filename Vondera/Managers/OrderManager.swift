@@ -79,7 +79,7 @@ class OrderManager {
         hash["courierInfo"] = [:]
         
         do {
-            try! await ordersDao.update(id: order.id, hashMap: hash)
+            try await ordersDao.update(id: order.id, hashMap: hash)
             order = await addComment(order: &order, msg: "", code: OUT_FOR_DELV_CODE)
             order.statue = "Out For Delivery"
             order.courierId = courier.id

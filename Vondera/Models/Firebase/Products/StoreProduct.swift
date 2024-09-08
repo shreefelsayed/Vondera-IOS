@@ -92,7 +92,38 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     }
     
     func defualtPhoto() -> String {
-        return listOptamized?.first ?? listPhotos.first ?? ""
+        if let optimizedList = listOptamized, !optimizedList.isEmpty {
+            for item in optimizedList {
+                if !item.isEmpty {
+                    return item
+                }
+            }
+        }
+        
+        if let firstPhoto = listPhotos.first, !firstPhoto.isEmpty {
+            return firstPhoto
+        }
+        
+        return ""
+    }
+    
+    func getDisplayPhotos() -> [String] {
+        // Create a result array with the same size as listPhotos
+        var displayPhotos = [String](repeating: "", count: listPhotos.count)
+        
+        // Iterate over each index of listPhotos
+        for index in listPhotos.indices {
+            // Check if listOptamized has an item at this index and it is not empty
+            if index < listOptamized?.count ?? 0, let optimizedItem = listOptamized?[index], !optimizedItem.isEmpty {
+                // Use the item from listOptamized
+                displayPhotos[index] = optimizedItem
+            } else {
+                // Otherwise, use the item from listPhotos
+                displayPhotos[index] = listPhotos[index]
+            }
+        }
+        
+        return displayPhotos
     }
     
     // MARK : This migrates all the varients

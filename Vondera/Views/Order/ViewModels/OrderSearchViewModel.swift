@@ -1,39 +1,33 @@
-//
-//  OrderSearchViewModel.swift
-//  Vondera
-//
-//  Created by Shreif El Sayed on 27/06/2023.
-//
-
 import Foundation
 import FirebaseFirestore
 import Combine
 
 class OrderSearchViewModel: ObservableObject {
-    var storeId:String
-    var ordersDao:OrdersDao
+    var storeId: String
+    var ordersDao: OrdersDao
     
     @Published var result = [Order]()
-    
     @Published var searchText = ""
+    
     private var cancellables = Set<AnyCancellable>()
 
-    init(storeId:String) {
+    init(storeId: String) {
         self.storeId = storeId
         self.ordersDao = OrdersDao(storeId: storeId)
         
         initSearch()
     }
     
-    func initSearch() {
+    private func initSearch() {
         $searchText
-            .sink { newValue in
-                self.searchOrder(newValue)
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] newValue in
+                self?.searchOrder(newValue)
             }
             .store(in: &cancellables)
     }
     
-    func searchOrder(_ search:String) {
+    private func searchOrder(_ search: String) {
         guard !search.isBlank else {
             result.removeAll()
             return
@@ -43,24 +37,21 @@ class OrderSearchViewModel: ObservableObject {
             do {
                 let indexBy = getIndex(search)
                 let result = try await self.ordersDao.search(search: search, field: indexBy, lastSnapShot: nil)
-                DispatchQueue.main.sync {
+                DispatchQueue.main.async {
                     self.result = result.0
                 }
             } catch {
-                print(error.localizedDescription)
+                print("Search failed: \(error.localizedDescription)")
             }
-            
         }
     }
     
-    func getIndex(_ value:String) -> String {
+    private func getIndex(_ value: String) -> String {
         if value.isPhoneNumber {
             return "phone"
         } else if value.isNumeric && !value.isPhoneNumber {
             return "id"
         }
-        
         return "name"
     }
-    
 }

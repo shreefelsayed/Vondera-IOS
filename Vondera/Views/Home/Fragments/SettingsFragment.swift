@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AlertToast
+import UIKit
 
 struct SettingsFragment: View {
     private let appLink = "https://apps.apple.com/eg/app/vondera/id6459148256"
@@ -25,31 +26,31 @@ struct SettingsFragment: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if let myUser = myUser.getUser() {
+            if let currentUser = myUser.user {
                 List {
                     // MARK : Header
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading)  {
                             HStack(alignment: .center) {
-                                ImagePlaceHolder(url: myUser.userURL, placeHolder: UIImage(named: "defaultPhoto"), reduis: 60)
+                                ImagePlaceHolder(url: myUser.user?.userURL ?? "", placeHolder: UIImage(named: "defaultPhoto"), reduis: 60)
                                 
                                 VStack(alignment: .leading) {
-                                    Text(myUser.name)
+                                    Text(currentUser.name)
                                         .font(.title3)
                                         .foregroundStyle(.white)
                                         .bold()
                                     
                                     
-                                    Text("\(myUser.getAccountTypeString().toString()) at \(myUser.store?.name ?? "")")
+                                    Text("\(currentUser.getAccountTypeString().toString()) at \(currentUser.store?.name ?? "")")
                                         .font(.caption)
                                         .lineLimit(1)
                                         .foregroundColor(.white)
                                     
-                                    Text("@\(myUser.store?.merchantId ?? "")")
+                                    Text("@\(currentUser.store?.merchantId ?? "")")
                                         .font(.body)
                                         .foregroundColor(.white)
                                         .onTapGesture {
-                                            CopyingData().copyToClipboard(myUser.store?.merchantId ?? "")
+                                            CopyingData().copyToClipboard(currentUser.store?.merchantId ?? "")
                                         }
                                 }
                                 .padding(.horizontal, 12)
@@ -68,7 +69,7 @@ struct SettingsFragment: View {
                                 
                                 Spacer()
                                 
-                                Text("\(myUser.store?.storePlanInfo?.name ?? "")")
+                                Text("\(currentUser.store?.storePlanInfo?.name ?? "")")
                                     .foregroundStyle(.white)
                                 
                                 Image(systemName: collapsed ? "chevron.down" :  "chevron.up")
@@ -93,7 +94,7 @@ struct SettingsFragment: View {
                     .listRowInsets(EdgeInsets())
                     
                     // MARK : STORE SETTINGS
-                    if let store = myUser.store {
+                    if let store = currentUser.store {
                         Section("Store Settings") {
                             NavigationLink(destination: SubscribtionsView()) {
                                 Label(
@@ -283,11 +284,18 @@ struct SettingsFragment: View {
     }
     
     func shareApp() {
-            if let appURL = URL(string: appLink) {
-                let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
-                UIApplication.shared.windows.first?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+        guard let appURL = URL(string: appLink) else {
+            return
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: [appURL], applicationActivities: nil)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let rootViewController = windowScene.windows.first(where: \.isKeyWindow)?.rootViewController {
+                rootViewController.present(activityViewController, animated: true, completion: nil)
             }
         }
+    }
 }
 
 #Preview {

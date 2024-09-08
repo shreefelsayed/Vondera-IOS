@@ -46,13 +46,15 @@ struct SearchBar: View {
             
             if isEditing {
                 Button("Cancel") {
-                    self.isEditing = false
-                    self.text = ""
+                    withAnimation {
+                        self.isEditing = false
+                        self.text = ""
+                    }
+                    
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }
                 .padding(.trailing, 10)
                 .transition(.move(edge: .trailing))
-                .animation(.default)
             }
         }
         .listRowInsets(EdgeInsets())
