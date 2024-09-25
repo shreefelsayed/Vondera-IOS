@@ -29,6 +29,10 @@ struct PlanInfo : Codable {
         let storePlanLevel = UserInformation.shared.user?.store?.storePlanInfo?.getPlanLevel() ?? 0
         let planLevel = getPlanLevel()
         
+        if UserInformation.shared.user?.store?.storePlanInfo?.planId == id && id == "OnDemand" {
+            return "Current Plan"
+        }
+        
         if storePlanLevel == planLevel {
             return "Update subscribtion duration"
         } else if storePlanLevel < planLevel {
@@ -69,7 +73,7 @@ struct Feature: Identifiable {
 extension PlanInfo {
     var features: [Feature] {
         var features: [Feature] = []
-        features.append(Feature(name: "\(planFeatures.maxOrders) Orders / month", available: (self.planFeatures.maxOrders > 0)))
+        features.append(Feature(name: "\(planFeatures.maxOrders == 0 ? "Unlimited" : "\(planFeatures.maxOrders)") Orders / month", available: (self.planFeatures.maxOrders > 0)))
         features.append(Feature(name: "\(planFeatures.members) Team members", available: (self.planFeatures.members > 0)))
         features.append(Feature(name: "\(planFeatures.salesChannels) Sales Channels", available: (self.planFeatures.salesChannels > 0)))
         features.append(Feature(name: "Unlimited Products", available: true))
@@ -98,7 +102,7 @@ struct StorePlanInfo: Codable {
     var duration:Int = 0
     var trxId = ""
     var onEnd = "Cancel"
-    var expireDate:Timestamp = Timestamp()
+    var expireDate:Timestamp? = Timestamp()
     var startDate:Timestamp = Timestamp()
     var expired = false
     var planFeatures = PlanFeatures()
@@ -112,6 +116,7 @@ struct StorePlanInfo: Codable {
     }
     
     func isDateAlert() -> Bool {
+        guard let expireDate = expireDate else { return false }
         return expireDate.toDate().timeIntervalSince(Date()) <= 3 * 24 * 60 * 60
     }
     

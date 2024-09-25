@@ -181,11 +181,11 @@ class CheckOutViewModel: ObservableObject {
         order.otherPhone = otherPhone
         order.requireDelivery = shipping
         
-        order = await OrderManager().addOrder(order: &order)
+        order = await OrderManager().addOrder(order: order)
         
         DispatchQueue.main.async { [order] in
             if self.whats {
-                _ = Contact().openWhatsApp(phoneNumber: self.phone, message: order.toString())
+                Contact().openWhatsApp(phoneNumber: self.phone, message: order.toString())
             }
             
             self.isSaving = false

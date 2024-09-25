@@ -28,14 +28,14 @@ struct StoreCouriers: View {
             showAdd.toggle()
         })
         .withEmptySearchView(searchText: viewModel.searchText, resultCount: viewModel.filteredItems.count)
-        /*.toolbar {
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack {
-                    NavigationLink {
+                    /*NavigationLink {
                        BannedEmployees()
                     } label: {
                         Image(.btnBan)
-                    }
+                    }*/
                     
                     Button {
                         showAdd.toggle()
@@ -48,7 +48,7 @@ struct StoreCouriers: View {
                 .font(.title2)
                 .bold()
             }
-        }*/
+        }
         .navigationDestination(isPresented: $showAdd, destination: {
             NewCourier(currentList: $viewModel.couriers)
         })

@@ -153,7 +153,7 @@ struct OrderOptionsSheet: View {
     }
     
     func deleteOrder() async {
-        let newOrder = await OrderManager().orderDelete(order:&order)
+        let newOrder = await OrderManager().orderDelete(order:order)
         self.order = newOrder.result
         uiMessage = "Order Deleted"
         isPreseneted.toggle()
@@ -207,7 +207,7 @@ struct AddCommentSheet : View {
         if let _ = UserInformation.shared.user, !comment.isBlank {
             addingComment = true
             
-            let newOrder = await OrderManager().addComment(order: &order, msg: comment, code: 0)
+            let newOrder = await OrderManager().addComment(order: order, msg: comment, code: 0)
             
             order = newOrder
             uiMessage = "Comment Added"

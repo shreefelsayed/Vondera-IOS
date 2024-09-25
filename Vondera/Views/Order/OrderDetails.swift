@@ -130,7 +130,7 @@ struct StatueButton : View {
     
     func confirm() {
         Task {
-            let order = await OrderManager().confirmOrder(order:&order)
+            let order = await OrderManager().confirmOrder(order:order)
             DispatchQueue.main.async { [order] in
                 self.order = order
                 self.showToast("Order Confirmed")
@@ -140,7 +140,7 @@ struct StatueButton : View {
     
     func delete() {
         Task {
-            let order = await OrderManager().orderDelete(order:&order)
+            let order = await OrderManager().orderDelete(order:order)
             if order.success {
                 DispatchQueue.main.async { [order] in
                     self.order = order.result
@@ -152,7 +152,7 @@ struct StatueButton : View {
     
     func assign(_ courier: Courier) {
         Task {
-            let updatedOrder = await OrderManager().outForDelivery(order: &order, courier: courier)
+            let updatedOrder = await OrderManager().outForDelivery(order: order, courier: courier)
             DispatchQueue.main.async { [updatedOrder] in
                 self.order = updatedOrder
                 self.showToast("Order is with courier")
@@ -163,7 +163,7 @@ struct StatueButton : View {
     func ready() {
         Task {
             do {
-                let order = await OrderManager().assambleOrder(order:&order)
+                let order = await OrderManager().assambleOrder(order:order)
                 DispatchQueue.main.async { [order] in
                     self.order = order
                     self.showToast("Order Is ready for Shipping")
@@ -176,7 +176,7 @@ struct StatueButton : View {
     
     func deliver() {
         Task {
-            let order  = await OrderManager().orderDelivered(order:&order)
+            let order  = await OrderManager().orderDelivered(order:order)
             DispatchQueue.main.async { [order] in
                 self.order = order
                 self.showToast("Order is Delivered")
@@ -186,14 +186,14 @@ struct StatueButton : View {
     
     func reset() {
         Task {
-            self.order = await OrderManager().resetOrder(order:&order)
+            self.order = await OrderManager().resetOrder(order:order)
             self.showToast("Order has been reset")
         }
     }
     
     func failed() {
         Task {
-            let order = await OrderManager().orderFailed(order:&order)
+            let order = await OrderManager().orderFailed(order:order)
             DispatchQueue.main.async { [order] in
                 self.order = order
                 self.showToast("Order Failed")
@@ -714,7 +714,7 @@ struct OrderDetails: View {
     
     func addComment() {
         Task {
-            let order = await OrderManager().addComment(order: &order, msg: comment, code: 0)
+            let order = await OrderManager().addComment(order: order, msg: comment, code: 0)
             DispatchQueue.main.async { [order] in
                 self.order = order
                 self.comment = ""

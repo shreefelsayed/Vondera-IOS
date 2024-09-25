@@ -28,46 +28,48 @@ struct PlanCard: View {
                         }
                 }
                 
-                
-                HStack {
-                    ProgressView(value: plan.getPercentage())
-                        .accentColor(
-                            (plan.isUsageAlert()) ?
-                            Color.red : Color.accentColor
-                        )
-                        .frame(maxWidth: .infinity)
-                        .progressViewStyle(LinearProgressViewStyle())
-                        .padding(.vertical, 4)
+                if plan.planId != "OnDemand" {
+                    HStack {
+                        ProgressView(value: plan.getPercentage())
+                            .accentColor(
+                                (plan.isUsageAlert()) ?
+                                Color.red : Color.accentColor
+                            )
+                            .frame(maxWidth: .infinity)
+                            .progressViewStyle(LinearProgressViewStyle())
+                            .padding(.vertical, 4)
+                        
+                        Text("\(Int((plan.getPercentage() * 100) ))%")
+                            .font(.caption)
+                        
+                    }
                     
-                    Text("\(Int((plan.getPercentage() * 100) ))%")
-                        .font(.caption)
+                    HStack {
+                        Text("Monthly Limit")
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Text("\(plan.planFeatures.currentOrders) Of \(plan.planFeatures.maxOrders ) Orders")
+                            .foregroundStyle( (plan.isUsageAlert()) ? .red : .secondary)
+                    }
                     
-                }
-                
-                HStack {
-                    Text("Monthly Limit")
-                        .bold()
+                    Divider()
                     
-                    Spacer()
-                    
-                    Text("\(plan.planFeatures.currentOrders) Of \(plan.planFeatures.maxOrders ) Orders")
-                        .foregroundStyle( (plan.isUsageAlert()) ? .red : .secondary)
-                }
-                
-                Divider()
-                
-                HStack {
-                    Text("Expire Date")
-                        .bold()
-                    
-                    Spacer()
-                    
-                    Text("\(plan.expireDate.toString())")
-                        .foregroundStyle( (plan.isDateAlert()) ? .red : .secondary)
+                    HStack {
+                        Text("Expire Date")
+                            .bold()
+                        
+                        Spacer()
+                        
+                        if let expireDate = plan.expireDate {
+                            Text("\(expireDate.toString())")
+                                .foregroundStyle( (plan.isDateAlert()) ? .red : .secondary)
+                        }
+                        
+                    }
                 }
             }
-            
-            
         }
         .navigationDestination(isPresented: $showPlans, destination: {
             AppPlans()

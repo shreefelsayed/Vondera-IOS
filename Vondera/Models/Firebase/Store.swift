@@ -24,6 +24,7 @@ class Store: Codable {
     var tiktokLink: String? = ""
     var website: String? = ""
     var customDomain:String? = ""
+    var ordersWallet:Double? = 0.0
     
  
     var onlineStore: Bool? = true
@@ -127,16 +128,20 @@ class Store: Codable {
         }
 
         // Get the current date
-        let currentDate = Date()
+        if let expireData = storePlanInfo.expireDate?.toDate() {
+            let currentDate = Date()
 
-        // Calculate the difference in days between the expiration date and the current date
-        let differenceInSeconds = storePlanInfo.expireDate.toDate().timeIntervalSince(currentDate)
-        let daysLeft = Int(differenceInSeconds / (60 * 60 * 24))
+            // Calculate the difference in days between the expiration date and the current date
+            let differenceInSeconds = expireData.timeIntervalSince(currentDate)
+            
+            let daysLeft = Int(differenceInSeconds / (60 * 60 * 24))
 
-        // If the expiration date is within 3 days, return the number of days left
-        if daysLeft <= 3 {
-            return "Your subscription will expire in \(daysLeft) days"
+            // If the expiration date is within 3 days, return the number of days left
+            if daysLeft <= 3 {
+                return "Your subscription will expire in \(daysLeft) days"
+            }
         }
+       
 
         // Calculate remaining orders
         let remainingOrders = storePlanInfo.planFeatures.maxOrders - storePlanInfo.planFeatures.currentOrders

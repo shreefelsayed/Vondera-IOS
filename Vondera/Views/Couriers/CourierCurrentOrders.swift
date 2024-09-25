@@ -85,7 +85,7 @@ struct AssignToCourierView : View {
                 return
             }
             
-            order = await OrderManager().outForDelivery(order: &order, courier: courier)
+            order = await OrderManager().outForDelivery(order: order, courier: courier)
             
             DispatchQueue.main.async { [order] in
                 self.searchedId = ""

@@ -113,7 +113,6 @@ struct TransactionCard : View {
                 .bold()
                 .foregroundStyle(Color.accentColor)
         }
-        
     }
 }
 

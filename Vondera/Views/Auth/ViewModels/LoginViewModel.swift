@@ -11,7 +11,6 @@ import FirebaseAuth
 class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
-    @Published var errorMsg:String?
     
     let authManger:AuthManger
     
@@ -36,10 +35,11 @@ class LoginViewModel: ObservableObject {
             return false
         }
         
-        let loggedIn = await authManger.signUserInViaMail(email: email, password: password)
+        let loggedIn = await authManger.signUserInViaMail(email: email.trimming(spaces: .leadingAndTrailing),
+                                                          password: password.trimming(spaces: .leadingAndTrailing))
         
         if loggedIn == false {
-            errorMsg = "No user was found"
+            ToastManager.shared.showToast(msg: "No user was found", toastType: .error)
             return false
         }
         
@@ -52,17 +52,17 @@ class LoginViewModel: ObservableObject {
     
     func validate() -> Bool {        
         guard !email.isBlank, !password.isBlank else {
-            errorMsg = "Please fill in all fields"
+            ToastManager.shared.showToast(msg: "Please fill in all fields", toastType: .error)
             return false
         }
         
         guard email.isValidEmail else {
-            errorMsg = "Please enter valid email"
+            ToastManager.shared.showToast(msg: "Please enter valid email", toastType: .error)
             return false
         }
         
         guard password.count > 5 else {
-            errorMsg = "Please enter valid password"
+            ToastManager.shared.showToast(msg: "Please enter valid password", toastType: .error)
             return false
         }
         

@@ -112,31 +112,14 @@ struct LoginView: View {
             
         }
         .padding()
-        /*.onReceive(appleAuth.authPublisher, perform: { authProvider in
-            Task {
-                let loggedIn = await viewModel.appleSignIn(cred: authProvider.cred, id: authProvider.id)
-                if !loggedIn {
-                    print("Will Create Account")
-                    authInfo = authProvider
-                    creatingAccount = true
-                }
-            }
-        })*/
         .navigationDestination(isPresented: $creatingAccount) {
             CreateAccountView(authInfo: authInfo)
         }
         .navigationDestination(isPresented: $forgetPassword) {
             ForgetPasswordView()
         }
-        .toast(isPresenting: Binding(value: $viewModel.errorMsg)){
-            AlertToast(displayMode: .alert,
-                       type: .error(.red),
-                       title: viewModel.errorMsg)
-        }
         .sheet(isPresented: $showSavedItems) {
-            
-                SwitchAccountView(show: $showSavedItems)
-            
+            SwitchAccountView(show: $showSavedItems)
         }
         .onAppear {
             Task {

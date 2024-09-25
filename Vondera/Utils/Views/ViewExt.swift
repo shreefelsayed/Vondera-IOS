@@ -482,7 +482,7 @@ extension View {
         self.onPreferenceChange(ContentHeightKey.self) { newHeight in
             sheetHeight.wrappedValue = newHeight
         }
-        .presentationDetents([.height(sheetHeight.wrappedValue)])
+        .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
     }
 }

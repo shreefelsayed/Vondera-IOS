@@ -46,7 +46,7 @@ struct AppPlans: View {
                 Spacer()
                 
                 Button {
-                    showPickDurationDialog.toggle()
+                    showPickerDialog(plans[selectedPlan].id)
                 } label: {
                     Text(plans[selectedPlan].getButtonTitle())
                         .bold()
@@ -86,6 +86,15 @@ struct AppPlans: View {
         .navigationTitle("Plans")
     }
     
+    func showPickerDialog(_ planId:String) {
+        if planId != "OnDemand" {
+            showPickDurationDialog.toggle()
+            return
+        }
+        
+        Task { await subscribeOnDemand(planId) }
+    }
+    
     func subscribe(_ planId:String, _ subPlanId:String) {
         Task {
             do {
@@ -97,13 +106,59 @@ struct AppPlans: View {
         }
     }
     
+    func subscribeOnDemand(_ planId:String) async {
+        do {
+            guard let user = UserInformation.shared.user else { return }
+            
+            let current = user.store?.storePlanInfo?.planId ?? "free"
+            // --> Check if the current plan was on demand
+            if current == "OnDemand" {
+                ToastManager.shared.showToast(msg: "You're already on the On Demand Plan", toastType: .normal)
+                return
+            }
+            
+            DispatchQueue.main.async { storeVM.isBuying = true }
+            
+            let result = try await FirebaseFunctionCaller().callFunction(functionName: "onDemand-subscribe",
+                                                                         data: ["storeId": user.storeId])
+            
+            DispatchQueue.main.async { storeVM.isBuying = false }
+            
+            guard let resultData = result.data as? [String: Any] else {
+                ToastManager.shared.showToast(msg: "Error happened", toastType: .error)
+                return
+            }
+            
+            let success = resultData["success"] as! Bool
+            let msg = resultData["msg"] as! String
+
+            if !success {
+                ToastManager.shared.showToast(msg: msg.localize(), toastType: .error)
+                return
+            }
+            
+            // --> Copy Data
+            DispatchQueue.main.async {
+                storeVM.isBuying = false
+                DynamicNavigation.shared.navigate(to: AnyView(OnPaymentSuccess()))
+            }
+        } catch {
+            print("Error happened")
+        }
+    }
+    
     func getData() {
+        self.isLoading = true
+        
         Task {
+            
             do {
                 let items = try await PlanDao().getPaid()
                 DispatchQueue.main.async {
                     self.currentPlanId = UserInformation.shared.user?.store?.storePlanInfo?.planId ?? "free"
                     self.plans = items.sorted(by: {$0.getBasePrice() < $1.getBasePrice()})
+                    self.plans.insert(PlanDao().getOnDemandPlan(), at: 0)
+                    self.isLoading = false
                 }
             } catch {
                 print(error.localizedDescription)
@@ -143,6 +198,9 @@ struct OnPaymentSuccess : View {
             Spacer()
         }
         .padding()
+        .task {
+            await refreshData()
+        }
     }
     
     func refreshData() async {
@@ -243,6 +301,24 @@ struct PlanInfoView : View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
+                if !plan.desc.isBlank {
+                    HStack {
+                        Text(plan.desc)
+                        
+                        Spacer()
+                        
+                        if plan.id == "OnDemand" {
+                            NewLabel()
+                        }
+                    }
+                    
+                    Spacer().frame(height: 20)
+                }
+                
+                HStack {
+                    Spacer()
+                }
+                
                 ForEach(plan.features.filter({ $0.available })) { feature in
                     HStack {
                         Label(feature.name, systemImage: "checkmark")
@@ -257,7 +333,6 @@ struct PlanInfoView : View {
         
     }
 }
-
 
 // MARK : The Duration Picker Sheet
 struct DurationSheet :View {
@@ -322,7 +397,6 @@ struct DurationSheet :View {
         .wrapSheet(sheetHeight: $sheetHeight)
     }
 }
-
 
 #Preview {
     AppPlans()

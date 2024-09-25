@@ -98,7 +98,7 @@ class CreateAccountViewModel: ObservableObject {
         
         do {
             // --> Check if email already exists
-            let emailExists = try await UsersDao().emailExists(email: email)
+            let emailExists = try await UsersDao().emailExists(email: email.trimming(spaces: .leadingAndTrailing))
             guard !emailExists else {
                 isSaving = false
                 showError(err: "This email is already signed up")
@@ -106,7 +106,11 @@ class CreateAccountViewModel: ObservableObject {
             }
             
             // --> Create user Object
-            var user = UserData(id: "", name: name, email: email, phone: phone, addedBy: refferCode, accountType: "Owner", pass: password)
+            var user = UserData(id: "", name: name, email: email.trimming(spaces: .leadingAndTrailing),
+                                phone: phone,
+                                addedBy: refferCode,
+                                accountType: "Owner",
+                                pass: password.trimming(spaces: .leadingAndTrailing))
             
             if let authInfo = authInfo {
                 user.userURL = authInfo.url
@@ -116,7 +120,11 @@ class CreateAccountViewModel: ObservableObject {
             }
             
             // --> Create Store Object
-            let store = Store(name: storeName, address: address, governorate: gov, phone: bPhone, ownerId: "")
+            let store = Store(name: storeName,
+                              address: address,
+                              governorate: gov,
+                              phone: bPhone,
+                              ownerId: "")
             
             store.almostOut = 5
             store.merchantId = userName.replacingOccurrences(of: " ", with: "").lowercased()

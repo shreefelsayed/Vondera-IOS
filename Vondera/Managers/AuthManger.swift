@@ -158,6 +158,12 @@ class AuthManger {
                 }
             }
             
+            if !user.active {
+                print("No user id not found")
+                await logOut()
+                return nil
+            }
+            
             UserInformation.shared.updateUser(user)
             await onSignIn()
             return user

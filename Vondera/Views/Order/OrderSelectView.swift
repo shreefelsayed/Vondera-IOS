@@ -181,7 +181,7 @@ struct ActionsDialog: View {
                             Button("Confirm orders") {
                                 showToast("Confirming Orders")
                                 Task {
-                                    let update = await OrderManager().confirmOrder(list: &list)
+                                    let update = await OrderManager().confirmOrder(list: list)
                                     DispatchQueue.main.async {
                                         self.list = update
                                         print("Statue \(list.first?.statue ?? "")")
@@ -199,7 +199,7 @@ struct ActionsDialog: View {
                         Button("Assemble orders") {
                             showToast("Assembling Orders")
                             Task {
-                                let update = await OrderManager().assambleOrder(list: &list)
+                                let update = await OrderManager().assambleOrder(list: list)
                                 DispatchQueue.main.async {
                                     self.list = update
                                     self.onActionMade(update)
@@ -226,7 +226,7 @@ struct ActionsDialog: View {
                         Button("Deliver orders") {
                             showToast("Finishing Orders")
                             Task {
-                                let update =  await OrderManager().orderDelivered(list: &list)
+                                let update =  await OrderManager().orderDelivered(list: list)
                                 DispatchQueue.main.async {
                                     self.list = update
                                     self.onActionMade(update)
@@ -255,7 +255,7 @@ struct ActionsDialog: View {
                 showToast("Assigned to Courier")
                 
                 Task {
-                    let update = await OrderManager().outForDelivery(list:&list, courier:option)
+                    let update = await OrderManager().outForDelivery(list:list, courier:option)
                     DispatchQueue.main.async {
                         self.list = update
                         self.onActionMade(update)

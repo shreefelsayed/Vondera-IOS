@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/aws-amplify/aws-sdk-ios-spm",
       "state" : {
-        "revision" : "048ba8f55deb04dd399c0c3a61b4addf54e0c36b",
-        "version" : "2.36.7"
+        "revision" : "292607ecd78dc1a1774cdbe043adb4e7fd5ff27e",
+        "version" : "2.37.1"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/CodeScanner",
       "state" : {
-        "revision" : "34da57fb63b47add20de8a85da58191523ccce57",
-        "version" : "2.5.0"
+        "revision" : "9fa582f4b36c69c2a55bff5fb3377eb170ae273c",
+        "version" : "2.5.1"
       }
     },
     {
@@ -258,8 +258,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
-        "revision" : "5191b801aca999b704eb93f118f91468b4570571",
-        "version" : "5.19.6"
+        "revision" : "8a1be70a625683bc04d6903e2935bf23f3c6d609",
+        "version" : "5.19.7"
       }
     },
     {
@@ -294,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
-        "revision" : "e17d61f26df0f0e06f58f6977ba05a097a720106",
-        "version" : "1.27.1"
+        "revision" : "edb6ed4919f7756157fe02f2552b7e3850a538e5",
+        "version" : "1.28.1"
       }
     },
     {

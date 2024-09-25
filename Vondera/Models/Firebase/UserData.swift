@@ -64,6 +64,10 @@ struct UserData: Codable, Identifiable {
         return !(appleId?.isBlank ?? true)
     }
     
+    func isAppleAccount() -> Bool {
+        return email == "shreiftest@gmail.com"
+    }
+    
     static func ==(lhs: UserData, rhs: UserData) -> Bool {
         return lhs.id == rhs.id
     }

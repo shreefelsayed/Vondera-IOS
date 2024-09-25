@@ -221,6 +221,12 @@
     },
     "%@ LE #%@" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ جم #%2$@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -235,6 +241,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ طلب"
+          }
+        }
+      }
+    },
+    "%@ Orders / month" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ الطلبات / الشهر"
           }
         }
       }
@@ -459,16 +475,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld طلب"
-          }
-        }
-      }
-    },
-    "%lld Orders / month" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld اوردر شهري"
           }
         }
       }
@@ -1095,6 +1101,16 @@
         }
       }
     },
+    "Add Funds" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف رصيد"
+          }
+        }
+      }
+    },
     "Add item" : {
       "localizations" : {
         "ar" : {
@@ -1490,6 +1506,20 @@
           }
         }
       }
+    },
+    "Amount must be 50 EGP or more" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المبلغ يجب ان يكون ٢٠٠ جنيه او اكثر"
+          }
+        }
+      }
+    },
+    "Amount must be 200 EGP or more" : {
+
     },
     "Amount of subscribtion fees we received" : {
       "localizations" : {
@@ -2317,17 +2347,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تغيير اسم المستخدم سيقوم بتغيير رابط موقعك لدينا، هل انت متأكد من انك تريد تغيير اسم المستخدم ؟"
-          }
-        }
-      }
-    },
-    "Check Courier Sheet" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "تأكد من شيت طلبات المندوب"
           }
         }
       }
@@ -4394,6 +4413,16 @@
         }
       }
     },
+    "Enter amount" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل المبلغ"
+          }
+        }
+      }
+    },
     "Enter how many pieces you want to add to your stock" : {
       "localizations" : {
         "ar" : {
@@ -4410,6 +4439,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ادخل اسم المنتج"
+          }
+        }
+      }
+    },
+    "Enter the amount that you want to add to your wallet." : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل المبلغ الذي ترغب في اضافته"
           }
         }
       }
@@ -4910,16 +4949,6 @@
         }
       }
     },
-    "First" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "أول"
-          }
-        }
-      }
-    },
     "Fonts" : {
       "localizations" : {
         "ar" : {
@@ -5151,7 +5180,7 @@
       }
     },
     "Hello, World!" : {
-
+      "shouldTranslate" : false
     },
     "Help" : {
       "localizations" : {
@@ -5969,16 +5998,6 @@
         }
       }
     },
-    "Navigate" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "انتقل"
-          }
-        }
-      }
-    },
     "Net Profit" : {
       "localizations" : {
         "ar" : {
@@ -6000,6 +6019,16 @@
       }
     },
     "New" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جديد"
+          }
+        }
+      }
+    },
+    "NEW" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6460,7 +6489,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا يوجد نتاج بحث ل %lld"
+            "value" : "لا يوجد نتاج بحث ل %@"
           }
         }
       }
@@ -6495,12 +6524,32 @@
         }
       }
     },
+    "No transactions were made yet" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد اي عمليات"
+          }
+        }
+      }
+    },
     "No transactions were made yet by your clients" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "لا يوجد اي معاملات من عملائك"
+          }
+        }
+      }
+    },
+    "No user was found" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم ايجاد اي مستخدم"
           }
         }
       }
@@ -6675,6 +6724,26 @@
         }
       }
     },
+    "On Demand" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حسب الطلب"
+          }
+        }
+      }
+    },
+    "On Demand Plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باقه حسب الطلب"
+          }
+        }
+      }
+    },
     "On Going Orders" : {
       "localizations" : {
         "ar" : {
@@ -6831,6 +6900,16 @@
         }
       }
     },
+    "Order commission" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عموله الطلب"
+          }
+        }
+      }
+    },
     "Order confirmed" : {
       "localizations" : {
         "ar" : {
@@ -6882,7 +6961,14 @@
       }
     },
     "Order has been deleted" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم حذف الطلب"
+          }
+        }
+      }
     },
     "Order has been reset" : {
       "localizations" : {
@@ -6965,10 +7051,6 @@
       }
     },
     "Order is with courier" : {
-
-    },
-    "Order Is with courier" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7430,6 +7512,16 @@
         }
       }
     },
+    "Pay" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادفع"
+          }
+        }
+      }
+    },
     "Payment" : {
       "localizations" : {
         "ar" : {
@@ -7876,6 +7968,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ادخل عنوان المتجر"
+          }
+        }
+      }
+    },
+    "Please enter valid email" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل بريد الكتروني سليم"
+          }
+        }
+      }
+    },
+    "Please enter valid password" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل كلمه مرور صحيحه"
+          }
+        }
+      }
+    },
+    "Please fill in all fields" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الرجاء ملئ جميع البيانات"
           }
         }
       }
@@ -8966,16 +9088,6 @@
         }
       }
     },
-    "Second" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ثانيا"
-          }
-        }
-      }
-    },
     "Secondary Color" : {
       "localizations" : {
         "ar" : {
@@ -9926,16 +10038,6 @@
         }
       }
     },
-    "Text" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "النص"
-          }
-        }
-      }
-    },
     "Thank god, no complaints are added to your orders" : {
       "localizations" : {
         "ar" : {
@@ -10182,16 +10284,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "لا توجد طلبات جاهزة في متجرك، قم بتجميع بعض الطلبات لتجهيزها"
-          }
-        }
-      }
-    },
-    "Third" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ثالثا"
           }
         }
       }
@@ -12298,6 +12390,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "تحتاج إلى ما لا يقل عن 10,000 جنيه مصري في محفظتك لسحب الأموال."
+          }
+        }
+      }
+    },
+    "You're already on the On Demand Plan" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انت بالفعل علي باقه حسب الطلب"
           }
         }
       }

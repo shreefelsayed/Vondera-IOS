@@ -165,7 +165,6 @@ class StoreKitManager: ObservableObject {
             "trx": trx
         ]
         
-        print("Data \(data)")
         
         do {
             let result = try await FirebaseFunctionCaller().callFunction(functionName: "subscribtions-subscribeToPlan", data: data)

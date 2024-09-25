@@ -97,10 +97,16 @@ struct SettingsFragment: View {
                     if let store = currentUser.store {
                         Section("Store Settings") {
                             NavigationLink(destination: SubscribtionsView()) {
-                                Label(
-                                    title: { Text("Subscriptions and payments") },
-                                    icon: { Image(.btnSubscribtions) }
-                                )
+                                HStack {
+                                    Label(
+                                        title: { Text("Subscriptions and payments") },
+                                        icon: { Image(.btnSubscribtions) }
+                                    )
+                                    
+                                    Spacer()
+                                    
+                                    NewLabel()
+                                }
                             }
                             .bold()
                             
@@ -113,10 +119,13 @@ struct SettingsFragment: View {
                             .bold()
                             
                             NavigationLink(destination: StoreSettingsView(store: store)) {
-                                Label(
-                                    title: { Text("Store Settings") },
-                                    icon: { Image(.btnSettings) }
-                                )
+                                    Label(
+                                        title: { Text("Store Settings") },
+                                        icon: { Image(.btnSettings) }
+                                    )
+                                    
+                                
+                                
                             }
                             .bold()
 

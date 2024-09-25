@@ -261,7 +261,7 @@ class OrdersDao {
         return try await collection.document(id).getDocument(as: Order.self)
     }
     
-    func update(id:String, hashMap:[String:Any]) async throws {
+    func update(id:String, hashMap:[String:Any?]) async throws {
         return try await collection.document(id).updateData(hashMap)
     }
     

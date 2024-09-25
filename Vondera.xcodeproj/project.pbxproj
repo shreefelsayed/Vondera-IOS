@@ -260,6 +260,7 @@
 		B38C0B0B2B4121B0008D247F /* VTransactionsDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38C0B092B412115008D247F /* VTransactionsDao.swift */; };
 		B38C0B0D2B4135E9008D247F /* VPaySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38C0B0C2B4135E8008D247F /* VPaySettings.swift */; };
 		B38D9EA02AA4767E00A17C04 /* FloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38D9E9F2AA4767E00A17C04 /* FloatingTextField.swift */; };
+		B390EAD42C9BB6EC00167E47 /* NewLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EAD32C9BB6EC00167E47 /* NewLabel.swift */; };
 		B390EB522A4792140058D06B /* Complaint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EB512A4792140058D06B /* Complaint.swift */; };
 		B390EB542A47A1540058D06B /* ExpansesDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EB532A47A1540058D06B /* ExpansesDao.swift */; };
 		B390EB562A47D4280058D06B /* NavigationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390EB552A47D4280058D06B /* NavigationText.swift */; };
@@ -344,6 +345,8 @@
 		B3D067C12BA1E45100EB7A06 /* AccountHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067C02BA1E45100EB7A06 /* AccountHomeScreen.swift */; };
 		B3D067C32BA1E48600EB7A06 /* LoadingUserDataScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067C22BA1E48600EB7A06 /* LoadingUserDataScreen.swift */; };
 		B3D067C82BA228E400EB7A06 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067C72BA228E400EB7A06 /* ToastManager.swift */; };
+		B3D076522C9DCC0A0046F4E1 /* OnDemandTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D076512C9DCC030046F4E1 /* OnDemandTransactions.swift */; };
+		B3D076542C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D076532C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift */; };
 		B3D150532A7AB98E003AB8B8 /* ReceiptPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */; };
 		B3D567DB2BD18B4200BB4047 /* VarientsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */; };
 		B3D567DF2BD275DE00BB4047 /* AlwaysStockedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */; };
@@ -676,6 +679,7 @@
 		B38C0B092B412115008D247F /* VTransactionsDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTransactionsDao.swift; sourceTree = "<group>"; };
 		B38C0B0C2B4135E8008D247F /* VPaySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPaySettings.swift; sourceTree = "<group>"; };
 		B38D9E9F2AA4767E00A17C04 /* FloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingTextField.swift; sourceTree = "<group>"; };
+		B390EAD32C9BB6EC00167E47 /* NewLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabel.swift; sourceTree = "<group>"; };
 		B390EB512A4792140058D06B /* Complaint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complaint.swift; sourceTree = "<group>"; };
 		B390EB532A47A1540058D06B /* ExpansesDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansesDao.swift; sourceTree = "<group>"; };
 		B390EB552A47D4280058D06B /* NavigationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationText.swift; sourceTree = "<group>"; };
@@ -744,6 +748,8 @@
 		B3D067C02BA1E45100EB7A06 /* AccountHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHomeScreen.swift; sourceTree = "<group>"; };
 		B3D067C22BA1E48600EB7A06 /* LoadingUserDataScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingUserDataScreen.swift; sourceTree = "<group>"; };
 		B3D067C72BA228E400EB7A06 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
+		B3D076512C9DCC030046F4E1 /* OnDemandTransactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandTransactions.swift; sourceTree = "<group>"; };
+		B3D076532C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandTransactionModel.swift; sourceTree = "<group>"; };
 		B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptPDF.swift; sourceTree = "<group>"; };
 		B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VarientsSettings.swift; sourceTree = "<group>"; };
 		B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysStockedViewModel.swift; sourceTree = "<group>"; };
@@ -1331,6 +1337,7 @@
 				B35A430E2ADEAEE20027C29B /* SwitchAccountView.swift */,
 				B3AA368C2AE1D5C500AABA71 /* CustomTopTapBar.swift */,
 				B3155A6E2AE739BD006419F0 /* HomeReports.swift */,
+				B390EAD32C9BB6EC00167E47 /* NewLabel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1589,6 +1596,7 @@
 		B3A7C8C82A285C3700D6C1D2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B3D076532C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift */,
 				B32FB4992BC551C1004D61B7 /* Plans */,
 				B3F0F3E82AC613E5000AFB0C /* Firebase */,
 				B314F4DB2A4DE825009856E3 /* SavedItem.swift */,
@@ -1611,6 +1619,7 @@
 		B3A7C8F42A287CA900D6C1D2 /* Dao */ = {
 			isa = PBXGroup;
 			children = (
+				B3D076512C9DCC030046F4E1 /* OnDemandTransactions.swift */,
 				B38C0B092B412115008D247F /* VTransactionsDao.swift */,
 				B38C0B082B411F6C008D247F /* VPayoutsDao.swift */,
 				B3EF61812A43FE75007930ED /* CategoryDao.swift */,
@@ -2230,7 +2239,9 @@
 				B36D8C5D2A40876800A8C555 /* LatestOrdersFragment.swift in Sources */,
 				B33DBD372A4A5531008BBB69 /* Contact.swift in Sources */,
 				B359A7472C2EAB400074732C /* VonderaStaticsScreen.swift in Sources */,
+				B3D076522C9DCC0A0046F4E1 /* OnDemandTransactions.swift in Sources */,
 				B33DBCEC2A48D512008BBB69 /* SwipeHelper.swift in Sources */,
+				B390EAD42C9BB6EC00167E47 /* NewLabel.swift in Sources */,
 				B359A7442C2EAADF0074732C /* SendNotificationScreen.swift in Sources */,
 				B3F981892ACDABF200D70FAF /* LottieView.swift in Sources */,
 				B3A7C9032A2880D900D6C1D2 /* UserHome.swift in Sources */,
@@ -2418,6 +2429,7 @@
 				B3155A712AE74663006419F0 /* StoreCustomMessage.swift in Sources */,
 				B316642F2B1B7D09001C8C6A /* OrderShippingExcel.swift in Sources */,
 				B31AE4082A414399003B7867 /* StoreSettingsViewModel.swift in Sources */,
+				B3D076542C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift in Sources */,
 				B3D9305C2C026A0B0027E6FB /* StoreComplaints.swift in Sources */,
 				B3A7C8CF2A285D2200D6C1D2 /* ForgetPasswordView.swift in Sources */,
 				B3A7C8CD2A285D0F00D6C1D2 /* CreateAccountView.swift in Sources */,
@@ -2565,7 +2577,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2586,7 +2598,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2608,7 +2620,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 77;
+				CURRENT_PROJECT_VERSION = 79;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2628,7 +2640,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

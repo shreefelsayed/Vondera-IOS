@@ -84,36 +84,43 @@ struct StoresProfileScreen: View {
                             
                             Text("Current Plan : \(store.storePlanInfo?.name ?? "None")")
                             
-                            ProgressView(value: store.storePlanInfo?.getPercentage())
-                                .accentColor((store.storePlanInfo?.isUsageAlert() ?? false) ? Color.red : Color.accentColor)
-                                .frame(maxWidth: .infinity)
-                                .progressViewStyle(LinearProgressViewStyle())
-                                .padding(.vertical, 4)
-                            
-                            HStack {
-                                Text("Monthly Limit")
-                                    .bold()
+        
+                            if store.storePlanInfo?.planId != "OnDemand" {
+                                ProgressView(value: store.storePlanInfo?.getPercentage())
+                                    .accentColor((store.storePlanInfo?.isUsageAlert() ?? false) ? Color.red : Color.accentColor)
+                                    .frame(maxWidth: .infinity)
+                                    .progressViewStyle(LinearProgressViewStyle())
+                                    .padding(.vertical, 4)
                                 
-                                Spacer()
+                                HStack {
+                                    Text("Monthly Limit")
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    Text("\(store.storePlanInfo?.planFeatures.currentOrders ?? 0) Of \(store.storePlanInfo?.planFeatures.maxOrders ?? 0 ) Orders")
+                                        .foregroundStyle( (store.storePlanInfo?.isUsageAlert() ?? false) ? .red : .secondary)
+                                        .font(.caption)
+                                }
                                 
-                                Text("\(store.storePlanInfo?.planFeatures.currentOrders ?? 0) Of \(store.storePlanInfo?.planFeatures.maxOrders ?? 0 ) Orders")
-                                    .foregroundStyle( (store.storePlanInfo?.isUsageAlert() ?? false) ? .red : .secondary)
-                                    .font(.caption)
+                                Divider()
+                                
+                                HStack {
+                                    Text("Expire Date")
+                                        .bold()
+                                    
+                                    Spacer()
+                                    
+                                    if let expireData = store.storePlanInfo?.expireDate {
+                                        Text("\(expireData.toString())")
+                                            .foregroundStyle( (store.storePlanInfo?.isDateAlert() ?? false) ? .red : .secondary)
+                                    
+                                    }
+                                }
+                                
+                                Divider()
+                                
                             }
-                            
-                            Divider()
-                            
-                            HStack {
-                                Text("Expire Date")
-                                    .bold()
-                                
-                                Spacer()
-                                
-                                Text("\(store.storePlanInfo?.expireDate.toString() ?? "")")
-                                    .foregroundStyle( (store.storePlanInfo?.isDateAlert() ?? false) ? .red : .secondary)
-                            }
-                            
-                            Divider()
                             
                             Link(store.getStoreDomain(), destination: URL(string: store.getStoreDomain())!)
                         }
