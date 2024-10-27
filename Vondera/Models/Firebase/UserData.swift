@@ -6,17 +6,17 @@ import SwiftUI
 struct UserData: Codable, Identifiable {
     var id: String = ""
     var name: String = ""
-    var username: String? = ""
     var email: String = ""
     var storeId: String = ""
     var phone: String = ""
     var addedBy: String? = ""
-    var accountType: String = "Worker" // Admin - Owner - Store Admin - Marketing - Worker - Courier
+    var accountType: String = "Worker" // Owner - Store Admin - Marketing - Worker - Courier
     var active: Bool = true
-    var percentage: Double? = 0
     var pass: String = ""
     var userURL: String = ""
     var wallet: Int? = 0
+    var username: String? = ""
+    var percentage: Double? = 0
     var earnings: Int? = 0
     var online: Bool? = false
     var date: Timestamp? = Timestamp(date: Date())

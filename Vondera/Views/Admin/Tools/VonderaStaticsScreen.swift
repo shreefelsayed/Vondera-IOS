@@ -20,6 +20,11 @@ class VonderaStaticsScreenVM : ObservableObject {
     @Published var onlineUsers:Double = 0
     @Published var almostExpired = 0.0
     
+    @Published var pro = 0
+    @Published var starter = 0
+    @Published var plus = 0
+    @Published var onDemand = 0
+
     
     @Published var isLoading = false
     
@@ -72,11 +77,40 @@ class VonderaStaticsScreenVM : ObservableObject {
                 .getAggregation(source: .server)
                 .count.doubleValue
             
+            let proPlan = try await Firestore.firestore().collection("stores")
+                .whereField("storePlanInfo.planId", isEqualTo: "pro")
+                .count
+                .getAggregation(source: .server)
+                .count.intValue
+            
+            let plusPlan = try await Firestore.firestore().collection("stores")
+                .whereField("storePlanInfo.planId", isEqualTo: "plus")
+                .count
+                .getAggregation(source: .server)
+                .count.intValue
+            
+            let starterPlan = try await Firestore.firestore().collection("stores")
+                .whereField("storePlanInfo.planId", isEqualTo: "starter")
+                .count
+                .getAggregation(source: .server)
+                .count.intValue
+            
+            let onDemandPlan = try await Firestore.firestore().collection("stores")
+                .whereField("storePlanInfo.planId", isEqualTo: "OnDemand")
+                .count
+                .getAggregation(source: .server)
+                .count.intValue
+            
             let perc:Double = (((subscribedStores - freeAfterSubscribe) / subscribedStores) * 100)
             
             DispatchQueue.main.async { 
                 self.retentionPerecentage = Int(perc)
                 self.online = onlineUsers
+                self.pro = proPlan
+                self.plus = plusPlan
+                self.starter = starterPlan
+                self.onDemand = onDemandPlan
+
                 self.almostExpired = almostExpired
                 self.onlineUsers = onlineEmployees
             }
@@ -152,6 +186,27 @@ struct VonderaStaticsScreen: View {
                 ReportCard(title: "Active Stores", amount: viewModel.online, prefix: "Stores", desc : "Number of stores that were active in the last 3 days")
                 
                 ReportCard(title: "Almost Expired", amount: viewModel.almostExpired, prefix: "Stores", desc : "Number of stores that will expire in the next 3 days")
+                
+                
+                Divider()
+                
+                Text("Plans")
+                    .font(.headline)
+                
+
+                ReportCard(title: "On Demand Plan", amount: viewModel.onDemand.double(), prefix: "Stores", desc : "Number of stores that in On Demand plan")
+                    .navigationLink(to: PlansStoreScreen(plans: ["OnDemand"], title: "On Demand users"))
+                    
+                
+                ReportCard(title: "Starter Plan", amount: viewModel.starter.double(), prefix: "Stores", desc : "Number of stores that in Starter plan")
+                    .navigationLink(to: PlansStoreScreen(plans: ["starter"], title: "Starter users"))
+                
+                ReportCard(title: "Plus Plan", amount: viewModel.plus.double(), prefix: "Stores", desc : "Number of stores that in Plus plan")
+                    .navigationLink(to: PlansStoreScreen(plans: ["plus"], title: "Plus users"))
+                
+                ReportCard(title: "Pro Plan", amount: viewModel.pro.double(), prefix: "Stores", desc : "Number of stores that in Pro plan")
+                    .navigationLink(to: PlansStoreScreen(plans: ["pro"], title: "Pro users"))
+                
                 
                 Divider()
                     .padding(.vertical, 12)

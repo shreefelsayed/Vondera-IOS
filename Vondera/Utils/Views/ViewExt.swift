@@ -95,6 +95,13 @@ extension Image {
 
 // Disable the view and show a progress dialog
 extension View {
+    func navigationLink<Destination: View>(to destination: Destination) -> some View {
+            NavigationLink(destination: destination) {
+                self
+            }
+            .buttonStyle(.plain)
+        }
+    
     func navigationCardView<Destination: View>(destination: Destination) -> some View {
         self
             .padding(8)

@@ -15,7 +15,6 @@ class OrderManager {
     let OUT_FOR_DELV_CODE = 15
     let CHANGE_SHIPPING_PRICE = 21
     let RESET_ORDER = 25
-    
     let DONE_CODE = 16
     let ASSEMBLED_CODE = 20
     let FAILED_CODE = 17

@@ -87,8 +87,8 @@ struct WBNewOrderSettings: View {
             guard let store = store else { return }
             DispatchQueue.main.async {
                 self.wbInfo = store.wbInfo ?? WbInfo()
-                self.isActive = store.wbInfo?.newOrder.active ?? false
-                self.msg = store.wbInfo?.newOrder.msg ?? ""
+                self.isActive = store.wbInfo?.newOrder?.active ?? false
+                self.msg = store.wbInfo?.newOrder?.msg ?? ""
                 self.isLoading = false
             }
         } catch {

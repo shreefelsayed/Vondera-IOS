@@ -61,9 +61,18 @@ class StoresDao {
     func getCurrentlySubscribed(lastSnapshot:DocumentSnapshot?) async throws -> ([Store], DocumentSnapshot?) {
         return try await collection
             .whereField("renewCount", isGreaterThan: 0)
-            .whereField("storePlanInfo.planId", isNotEqualTo: "free")
+            .whereField("storePlanInfo.planId", notIn: ["OnDemand", "free"])
             .startAfter(lastDocument: lastSnapshot)
             .limit(to: 25)
+            .getDocumentWithLastSnapshot(as: Store.self)
+    }
+    
+    func getPlansStore(plans:[String], lastSnapshot:DocumentSnapshot?) async throws -> ([Store], DocumentSnapshot?) {
+        return try await collection
+            .whereField("storePlanInfo.planId", in: plans)
+            .order(by: "storePlanInfo.startDate", descending: true)
+            .startAfter(lastDocument: lastSnapshot)
+            .limit(to: 10)
             .getDocumentWithLastSnapshot(as: Store.self)
     }
     

@@ -6704,6 +6704,18 @@
         }
       }
     },
+    "Number of stores that in On Demand plan" : {
+
+    },
+    "Number of stores that in Plus plan" : {
+
+    },
+    "Number of stores that in Pro plan" : {
+
+    },
+    "Number of stores that in Starter plan" : {
+
+    },
     "Number of stores that were active in the last 3 days" : {
       "localizations" : {
         "ar" : {
@@ -6743,6 +6755,9 @@
           }
         }
       }
+    },
+    "On Demand users" : {
+
     },
     "On Going Orders" : {
       "localizations" : {
@@ -8082,6 +8097,12 @@
         }
       }
     },
+    "Plus Plan" : {
+
+    },
+    "Plus users" : {
+
+    },
     "Preorder Product" : {
       "localizations" : {
         "ar" : {
@@ -8191,6 +8212,12 @@
           }
         }
       }
+    },
+    "Pro Plan" : {
+
+    },
+    "Pro users" : {
+
     },
     "Product" : {
       "localizations" : {
@@ -9647,6 +9674,12 @@
           }
         }
       }
+    },
+    "Starter Plan" : {
+
+    },
+    "Starter users" : {
+
     },
     "Statistics" : {
       "localizations" : {

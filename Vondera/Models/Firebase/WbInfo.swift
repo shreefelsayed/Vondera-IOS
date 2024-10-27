@@ -8,12 +8,12 @@
 import Foundation
 
 struct WbInfo: Codable {
-    var instanceId:String = ""
-    var apiToken:String = ""
-    var useVondera:Bool = true
-    var newOrder:WBMessage = WBMessage()
-    var shipping:WBMessage = WBMessage()
-    var delivered:WBMessage = WBMessage()
+    var instanceId:String? = ""
+    var apiToken:String? = ""
+    var useVondera:Bool? = true
+    var newOrder:WBMessage? = WBMessage()
+    var shipping:WBMessage? = WBMessage()
+    var delivered:WBMessage? = WBMessage()
 }
 
 struct WBMessage: Codable {

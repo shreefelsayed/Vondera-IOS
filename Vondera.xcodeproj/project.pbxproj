@@ -339,6 +339,7 @@
 		B3C698522B8A276B00CDBA55 /* CourierInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C698512B8A276A00CDBA55 /* CourierInfo.swift */; };
 		B3C698562B8A2D4200CDBA55 /* ProviderIntegrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C698552B8A2D4200CDBA55 /* ProviderIntegrationView.swift */; };
 		B3C899DA2AED03C70071706C /* RichTextKit in Frameworks */ = {isa = PBXBuildFile; productRef = B3C899D92AED03C70071706C /* RichTextKit */; };
+		B3CBC3DF2CBB3536003E3C1D /* PlansStoreScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CBC3DE2CBB3536003E3C1D /* PlansStoreScreen.swift */; };
 		B3CF6B962B3E598000134806 /* BannerTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CF6B952B3E598000134806 /* BannerTitles.swift */; };
 		B3D067BD2BA1E3FC00EB7A06 /* OnBoardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067BC2BA1E3FC00EB7A06 /* OnBoardingScreen.swift */; };
 		B3D067BF2BA1E42600EB7A06 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067BE2BA1E42600EB7A06 /* SplashScreen.swift */; };
@@ -742,6 +743,7 @@
 		B3C30F522A9F1C4B0086B3FE /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		B3C698512B8A276A00CDBA55 /* CourierInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourierInfo.swift; sourceTree = "<group>"; };
 		B3C698552B8A2D4200CDBA55 /* ProviderIntegrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderIntegrationView.swift; sourceTree = "<group>"; };
+		B3CBC3DE2CBB3536003E3C1D /* PlansStoreScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansStoreScreen.swift; sourceTree = "<group>"; };
 		B3CF6B952B3E598000134806 /* BannerTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTitles.swift; sourceTree = "<group>"; };
 		B3D067BC2BA1E3FC00EB7A06 /* OnBoardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScreen.swift; sourceTree = "<group>"; };
 		B3D067BE2BA1E42600EB7A06 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -1223,6 +1225,7 @@
 				B32F93732C3D3A0D004B9E15 /* StopedSubscribeStores.swift */,
 				B359A7362C2EAA790074732C /* StoresSearchScreen.swift */,
 				B359A7382C2EAA7F0074732C /* StoresProfileScreen.swift */,
+				B3CBC3DE2CBB3536003E3C1D /* PlansStoreScreen.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -2351,6 +2354,7 @@
 				B3EF617E2A43FBB8007930ED /* StoreProductsViewModel.swift in Sources */,
 				B3F0F3E52AC4C995000AFB0C /* StoreCategory.swift in Sources */,
 				B36D8C6D2A408F6600A8C555 /* ProductOrderObject.swift in Sources */,
+				B3CBC3DF2CBB3536003E3C1D /* PlansStoreScreen.swift in Sources */,
 				B3EF61582A434ADE007930ED /* UserOrders.swift in Sources */,
 				B390EB562A47D4280058D06B /* NavigationText.swift in Sources */,
 				B3D067BD2BA1E3FC00EB7A06 /* OnBoardingScreen.swift in Sources */,

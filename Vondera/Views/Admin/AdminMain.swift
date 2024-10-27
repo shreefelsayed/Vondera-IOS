@@ -42,7 +42,7 @@ class AdminMainViewModel : ObservableObject {
             
             let still = try await Firestore.firestore().collection("stores")
                 .whereField("renewCount", isGreaterThan: 0)
-                .whereField("storePlanInfo.planId", isNotEqualTo: "free")
+                .whereField("storePlanInfo.planId", notIn: ["OnDemand","free"])
                 .getCount()
             
             let aCount =  try await Firestore.firestore().collection("stores")

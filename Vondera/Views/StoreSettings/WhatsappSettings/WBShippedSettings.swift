@@ -85,8 +85,8 @@ struct WBShippedSettings: View {
             guard let store = store else { return }
             DispatchQueue.main.async {
                 self.wbInfo = store.wbInfo ?? WbInfo()
-                self.isActive = store.wbInfo?.shipping.active ?? false
-                self.msg = store.wbInfo?.shipping.msg ?? ""
+                self.isActive = store.wbInfo?.shipping?.active ?? false
+                self.msg = store.wbInfo?.shipping?.msg ?? ""
                 self.isLoading = false
             }
         } catch {

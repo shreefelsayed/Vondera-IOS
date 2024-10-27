@@ -157,6 +157,15 @@ struct StoreCard : View {
                     .bold()
                 
                 Text(store.storePlanInfo?.name ?? "Free")
+                
+                if store.storePlanInfo?.planId == "OnDemand" {
+                    HStack {
+                        Image(systemName: "wallet.pass.fill")
+                            .foregroundStyle(.primary)
+                        
+                        Text("\(store.ordersWallet?.formatted() ?? "0.0") EGP")
+                    }
+                }
             }
             
             Spacer()

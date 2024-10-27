@@ -5,17 +5,17 @@ import SwiftUI
 class Store: Codable {
     @DocumentID var id:String?
     var name: String = ""
-    var slogan: String? = ""
     var address: String = ""
     var governorate: String = ""
     var phone: String = ""
-    var logo: String? = ""
     var merchantId: String = ""
-
     var ownerId: String = ""
+    
     var cardToken: String? = ""
     var addBy: String? = ""
-    
+    var logo: String? = ""
+    var slogan: String? = ""
+
     var active: Bool? = true
     var renewCount:Int? = 0
     
