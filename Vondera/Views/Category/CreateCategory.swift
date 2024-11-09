@@ -75,7 +75,6 @@ struct CreateCategory: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         }
-        .navigationBarBackButtonHidden(viewModel.isSaving)
         .toast(isPresenting: Binding(value: $viewModel.msg)){
             AlertToast(displayMode: .banner(.slide),
                        type: .regular,

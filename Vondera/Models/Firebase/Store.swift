@@ -61,6 +61,7 @@ class Store: Codable {
     var almostOut:Int? = 0
     var categoryNo:Int? = 0
     var hiddenOrders:Int? = 0
+    var depositOptions:DepsoitOptions?
     
     var listMarkets:[StoreMarketPlace]? = MarketsManager().getDefaultMarkets()
     var listAreas: [CourierPrice]? = GovsUtil().getStoreDefault()
@@ -153,6 +154,12 @@ class Store: Codable {
 
         return nil
     }
+}
+
+struct DepsoitOptions : Codable {
+    var active:Bool
+    var type:String
+    var value:Double
 }
 
 struct EmailService: Codable {

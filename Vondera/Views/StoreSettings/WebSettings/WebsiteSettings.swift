@@ -23,7 +23,7 @@ struct WebsiteSettings: View {
                 
                 Section("Theming") {
                     NavigationLink {
-                        WebsiteTheme()
+                        WebsiteTheme(storeId: myUser.storeId)
                     } label: {
                         Label("Website theme", systemImage: "tshirt")
                     }
@@ -38,6 +38,12 @@ struct WebsiteSettings: View {
                         BannerTitles()
                     } label: {
                         Label("Banner titles", systemImage: "list.dash.header.rectangle")
+                    }
+                    
+                    NavigationLink {
+                        AdvancedColors(storeId: myUser.storeId)
+                    } label: {
+                        Label("Advanced Options", systemImage: "scissors.badge.ellipsis")
                     }
                     
                 }
@@ -68,6 +74,12 @@ struct WebsiteSettings: View {
                         PaymentSettings()
                     } label: {
                         Label("Payment Options", systemImage: "creditcard.fill")
+                    }
+                    
+                    NavigationLink {
+                        DepositSettings(storeId: user.user?.storeId ?? "")
+                    } label: {
+                        Label("Deposit Options", systemImage: "creditcard.trianglebadge.exclamationmark")
                     }
                     
                     NavigationLink {
@@ -119,15 +131,21 @@ struct WebsiteSettings: View {
                 
                 Section("Other Settings") {
                     NavigationLink {
-                        SiteOptions()
+                        WebsiteLanguage(storeId: myUser.storeId)
                     } label: {
-                        Label("More options", systemImage: "option")
+                        Label("Website Languages", systemImage: "globe")
                     }
                     
                     NavigationLink {
                         EmailSettings()
                     } label: {
                         Label("Mailing Settings", systemImage: "envelope.circle")
+                    }
+                    
+                    NavigationLink {
+                        SiteOptions()
+                    } label: {
+                        Label("More options", systemImage: "option")
                     }
                 }
             }

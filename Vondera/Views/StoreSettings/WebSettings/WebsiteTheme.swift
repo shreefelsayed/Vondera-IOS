@@ -10,137 +10,210 @@ import AlertToast
 import FirebaseFirestore
 
 struct WebsiteTheme: View {
-    @ObservedObject var user = UserInformation.shared
-    @State var saving = false
-    @State var msg:String?
+    var storeId:String
+    
+    @State private var isSaving = false
+    @State private var isLoading = false
     @Environment(\.presentationMode) private var presentationMode
     
-    @State var themes = [String]()
-    @State var fonts = [String]()
-
-    @State var selectedTheme = 1
-    @State var selectedFont = 1
-
-    @State var primaryColor = Color.brown
-    @State var accentColor = Color.brown
-
+    @State private var themes = [ThemeModel]()
+    @State private var fonts = [String]()
+    
+    @State private var selectedThemeId = 1
+    @State private var selectedFont = 1
+    
+    @State private var primaryColor = Color.brown
+    @State private var accentColor = Color.brown
+    
+    @State private var store:Store?
+    @State private var showWarning:Bool = false
+    
     var body: some View {
-        List {
-            if !themes.isEmpty {
-                Picker("Theme", selection: $selectedTheme) {
-                    ForEach(themes.indices, id: \.self) { index in
-                        Text(themes[index])
-                            .tag(index)
+        ScrollView {
+            VStack(alignment:.leading) {
+                Text("Font Theming")
+                    .bold()
+                
+                HStack {
+                    Text("Font Color")
+                    Spacer()
+                    ColorPicker(selection: $accentColor, supportsOpacity: false) {
+                        Image(systemName: "eyedropper")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                            .padding(6)
+                            .clipShape(.circle)
                     }
                 }
-                .pickerStyle(.menu)
-            }
-            
-            if !fonts.isEmpty {
-                Picker("Fonts", selection: $selectedFont) {
-                    ForEach(fonts.indices, id: \.self) { index in
-                        Text(fonts[index])
-                            .tag(index)
+                
+                Divider()
+                
+                HStack {
+                    Text("Font Face")
+                    
+                    Spacer()
+                    
+                    Picker("Fonts", selection: $selectedFont) {
+                        ForEach(fonts.indices, id: \.self) { index in
+                            Text(fonts[index])
+                                .tag(index)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }
+                
+                Spacer().frame(height: 24)
+                
+                Text("Website Theme")
+                    .bold()
+                
+                HStack {
+                    Text("Primary Color")
+                    Spacer()
+                    ColorPicker(selection: $primaryColor, supportsOpacity: false) {
+                        Image(systemName: "eyedropper")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                            .padding(6)
+                            .clipShape(.circle)
                     }
                 }
-                .pickerStyle(.menu)
-            }
-            
-            HStack {
-                Text("Primary Color")
-                Spacer()
-                ColorPicker(selection: $primaryColor, supportsOpacity: false) {
-                    Image(systemName: "eyedropper")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .padding(6)
-                        .clipShape(.circle)
+                
+                Divider()
+                
+                
+                ThemePicker(themes: themes, currentThemeId: selectedThemeId) { themeId in
+                    selectedThemeId = themeId
                 }
             }
-            
-            HStack {
-                Text("Secondary Color")
-                Spacer()
-                ColorPicker(selection: $accentColor, supportsOpacity: false) {
-                    Image(systemName: "eyedropper")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .padding(6)
-                        .clipShape(.circle)
-                }
-            }
+            .padding()
         }
+        .scrollIndicators(.hidden)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Update") {
-                    update()
+                Button("Save") {
+                    Task { await validate() }
                 }
-                .disabled(saving)
             }
         }
-        .willProgress(saving: saving)
-        .navigationBarBackButtonHidden(saving)
+        .confirmationDialog("Theme Changed", isPresented: $showWarning, actions: {
+            Button("Switch Theme", role: .destructive) {
+                Task { await update() }
+            }
+            Button("Cancel", role: .cancel) {
+                showWarning = false // Dismiss the dialog
+            }
+        }, message: {
+            Text("You have changed your website theme, this will lead to reset all of your colors, are you sure you want to switch the theme ?")
+        })
+        .willProgress(saving: isSaving)
+        .willLoad(loading: isLoading)
         .task {
-            if let siteData = user.user?.store?.siteData {
-                selectedTheme = siteData.themeId ?? 1
-                selectedFont = siteData.fontId ?? 1
-                primaryColor = Color(hex: siteData.primaryColor ?? "")
-                accentColor = Color(hex: siteData.secondaryColor ?? "")
-                getTheme()
-            }
-        }
-        .toast(isPresenting: Binding(value: $msg)) {
-            AlertToast(displayMode: .banner(.pop), type: .regular, title: msg)
+            await fetch()
         }
         .navigationTitle("Website theme")
     }
     
-    func getTheme() {
-        Task {
-            if let doc = try? await Firestore.firestore().collection("main").document("ecommerce").getDocument() {
-                let themes = doc.data()?["themes"] as! [String]
-                let fonts = doc.data()?["fonts"] as! [String]
-                DispatchQueue.main.async {
-                    self.themes = themes
-                    self.fonts = fonts
-                }
+    func fetch() async {
+        DispatchQueue.main.async { self.isLoading = true }
+        do {
+            let store = try await StoresDao().getStore(uId: storeId)
+            let themes = try await ThemeDao().getThemes()
+            let doc = try await Firestore.firestore().collection("main").document("ecommerce").getDocument()
+            guard let store = store else { return }
+            
+            DispatchQueue.main.async {
+                self.updateUI(store)
+                self.themes = themes
+                self.fonts = doc.data()?["fonts"] as! [String]
+                self.isLoading = false
             }
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
-    func update() {
-        Task {
-            if let id = UserInformation.shared.user?.storeId {
-                saving = true
-                
-                let data = [
-                    "siteData.primaryColor" : primaryColor.toHex(),
-                    "siteData.secondaryColor" : accentColor.toHex(),
-                    "siteData.themeId" : selectedTheme,
-                    "siteData.fontId" : selectedFont,
-                ]
-                
-                if let _ = try? await StoresDao().update(id: id, hashMap: data) {
-                    DispatchQueue.main.async { [self] in
-                        UserInformation.shared.user?.store?.siteData?.primaryColor = primaryColor.toHex()
-                        UserInformation.shared.user?.store?.siteData?.secondaryColor = accentColor.toHex()
-                        UserInformation.shared.user?.store?.siteData?.themeId = selectedTheme
-                        UserInformation.shared.user?.store?.siteData?.fontId = selectedFont
-                        UserInformation.shared.updateUser()
-                        presentationMode.wrappedValue.dismiss()
-                        msg = "Updated"
-                    }
-                } else {
-                    msg = "Error Happened"
-                }
-                
-                saving = false
-            }
+    func updateUI(_ store:Store) {
+        self.store = store
+        selectedThemeId = store.siteData?.themeId ?? 1
+        selectedFont = store.siteData?.fontId ?? 1
+        primaryColor = Color(hex: store.siteData?.primaryColor ?? "")
+        accentColor = Color(hex: store.siteData?.secondaryColor ?? "")
+    }
+    
+    func hasUpdatedTheme() -> Bool {
+        return store?.siteData?.themeId != selectedThemeId
+    }
+    
+    func validate() async {
+        guard !hasUpdatedTheme() else {
+            showWarning.toggle()
+            return
+        }
+        
+        await update()
+        
+    }
+    
+    func update() async {
+        DispatchQueue.main.async { self.isSaving = true }
+        
+        do {
+            let data:[String:Any] = [
+                "storeId": storeId,
+                "primaryColor" : primaryColor.toHex(),
+                "fontColor" : accentColor.toHex(),
+                "themeId" : selectedThemeId,
+                "fontId" : selectedFont,
+            ]
             
+            _ = try await FirebaseFunctionCaller().callFunction(functionName: "store-updateTheme", data: data)
+            
+            DispatchQueue.main.async {
+                self.isSaving = false
+                ToastManager.shared.showToast(msg: "Theme Updated", toastType: .success)
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        } catch {
+            DispatchQueue.main.async { self.isSaving = false }
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
     }
 }
 
-#Preview {
-    WebsiteTheme()
+struct ThemePicker: View {
+    let themes: [ThemeModel]
+    let currentThemeId: Int
+    let onThemeSelected: (Int) -> Void
+    
+    private let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(themes, id: \.id) { theme in
+                    VStack {
+                        CachedImageView(imageUrl: theme.previewLink)
+                            .frame(height: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(currentThemeId == theme.id ? Color.accentColor : Color.clear, lineWidth: 3)
+                            )
+                        
+                        
+                        Text(theme.name)
+                            .font(.body)
+                            .foregroundColor(currentThemeId == theme.id ? Color.accentColor : Color.primary)
+                    }
+                    .onTapGesture {
+                        onThemeSelected(theme.id)
+                    }
+                }
+            }
+        }
+    }
 }

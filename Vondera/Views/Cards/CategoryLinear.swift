@@ -45,6 +45,37 @@ struct CategoryLinear: View {
     }
 }
 
+struct SubCategoryLinear: View {
+    @Binding var category:SubCategory
+    var isSelected:Bool = false
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+               
+                Text(category.name)
+                    .font(.headline)
+                    .padding(.horizontal)
+                    .bold()
+                
+                Spacer()
+                
+                
+                
+                if isSelected {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.accentColor)
+                }
+                                
+                Image(systemName: "arrow.up.arrow.down")
+                    .opacity(0.5)
+                    .font(.body)
+            }
+        }
+    }
+}
+
+
 #Preview {
     CategoryLinear(category: .constant(Category.example()))
 }

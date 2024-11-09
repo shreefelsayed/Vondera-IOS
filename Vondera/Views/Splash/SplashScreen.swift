@@ -9,18 +9,19 @@ import SwiftUI
 
 struct SplashScreen : View {
     var body: some View {
-        VStack (alignment: .center) {
-            Spacer()
-            
-            Image("vondera_no_slogan")
+        ZStack(alignment: .bottom) {
+            Image(.splash)
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea(.all)
             
-            Spacer()
+            // ProgressView at the bottom
             ProgressView()
-            Spacer().frame(height: 48)
+                .padding(.bottom, 40) // Adds padding to bring the progress view slightly above the screen bottom
+                .foregroundColor(.white)
         }
-        .padding()
+        
     }
 }
 

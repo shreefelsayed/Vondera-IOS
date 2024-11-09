@@ -10,22 +10,27 @@ import AlertToast
 
 struct StoreCategories: View {
     var store:Store
-    @ObservedObject var viewModel:StoreCategoriesViewModel
+    @StateObject private var viewModel:StoreCategoriesViewModel
+    
     @State private var draggingIndex: Int?
-    @State var draggedItem : Category?
-    @State var editCategory: Category?
+    @State private var draggedItem : Category?
+    @State private var editCategory: Category?
     @Environment(\.presentationMode) private var presentationMode
 
     init(store: Store) {
         self.store = store
-        self.viewModel = StoreCategoriesViewModel(store: store)
+        self._viewModel = StateObject(wrappedValue: StoreCategoriesViewModel(store: store))
     }
     
     var body: some View {
         List {
             ForEach($viewModel.items) { item in
                 if item.wrappedValue.filter(searchText: viewModel.searchText) {
-                    CategoryLinear(category: item)
+                    NavigationLink(destination: {
+                        SubCategoriesScreen(category: item.wrappedValue, storeId: store.ownerId)
+                    }, label: {
+                        CategoryLinear(category: item)
+                    })
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button {
                             self.editCategory = item.wrappedValue

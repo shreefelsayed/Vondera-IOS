@@ -28,6 +28,7 @@ struct MainView: View {
                     ZStack {
                         if viewModel.signed {
                             LoadingUserDataScreen()
+                                .ignoresSafeArea()
                         } else {
                             LoginView()
                         }

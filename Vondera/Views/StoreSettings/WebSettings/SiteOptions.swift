@@ -9,7 +9,6 @@ import SwiftUI
 import AlertToast
 
 struct SiteOptions: View {
-    
     @State var sendEmails = true
     @State var stocks = true
     @State var requireMails = true
@@ -17,6 +16,7 @@ struct SiteOptions: View {
     @State var lastPiece = true
     @State var askForAddress = true
     @State var productReviews = true
+    @State var allowCustomerEmails = true
 
     @State var minPrice:Double = 0
     
@@ -56,6 +56,8 @@ struct SiteOptions: View {
            
             Section("Others") {
                 Toggle("Show whatsapp contact button", isOn: $showWhatsapp)
+                
+                Toggle("Enable Customers to create accounts", isOn: $allowCustomerEmails)
             }
         }
         .toolbar {
@@ -77,6 +79,7 @@ struct SiteOptions: View {
                 lastPiece = siteData.lastPiece ?? true
                 askForAddress = siteData.askForAddress ?? true
                 minPrice = siteData.minOrderAmount ?? 0
+                allowCustomerEmails = siteData.customerAccountsEnabled ?? true
             }
         }
         .toast(isPresenting: Binding(value: $msg)) {
@@ -98,7 +101,8 @@ struct SiteOptions: View {
                     "siteData.lastPiece" : lastPiece,
                     "siteData.askForAddress" : askForAddress,
                     "siteData.reviewsEnabled": productReviews,
-                    "siteData.minOrderAmount": minPrice
+                    "siteData.minOrderAmount": minPrice,
+                    "siteData.customerAccountsEnabled": allowCustomerEmails
                 ]
                 
                 if let _ = try? await StoresDao().update(id: id, hashMap: data) {
@@ -110,6 +114,7 @@ struct SiteOptions: View {
                         UserInformation.shared.user?.store?.siteData?.lastPiece = lastPiece
                         UserInformation.shared.user?.store?.siteData?.minOrderAmount = minPrice
                         UserInformation.shared.user?.store?.siteData?.askForAddress = askForAddress
+                        UserInformation.shared.user?.store?.siteData?.customerAccountsEnabled = allowCustomerEmails
                         UserInformation.shared.updateUser()
                         presentationMode.wrappedValue.dismiss()
                         msg = "Updated"

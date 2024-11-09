@@ -1387,6 +1387,9 @@
         }
       }
     },
+    "Advanced Options" : {
+
+    },
     "After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." : {
       "localizations" : {
         "ar" : {
@@ -1640,6 +1643,9 @@
           }
         }
       }
+    },
+    "Arabic" : {
+
     },
     "Are you sure you want to delete the order ?" : {
       "localizations" : {
@@ -1901,6 +1907,9 @@
         }
       }
     },
+    "Background Color" : {
+
+    },
     "Ban customer" : {
       "localizations" : {
         "ar" : {
@@ -2020,6 +2029,12 @@
           }
         }
       }
+    },
+    "Button Background Color" : {
+
+    },
+    "Button Text Color" : {
+
     },
     "By : %@" : {
       "localizations" : {
@@ -2451,6 +2466,9 @@
         }
       }
     },
+    "Choose your website display languages" : {
+
+    },
     "Clear" : {
       "localizations" : {
         "ar" : {
@@ -2600,6 +2618,9 @@
           }
         }
       }
+    },
+    "Colors Updated" : {
+
     },
     "Comment added" : {
       "localizations" : {
@@ -2770,6 +2791,9 @@
           }
         }
       }
+    },
+    "Constant Amount" : {
+
     },
     "Contact" : {
       "localizations" : {
@@ -3030,6 +3054,9 @@
           }
         }
       }
+    },
+    "Create a New Sub Category" : {
+
     },
     "Create discount code" : {
       "localizations" : {
@@ -3701,6 +3728,15 @@
         }
       }
     },
+    "Deposit Options" : {
+
+    },
+    "Deposit Percent" : {
+
+    },
+    "Deposit Type" : {
+
+    },
     "Describe what is this expanses for ex (Marketing fees, employee salary)" : {
       "localizations" : {
         "ar" : {
@@ -4041,6 +4077,9 @@
         }
       }
     },
+    "Edit Sub Category" : {
+
+    },
     "Edit your integration id and add this link to your Transaction processed callback" : {
       "localizations" : {
         "ar" : {
@@ -4222,6 +4261,12 @@
           }
         }
       }
+    },
+    "Enable Customers to create accounts" : {
+
+    },
+    "Enable Deposit" : {
+
     },
     "Enable local orders" : {
       "localizations" : {
@@ -4462,6 +4507,9 @@
           }
         }
       }
+    },
+    "Enter the sub category name" : {
+
     },
     "Enter your complaint" : {
       "localizations" : {
@@ -4949,6 +4997,18 @@
         }
       }
     },
+    "Floating Background Color" : {
+
+    },
+    "Font Color" : {
+
+    },
+    "Font Face" : {
+
+    },
+    "Font Theming" : {
+
+    },
     "Fonts" : {
       "localizations" : {
         "ar" : {
@@ -4968,6 +5028,12 @@
           }
         }
       }
+    },
+    "Footer Background Color" : {
+
+    },
+    "Footer Text Color" : {
+
     },
     "Forget Password" : {
       "localizations" : {
@@ -5343,6 +5409,7 @@
       }
     },
     "In order to active this option, you need to add a payment gateway first" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5522,6 +5589,9 @@
         }
       }
     },
+    "Languages Updated" : {
+
+    },
     "Last Order" : {
       "localizations" : {
         "ar" : {
@@ -5641,6 +5711,12 @@
           }
         }
       }
+    },
+    "List Banner Background Color" : {
+
+    },
+    "List Banner Text Color" : {
+
     },
     "Live website" : {
       "localizations" : {
@@ -6244,6 +6320,9 @@
         }
       }
     },
+    "New Sub Category" : {
+
+    },
     "New TRX" : {
       "localizations" : {
         "ar" : {
@@ -6493,6 +6572,9 @@
           }
         }
       }
+    },
+    "No Sub categories were added to this category !" : {
+
     },
     "No team members are banned" : {
       "localizations" : {
@@ -7757,6 +7839,9 @@
         }
       }
     },
+    "Perecent" : {
+
+    },
     "Personal Info" : {
       "localizations" : {
         "ar" : {
@@ -8279,6 +8364,9 @@
         }
       }
     },
+    "Product Image Background Color" : {
+
+    },
     "Product Images Changed" : {
       "localizations" : {
         "ar" : {
@@ -8398,6 +8486,9 @@
           }
         }
       }
+    },
+    "Product Text Color" : {
+
     },
     "Product Title" : {
       "localizations" : {
@@ -8796,6 +8887,7 @@
       }
     },
     "Require Deposit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8846,6 +8938,7 @@
       }
     },
     "Requiring a depoist will close the cash on delivery option, the deposit will be added to the order" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9116,6 +9209,7 @@
       }
     },
     "Secondary Color" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -9404,6 +9498,9 @@
           }
         }
       }
+    },
+    "Settings updated successfully" : {
+
     },
     "Share the app" : {
       "localizations" : {
@@ -9901,6 +9998,15 @@
         }
       }
     },
+    "Sub Category Created !" : {
+
+    },
+    "Sub Category Name" : {
+
+    },
+    "Sub Category Updated !" : {
+
+    },
     "Submit" : {
       "localizations" : {
         "ar" : {
@@ -10000,6 +10106,9 @@
           }
         }
       }
+    },
+    "Switch Theme" : {
+
     },
     "Team members" : {
       "localizations" : {
@@ -10292,6 +10401,7 @@
       }
     },
     "Theme" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -10300,6 +10410,12 @@
           }
         }
       }
+    },
+    "Theme Changed" : {
+
+    },
+    "Theme Updated" : {
+
     },
     "Theming" : {
       "localizations" : {
@@ -11517,6 +11633,12 @@
         }
       }
     },
+    "Value can't be Zero" : {
+
+    },
+    "Value must be between 1% and 99%" : {
+
+    },
     "Variant Title" : {
       "localizations" : {
         "ar" : {
@@ -11847,6 +11969,9 @@
         }
       }
     },
+    "Website Languages" : {
+
+    },
     "Website settings" : {
       "localizations" : {
         "ar" : {
@@ -11876,6 +12001,9 @@
           }
         }
       }
+    },
+    "Website Theme" : {
+
     },
     "Website Username" : {
       "localizations" : {
@@ -12226,6 +12354,9 @@
           }
         }
       }
+    },
+    "You have changed your website theme, this will lead to reset all of your colors, are you sure you want to switch the theme ?" : {
+
     },
     "You have no active discount codes, create one now !" : {
       "localizations" : {

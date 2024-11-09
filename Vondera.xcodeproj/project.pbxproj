@@ -348,6 +348,14 @@
 		B3D067C82BA228E400EB7A06 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D067C72BA228E400EB7A06 /* ToastManager.swift */; };
 		B3D076522C9DCC0A0046F4E1 /* OnDemandTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D076512C9DCC030046F4E1 /* OnDemandTransactions.swift */; };
 		B3D076542C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D076532C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift */; };
+		B3D0B5C62CDEEFB00049FD30 /* RadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5C52CDEEFB00049FD30 /* RadioButton.swift */; };
+		B3D0B5C82CDF17BB0049FD30 /* SubcategoryDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5C72CDF17BB0049FD30 /* SubcategoryDao.swift */; };
+		B3D0B5CA2CDF18B80049FD30 /* SubCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5C92CDF18B80049FD30 /* SubCategory.swift */; };
+		B3D0B5CD2CDF1D020049FD30 /* SubCategoriesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5CC2CDF1D020049FD30 /* SubCategoriesScreen.swift */; };
+		B3D0B5CF2CDF1D120049FD30 /* CreateSubCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5CE2CDF1D120049FD30 /* CreateSubCategory.swift */; };
+		B3D0B5D12CDF432A0049FD30 /* ThemeDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5D02CDF43240049FD30 /* ThemeDao.swift */; };
+		B3D0B5D32CDF4EEE0049FD30 /* WebsiteLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5D22CDF4EEE0049FD30 /* WebsiteLanguage.swift */; };
+		B3D0B5D52CDF527E0049FD30 /* AdvancedColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D0B5D42CDF527E0049FD30 /* AdvancedColors.swift */; };
 		B3D150532A7AB98E003AB8B8 /* ReceiptPDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */; };
 		B3D567DB2BD18B4200BB4047 /* VarientsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */; };
 		B3D567DF2BD275DE00BB4047 /* AlwaysStockedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */; };
@@ -752,6 +760,14 @@
 		B3D067C72BA228E400EB7A06 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		B3D076512C9DCC030046F4E1 /* OnDemandTransactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandTransactions.swift; sourceTree = "<group>"; };
 		B3D076532C9DCCEB0046F4E1 /* OnDemandTransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandTransactionModel.swift; sourceTree = "<group>"; };
+		B3D0B5C52CDEEFB00049FD30 /* RadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioButton.swift; sourceTree = "<group>"; };
+		B3D0B5C72CDF17BB0049FD30 /* SubcategoryDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcategoryDao.swift; sourceTree = "<group>"; };
+		B3D0B5C92CDF18B80049FD30 /* SubCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategory.swift; sourceTree = "<group>"; };
+		B3D0B5CC2CDF1D020049FD30 /* SubCategoriesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCategoriesScreen.swift; sourceTree = "<group>"; };
+		B3D0B5CE2CDF1D120049FD30 /* CreateSubCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSubCategory.swift; sourceTree = "<group>"; };
+		B3D0B5D02CDF43240049FD30 /* ThemeDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDao.swift; sourceTree = "<group>"; };
+		B3D0B5D22CDF4EEE0049FD30 /* WebsiteLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteLanguage.swift; sourceTree = "<group>"; };
+		B3D0B5D42CDF527E0049FD30 /* AdvancedColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedColors.swift; sourceTree = "<group>"; };
 		B3D150522A7AB98E003AB8B8 /* ReceiptPDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptPDF.swift; sourceTree = "<group>"; };
 		B3D567DA2BD18B4200BB4047 /* VarientsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VarientsSettings.swift; sourceTree = "<group>"; };
 		B3D567DE2BD275DE00BB4047 /* AlwaysStockedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysStockedViewModel.swift; sourceTree = "<group>"; };
@@ -1115,6 +1131,8 @@
 				B37769E72B66B67700E5AC1E /* CustomDomain.swift */,
 				B352ADA02AF2907500068D1A /* ChangeUsername.swift */,
 				B310E73C2BB1F50B008C7A3C /* EmailSettings.swift */,
+				B3D0B5D22CDF4EEE0049FD30 /* WebsiteLanguage.swift */,
+				B3D0B5D42CDF527E0049FD30 /* AdvancedColors.swift */,
 			);
 			path = WebSettings;
 			sourceTree = "<group>";
@@ -1552,6 +1570,7 @@
 		B3A7C8C52A285C1E00D6C1D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B3D0B5CB2CDF1CE90049FD30 /* SubCategory */,
 				B359A72D2C2EA66F0074732C /* Admin */,
 				B3D9305A2C0269FC0027E6FB /* Complaints */,
 				B3D067BB2BA1E3F000EB7A06 /* Splash */,
@@ -1607,6 +1626,7 @@
 				B3F0F3EB2AC61472000AFB0C /* Markets.swift */,
 				B35A430A2ADEACCE0027C29B /* LoginInfo.swift */,
 				B33B50642AECAD420032942D /* SiteData.swift */,
+				B3D0B5C92CDF18B80049FD30 /* SubCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1622,6 +1642,7 @@
 		B3A7C8F42A287CA900D6C1D2 /* Dao */ = {
 			isa = PBXGroup;
 			children = (
+				B3D0B5D02CDF43240049FD30 /* ThemeDao.swift */,
 				B3D076512C9DCC030046F4E1 /* OnDemandTransactions.swift */,
 				B38C0B092B412115008D247F /* VTransactionsDao.swift */,
 				B38C0B082B411F6C008D247F /* VPayoutsDao.swift */,
@@ -1644,6 +1665,7 @@
 				B359A74E2C2EBA9F0074732C /* AdminTransDao.swift */,
 				B33B507B2AECD3910032942D /* CodesDao.swift */,
 				B35329E92BB6014300893FA1 /* ReviewsDao.swift */,
+				B3D0B5C72CDF17BB0049FD30 /* SubcategoryDao.swift */,
 			);
 			path = Dao;
 			sourceTree = "<group>";
@@ -1690,6 +1712,15 @@
 			path = Splash;
 			sourceTree = "<group>";
 		};
+		B3D0B5CB2CDF1CE90049FD30 /* SubCategory */ = {
+			isa = PBXGroup;
+			children = (
+				B3D0B5CC2CDF1D020049FD30 /* SubCategoriesScreen.swift */,
+				B3D0B5CE2CDF1D120049FD30 /* CreateSubCategory.swift */,
+			);
+			path = SubCategory;
+			sourceTree = "<group>";
+		};
 		B3D8E5152A9FAF3C00DC5049 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1709,6 +1740,7 @@
 				B3F0F3E02AC4A158000AFB0C /* ImagePlaceholder.swift */,
 				B35A43102ADEF69A0027C29B /* HypridTextField.swift */,
 				B35A43122ADEF9200027C29B /* SheetHeight.swift */,
+				B3D0B5C52CDEEFB00049FD30 /* RadioButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2114,6 +2146,7 @@
 				B3EF61822A43FE75007930ED /* CategoryDao.swift in Sources */,
 				B33DBD282A4A4426008BBB69 /* StoreExpanses.swift in Sources */,
 				B3E2BCB22AF151FB00A6FCFA /* PaytabSettings.swift in Sources */,
+				B3D0B5CD2CDF1D020049FD30 /* SubCategoriesScreen.swift in Sources */,
 				B3D150532A7AB98E003AB8B8 /* ReceiptPDF.swift in Sources */,
 				B3C698522B8A276B00CDBA55 /* CourierInfo.swift in Sources */,
 				B3EF618C2A4412B9007930ED /* CourierCurrentOrders.swift in Sources */,
@@ -2129,6 +2162,7 @@
 				B36923C82A41E67D00709112 /* StoreOrdersCount.swift in Sources */,
 				B32CA9222C35AE050007416C /* WhatsappSettings.swift in Sources */,
 				B3F0F3EC2AC61472000AFB0C /* Markets.swift in Sources */,
+				B3D0B5D12CDF432A0049FD30 /* ThemeDao.swift in Sources */,
 				B3155A6A2AE70238006419F0 /* NotificationsDao.swift in Sources */,
 				B33DBD242A4A38B0008BBB69 /* OrderSearchViewModel.swift in Sources */,
 				B3155A5A2AE593B0006419F0 /* AppleSignInHelper.swift in Sources */,
@@ -2146,6 +2180,8 @@
 				B369187B2AE00D4700315F57 /* OrderOptionsSheet.swift in Sources */,
 				B36923C62A41E00F00709112 /* TopSellingAreas.swift in Sources */,
 				B3191D722B4368E600E7CA9B /* Kashier.swift in Sources */,
+				B3D0B5C62CDEEFB00049FD30 /* RadioButton.swift in Sources */,
+				B3D0B5D52CDF527E0049FD30 /* AdvancedColors.swift in Sources */,
 				B3DFDC292A450B1600037858 /* CategoryPicker.swift in Sources */,
 				B3E776C92B1844D500BA7076 /* ImportShopify.swift in Sources */,
 				B3DFDC1E2A44EB5100037858 /* Copying.swift in Sources */,
@@ -2300,6 +2336,7 @@
 				B390EB752A48C3B10058D06B /* StoreCateogriesViewModel.swift in Sources */,
 				B359A73B2C2EAA910074732C /* VonderaTransactionsScreen.swift in Sources */,
 				B3191D762B43BA8200E7CA9B /* MyFatoorah.swift in Sources */,
+				B3D0B5C82CDF17BB0049FD30 /* SubcategoryDao.swift in Sources */,
 				B3A7C8CB2A285D0700D6C1D2 /* LoginView.swift in Sources */,
 				B30316A72AC6567E002134A2 /* StoreCategoryUpdate.swift in Sources */,
 				B3D567DF2BD275DE00BB4047 /* AlwaysStockedViewModel.swift in Sources */,
@@ -2345,9 +2382,11 @@
 				B3155A6D2AE703D9006419F0 /* NotificationsView.swift in Sources */,
 				B31AE4032A413F09003B7867 /* ConfirmedViewModel.swift in Sources */,
 				B3D8E51D2A9FBD3E00DC5049 /* StoreReport.swift in Sources */,
+				B3D0B5CA2CDF18B80049FD30 /* SubCategory.swift in Sources */,
 				B38C0B0D2B4135E9008D247F /* VPaySettings.swift in Sources */,
 				B3D567E12BD275EB00BB4047 /* AlwaysStocked.swift in Sources */,
 				B33B506F2AECB1CE0032942D /* DiscountCodes.swift in Sources */,
+				B3D0B5CF2CDF1D120049FD30 /* CreateSubCategory.swift in Sources */,
 				B36923BE2A41D39200709112 /* GovStaticsDao.swift in Sources */,
 				B33B50712AECB1DB0032942D /* SiteOptions.swift in Sources */,
 				B33DBD002A494381008BBB69 /* CreateCateogryViewModel.swift in Sources */,
@@ -2445,6 +2484,7 @@
 				B33970B72A462F1800E44FA2 /* CustomersScreen.swift in Sources */,
 				B3F0F3E72AC4CD2D000AFB0C /* StoreCategoryLinearCard.swift in Sources */,
 				B3EF61792A43F7FD007930ED /* ProductCard.swift in Sources */,
+				B3D0B5D32CDF4EEE0049FD30 /* WebsiteLanguage.swift in Sources */,
 				B3D067C12BA1E45100EB7A06 /* AccountHomeScreen.swift in Sources */,
 				B3F23FEA2BA06BF500A68025 /* PrivacyCenter.swift in Sources */,
 				B32CA9202C35A7C10007416C /* WbInfo.swift in Sources */,

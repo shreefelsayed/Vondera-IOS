@@ -25,6 +25,7 @@ struct LoadingUserDataScreen: View {
                         await AuthManger().logOut()
                     }
                 }
+                .ignoresSafeArea()
         }
     
     }
