@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Flow
+
 struct FilteredOrdersView: View {
     @State private var filterModel = FilterModel()
     @State private var sortIndex = "date"
@@ -268,13 +269,16 @@ struct FilterScreen: View {
             return
         }
         
-        self.isLoading = true
+        await MainActor.run { self.isLoading = true }
+        
         do {
             let usersResult = try await UsersDao().storeEmployees(expect: "", storeId: storeId, active: true)
             let couriersResult = try await CouriersDao(storeId: storeId).getByVisibility()
-            self.listUsers = usersResult
-            self.listCouriers = couriersResult
-            self.isLoading = false
+            await MainActor.run {
+                self.listUsers = usersResult
+                self.listCouriers = couriersResult
+                self.isLoading = false
+            }
         } catch {
             CrashsManager().addLogs(error.localizedDescription, "Filter Orders")
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
@@ -284,7 +288,7 @@ struct FilterScreen: View {
     
     private func initItems() async {
         await self.getData()
-        self.screenFiltered = currentlyFiltered
+        await MainActor.run { self.screenFiltered = currentlyFiltered }
     }
 }
 

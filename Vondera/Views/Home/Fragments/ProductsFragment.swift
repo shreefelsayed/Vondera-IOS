@@ -80,7 +80,7 @@ struct ProductsFragment: View {
                     
                     HStack {
                         Menu {
-                            NavigationLink(destination: AddProductView(storeId: user.storeId)) {
+                            NavigationLink(destination: AddProductView()) {
                                 Label("New Product", systemImage: "tag.fill")
                             }
                             

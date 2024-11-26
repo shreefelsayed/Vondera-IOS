@@ -27,7 +27,7 @@ struct CreateSubCategory: View {
         .padding()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Text(subCategory != nil ? "Creaet" : "Update")
+                Text(subCategory != nil ? "Create" : "Update")
                     .bold()
                     .foregroundStyle(Color.accentColor )
                     .onTapGesture {

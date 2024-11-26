@@ -17,6 +17,7 @@ struct SiteOptions: View {
     @State var askForAddress = true
     @State var productReviews = true
     @State var allowCustomerEmails = true
+    @State var canSingleCheckout = false
 
     @State var minPrice:Double = 0
     
@@ -57,6 +58,8 @@ struct SiteOptions: View {
             Section("Others") {
                 Toggle("Show whatsapp contact button", isOn: $showWhatsapp)
                 
+                Toggle("Show Checkout page under all products", isOn: $canSingleCheckout)
+                
                 Toggle("Enable Customers to create accounts", isOn: $allowCustomerEmails)
             }
         }
@@ -80,6 +83,7 @@ struct SiteOptions: View {
                 askForAddress = siteData.askForAddress ?? true
                 minPrice = siteData.minOrderAmount ?? 0
                 allowCustomerEmails = siteData.customerAccountsEnabled ?? true
+                canSingleCheckout = siteData.canSingleCheckout ?? false
             }
         }
         .toast(isPresenting: Binding(value: $msg)) {
@@ -102,7 +106,8 @@ struct SiteOptions: View {
                     "siteData.askForAddress" : askForAddress,
                     "siteData.reviewsEnabled": productReviews,
                     "siteData.minOrderAmount": minPrice,
-                    "siteData.customerAccountsEnabled": allowCustomerEmails
+                    "siteData.customerAccountsEnabled": allowCustomerEmails,
+                    "siteData.canSingleCheckout": canSingleCheckout
                 ]
                 
                 if let _ = try? await StoresDao().update(id: id, hashMap: data) {
@@ -114,6 +119,7 @@ struct SiteOptions: View {
                         UserInformation.shared.user?.store?.siteData?.lastPiece = lastPiece
                         UserInformation.shared.user?.store?.siteData?.minOrderAmount = minPrice
                         UserInformation.shared.user?.store?.siteData?.askForAddress = askForAddress
+                        UserInformation.shared.user?.store?.siteData?.canSingleCheckout = canSingleCheckout
                         UserInformation.shared.user?.store?.siteData?.customerAccountsEnabled = allowCustomerEmails
                         UserInformation.shared.updateUser()
                         presentationMode.wrappedValue.dismiss()

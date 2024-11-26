@@ -172,44 +172,65 @@ struct ProductVarients: View {
     }
 }
 
-struct OptionsView : View {
+struct OptionsView: View {
     @Binding var items: [String]
+    @State private var localItems: [String] = []
     @State private var newOption: String = ""
     
     var body: some View {
-        ForEach($items, id: \.self) { item in
-            if let index = items.firstIndex(of: item.wrappedValue) {
-                FloatingTextField(title: "Option \(index + 1)", text: item, required: nil, autoCapitalize: .words, isDiabled: false)
-                    .listRowSeparator(.hidden)
-                    .listRowSpacing(6)
+        VStack {
+
+
+            // Display each item in the local list
+            ForEach(localItems.indices, id: \.self) { index in
+                FloatingTextField(
+                    title: "Option \(index + 1)",
+                    text: Binding(
+                        get: { localItems[index] },
+                        set: { localItems[index] = $0 }
+                    ),
+                    required: nil,
+                    autoCapitalize: .words,
+                    isDiabled: false
+                )
             }
-        }
-        .onMove { indexSet, index in
-            withAnimation {
-                items.move(fromOffsets: indexSet, toOffset: index)
+            .onDelete { indexSet in
+                localItems.remove(atOffsets: indexSet)
+                updateItems()
             }
-        }
-        .onDelete { index in
-            withAnimation {
-                items.remove(atOffsets: index)
+            .onMove { indexSet, index in
+                localItems.move(fromOffsets: indexSet, toOffset: index)
+                updateItems()
             }
-        }
-                
-        HStack(alignment: .center) {
-            FloatingTextField(title: "Option \(items.count + 1)", text: $newOption, required: nil, autoCapitalize: .words)
             
-            Button {
-                if newOption.isBlank {
-                    return
-                }
+            // Add a new option
+            HStack {
+                FloatingTextField(
+                    title: "Option \(localItems.count + 1)",
+                    text: $newOption,
+                    required: nil,
+                    autoCapitalize: .words
+                )
                 
-                items.append(newOption)
-                newOption = ""
-            } label: {
-                Image(systemName: "plus")
+                Button {
+                    if !newOption.isBlank {
+                        localItems.append(newOption)  // Append the new option locally
+                        newOption = ""
+                        updateItems()
+                    }
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .disabled(newOption.isBlank)
+                .padding(.horizontal, 6)
             }
-            .disabled(newOption.isBlank)
-            .padding(.horizontal, 6)
         }
+        .onAppear {
+            localItems = items  // Initialize localItems with the parent items
+        }
+    }
+    
+    private func updateItems() {
+        items = localItems  // Sync changes back to the parent view
     }
 }

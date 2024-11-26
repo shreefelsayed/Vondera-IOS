@@ -1,13 +1,18 @@
 import Foundation
 import AWSS3
 import UIKit
+import FirebaseFirestore
 
 class S3Handler {
     static let s3BucketName = "vondera-bucket"
 
     static func configureAWS() {
-        let accessKeyId = "AKIAYS2NV5Z273U3K2SY"
-        let secretAccessKey = "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"
+        let accessKeyId = RemoteConfigManager.awsAccessKey
+        let secretAccessKey = RemoteConfigManager.awsSecretKey
+       
+        print("Access Key \(accessKeyId)")
+        print("Access Secret \(secretAccessKey)")
+
         let region = AWSRegionType.EUNorth1
 
         // Credentials provider
@@ -32,6 +37,7 @@ class S3Handler {
         )
     }
     
+    @MainActor
     static func uploadImages(imagesToUpload: [UIImage],
                                  maxSizeMB: Double? = nil,
                                  path: String,
@@ -72,6 +78,7 @@ class S3Handler {
             }
         }
 
+    @MainActor
     static func singleUpload(image: UIImage, path: String, maxSizeMB: Double? = nil, complete: @escaping (String?) -> ()) {
             var imageToUpload = image
             
@@ -114,6 +121,8 @@ class S3Handler {
                 return nil
             }
         }
+    
+    @MainActor
     static func getFileUrl(for key: String) -> String {
         return "https://\(s3BucketName).s3.eu-north-1.amazonaws.com/\(key)"
     }

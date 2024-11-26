@@ -30,9 +30,11 @@ class OutOfStockViewModel: ObservableObject {
     }
     
     func refreshData() async {
-        self.canLoadMore = true
-        self.lastSnapshot = nil
-        self.items.removeAll()
+        await MainActor.run {
+            self.canLoadMore = true
+            self.lastSnapshot = nil
+            self.items.removeAll()
+        }
         await getData()
     }
     
@@ -41,10 +43,10 @@ class OutOfStockViewModel: ObservableObject {
             return
         }
         
-        self.isLoading = true
+        await MainActor.run { self.isLoading = true }
         do {
             let result = try await productsDao.getOutOfStock(lastSnapShot: lastSnapshot)
-            DispatchQueue.main.async {
+            await MainActor.run {
                 let data = result.0.filter({$0.alwaysStocked == false})
                 self.lastSnapshot = result.1
                 self.items.append(contentsOf: data)
@@ -53,10 +55,6 @@ class OutOfStockViewModel: ObservableObject {
            
         } catch {
             CrashsManager().addLogs(error.localizedDescription, "Out Of Stock")
-        }
-        
-        DispatchQueue.main.async {
-            self.isLoading = false
         }
     }
 }

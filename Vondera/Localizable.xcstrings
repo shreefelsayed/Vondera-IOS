@@ -1041,12 +1041,12 @@
         }
       }
     },
-    "Add at least 2 options to each varient" : {
+    "Add at least 2 options to each variant" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اضف اختيارين  علي الاقل لكل نوع"
+            "value" : "اضف علي الاقل اختيارين"
           }
         }
       }
@@ -1388,7 +1388,14 @@
       }
     },
     "Advanced Options" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خيارات متطوره"
+          }
+        }
+      }
     },
     "After the partnership between Vondera and Agel Company, you can purchase goods from any supplier you choose and pay through the Agel Cash wallet. You can also finance the price of the goods for Agel Company for a small fee of 1.5% of the invoice amount. Your Agal wallet balance depends on your sales volume." : {
       "localizations" : {
@@ -1510,19 +1517,15 @@
         }
       }
     },
-    "Amount must be 50 EGP or more" : {
-      "extractionState" : "stale",
+    "Amount must be 200 EGP or more" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "المبلغ يجب ان يكون ٢٠٠ جنيه او اكثر"
+            "value" : "يجب ان يكون المبلغ ٢٠٠ او اكثر"
           }
         }
       }
-    },
-    "Amount must be 200 EGP or more" : {
-
     },
     "Amount of subscribtion fees we received" : {
       "localizations" : {
@@ -1645,7 +1648,14 @@
       }
     },
     "Arabic" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عربي"
+          }
+        }
+      }
     },
     "Are you sure you want to delete the order ?" : {
       "localizations" : {
@@ -1908,7 +1918,14 @@
       }
     },
     "Background Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون الخلفيه"
+          }
+        }
+      }
     },
     "Ban customer" : {
       "localizations" : {
@@ -2031,10 +2048,24 @@
       }
     },
     "Button Background Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون خلفيه الزر"
+          }
+        }
+      }
     },
     "Button Text Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون نص الزراير"
+          }
+        }
+      }
     },
     "By : %@" : {
       "localizations" : {
@@ -2467,7 +2498,14 @@
       }
     },
     "Choose your website display languages" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر لغه عرض الموقع"
+          }
+        }
+      }
     },
     "Clear" : {
       "localizations" : {
@@ -2620,7 +2658,14 @@
       }
     },
     "Colors Updated" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث الالوان"
+          }
+        }
+      }
     },
     "Comment added" : {
       "localizations" : {
@@ -2793,7 +2838,14 @@
       }
     },
     "Constant Amount" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مبلغ ثابت"
+          }
+        }
+      }
     },
     "Contact" : {
       "localizations" : {
@@ -3056,7 +3108,14 @@
       }
     },
     "Create a New Sub Category" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انشئ تصنيف فرعي جديد"
+          }
+        }
+      }
     },
     "Create discount code" : {
       "localizations" : {
@@ -3578,12 +3637,12 @@
         }
       }
     },
-    "Delete Varient" : {
+    "Delete Variant" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "حذف الخيار"
+            "value" : "حذف المتغير"
           }
         }
       }
@@ -3729,13 +3788,34 @@
       }
     },
     "Deposit Options" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الوديعه"
+          }
+        }
+      }
     },
     "Deposit Percent" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسبه الوديعه من اجمالي الطلب"
+          }
+        }
+      }
     },
     "Deposit Type" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نوع حساب الوديعه"
+          }
+        }
+      }
     },
     "Describe what is this expanses for ex (Marketing fees, employee salary)" : {
       "localizations" : {
@@ -4078,7 +4158,14 @@
       }
     },
     "Edit Sub Category" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعديل التصنيف"
+          }
+        }
+      }
     },
     "Edit your integration id and add this link to your Transaction processed callback" : {
       "localizations" : {
@@ -4266,7 +4353,14 @@
 
     },
     "Enable Deposit" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل الوديعه"
+          }
+        }
+      }
     },
     "Enable local orders" : {
       "localizations" : {
@@ -4428,15 +4522,8 @@
         }
       }
     },
-    "Enter a valid price amount" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ادخل مبلغ صحيح"
-          }
-        }
-      }
+    "Enter a valid price" : {
+
     },
     "Enter a valid quantity amount" : {
       "localizations" : {
@@ -4467,6 +4554,9 @@
           }
         }
       }
+    },
+    "Enter how many of this product do you have right now in the warehouse" : {
+
     },
     "Enter how many pieces you want to add to your stock" : {
       "localizations" : {
@@ -4509,7 +4599,14 @@
       }
     },
     "Enter the sub category name" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادخل اسم التصنيف"
+          }
+        }
+      }
     },
     "Enter your complaint" : {
       "localizations" : {
@@ -4827,15 +4924,8 @@
         }
       }
     },
-    "Fill all varients titles" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ادخل بيانات كل الاختيارات"
-          }
-        }
-      }
+    "Fill all variants titles" : {
+
     },
     "Fill from recent products" : {
       "localizations" : {
@@ -4893,16 +4983,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "املئ الخيار الحالي اولا"
-          }
-        }
-      }
-    },
-    "Fill the current varient first" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "املئ المتغير الحالي اولا"
           }
         }
       }
@@ -5001,13 +5081,34 @@
 
     },
     "Font Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون الخط"
+          }
+        }
+      }
     },
     "Font Face" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نوع الخط"
+          }
+        }
+      }
     },
     "Font Theming" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعدادات الخط"
+          }
+        }
+      }
     },
     "Fonts" : {
       "localizations" : {
@@ -5030,10 +5131,24 @@
       }
     },
     "Footer Background Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون خلفيه الفوتر"
+          }
+        }
+      }
     },
     "Footer Text Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون الفوتر"
+          }
+        }
+      }
     },
     "Forget Password" : {
       "localizations" : {
@@ -5408,17 +5523,6 @@
         }
       }
     },
-    "In order to active this option, you need to add a payment gateway first" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "لتتمكن من تفعيل هذا الاختيار يجب ان يكون لديك بوابه دفع مربوطه اولا"
-          }
-        }
-      }
-    },
     "In Stock" : {
       "localizations" : {
         "ar" : {
@@ -5590,7 +5694,14 @@
       }
     },
     "Languages Updated" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث اللغات"
+          }
+        }
+      }
     },
     "Last Order" : {
       "localizations" : {
@@ -6321,7 +6432,14 @@
       }
     },
     "New Sub Category" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصنيف فرعي جديد"
+          }
+        }
+      }
     },
     "New TRX" : {
       "localizations" : {
@@ -6543,6 +6661,9 @@
         }
       }
     },
+    "No products in this category" : {
+
+    },
     "No Products in this category, add a new product" : {
       "localizations" : {
         "ar" : {
@@ -6574,7 +6695,14 @@
       }
     },
     "No Sub categories were added to this category !" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يوجد تصنيفات فرعيه !"
+          }
+        }
+      }
     },
     "No team members are banned" : {
       "localizations" : {
@@ -6790,13 +6918,34 @@
 
     },
     "Number of stores that in Plus plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المتاجر ف باقه بلص"
+          }
+        }
+      }
     },
     "Number of stores that in Pro plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المتاجر في باقه برو"
+          }
+        }
+      }
     },
     "Number of stores that in Starter plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عدد المتاجر في باقه المبتدى"
+          }
+        }
+      }
     },
     "Number of stores that were active in the last 3 days" : {
       "localizations" : {
@@ -6839,7 +6988,14 @@
       }
     },
     "On Demand users" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باقه حسب الطلب"
+          }
+        }
+      }
     },
     "On Going Orders" : {
       "localizations" : {
@@ -7840,7 +7996,14 @@
       }
     },
     "Perecent" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسبه مئويه"
+          }
+        }
+      }
     },
     "Personal Info" : {
       "localizations" : {
@@ -8183,10 +8346,24 @@
       }
     },
     "Plus Plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باقه بلص"
+          }
+        }
+      }
     },
     "Plus users" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستخدمين باقه بلص"
+          }
+        }
+      }
     },
     "Preorder Product" : {
       "localizations" : {
@@ -8299,10 +8476,24 @@
       }
     },
     "Pro Plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باقه برو"
+          }
+        }
+      }
     },
     "Pro users" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستخدمين باقه برو"
+          }
+        }
+      }
     },
     "Product" : {
       "localizations" : {
@@ -8488,7 +8679,14 @@
       }
     },
     "Product Text Color" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لون نص المنتج"
+          }
+        }
+      }
     },
     "Product Title" : {
       "localizations" : {
@@ -8886,17 +9084,6 @@
         }
       }
     },
-    "Require Deposit" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "العربون المطلوب"
-          }
-        }
-      }
-    },
     "Require Shipping" : {
       "localizations" : {
         "ar" : {
@@ -8933,17 +9120,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "مطلوب"
-          }
-        }
-      }
-    },
-    "Requiring a depoist will close the cash on delivery option, the deposit will be added to the order" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "سيؤدي طلب العربون إلى إغلاق خيار الدفع نقدًا عند التسليم، وسيتم إضافة الإيداع إلى الطلب"
           }
         }
       }
@@ -9208,17 +9384,6 @@
         }
       }
     },
-    "Secondary Color" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اللون الثانوي"
-          }
-        }
-      }
-    },
     "Select All" : {
       "localizations" : {
         "ar" : {
@@ -9229,22 +9394,22 @@
         }
       }
     },
+    "Select at least one photo" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضف علي الاقل صوره"
+          }
+        }
+      }
+    },
     "Select Courier" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "اختار المندوب"
-          }
-        }
-      }
-    },
-    "Select one photo at least" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اختر صوره واحده علي الاقل"
           }
         }
       }
@@ -9500,7 +9665,14 @@
       }
     },
     "Settings updated successfully" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث الاعدادات"
+          }
+        }
+      }
     },
     "Share the app" : {
       "localizations" : {
@@ -9591,6 +9763,9 @@
           }
         }
       }
+    },
+    "Show Checkout page under all products" : {
+
     },
     "Show order QRCode" : {
       "localizations" : {
@@ -9773,10 +9948,24 @@
       }
     },
     "Starter Plan" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باقه المبتدئ"
+          }
+        }
+      }
     },
     "Starter users" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستخدمين باقه المبتدئ"
+          }
+        }
+      }
     },
     "Statistics" : {
       "localizations" : {
@@ -9998,14 +10187,45 @@
         }
       }
     },
+    "Sub Category" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصنيفات فرعيه"
+          }
+        }
+      }
+    },
     "Sub Category Created !" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم اضافه تصنيف فرعي"
+          }
+        }
+      }
     },
     "Sub Category Name" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم التصنيف الفرعي"
+          }
+        }
+      }
     },
     "Sub Category Updated !" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث التصنيف الفرعي"
+          }
+        }
+      }
     },
     "Submit" : {
       "localizations" : {
@@ -10108,7 +10328,14 @@
       }
     },
     "Switch Theme" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تبديل الثيم"
+          }
+        }
+      }
     },
     "Team members" : {
       "localizations" : {
@@ -10140,22 +10367,12 @@
         }
       }
     },
-    "Template date filled" : {
+    "Template data filled" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تم ملئ بيانات المنتج"
-          }
-        }
-      }
-    },
-    "TEnter how many of this product do you have right now in the warehouse" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "كميه المنتج الموجوده في المخزن في الوقت الحالي"
+            "value" : "تم ملئ البيانات"
           }
         }
       }
@@ -10400,22 +10617,25 @@
         }
       }
     },
-    "Theme" : {
-      "extractionState" : "stale",
+    "Theme Changed" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ثيم"
+            "value" : "تم تحديث الثيم"
           }
         }
       }
     },
-    "Theme Changed" : {
-
-    },
     "Theme Updated" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تحديث الموقع"
+          }
+        }
+      }
     },
     "Theming" : {
       "localizations" : {
@@ -10707,15 +10927,8 @@
         }
       }
     },
-    "This is your varient title for example (Color, Size, ..)" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "عنوان الاختيارات مثل (اللون او المقاس ..)"
-          }
-        }
-      }
+    "This is your variant title, for example (Color, Size, ...)" : {
+
     },
     "This is your wallet number, or your instapay ipa" : {
       "localizations" : {
@@ -11637,7 +11850,14 @@
 
     },
     "Value must be between 1% and 99%" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يجب أن تكون القيمة بين 1% و99%"
+          }
+        }
+      }
     },
     "Variant Title" : {
       "localizations" : {
@@ -11695,16 +11915,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "خيار"
-          }
-        }
-      }
-    },
-    "Varient Title" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "عنوان الاختيارات"
           }
         }
       }
@@ -12003,7 +12213,14 @@
       }
     },
     "Website Theme" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تخصيص الموقع"
+          }
+        }
+      }
     },
     "Website Username" : {
       "localizations" : {
@@ -12356,7 +12573,14 @@
       }
     },
     "You have changed your website theme, this will lead to reset all of your colors, are you sure you want to switch the theme ?" : {
-
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد قمت بتغيير مظهر موقع الويب الخاص بك، وهذا سيؤدي إلى إعادة تعيين جميع الألوان، هل أنت متأكد أنك تريد تبديل المظهر؟"
+          }
+        }
+      }
     },
     "You have no active discount codes, create one now !" : {
       "localizations" : {
@@ -12494,16 +12718,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "لم تقم باضافه اي منتج للسله"
-          }
-        }
-      }
-    },
-    "You haven't added any products to your store yet !" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "لم تقم بإضافة أي منتجات إلى متجرك بعد!"
           }
         }
       }

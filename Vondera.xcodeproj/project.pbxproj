@@ -369,6 +369,7 @@
 		B3D8E5302A9FFA2200DC5049 /* PlanDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */; };
 		B3D9305C2C026A0B0027E6FB /* StoreComplaints.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D9305B2C026A0B0027E6FB /* StoreComplaints.swift */; };
 		B3D9305E2C026A1A0027E6FB /* StoreClosedComplaints.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D9305D2C026A1A0027E6FB /* StoreClosedComplaints.swift */; };
+		B3DA3A3B2CE3D6F600FE2A19 /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DA3A3A2CE3D6F600FE2A19 /* RemoteConfigManager.swift */; };
 		B3DC4A642BBF6F16009A17C7 /* CollectOrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */; };
 		B3DFDC0E2A4498F000037858 /* EmptyMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */; };
 		B3DFDC102A44A01500037858 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3DFDC0F2A44A01500037858 /* AddProductView.swift */; };
@@ -782,6 +783,7 @@
 		B3D8E52F2A9FFA2200DC5049 /* PlanDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDao.swift; sourceTree = "<group>"; };
 		B3D9305B2C026A0B0027E6FB /* StoreComplaints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreComplaints.swift; sourceTree = "<group>"; };
 		B3D9305D2C026A1A0027E6FB /* StoreClosedComplaints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreClosedComplaints.swift; sourceTree = "<group>"; };
+		B3DA3A3A2CE3D6F600FE2A19 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
 		B3DC4A632BBF6F16009A17C7 /* CollectOrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectOrderPayment.swift; sourceTree = "<group>"; };
 		B3DFDC0D2A4498F000037858 /* EmptyMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMessageView.swift; sourceTree = "<group>"; };
 		B3DFDC0F2A44A01500037858 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
@@ -1022,6 +1024,7 @@
 				B36923C22A41DC4B00709112 /* Utils */,
 				B3A7C8C52A285C1E00D6C1D2 /* Views */,
 				B33DBD102A4A32E7008BBB69 /* QrCodeScanner.swift */,
+				B3DA3A3A2CE3D6F600FE2A19 /* RemoteConfigManager.swift */,
 			);
 			path = Vondera;
 			sourceTree = "<group>";
@@ -2484,6 +2487,7 @@
 				B33970B72A462F1800E44FA2 /* CustomersScreen.swift in Sources */,
 				B3F0F3E72AC4CD2D000AFB0C /* StoreCategoryLinearCard.swift in Sources */,
 				B3EF61792A43F7FD007930ED /* ProductCard.swift in Sources */,
+				B3DA3A3B2CE3D6F600FE2A19 /* RemoteConfigManager.swift in Sources */,
 				B3D0B5D32CDF4EEE0049FD30 /* WebsiteLanguage.swift in Sources */,
 				B3D067C12BA1E45100EB7A06 /* AccountHomeScreen.swift in Sources */,
 				B3F23FEA2BA06BF500A68025 /* PrivacyCenter.swift in Sources */,
@@ -2528,7 +2532,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -2621,7 +2625,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
@@ -2642,7 +2646,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2664,7 +2668,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vondera/VonderaRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEVELOPMENT_ASSET_PATHS = "\"Vondera/Preview Content\"";
 				DEVELOPMENT_TEAM = 7U37S34SQ4;
 				ENABLE_PREVIEWS = YES;
@@ -2684,7 +2688,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.2;
+				MARKETING_VERSION = 5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.armjld.vondera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -14,21 +14,21 @@ struct CategoryTab: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            ImagePlaceHolder(url: category.url, placeHolder: UIImage(named: "defaultCategory"), reduis: 60, iconOverly: nil)
+            ImagePlaceHolder(url: category.url, placeHolder: UIImage(named: "defaultCategory"), reduis: 40, iconOverly: nil)
                 .overlay(
                     Circle().stroke(selected?.id == category.id ? Color.accentColor : Color.clear, lineWidth: 2)
                 )
                 
             
             Text(category.name)
-                .lineLimit(2, reservesSpace: false)
+                .lineLimit(1, reservesSpace: false)
                 .minimumScaleFactor(0.2) // value is up to you
                 .multilineTextAlignment(.center)
                 .foregroundColor(selected?.id == category.id ? .accentColor : .gray)
                 .font(.body)
                 .bold(selected?.id == category.id)
         }
-        .frame(width: 80)
+        .frame(width: 60)
         .onTapGesture {
            selected = category
         }

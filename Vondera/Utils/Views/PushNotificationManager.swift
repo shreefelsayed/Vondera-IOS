@@ -13,7 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         window?.makeKeyAndVisible()
-        
+        FirebaseApp.configure()
         // FCM Notifications
         UNUserNotificationCenter.current().delegate = self
         
@@ -25,9 +25,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        FirebaseApp.configure()
+        
         
         Messaging.messaging().delegate = self
+        
+        RemoteConfigManager.shared.fetchRemoteConfig { success in
+            
+        }
+        
         
         // UPdate checker
         let siren = Siren.shared

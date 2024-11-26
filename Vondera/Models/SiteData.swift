@@ -15,6 +15,7 @@ struct SiteData: Codable {
     var lastPiece: Bool? = true
     var askForAddress: Bool? = true
     var reviewsEnabled: Bool? = true
+    var canSingleCheckout:Bool? = false
     
     var themeId: Int? = 1
     var fontId: Int? = 1

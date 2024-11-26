@@ -31,9 +31,11 @@ class AlmostOutViewModel: ObservableObject {
     }
     
     func refreshData() async {
-        self.canLoadMore = true
-        self.lastSnapshot = nil
-        self.items.removeAll()
+        await MainActor.run {
+            self.canLoadMore = true
+            self.lastSnapshot = nil
+            self.items.removeAll()
+        }
         await getData()
     }
     
@@ -42,13 +44,13 @@ class AlmostOutViewModel: ObservableObject {
             return
         }
         
-        self.isLoading = true
+        await MainActor.run { self.isLoading = true }
         
         let amount = UserInformation.shared.user?.store?.almostOut ?? 20
         
         do {
             let result = try await productsDao.getStockLessThen(almostOut: amount, lastSnapShot: lastSnapshot)
-            DispatchQueue.main.sync {
+            await MainActor.run {
                 let data = result.0.filter({$0.alwaysStocked == false})
                 self.lastSnapshot = result.1
                 self.items.append(contentsOf: data)
@@ -56,10 +58,6 @@ class AlmostOutViewModel: ObservableObject {
             }
         } catch {
             CrashsManager().addLogs(error.localizedDescription, "Almost Out")
-        }
-        
-        DispatchQueue.main.sync {
-            self.isLoading = false
         }
     }
 }

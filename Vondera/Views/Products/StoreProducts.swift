@@ -6,105 +6,78 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 class StoreProductsViewModel : ObservableObject {
     var storeId:String
-    var categoryDao:CategoryDao
-    var productsDao:ProductsDao
-    
-    @Published var sortIndex = "sold" {
-        didSet {
-            updateListIndexs()
-        }
-    }
     
     @Published var selectedCategory:Category? {
         didSet {
-            Task { await updateProducts() }
+            updateDisplayedSub()
         }
     }
     
+    @Published var selectedSubCategoryIndex = 0
+    
     @Published var categories = [Category]()
-    @Published var products = [StoreProduct]()
-    
-    
-    @Published var errorMsg = ""
+    @Published var subCategories = [SubCategory]()
+    @Published var displayedSubCategories = [SubCategory]()
     @Published var isLoading = false
-    @Published var isLoadingCategory = false
-    @Published var searchText = ""
     
     init(storeId:String) {
         self.storeId = storeId
-        self.categoryDao = CategoryDao(storeId: storeId)
-        self.productsDao = ProductsDao(storeId: storeId)
         
         Task {
-            await getCategories()
+            await fetchData()
         }
     }
     
-    func updateProducts() async {
-        self.isLoadingCategory = true
+    func updateDisplayedSub() {
+        guard let id = selectedCategory?.id else { return }
+        var categoryItems = subCategories.filter { $0.categoryId == id }
+        categoryItems.sort { $0.sortValue < $1.sortValue }
         
-        do {
-            self.products = try await productsDao.getByCategory(id: self.selectedCategory?.id ?? "")
-            DispatchQueue.main.async {
-                self.updateListIndexs()
-                self.isLoadingCategory = false
-            }
-        } catch {
-            showError(msg: error.localizedDescription)
+        categoryItems.insert(SubCategory(name: "All", id: ""), at: 0)
+        DispatchQueue.main.async {
+            self.selectedSubCategoryIndex = 0
+            self.displayedSubCategories = categoryItems
         }
     }
     
-    func updateListIndexs() {
-        DispatchQueue.main.async { [self] in
-            switch sortIndex {
-            case "name":
-                products.sort { $0.name < $1.name}
-            case "quantity":
-                products.sort { $0.quantity > $1.quantity}
-            case "sold":
-                products.sort { $0.sold ?? 0 > $1.sold ?? 0}
-            case "lastOrderDate":
-                products.sort { $0.lastOrderDate?.toDate() ?? Date() > $1.lastOrderDate?.toDate() ?? Date()}
-            default:
-                print("None known value")
-            }
-        }
-        
-    }
     
-    func getCategories() async {
+    func fetchData() async {
+        DispatchQueue.main.async { self.isLoading = true }
         do {
-            self.isLoading = true
-            self.categories = try await categoryDao.getAll()
-            self.categories.append(Category(id: "", name: "Without", url: UserInformation.shared.user?.store?.logo ?? ""))
+            let categories = try await CategoryDao(storeId: storeId).getAll()
+            let subCategories = try await SubStoreCategoryDao(storeId: storeId).getAll()
             
-            if !categories.isEmpty {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                self.categories = categories
+                self.subCategories = subCategories
+                self.categories.append(Category(id: "", name: "Without", url: UserInformation.shared.user?.store?.logo ?? ""))
+                
+                if !categories.isEmpty {
                     self.selectedCategory = self.categories.first
-                    self.isLoading = false
                 }
+                
+                self.isLoading = false
             }
         } catch {
-            showError(msg: error.localizedDescription)
+            ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
         }
-    }
-    
-    private func showError(msg:String) {
-        self.errorMsg = msg
     }
 }
 
 struct StoreProducts: View {
     var storeId:String
-    @ObservedObject var viewModel:StoreProductsViewModel
-    @State var myUser:UserData?
+    var isBuing:Bool = false
+    
+    @StateObject var viewModel:StoreProductsViewModel
+    @State var cartItems = CartManager().getCart()
     
     init(storeId: String) {
         self.storeId = storeId
-        self.viewModel =  StoreProductsViewModel(storeId: storeId)
+        self._viewModel = StateObject(wrappedValue: StoreProductsViewModel(storeId: storeId))
     }
     
     var body: some View {
@@ -118,98 +91,159 @@ struct StoreProducts: View {
             }
             .frame(height: 100)
             
+            CustomTopTabBar(tabIndex: $viewModel.selectedSubCategoryIndex, titles: viewModel.displayedSubCategories.map { $0.name.localize() })
+                .padding(.leading, 12)
+                .padding(.top, 12)
             
             Spacer().frame(height: 8)
-
-
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
-                    ForEach($viewModel.products.indices, id: \.self) { index in
-                        if $viewModel.products[index].wrappedValue.filter(viewModel.searchText) {
-                            NavigationLink(destination: ProductDetails(product: $viewModel.products[index], onDelete: { item in
-                                if let index = viewModel.products.firstIndex(where: {$0.id == item.id}) {
-                                    DispatchQueue.main.async {
-                                        viewModel.products.remove(at: index)
-                                    }
-                                }
-                            })) {
-                                ProductCard(product: $viewModel.products[index])
-                                    .id(viewModel.products[index].id)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
+            
+            if !viewModel.displayedSubCategories.isEmpty {
+                getProductsView()
             }
             
-            .overlay {
-                if viewModel.isLoadingCategory {
-                    ProgressView()
-                }
-            }
             
             Spacer()
         }
         .padding()
         .scrollIndicators(.hidden)
-        .refreshable {
-            await viewModel.updateProducts()
-        }
-        .searchable(text: $viewModel.searchText, prompt: Text("Search \(viewModel.products.count) Products"))
         .background(Color.background)
         .willLoad(loading: viewModel.isLoading)
-        .overlay {
-            if viewModel.products.isEmpty {
-                EmptyMessageViewWithButton(systemName: "cart.fill.badge.plus", msg: "You haven't added any products to your store yet !") {
-                    VStack {
-                        NavigationLink {
-                            AddProductView()
-                        } label: {
-                            Text("Add Product")
-                        }
-                        .buttonStyle(.bordered)
+        .navigationTitle("Products")
+        .toolbar {
+            if isBuing {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: Cart()) {
+                        CartBadgeView(cartItems: $cartItems)
                     }
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    ProductsSearchView()
+                } label: {
+                    Image(systemName: "magnifyingglass")
                 }
             }
         }
         .onAppear {
-            self.myUser = UserInformation.shared.getUser()
+            self.cartItems = CartManager().getCart()
         }
-        .navigationTitle("Products")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    Picker("Sort Option", selection: $viewModel.sortIndex) {
-                        Text("Name")
-                            .tag("name")
-                        
-                        Text("Quantity")
-                            .tag("quantity")
-                        
-                        Text("Most Selling")
-                            .tag("sold")
-                        
-                        Text("Last Order Date")
-                            .tag("lastOrderDate")
-                    }
-                } label: {
-                    Image(systemName: "arrow.up.arrow.down")
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Add") {
-                    AddProductView(storeId: storeId)
-                }
-            }
-        }
+    }
+    
+    @ViewBuilder
+    func getProductsView() -> some View {
+        SubCategoryProducts(storeId: storeId,
+                            categoryId: viewModel.selectedCategory?.id ?? "",
+                            subCategoryId: getSubCategoryId(),
+                            isBuying: isBuing)
+        .id("\(viewModel.selectedCategory?.id ?? "")-\(getSubCategoryId())")
+    }
+    
+    func getSubCategoryId() -> String {
+        if (viewModel.displayedSubCategories.count - 1) < viewModel.selectedSubCategoryIndex { return "" }
+        return viewModel.displayedSubCategories[viewModel.selectedSubCategoryIndex].id
     }
 }
 
-struct StoreProducts_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            StoreProducts(storeId: "lcvPuRAIVVUnRcZpttlPsRPLqoY2")
+struct SubCategoryProducts: View {
+    var storeId: String
+    var categoryId: String
+    var subCategoryId: String
+    var isBuying: Bool = false
+    
+    @State private var isFetching = false
+    @State private var isLoading = false
+    @State private var items = [StoreProduct]()
+    
+    @State private var lastDocument: DocumentSnapshot?
+    @State private var hasMore = true
+    
+    var body: some View {
+        ScrollView {
+            VStack {
+                HStack { Spacer() }
+                if !items.isEmpty, !isLoading {
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                        ForEach(items.indices, id: \.self) { index in
+                            if items.indices.contains(index) {
+                                VStack {
+                                    NavigationLink(destination: ProductDetails(product: $items[index])) {
+                                        ProductCard(product: $items[index])
+                                            .id(UUID().uuidString)
+                                    }
+                                    .buttonStyle(.plain)
+                                    
+                                    if items[index].id == items.last?.id && hasMore {
+                                        ProgressView()
+                                            .onAppear {
+                                                Task { await fetchProducts() }
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Spacer()
+            }
+        }
+        .task { await fetchProducts() }
+        .refreshable { await reset() }
+        .overlay {
+            if isLoading {
+                ProgressView()
+            }
+        }
+        .withEmptyView(text: "No products in this category", count: items.count, loading: isLoading)
+    }
+    
+    func reset() async {
+        // Use main thread for clearing items and resetting flags
+        await MainActor.run {
+            isLoading = false
+            isFetching = false
+            items.removeAll()
+            lastDocument = nil
+            hasMore = true
+            print("Reset")
+        }
+        
+        await fetchProducts()
+    }
+    
+    func fetchProducts() async {
+        guard hasMore, !isLoading, !isFetching else { return }
+        
+        await MainActor.run {
+            isLoading = (lastDocument == nil)
+            isFetching = (lastDocument != nil)
+        }
+        
+        print("Fetching ...")
+        
+        do {
+            let result = try await ProductsDao(storeId: storeId).getBySubcategory(
+                categoryId: categoryId, subCategoryId: subCategoryId, lastDoc: lastDocument
+            )
+            
+            print("Result fetched ...")
+            
+            await MainActor.run {
+                // Append new items on the main thread
+                self.items.append(contentsOf: result.0)
+                self.hasMore = !result.0.isEmpty
+                self.lastDocument = result.1
+                self.isLoading = false
+                self.isFetching = false
+                print("Items updated, flags toggled")
+            }
+        } catch {
+            print("Error in fetching \(error)")
+            await MainActor.run {
+                self.isLoading = false
+                self.isFetching = false
+            }
         }
     }
 }

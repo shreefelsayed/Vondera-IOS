@@ -73,10 +73,12 @@ struct StatueButton : View {
         }, message: {
             Text("This will delete the order, but you can restore it later.")
         })
-        .onChange(of: selecting) { _ in
-            
-            // --> Then we make the action
-            makeActionOnNewStatue(selecting)
+        .onChange(of: selecting) { newValue in
+            if let validStatue = OrderStatues(rawValue: newValue) {
+                makeActionOnNewStatue(newValue)
+            } else {
+                self.selecting = order.statue
+            }
         }
         .onChange(of: courierScreen) { newValue in
             guard !courierScreen else {
@@ -93,6 +95,7 @@ struct StatueButton : View {
         }
     }
     
+    @MainActor
     private func makeActionOnNewStatue(_ statue:String) {
         guard selecting != order.statue else { return }
 
@@ -122,9 +125,8 @@ struct StatueButton : View {
                 deleteWarning.toggle()
             }
             break
-        case .none:
+        default:
             break
-        
         }
     }
     

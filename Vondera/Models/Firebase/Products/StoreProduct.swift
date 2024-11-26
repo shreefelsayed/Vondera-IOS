@@ -35,6 +35,9 @@ struct StoreProduct: Codable, Identifiable, Equatable, Hashable {
     var avgRating:Float? = 0;
     var totalRating:Double? = 0;
     
+    var subCategoryId:String? = ""
+    var subCategoryName:String? = ""
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

@@ -17,7 +17,12 @@ struct ProductInfoView: View {
     @State private var stocked = true
     
     @State private var categories = [Category]()
-    @State private var selectedCategory:Category? = nil
+    
+    @State private var allSubCategories = [SubCategory]()
+    @State private var displayedSubCategories = [SubCategory]()
+    @State private var selectedSubCategoryId = ""
+    
+    @State private var selectedCategory:Category?
 
     @State private var isLoading = true
     @State private var isSaving = false
@@ -47,6 +52,20 @@ struct ProductInfoView: View {
                     Text("Select the category that this product belongs too")
                         .font(.caption)
                 }
+                
+                
+                if displayedSubCategories.count > 0 {
+                    HStack {
+                        
+                        
+                        Picker("Sub Category", selection: $selectedSubCategoryId, content: {
+                            ForEach(displayedSubCategories, id: \.id) { item in
+                                Text(item.name)
+                                    .id(item.id)
+                            }
+                        })
+                    }
+                }
             }
 
             Section("Stock Handling") {
@@ -60,6 +79,9 @@ struct ProductInfoView: View {
                         .font(.caption)
                 }
             }
+        }
+        .onChange(of: selectedCategory) { _ in
+            refresSubCategories()
         }
         .willLoad(loading: isLoading)
         .willProgress(saving: isSaving)
@@ -91,30 +113,38 @@ struct ProductInfoView: View {
         .task {
             await getData()
         }
-        
     }
 
     
     func getData() async {
         self.isLoading = true
+        
         do {
             let category = try await CategoryDao(storeId: product.storeId).getAll()
+            let subCategories = try await SubStoreCategoryDao(storeId: product.storeId).getAll()
             let product = try await ProductsDao(storeId: product.storeId).getProduct(id: product.id)
             
             guard let product = product else {
                 return
             }
             
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.product = product
                 self.categories = category
                 self.name = product.name
                 self.desc = product.desc ?? ""
                 self.stocked = product.alwaysStocked ?? false
+                self.allSubCategories = subCategories
                 
                 if let selectedIndex = self.categories.firstIndex(where: {$0.id == (product.categoryId ?? "")}) {
                     self.selectedCategory = self.categories[selectedIndex]
                 }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.selectedSubCategoryId = product.subCategoryId ?? ""
+                }
+               
+                
                 self.isLoading = false
             }
         } catch {
@@ -123,29 +153,51 @@ struct ProductInfoView: View {
         }
     }
     
+    func refresSubCategories() {
+        guard let selectedCategory else {
+            displayedSubCategories = []
+            return
+        }
+        
+        var items =  allSubCategories.filter { $0.categoryId == selectedCategory.id }
+        items.insert(SubCategory(name: "None", id: "", categoryId: selectedCategory.id, sortValue: 0), at: 0)
+        selectedSubCategoryId = items.first?.id ?? ""
+        displayedSubCategories = items
+    }
+    
+    func getSubCategoryById() -> SubCategory? {
+        if selectedSubCategoryId.isBlank { return nil }
+        let cate = allSubCategories.first { $0.id == selectedSubCategoryId }
+        return cate
+    }
+    
     func update() async {
         guard let storeId = UserInformation.shared.user?.storeId, check() else {
             return
         }
         
-        self.isSaving = true
+        await MainActor.run { self.isSaving = true }
         
         // --> Update the database
         let data:[String:Any] = ["name": name.lowercased(),
                                  "desc": desc,
                                  "alwaysStocked": stocked,
+                                 "subCategoryId": selectedSubCategoryId,
+                                 "subCategoryName": getSubCategoryById()?.name ?? "",
                                  "categoryId": selectedCategory?.id ?? "",
                                  "categoryName": selectedCategory?.name ?? ""]
         
         do {
             try await ProductsDao(storeId: storeId).update(id: product.id, hashMap: data)
             
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.product.name = name.lowercased()
                 self.product.desc = desc
                 self.product.alwaysStocked = stocked
                 self.product.categoryId = selectedCategory?.id ?? ""
                 self.product.categoryName = selectedCategory?.name ?? ""
+                self.product.subCategoryId = selectedSubCategoryId
+                self.product.subCategoryName = getSubCategoryById()?.name ?? ""
                 ToastManager.shared.showToast(msg: "Product info updated", toastType: .success)
                 self.presentationMode.wrappedValue.dismiss()
             }

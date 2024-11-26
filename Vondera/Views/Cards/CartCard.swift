@@ -42,7 +42,11 @@ struct CartCard: View {
                         Spacer()
 
                         if maxQuantity >= 1 {
-                            Stepper(value: $orderProduct.quantity, in: 1...maxQuantity) {
+                            Stepper(value: Binding(get: {
+                                min(max(orderProduct.quantity, 1), maxQuantity)
+                            }, set: {
+                                orderProduct.quantity = min(max($0, 1), maxQuantity)
+                            }), in: 1...maxQuantity) {
                                 Text("Quantity \(orderProduct.quantity)")
                                     .font(.caption)
                             }
@@ -68,21 +72,25 @@ struct CartCard: View {
                 return
             }
             
-            maxQuantity = orderProduct.product?.getMaxQuantity(variant: orderProduct.product?.getVariantInfo(orderProduct.hashVaraients)) ?? 1000
+            if let product = orderProduct.product {
+                maxQuantity = product.getMaxQuantity(variant: product.getVariantInfo(orderProduct.hashVaraients)) ?? 1000
+            }
             
             checkCurrentQuantity()
         }
     }
     
     private func checkCurrentQuantity() {
-        if orderProduct.quantity > maxQuantity {
-            orderProduct.quantity = maxQuantity
-        }
-        
-        if orderProduct.quantity <= 0 {
-            orderProduct.quantity = 1
+        DispatchQueue.main.async {
+            if orderProduct.quantity > maxQuantity {
+                orderProduct.quantity = maxQuantity
+            }
+            if orderProduct.quantity <= 0 {
+                orderProduct.quantity = 1
+            }
         }
     }
+
 }
 
 

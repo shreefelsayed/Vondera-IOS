@@ -28,9 +28,11 @@ class AlwaysStockedViewModel: ObservableObject {
     }
     
     func refreshData() async {
-        self.canLoadMore = true
-        self.lastSnapshot = nil
-        self.items.removeAll()
+        await MainActor.run {
+            self.canLoadMore = true
+            self.lastSnapshot = nil
+            self.items.removeAll()
+        }
         await getData()
     }
     
@@ -39,10 +41,10 @@ class AlwaysStockedViewModel: ObservableObject {
             return
         }
         
-        self.isLoading = true
+        await MainActor.run { self.isLoading = true }
         do {
             let result = try await productsDao.getAlwaysStocked(lastSnapShot: lastSnapshot)
-            DispatchQueue.main.async {
+            await MainActor.run {
                 self.lastSnapshot = result.1
                 self.items.append(contentsOf: result.0)
                 self.canLoadMore = !result.0.isEmpty
@@ -51,9 +53,9 @@ class AlwaysStockedViewModel: ObservableObject {
         } catch {
             ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             CrashsManager().addLogs(error.localizedDescription, "Always Stocked")
-
+            await MainActor.run { self.isLoading = false }
         }
         
-        self.isLoading = false
+        
     }
 }

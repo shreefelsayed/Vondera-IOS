@@ -45,7 +45,7 @@ struct StoreStepsView: View {
                     
                     StepItem(isDone: store.categoriesCount ?? 0 > 0, view: AnyView(CreateCategory(storeId: myUser.storeId, onAdded: nil)), text: "Add your categories")
                     
-                    StepItem(isDone: store.productsCount ?? 0 > 0, view: AnyView(AddProductView(storeId: myUser.storeId)), text: "Add your first product")
+                    StepItem(isDone: store.productsCount ?? 0 > 0, view: AnyView(AddProductView()), text: "Add your first product")
                     
                     StepItem(isDone: store.listAreas?.count ?? 0 > 0, view: AnyView(StoreShipping(storeId: myUser.storeId)), text: "Add your supported shipping areas")
                     

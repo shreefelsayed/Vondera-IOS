@@ -11,57 +11,48 @@ import Foundation
 import Firebase
 import Combine
 
-class AddProductViewModel : ObservableObject {
-    var storeId:String = ""
-    var categorysDao:CategoryDao
-    var productsDao:ProductsDao
-    
-    var productId = ""
+class AddProductViewModel: ObservableObject {
+    var storeId: String
+    var categorysDao: CategoryDao
+    var productsDao: ProductsDao
     
     @Published var page = 1
+    @Published var isSaving = false
+    @Published var isUploading = false
+    
     @Published var categories = [Category]()
-    
+    @Published var allSubCategories = [SubCategory]()
+    @Published var selectedSubCategoryId = ""
+    @Published var displayedSubCategories = [SubCategory]()
+
     @Published var recentProducts = [StoreProduct]()
-    @Published var selectedTemplate:StoreProduct?
-    
-    
-    @Published var selectedCategory:Category? {
+    @Published var selectedTemplate: StoreProduct?
+    @Published var selectedCategory: Category? {
         didSet {
-            Task {
-                await updateRecentProducts()
-            }
+            refresSubCategories()
+            Task { await updateRecentProducts() }
         }
     }
-    
     @Published var isSheetPresented = false
-    
     @Published var selectedPhotos: [UIImage] = []
-    
     @Published var name = ""
     @Published var desc = ""
-    
     @Published var alwaysStocked = false
     @Published var sellingPrice = "0"
     @Published var cost = "0"
     @Published var crossed = "0"
     @Published var quantity = "0"
-    @Published var isSaving = false
     
-    @Published var listVarients = [[String:[String]]]()
-    @Published var listTitles = [String]()
-    @Published var listOptions = [[String]]()
-    
+    @Published var listVarients = [[String: [String]]]()
+
     @Published var templateVariantDetails = [VariantsDetails]()
-    
-    var myUser = UserInformation.shared.getUser()
-        
+    var myUser: UserData?
+
     var viewDismissalModePublisher = PassthroughSubject<Bool, Never>()
-    private var shouldDismissView = false {
-        didSet {
-            viewDismissalModePublisher.send(shouldDismissView)
-        }
-    }
-    
+    var productId = "" // Added productId property to maintain product ID
+    var listTitles: [String] = []
+    var listOptions: [[String]] = []
+
     init(storeId: String) {
         self.storeId = storeId
         self.categorysDao = CategoryDao(storeId: storeId)
@@ -74,26 +65,37 @@ class AddProductViewModel : ObservableObject {
         }
     }
     
-    
-    
-    func deleteVarient(i:Int) {
-        listTitles.remove(at: i)
-        listOptions.remove(at: i)
-        listVarients.remove(at: i)
+    // MARK: - Photo Management
+    @MainActor
+    func removePhoto(image: UIImage) {
+        selectedPhotos.removeAll { $0 == image }
     }
     
-    func canAddVarient() -> Bool {
-        if listVarients.isEmpty { return true }
-        if listTitles.last!.isEmpty || listOptions.last!.isEmpty {
-            return false
-        }
-        
-        return true
+    @MainActor
+    func clearSelectedPhotos() {
+        selectedPhotos.removeAll()
     }
     
-    func addVarient() {
-        guard canAddVarient() else {
-            ToastManager.shared.showToast(msg: "Fill the current varient first", toastType: .error)
+    // MARK: - Variant Management
+    @MainActor
+    func deleteVarient(at index: Int) {
+        listVarients.remove(at: index)
+        listTitles.remove(at: index)
+        listOptions.remove(at: index)
+    }
+    
+    @MainActor
+    func canAddVariant() -> Bool {
+        guard !listVarients.isEmpty else { return true }
+        let lastTitleEmpty = listTitles.last?.isEmpty ?? true
+        let lastOptionsEmpty = listOptions.last?.isEmpty ?? true
+        return !(lastTitleEmpty || lastOptionsEmpty)
+    }
+    
+    @MainActor
+    func addVariant() {
+        guard canAddVariant() else {
+            ToastManager.shared.showToast(msg: "Fill the current variant first", toastType: .error)
             return
         }
         
@@ -102,264 +104,257 @@ class AddProductViewModel : ObservableObject {
         listOptions.append([String]())
     }
     
+    // MARK: - Navigation & Validation
+    @MainActor
     func nextPage() {
-        if page == 1 {
-            if (check1()) {page = 2}
-        } else if page == 2 {
-            if (check2()) {
-                if alwaysStocked {
-                    uploadPhotos()
-                } else {
+        print("Current page \(page)")
+        switch page {
+        case 1:
+            if check1() { page = 2 }
+            break
+        case 2:
+            if check2() {
+                if !alwaysStocked {
                     page = 3
+                } else {
+                    uploadPhotos()
                 }
             }
-        } else if page == 3 {
-            if(check3()) { uploadPhotos() }
+            break
+        case 3:
+            if check3() { uploadPhotos() }
+            break
+        default:
+            break
         }
     }
-    
+
+    @MainActor
     func showPrevPage() {
         if page == 1 {
-            shouldDismissView = true
-            return
+            viewDismissalModePublisher.send(true)
+        } else {
+            page -= 1
         }
-        
-        page -= 1
     }
-    
+
+    @MainActor
     func check1() -> Bool {
         guard !name.isBlank else {
             ToastManager.shared.showToast(msg: "Enter product name", toastType: .error)
             return false
         }
-        
-        guard selectedPhotos.count > 0 else {
-            ToastManager.shared.showToast(msg: "Select one photo at least", toastType: .error)
+        guard !selectedPhotos.isEmpty else {
+            ToastManager.shared.showToast(msg: "Select at least one photo", toastType: .error)
             return false
         }
-        
         guard selectedCategory != nil else {
             ToastManager.shared.showToast(msg: "Select the product category", toastType: .error)
             return false
         }
-        
         guard sellingPrice.isNumeric else {
-            ToastManager.shared.showToast(msg: "Enter a valid price amount", toastType: .error)
+            ToastManager.shared.showToast(msg: "Enter a valid price", toastType: .error)
             return false
         }
-        
         guard sellingPrice != "0" else {
             ToastManager.shared.showToast(msg: "Selling price can't be Zero LE", toastType: .error)
             return false
         }
-        
         guard cost.isNumeric else {
-            ToastManager.shared.showToast(msg:"Enter a valid cost amount", toastType: .error)
+            ToastManager.shared.showToast(msg: "Enter a valid cost amount", toastType: .error)
             return false
         }
-        
         return true
     }
-    
+
+    @MainActor
     func check2() -> Bool {
-        var titleFilled = true
-        var optionsProvided = true
-        
-        for str in listTitles {
-            if str.isBlank {titleFilled = false}
+        let titleFilled = listTitles.allSatisfy { !$0.isBlank }
+        let optionsProvided = listOptions.allSatisfy { $0.count >= 2 }
+
+        if !titleFilled {
+            ToastManager.shared.showToast(msg: "Fill all variants titles", toastType: .error)
+        }
+        if !optionsProvided {
+            ToastManager.shared.showToast(msg: "Add at least 2 options to each variant", toastType: .error)
         }
         
-        for list in listOptions {
-            if list.count < 2 {optionsProvided = false}
-        }
-        
-        guard titleFilled else {
-            ToastManager.shared.showToast(msg:"Fill all varients titles", toastType: .error)
-            return false
-        }
-        
-        guard optionsProvided else {
-            ToastManager.shared.showToast(msg:"Add at least 2 options to each varient", toastType: .error)
-            return false
-        }
-        
-        return true
+        let result = titleFilled && optionsProvided
+        print("Validation Result \(result)")
+        return result
     }
-    
+
+    @MainActor
     func check3() -> Bool {
         guard quantity.isNumeric else {
             ToastManager.shared.showToast(msg: "Enter a valid quantity amount", toastType: .error)
             return false
         }
-        
         return true
     }
     
-    func listVarient() -> [[String: [String]]] {
-        var listVars = [[String: [String]]]()
-        for (index, title) in listTitles.enumerated() {
-            listVars.append([title:listOptions[index]])
+    // MARK: - Product Handling
+    func saveProduct(uris: ([String], [String?])) async {
+        await MainActor.run { self.isSaving = true }
+        
+        var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
+        product.desc = desc
+        product.storeId = storeId
+        product.crossedPrice = Double(crossed) ?? 0
+        product.listPhotos = uris.0
+        product.listOptamized = uris.1.compactMap { $0 ?? "" }
+        product.hashVarients = listVarient()
+        product.alwaysStocked = alwaysStocked
+        product.categoryId = selectedCategory?.id ?? ""
+        product.categoryName = selectedCategory?.name ?? ""
+        product.subCategoryId = selectedSubCategoryId
+        product.subCategoryName = getSubCategoryById()?.name ?? ""
+        
+        product.variantsDetails = templateVariantDetails.map {
+            var detail = $0
+            detail.image = ""
+            detail.optimizedImage = ""
+            detail.cost = Double(cost) ?? 0
+            detail.price = Double(sellingPrice) ?? 0
+            return detail
         }
         
-        return listVars
-    }
-    
-    func uploadPhotos() {
-        DispatchQueue.main.async {
-            self.isSaving = true
-        }
-        
-        if let storeId = myUser?.storeId {
-            let path = "stores/\(storeId)/products/\(productId)"
-            S3Handler.uploadImages(imagesToUpload: selectedPhotos,
-                                   maxSizeMB: 4,
-                                   path: path,
-                                   createThumbnail: true) { uploadResults in
-                self.saveProduct(uris: uploadResults)
+        do {
+            try await productsDao.create(product)
+            
+            await MainActor.run { [product] in
+                self.isSaving = false
+                self.updateUserProductCount()
+                ToastManager.shared.showToast(msg: "Product has been added", toastType: .success)
+                if product.hasVariants() {
+                    DynamicNavigation.shared.navigate(to: AnyView(VarientsSettings(product: .constant(product))))
+                } else {
+                    self.viewDismissalModePublisher.send(true)
+                }
+            }
+        } catch {
+            await MainActor.run {
+                self.isSaving = false
+                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
             }
         }
     }
     
+    // MARK: - Template Handling
+    @MainActor
+    func chooseTemplate(product: StoreProduct) {
+        selectedTemplate = product
+        desc = product.desc ?? ""
+        cost = "\(Int(product.buyingPrice))"
+        crossed = "\(Int(product.crossedPrice ?? 0))"
+        sellingPrice = "\(Int(product.price))"
+        alwaysStocked = product.alwaysStocked ?? false
+        quantity = "\(product.quantity)"
+        templateVariantDetails = product.getVariant()
+        listVarients = product.hashVarients ?? []
+        listTitles = product.hashVarients?.getTitles() ?? []
+        listOptions = product.hashVarients?.getOptions() ?? []
+        selectedSubCategoryId = product.subCategoryId ?? ""
+        ToastManager.shared.showToast(msg: "Template data filled")
+    }
+    
+    // MARK: - Helper Functions
+    func listVarient() -> [[String: [String]]] {
+        return zip(listTitles, listOptions).map { [$0: $1] }
+    }
+
+    @MainActor
+    func uploadPhotos() {
+        guard let storeId = myUser?.storeId else { return }
+        self.isUploading = true
+        let path = "stores/\(storeId)/products/\(productId)"
+        
+        Task {
+            try await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds in nanoseconds
+            S3Handler.uploadImages(imagesToUpload: selectedPhotos, maxSizeMB: 2, path: path, createThumbnail: true) { uploadResults in
+                self.isUploading = false
+                Task { await self.saveProduct(uris: uploadResults) }
+            }
+        }
+    }
+
+    
     func updateRecentProducts() async {
-        DispatchQueue.main.async {
+        await MainActor.run {
             self.selectedTemplate = nil
             self.recentProducts.removeAll()
         }
         
-        if let id = selectedCategory?.id {
-            if let templetes = try? await ProductsDao(storeId: storeId).getCategoryRecent(categoryId: id) {
-                DispatchQueue.main.async {
-                    self.recentProducts = templetes
-                }
-            }
-        }
-    }
-    
-    func chooseTemplete(product:StoreProduct) {
-        self.selectedTemplate = product
-        self.desc = product.desc ?? ""
-        self.cost = "\(Int(product.buyingPrice))"
-        self.crossed = "\(Int(product.crossedPrice ?? 0))"
-        self.sellingPrice = "\(Int(product.price))"
-        self.alwaysStocked = product.alwaysStocked ?? false
-        self.quantity = "\(product.quantity)"
-        self.templateVariantDetails = product.getVariant()
+        guard let categoryId = selectedCategory?.id else { return }
         
-        self.listVarients = product.hashVarients ?? []
-        self.listTitles = product.hashVarients?.getTitles() ?? []
-        self.listOptions = product.hashVarients?.getOptions() ?? []
-        
-        ToastManager.shared.showToast(msg: "Template date filled")
-    }
-    
-    func saveProduct(uris: ([String], [String?])) {
-        Task {
-            // MARK : Create a product Object
-            var product = StoreProduct(name: name.lowercased(), id: productId, quantity: Int(quantity) ?? 0, addedBy: "", price: Double(sellingPrice) ?? 0, buyingPrice: Double(cost) ?? 0)
-            
-            product.desc = desc
-            product.storeId = storeId
-            product.crossedPrice = Double(crossed) ?? 0
-            product.listPhotos = uris.0
-            product.listOptamized = uris.1.compactMap { $0 ?? "" }
-            product.hashVarients = listVarient()
-            product.alwaysStocked = alwaysStocked
-            product.categoryId = selectedCategory?.id ?? ""
-            product.categoryName = selectedCategory?.name ?? ""
-            
-            product.variantsDetails = listVarient().isEmpty ? [] : templateVariantDetails.map { detail in
-                var modifiedDetail = detail // Create a copy of the detail
-                modifiedDetail.image = ""
-                modifiedDetail.optimizedImage = ""
-                modifiedDetail.cost = Double(cost) ?? 0
-                modifiedDetail.price = Double(sellingPrice) ?? 0
-                return modifiedDetail
-            }
-            
-            // MARK : Save the product to database
-            do {
-                try await productsDao.create(product)
-                ToastManager.shared.showToast(msg: "Product has been added", toastType: .success)
-                
-                // --> Saving Local
-                if let myUser = UserInformation.shared.getUser() {
-                    if var productsCount = myUser.store?.productsCount {
-                        productsCount = productsCount + 1
-                        myUser.store?.productsCount = productsCount
-                        UserInformation.shared.updateUser(myUser)
-                    }
-                }
-                
-                DispatchQueue.main.async { [product] in
-                    if product.hasVariants() {
-                        DynamicNavigation.shared.navigate(to: AnyView(VarientsSettings(product: .constant(product))))
-                    } else {
-                        self.shouldDismissView = true
-                    }
-                }
-            } catch {
-                ToastManager.shared.showToast(msg: error.localizedDescription.localize(), toastType: .error)
-            }
-            
-            DispatchQueue.main.async {
-                self.isSaving = false
-            }
-        }
-    }
-    
-    func getStoreCategories() async {
         do {
-            categories = try await categorysDao.getAll()
-            if let cat = categories.first {
-                selectedCategory = cat
+            let items = try await productsDao.getCategoryRecent(categoryId: categoryId)
+            await MainActor.run {
+                self.recentProducts = items
             }
         } catch {
-            print(error.localizedDescription)
+            print("Failed to load recent products: \(error.localizedDescription)")
+        }
+    }
+
+    func getStoreCategories() async {
+        do {
+            let categories = try await categorysDao.getAll()
+            let subCategories = try await SubStoreCategoryDao(storeId: storeId).getAll()
+            
+            await MainActor.run {
+                self.categories = categories
+                self.allSubCategories = subCategories
+                self.selectedCategory = categories.first
+            }
+        } catch {
+            print("Failed to load categories: \(error.localizedDescription)")
         }
     }
     
-    
-    func removePhoto(image: UIImage) {
-        if let index = selectedPhotos.firstIndex(of: image) {
-            selectedPhotos.remove(at: index)
-        }
-    }
-    
-    // Add a function to clear the selected photos
-    func clearSelectedPhotos() {
-        selectedPhotos.removeAll()
-    }
-    
-    func createProductId() async {
-        let id:String = "\(generateRandomNumber())"
-        let isExist = try? await productsDao.productExist(id: id)
-        if (isExist ?? true) {
-            await createProductId()
+    func refresSubCategories() {
+        guard let selectedCategory else {
+            displayedSubCategories = []
             return
         }
         
-        self.productId = id
+        var items =  allSubCategories.filter { $0.categoryId == selectedCategory.id }
+        items.insert(SubCategory(name: "None", id: "", categoryId: selectedCategory.id, sortValue: 0), at: 0)
+        selectedSubCategoryId = items.first?.id ?? ""
+        displayedSubCategories = items
     }
     
+    func getSubCategoryById() -> SubCategory? {
+        if selectedSubCategoryId.isBlank { return nil }
+        let cate = allSubCategories.first { $0.id == selectedSubCategoryId }
+        return cate
+    }
+    
+    func createProductId() async {
+        productId = "\(generateRandomNumber())"
+        let exists = try? await productsDao.productExist(id: productId)
+        if exists ?? false {
+            await createProductId() // Recursively generate a new ID if exists
+        }
+    }
+
     func generateRandomNumber() -> Int {
-        let randomNumber = arc4random_uniform(9000) + 1000
-        return Int(randomNumber)
+        return Int(arc4random_uniform(9000) + 1000)
+    }
+    
+    // MARK: - User Update
+    func updateUserProductCount() {
+        /*myUser?.store?.productsCount += 1
+        UserInformation.shared.saveUser(user: myUser!)*/
     }
 }
 
 
 struct AddProductView: View {
-    var storeId:String = UserInformation.shared.user?.storeId ?? ""
-    
-    @State var images:[PhotosPickerItem] = [PhotosPickerItem]()
-    
-    @StateObject private var viewModel:AddProductViewModel
+    @StateObject private var viewModel = AddProductViewModel(storeId: UserInformation.shared.user?.storeId ?? "")
     @Environment(\.presentationMode) private var presentationMode
-
-    init(storeId: String = "") {
-        self.storeId = UserInformation.shared.user?.storeId ?? ""
-        _viewModel = StateObject(wrappedValue: AddProductViewModel(storeId: UserInformation.shared.user?.storeId ?? ""))
-    }
+    @State private var images: [PhotosPickerItem] = []
+    
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -367,27 +362,30 @@ struct AddProductView: View {
         }
         .sheet(isPresented: $viewModel.isSheetPresented) {
             NavigationStack {
-                CategoryPicker(items: $viewModel.categories, storeId: viewModel.myUser?.storeId ?? "", selectedItem: $viewModel.selectedCategory)
+                CategoryPicker(items: $viewModel.categories,
+                               storeId: viewModel.myUser?.storeId ?? "",
+                               selectedItem: $viewModel.selectedCategory)
             }
         }
         .padding()
         .navigationTitle("New Product")
-        .navigationBarItems(leading: Button(action : {
-            withAnimation {
-                viewModel.showPrevPage()
-            }
-        }){
+        
+        .navigationBarItems(leading: Button(action: {
+            withAnimation { viewModel.showPrevPage() }
+        }) {
             Image(systemName: "arrow.left")
         })
-        .willProgress(saving: viewModel.isSaving, handleBackButton: false)
-        .navigationBarBackButtonHidden(true)
         .onReceive(viewModel.viewDismissalModePublisher) { shouldDismiss in
             if shouldDismiss {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             }
         }
         .withAccessLevel(accessKey: .productsWrite, presentation: presentationMode)
+        .willProgress(saving: viewModel.isSaving, handleBackButton: false, msg: "Creating products ..")
+        .willProgress(saving: viewModel.isUploading, handleBackButton: false, msg: "Uploading images ..")
+        .navigationBarBackButtonHidden(true)
     }
+
     
     var page3: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -395,7 +393,7 @@ struct AddProductView: View {
                 .font(.title)
                 .bold()
             
-            FloatingTextField(title: "Quantity", text:  $viewModel.quantity, caption: "TEnter how many of this product do you have right now in the warehouse", required: nil, keyboard: .numberPad)
+            FloatingTextField(title: "Quantity", text:  $viewModel.quantity, caption: "Enter how many of this product do you have right now in the warehouse", required: nil, keyboard: .numberPad)
             
             
             ButtonLarge(label:"Create Product") {
@@ -416,12 +414,11 @@ struct AddProductView: View {
                 Spacer()
                 
                 Button {
-                    viewModel.addVarient()
+                    viewModel.addVariant()
                 } label: {
                     Text("Add")
                 }
             }
-            
             
             Spacer().frame(height: 10)
             
@@ -432,20 +429,28 @@ struct AddProductView: View {
 
             ForEach(Array($viewModel.listVarients.indices), id: \.self) { i in
                 VStack(alignment: .leading, spacing: 6) {
-                    FloatingTextField(title: "Varient Title", text: $viewModel.listTitles[i], caption: "This is your varient title for example (Color, Size, ..)", required: true, autoCapitalize: .words)
+                    // Binding the variant title to listTitles
+                    FloatingTextField(
+                        title: "Variant Title",
+                        text: $viewModel.listTitles[i], // Binding to each variant's title
+                        caption: "This is your variant title, for example (Color, Size, ...)",
+                        required: true,
+                        autoCapitalize: .words
+                    )
                     
-                                        
-                    OptionsView(items: $viewModel.listOptions[i])
+                    // Binding the options to listOptions
+                    OptionsView(items: $viewModel.listOptions[i])  // Binding each variant's options
                     
                     HStack {
-                        ButtonLarge(label: "Delete Varient", background: .gray) {
-                            viewModel.deleteVarient(i : i)
+                        ButtonLarge(label: "Delete Variant", background: .gray) {
+                            viewModel.deleteVarient(at: i) // Call to delete the variant at index `i`
                         }
                     }
                     
                     Divider()
                 }
             }
+
             
             Spacer().frame(height: 20)
         
@@ -475,7 +480,7 @@ struct AddProductView: View {
                         ForEach(viewModel.recentProducts) { prod in
                             ProductTemplete(isSelected: viewModel.selectedTemplate == prod, product: prod) { selected in
                                 withAnimation {
-                                    viewModel.chooseTemplete(product: selected)
+                                    viewModel.chooseTemplate(product: selected)
                                 }
                                 
                             }
@@ -489,10 +494,8 @@ struct AddProductView: View {
                 FloatingTextField(title: "Product Name", text:  $viewModel.name, caption: "This is the name of the product, which will appear on the website and the app", required: true, autoCapitalize: .words)
                 
                 FloatingTextField(title: "Product Description", text:  $viewModel.desc, caption: "Your product describtion will be visible for users in your website and in the app", required: false, multiLine: true, autoCapitalize: .sentences)
-               
-                // MARK : Pick up photos
-                
-                photos
+                               
+                buildPhotos
                 
                 
                 // MARK : Stock Options
@@ -507,10 +510,26 @@ struct AddProductView: View {
                 
                 
                 // MARK : Select the Category
-                categories
+                buildCategoryPicker
+                
+                // MARK : Sub Category
+                if viewModel.displayedSubCategories.count > 0 {
+                    HStack {
+                        Text("Sub Category")
+                        
+                        Spacer()
+                        
+                        Picker("Sub Category", selection: $viewModel.selectedSubCategoryId, content: {
+                            ForEach(viewModel.displayedSubCategories, id: \.id) { item in
+                                Text(item.name)
+                                    .id(item.id)
+                            }
+                        })
+                    }
+                }
                 
                 // MARK : Pricing
-                pricing
+                buildPricingInput
             }
             
             
@@ -536,8 +555,7 @@ struct AddProductView: View {
         }
     }
     
-    
-    var categories: some View {
+    var buildCategoryPicker: some View {
         VStack(alignment: .leading) {
             Text("Category")
                 .font(.title2)
@@ -555,7 +573,7 @@ struct AddProductView: View {
         }
     }
     
-    var pricing: some View {
+    var buildPricingInput: some View {
         VStack(alignment: .leading) {
             Text("Price and cost")
                 .font(.title2)
@@ -568,7 +586,7 @@ struct AddProductView: View {
         }
     }
     
-    var photos: some View {
+    var buildPhotos: some View {
         VStack(alignment: .leading) {
             // MARK : Photos title
             HStack {
@@ -619,14 +637,6 @@ struct AddProductView: View {
                     
                 }
             }
-        }
-    }
-}
-
-struct AddProductView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            AddProductView(storeId: Store.Qotoofs())
         }
     }
 }

@@ -73,6 +73,30 @@ class ProductsDao {
         return (data.items, data.lastDocument)
     }
     
+    func getBySubcategory(categoryId:String, subCategoryId:String, lastDoc:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
+        var query:Query = collection
+            .whereField("categoryId", isEqualTo: categoryId)
+            .order(by: "createDate", descending: true)
+        
+        print("Query ready")
+        if !subCategoryId.isBlank {
+            query = query.whereField("subCategoryId", isEqualTo: subCategoryId)
+        }
+        print("Sub Query Ready")
+        
+        if lastDoc != nil {
+            query = query.start(afterDocument: lastDoc!)
+        }
+        print("Start after ready")
+        
+        query = query.limit(to: 25)
+        
+        print("Limit Query Ready")
+        let data = try await query.getDocumentWithLastSnapshot(as: StoreProduct.self)
+        print("Got data")
+        return (data.items, data.lastDocument)
+    }
+    
     func getInStock(lastSnapShot:DocumentSnapshot?) async throws -> ([StoreProduct], DocumentSnapshot?) {
         return try await collection
             .whereField("quantity", isGreaterThan: 0)

@@ -35,7 +35,8 @@ class CreateCategoryViewModel : ObservableObject {
         }
     }
     
-    func saveCategory() async {
+    @MainActor
+    func saveCategory() {
         // --> Check if image wasn't selected
         guard let selectedImage = selectedImage else {
             showMessage("Please select a category image")

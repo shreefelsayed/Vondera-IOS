@@ -51,6 +51,6 @@ extension Query {
         }
 
         
-        return(items,snapshot.documents.last)
+        return(items, snapshot.documents.last)
     }
 }

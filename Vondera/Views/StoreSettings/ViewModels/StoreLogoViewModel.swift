@@ -35,6 +35,7 @@ class StoreLogoViewModel : ObservableObject {
     }
     
     
+    @MainActor
     func saveNewLogo() {
         // --> Check if image wasn't selected
         guard selectedImage != nil else {
